@@ -1,0 +1,30 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main  # Only deploy on main branch update
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: zero olympiad repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Build and Deploy to Vercel
+        run: vercel --prod --yes --token=${{secrets.VERCEL_TOKEN}}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Set your Vercel token in GitHub secrets
