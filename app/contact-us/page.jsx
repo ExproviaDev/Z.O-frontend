@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div>this is contact us page</div>
+    <div>this is faq page</div>
   )
 }
