@@ -155,4 +155,5 @@ export default function FAQPage() {
         </div>
       </div>
     </div>
-  );
+  )
+}
