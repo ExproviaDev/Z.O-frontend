@@ -47,7 +47,7 @@ export default function Page() {
             {String(timeLeft.days).padStart(2, '0')} days {' '}
             {String(timeLeft.hours).padStart(2, '0')} hours {' '}
             {String(timeLeft.minutes).padStart(2, '0')} minutes {' '}
-            {String(timeLeft.seconds).padStart(2, '0')} seconds
+            {String(timeLeft.seconds).padStart(2, '0')} seconds {' '}
           </p>
         </div>
       </div>
