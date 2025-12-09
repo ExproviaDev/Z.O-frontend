@@ -33,7 +33,7 @@ export default function Header() {
                                 <Link
                                     key={item.title}
                                     href={item.url}
-                                    className="text-sm font-medium text-gray-700 hover:text-primary transition-colors relative group"
+                                    className="text-xl font-medium text-gray-700 hover:text-primary transition-colors relative group"
                                 >
                                     {item.title}
                                 </Link>
