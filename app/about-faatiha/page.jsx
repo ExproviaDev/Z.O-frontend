@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div>about fatiha</div>
+    <div>
+      <h1>this the page about fatiha ayat</h1>
+    </div>
+
   )
 }
