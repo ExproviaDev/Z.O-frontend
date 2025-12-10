@@ -8,7 +8,7 @@ import LogoFooter from "../../../public/src/SiteLogo.png";
 
 export default function Footer() {
     return (
-        <footer className="bg-Secondary text-black mt-10">
+        <footer className="bg-[#F4F4F4] text-black mt-10">
             <div className="container mx-auto px-5 lg:px-4 py-12 lg:py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
@@ -42,8 +42,8 @@ export default function Footer() {
                         <ul className="space-y-3 text-lg">
                             {[
                                 { name: "Home", path: "/" },
-                                { name: "About Us", path: "/about" },
-                                { name: "Contact Us", path: "/contact" },
+                                { name: "About Us", path: "/about-us" },
+                                { name: "Contact Us", path: "/contact-us" },
                                 { name: "Privacy Policy", path: "/privacy" },
                                 { name: "Terms & Conditions", path: "/terms" },
                             ].map((link) => (
