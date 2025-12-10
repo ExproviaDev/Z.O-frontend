@@ -1,6 +1,5 @@
 // components/QuizForm.jsx
 "use client"; // Client Component
-
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import QuizQuestion from "./QuizQuestion";
