@@ -11,7 +11,7 @@ const navItems = [
     { title: "About Us", url: "/about" },
     { title: "Leaderboard", url: "/leaderboard" },
     { title: "FAQ", url: "/faq" },
-    { title: "Contact Us", url: "/contact" },
+    { title: "Contact Us", url: "/contact-us" },
 ];
 
 export default function Header() {
