@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const navItems = [
     { title: "Home", url: "/" },
-    { title: "About Us", url: "/about" },
+    { title: "About Us", url: "/about-us" },
     { title: "Leaderboard", url: "/leaderboard" },
     { title: "FAQ", url: "/faq" },
     { title: "Contact Us", url: "/contact-us" },
@@ -22,7 +22,7 @@ export default function Header() {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 w-full px-5 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <header className="sticky top-0 left-0 right-0 mb-12 z-50 w-full px-5 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
             <div className="container mx-auto">
                 <div className="flex items-center justify-between h-16 lg:h-20">
                     {/* Logo and Mobile Menu Toggle */}
