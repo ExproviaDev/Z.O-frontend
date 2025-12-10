@@ -46,7 +46,7 @@ export default function Page() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 pb-16">
 
         {/* Office Card */}
-        <div className="bg-white border rounded-2xl p-7 shadow-md hover:shadow-xl transition-all duration-300">
+        <div className="bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-2xl p-7  transition-all duration-300">
           <h3 className="text-2xl font-semibold mb-6 text-gray-800">
             Office Information
           </h3>
@@ -103,7 +103,7 @@ export default function Page() {
 
         {/* follow us  */}
         <div>
-          <div className="bg-white border rounded-xl p-7 shadow-md hover:shadow-xl 
+          <div className="bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-xl p-7 
                 transition-all duration-300 h-fit">
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
               Follow Us
@@ -116,7 +116,7 @@ export default function Page() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-2 border rounded-xl 
+                  className="flex items-center bg-white gap-4 p-2 border border-gray-300 rounded-xl 
                    hover:bg-indigo-50 hover:border-indigo-300 
                    transition-all cursor-pointer"
                 >
@@ -133,10 +133,10 @@ export default function Page() {
             </div>
 
           </div>
-          <div className="mt-8 border rounded-xl py-3 px-4 text-center">
+          <div className="mt-8 bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-xl py-3 px-4 text-center">
             <h3 className="text-3xl pb-3 font-semibold">FAQ Page</h3>
            <div className="flex justify-center ">
-             <hr className="w-[400px]" />
+             <hr className="w-[400px] text-gray-300" />
            </div>
             <Link
               href="/faq"
@@ -190,7 +190,7 @@ export default function Page() {
           Our Location
         </h2>
 
-        <div className="w-full lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-lg border">
+        <div className="w-full lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-lg border border-gray-400 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)]">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.214776761477!2d90.37298327476827!3d23.751397489219598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8a36e5ccfdf%3A0xfcf2c98f41a42a40!2sDhanmondi%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1701234567890
 "
