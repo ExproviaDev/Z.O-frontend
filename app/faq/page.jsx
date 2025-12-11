@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import bannerImg from "@/public/src/faq.jpg"; // <-- YOUR FAQ BANNER IMAGE
+import Image from "next/image";
 
 export default function FAQPage() {
   const [open, setOpen] = useState(null);
@@ -63,16 +64,16 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="bg-white text-black pt-16">
+    <div className="bg-white text-black  ">
 
       {/* ===================== TOP BANNER ===================== */}
-     <div className="relative w-full h-[240px] sm:h-[300px] md:h-[380px] lg:h-[420px] overflow-hidden">
+     <div className="relative w-full h-60 sm:h-[300px] md:h-[380px] lg:h-[420px] overflow-hidden">
 
   {/* Banner Image */}
-  <img
-    src={bannerImg.src}
+  <Image
+    src={bannerImg}
     alt="FAQ Banner"
-    className="w-full h-full object-cover"
+    className="w-full h-full object-cover "
   />
 
   {/* Overlay */}
