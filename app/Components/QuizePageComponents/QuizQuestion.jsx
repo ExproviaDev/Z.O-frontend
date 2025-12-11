@@ -22,11 +22,11 @@ const QuizQuestion = ({
               value={option}
               checked={selectedAnswer === option}
               onChange={() => handleOptionChange(question.id, option)}
-              className="h-4 w-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+              className="h-4 w-4 text-Primary border-gray-300 focus:ring-blue-500"
             />
             <label
               htmlFor={`question-${question.id}-option-${index}`}
-              className="text-lg cursor-pointer"
+              className="text-xl text-Primary cursor-pointer"
             >
               {option}
             </label>
