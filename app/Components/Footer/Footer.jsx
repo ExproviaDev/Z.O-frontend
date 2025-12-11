@@ -44,8 +44,8 @@ export default function Footer() {
                                 { name: "Home", path: "/" },
                                 { name: "About Us", path: "/about" },
                                 { name: "Contact Us", path: "/contact-us" },
-                                { name: "Privacy Policy", path: "/privacy" },
-                                { name: "Terms & Conditions", path: "/terms" },
+                                { name: "Privacy Policy", path: "/privacyPolicy" },
+                                { name: "Terms & Conditions", path: "/tramsAndCondition" },
                             ].map((link) => (
                                 <li key={link.name}>
                                     <Link
@@ -135,13 +135,13 @@ export default function Footer() {
 
                         <div className="flex items-center gap-6 text-lg">
                             <Link
-                                href="/privacy"
+                                href="/privacyPolicy"
                                 className="text-black/60 hover:text-primary transition-colors"
                             >
                                 Privacy
                             </Link>
                             <Link
-                                href="/terms"
+                                href="/tramsAndCondition"
                                 className="text-black/60 hover:text-primary transition-colors"
                             >
                                 Terms

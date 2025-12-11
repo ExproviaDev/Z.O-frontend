@@ -15,15 +15,15 @@ const navItems = [
 ];
 
 export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
 
     return (
-        <header className="sticky top-0 left-0 right-0 z-50 w-full px-5 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
-            <div className="max-w-7xl mx-auto">
+        <header className="sticky top-0 left-0 right-0 z-50 w-full  bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
+            <div className="max-w-7xl mx-auto px-5" >
                 <div className="container mx-auto">
                     <div className="flex items-center justify-between h-16 lg:h-20">
                         {/* Logo and Mobile Menu Toggle */}
@@ -75,9 +75,11 @@ export default function Header() {
 
                         {/* Desktop Buttons */}
                         <div className="hidden lg:flex items-center gap-4">
-                            <button className="px-5 py-1.5 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
-                                Login
-                            </button>
+                            <Link href='/auth/login'>
+                                <button className="px-5 py-1.5 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
+                                    Login
+                                </button>
+                            </Link>
                             <button className="px-5 py-1.5 text-lg text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
                                 Register
                             </button>
@@ -107,9 +109,11 @@ export default function Header() {
                             ))}
                         </nav>
                         <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-gray-200">
-                            <button className="w-full py-3 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
-                                Login
-                            </button>
+                            <Link href='/auth/login'>
+                                <button className="w-full py-3 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
+                                    Login
+                                </button>
+                            </Link>
                             <button className="w-full py-3 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
                                 Register
                             </button>
