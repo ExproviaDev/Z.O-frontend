@@ -1,7 +1,7 @@
 import Image from "next/image";
 import aboutImage from "@/public/src/image.jpg"; // use actual file name
 import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
-import HeadingDetails from "../Components/Heading/HeadingDetails";
+import HeadingDetails from "../Components/HeadingDetails/HeadingDetails";
 import ThemeSong from "../Components/ThemeSong/ThemeSong";
 import PresidentAward from "@/public/src/PresidentAward.jpg";
 import UNDP from "@/public/src/UNDP.jpg";
@@ -19,7 +19,7 @@ const Section = () => {
         style={{ backgroundImage: `url(${aboutImage.src})` }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="px-5 lg:px-0 relative z-10 flex justify-center items-center h-full text-center text-white mt-">
+        <div className="px-5 relative z-10 flex justify-center items-center h-full text-center text-white mt-">
           <div className="mt-20 flex flex-col items-end">
             <h1 className="text-xl md:text-4xl lg:text-5xl font-bold">{`"Reducing To Zero, Rising As Hero!"`}</h1>
             <p className="text-lg lg:text-xl ">-- Faatiha Ayat</p>
@@ -91,7 +91,7 @@ const Section = () => {
         </div>
       </section>
 
-      <section className="max-w-7xl pt-16 px-5 lg:px-0 mx-auto">
+      <section className="max-w-7xl pt-16 px-5 mx-auto">
         <div>
           <HeadingDetails
             title="Speeches at the United Nations"
@@ -181,7 +181,7 @@ const Section = () => {
         </div>
       </section>
 
-      <section className="max-w-7xl pt-16 px-5 mx-auto">
+      <section className="max-w-7xl pt-16 px-5  mx-auto">
         <HeadingDetails
           title={"Honors and Awards"}
           subtitle={
