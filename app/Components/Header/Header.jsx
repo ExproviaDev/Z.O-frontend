@@ -15,11 +15,11 @@ const navItems = [
 ];
 
 export default function Header() {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
     return (
         <header className="sticky top-0 left-0 right-0 z-50 w-full px-5 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">

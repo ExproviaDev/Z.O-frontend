@@ -1,13 +1,8 @@
-// components/QuizQuestion.jsx
 "use client";
 
 import React from "react";
 
-const QuizQuestion = ({
-  question,
-  handleOptionChange,
-  selectedAnswer,
-}) => {
+const QuizQuestion = ({ question, handleOptionChange, selectedAnswer, isTimeUp }) => {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">{question.text}</h2>
@@ -22,12 +17,10 @@ const QuizQuestion = ({
               value={option}
               checked={selectedAnswer === option}
               onChange={() => handleOptionChange(question.id, option)}
-              className="h-4 w-4 text-Primary border-gray-300 focus:ring-blue-500"
+              className="h-4 w-4 text-primary border-gray-300 focus:ring-blue-500"
+              disabled={isTimeUp} // Disable inputs when time is up
             />
-            <label
-              htmlFor={`question-${question.id}-option-${index}`}
-              className="text-xl text-Primary cursor-pointer"
-            >
+            <label htmlFor={`question-${question.id}-option-${index}`} className="text-xl cursor-pointer">
               {option}
             </label>
           </div>

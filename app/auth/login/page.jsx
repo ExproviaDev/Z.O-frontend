@@ -3,90 +3,127 @@
 
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import Image from "next/image";
+import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import Link from "next/link";
-import { BsGoogle } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa6";
 
 export default function LoginPage() {
-  const handleLogin = (e) => {
-    e.preventDefault(); 
-    console.log("Form submitted");
+  const initialValues = {
+    
+    email: "",
+    password: "",
+  };
+
+  const [formData, setFormData] = useState(initialValues);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Logged in:", formData);
+    setFormData(initialValues);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10 text-black bg-transparent">
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="min-h-screen w-full flex items-center  justify-center bg-white relative overflow-hidden">
 
-        {/* LEFT SECTION */}
-        <div className="relative bg-[#11142518] text-black bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-2xl p-10 flex flex-col justify-center group">
-          <div className="relative z-10">
-            <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight drop-shadow">
-              WELCOME <br /> BACK TO THE <br />
-              <span className="text-green-400">ART COMMUNITY</span>
-            </h1>
+      {/* === Background Layer (Inside MAIN container) === */}
+      <div className="absolute inset-0">
+        <Image
+          src="/src/bannerForLogin.png"
+          alt="Background"
+          fill
+          className="object-cover opacity-60"  // <-- clearer image
+          priority
+        />
+      </div>
 
-            <p className="mt-5 max-w-sm text-black font-medium">
-              Discover creative works, connect with artists & grow your talent.
-            </p>
+      {/* Soft white overlay (balance for readability) */}
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-xs"></div>
 
-            <div className="mt-8 flex items-center gap-4">
-              <span className="text-sm font-bold uppercase tracking-wide">Login with</span>
-              <button className="text-2xl pl-2 bg-gradient-to-r from-[#4285F4] w-10 h-10 bg-white text-black rounded-full font-bold shadow-md">
-                <BsGoogle />
-              </button>
-              <button className="text-2xl pl-2 bg-gradient-to-r from-[#4286f4ab] w-10 h-10  text-blue-600 w-10 h-10 bg-white rounded-full font-bold shadow-md">
-                <FaFacebook />
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* === Main Content (Centered) === */}
+      <div className="relative z-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/30 backdrop-blur-xs p-10 rounded-3xl shadow-2xl">
 
-        {/* RIGHT SECTION */}
-        <div className="text-black rounded-2xl p-10 bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)]">
-          <h2 className="text-3xl font-bold">Log In</h2>
-          <p className="mt-1 text-sm text-gray-500">
-            New here? <Link href="/register" className="text-blue-600 cursor-pointer hover:underline">Join Now</Link>
+        {/* Left Section */}
+        <div className="text-Secondary flex flex-col justify-center">
+          <h1 className="text-4xl font-bold leading-tight">
+           <p>Login</p>
+          </h1>
+
+        
+
+          <p className="mt-6 text-sm  leading-relaxed">
+            Login to continue your journey, access your dashboard, track your progress, and unlock your achievements.
           </p>
 
-          {/* FORM (fixed) */}
-          <form onSubmit={handleLogin} className="mt-8 space-y-5">
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-green-500"
-            />
+          <button className="mt-8 px-6  w-fit  bg-green-500 text-white py-3 rounded-lg font-bold hover:bg-green-600 transition ">
+            Learn More
+          </button>
+        </div>
 
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-green-500"
-            />
+        {/* === Login Card === */}
+        <div className="bg-gray-200 backdrop-blur-xl border border-gray-200 rounded-2xl p-6 shadow-lg">
+          <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">Login</h2>
 
-            <div className="flex items-center gap-2">
-              <input type="checkbox" />
-              <span className="text-sm">Keep me logged in</span>
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+           
+
+            {/* Email */}
+            <div>
+              <label className="text-gray-700 text-sm">Email</label>
+              <div className="flex items-center bg-gray-100 rounded-full px-4 mt-1">
+                <AiOutlineMail className="text-gray-500 mr-2" />
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-transparent py-2 text-gray-800 outline-none placeholder-gray-500"
+                  required
+                />
+              </div>
             </div>
 
-            {/* LOGIN BUTTON (form এর ভিতরে) */}
+            {/* Password */}
+            <div>
+              <label className="text-gray-700 text-sm">Password</label>
+              <div className="flex items-center bg-gray-100 rounded-full px-4 mt-1">
+                <AiOutlineLock className="text-gray-500 mr-2" />
+                <input
+                  type="password"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full bg-transparent py-2 text-gray-800 outline-none placeholder-gray-500"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Forgot Password */}
+            <div className="text-right">
+              <button
+                type="button"
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Forgot Password?
+              </button>
+            </div>
+
+            {/* Submit */}
             <button
               type="submit"
               className="w-full bg-green-500 text-white py-3 rounded-lg font-bold hover:bg-green-600 transition"
             >
-              Log In
+              Login
             </button>
+
+              <p className="mt-2 ">
+            If you Don't Have Any Account!{" "}
+            <Link href="/register" className="underline cursor-pointer text-green-400 font-bold">Register</Link>
+          </p>
+
           </form>
-
-          <p className="mt-5 text-sm">
-            Forgot your <Link href="/forgot-password" className="font-semibold cursor-pointer text-blue-600">password?</Link>
-          </p>
-
-          <p className="mt-6 text-xs text-gray-500 leading-relaxed">
-            By clicking Login, you agree to our  
-            <Link className="text-blue-400 underline" href="/tramsAndCondition"> Terms of Service </Link> 
-            & 
-            <Link className="text-blue-400 underline" href="/privacyPolicy"> Privacy Policy </Link>.
-          </p>
         </div>
       </div>
     </div>
