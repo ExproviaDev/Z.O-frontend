@@ -120,7 +120,6 @@ export default function RamadanZeroPage() {
                         <p className="text-center text-gray-600 mb-4">দুটি প্রতিযোগিতার জন্য</p>
                         <button
                             className="w-full py-3 mt-4 bg-blue-500 text-white rounded hover:scale-105 transition-all"
-                            onClick={() => setIsRegOpen(true)}
                         >
                             রেজিস্ট্রেশন করুন
                         </button>
