@@ -2,16 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  FaUser,
-  FaHome,
-  FaBook,
-  FaRegBookmark,
-  FaStar,
-  FaHistory,
-} from "react-icons/fa";
+import { FaUser, FaHome, FaBook, FaRegBookmark, FaStar } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { MdQuiz } from "react-icons/md";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -26,8 +18,6 @@ export default function Sidebar() {
       href: "/dashboard/certificates",
     },
     { name: "Payment History", icon: <FaStar />, href: "/dashboard/history" },
-    // { name: "My Quiz Attempts", icon: <MdQuiz />, href: "/quiz" },
-    // { name: "Order History", icon: <FaHistory />, href: "/orders" },
   ];
 
   const userMenu = [{ name: "Settings", href: "/settings" }];
