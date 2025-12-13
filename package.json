@@ -9,7 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.1",
     "@supabase/supabase-js": "^2.87.1",
+    "axios": "^1.13.2",
+    "@reduxjs/toolkit": "^2.11.1",
+    "@supabase/supabase-js": "^2.87.1",
+    "autoprefixer": "^10.4.22",
+    "@reduxjs/toolkit": "^2.11.1",
+    "@supabase/supabase-js": "^2.87.1",
+    "autoprefixer": "^10.4.22",
     "daisyui": "^5.5.8",
     "lottie-react": "^2.4.1",
     "motion": "^12.23.26",
@@ -17,7 +25,9 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.68.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",

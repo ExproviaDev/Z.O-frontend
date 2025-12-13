@@ -38,7 +38,7 @@ export default function Page() {
           Contact & Support
         </h1>
         <p className="text-gray-600 text-lg md:text-xl mt-3">
-          Have questions? We're here to assist you every step of the way.
+          Have questions? We`re here to assist you every step of the way.
         </p>
       </div>
 
