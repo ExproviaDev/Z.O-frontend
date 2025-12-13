@@ -2,16 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  FaUser,
-  FaHome,
-  FaBook,
-  FaRegBookmark,
-  FaStar,
-  FaHistory,
-} from "react-icons/fa";
+import { FaUser, FaHome, FaBook, FaRegBookmark, FaStar } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { MdQuiz } from "react-icons/md";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -19,17 +11,19 @@ export default function Sidebar() {
   const menuItems = [
     { name: "Dashboard", icon: <FaHome />, href: "/dashboard" },
     { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile" },
-    { name: "Enrolled Courses", icon: <FaBook />, href: "/courses" },
-    { name: "Wishlist", icon: <FaRegBookmark />, href: "/wishlist" },
-    { name: "Reviews", icon: <FaStar />, href: "/reviews" },
-    { name: "My Quiz Attempts", icon: <MdQuiz />, href: "/quiz" },
-    { name: "Order History", icon: <FaHistory />, href: "/orders" },
+    { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes" },
+    {
+      name: "My Certificates",
+      icon: <FaRegBookmark />,
+      href: "/dashboard/certificates",
+    },
+    { name: "Payment History", icon: <FaStar />, href: "/dashboard/history" },
   ];
 
   const userMenu = [{ name: "Settings", href: "/settings" }];
 
   return (
-    <aside className="w-64 border-2 border-green-600 rounded-xl p-6 shadow-sm bg-white">
+    <aside className="lg:w-64 border-2 border-green-600 rounded-xl p-6 shadow-sm bg-white">
       {/* Welcome text */}
       <h2 className="text-sm font-semibold text-gray-500 mb-4">
         WELCOME, JONE DUE

@@ -22,13 +22,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body
-
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header></Header>
-        <main className="min-h-screen mx-auto ">
-          {children}
-        </main>
+        <main className="min-h-screen mx-auto ">{children}</main>
         <Footer></Footer>
       </body>
     </html>
