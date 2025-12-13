@@ -27,26 +27,6 @@ const Section = () => {
         </div>
       </section>
 
-      {/* <section className="max-w-7xl mx-auto py-10">
-        <HeadingDetails
-          title={"Empowering the Next Generation: Zero Olympiad"}
-          subtitle={
-            "A Global Competition for Youth to Tackle Social Challenges and Promote Sustainable Development."
-          }
-        ></HeadingDetails>
-        <div>
-          <div>
-            <div className="inline-flex items-center gap-2 bg-bd-green/10 text-bd-green px-4 py-2 rounded-full mb-6 border border-green-500">
-              <span className="text-xl font-semibold">Our Theme Song</span>
-            </div>
-
-
-
-          </div>
-          <div></div>
-        </div>
-      </section> */}
-
       <section className="max-w-7xl mx-auto pt-16 px-5 lg:px-0 md:flex justify-center gap-12 space-y-5">
         <div className="md:w-1/2  border-red-200 flex  justify-end">
           <Image
