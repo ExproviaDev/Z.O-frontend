@@ -79,7 +79,7 @@ export default function page() {
     if (res.ok && data.user) { 
       const successMessage = "রেজিস্ট্রেশন সফল! আপনার ইমেল যাচাইকরণের জন্য একটি মেইল পাঠানো হয়েছে।";
       alert(successMessage);
-      router.push('/login');
+      router.push('/api/auth/login');
 
     } else {
       
