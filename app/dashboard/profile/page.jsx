@@ -25,7 +25,7 @@ const page = () => {
         </div>
         <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
           <h2 className="w-1/2 font-semibold"> Email</h2>
-          <p>example@gmail.com</p>
+          <p>faatihaaayat@gmail.com</p>
         </div>
         <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
           <h2 className="w-1/2 font-semibold"> Version</h2>
