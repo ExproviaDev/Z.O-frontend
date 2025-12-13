@@ -27,14 +27,20 @@ export default function RootLayout({ children }) {
       >
         <Header></Header>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a4500141773cb8d176be7e8aee96914d8c6bdc9f
         <main className="min-h-screen mx-auto ">
           <ReduxProvider>
             {children}
           </ReduxProvider>
         </main>
+<<<<<<< HEAD
 =======
         <main className="min-h-screen mx-auto ">{children}</main>
 >>>>>>> bd4c452e266031866d0ec39c6d3aa4e91d1a9d80
+=======
+>>>>>>> a4500141773cb8d176be7e8aee96914d8c6bdc9f
         <Footer></Footer>
       </body>
     </html>
