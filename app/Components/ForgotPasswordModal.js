@@ -1,27 +1,31 @@
 "use client";
 import React, { useState } from 'react';
-import { AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineMail, AiOutlineClose } from 'react-icons/ai';
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'; 
 
 export default function ForgotPasswordModal({ onClose }) {
     const [resetEmail, setResetEmail] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false); 
+    const [error, setError] = useState("");  
     const [successMessage, setSuccessMessage] = useState("");
+
 
     const handleResetSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setSuccessMessage("");
-        setLoading(true);
+        setLoading(true); 
 
         if (!resetEmail) {
             setError("ইমেল অ্যাড্রেস আবশ্যক।");
             setLoading(false);
             return;
         }
-        const backendUrl = "http://localhost:4000/api/auth/forgot-password";
+
+        const backendUrl = "http://localhost:4000/api/auth/forgot-password"; 
 
         try {
+            
             const res = await fetch(backendUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -32,7 +36,7 @@ export default function ForgotPasswordModal({ onClose }) {
 
             if (res.ok) {
                 setSuccessMessage(data.message || "আপনার ইমেলের ইনবক্সে পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে।");
-                setResetEmail("");
+                setResetEmail(""); 
             } else {
                 setError(data.message || "পাসওয়ার্ড রিসেট অনুরোধে ত্রুটি হয়েছে।");
             }
@@ -40,18 +44,27 @@ export default function ForgotPasswordModal({ onClose }) {
             console.error("Forgot Password Network Error:", err);
             setError("পাসওয়ার্ড রিসেট করার সময় একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।");
         } finally {
-            setLoading(false);
+            setLoading(false); 
         }
     };
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-            
-            <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-sm transform transition-all scale-100 opacity-100">
-                <h3 className="text-xl font-bold text-gray-800 text-center mb-4">পাসওয়ার্ড ভুলে গেছেন?</h3>
-                
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-6 md:p-12 transform transition-all scale-100 opacity-100">
+                <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-bold text-gray-800">পাসওয়ার্ড ভুলে গেছেন?</h3>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="text-gray-600 hover:text-gray-800"
+                    >
+                        <AiOutlineClose size={24} />
+                    </button>
+                </div>
+
                 {successMessage ? (
                     <div className="text-center">
+                        <FaCheckCircle className="text-green-600 mx-auto mb-4" size={48} />
                         <p className="text-green-600 font-medium mb-4">{successMessage}</p>
                         <button 
                             type="button" 
@@ -63,25 +76,26 @@ export default function ForgotPasswordModal({ onClose }) {
                     </div>
                 ) : (
                     <form onSubmit={handleResetSubmit} className="space-y-4">
-                        <p className="text-sm text-gray-600 text-center">আপনার ইমেল অ্যাড্রেস দিন।</p>
+                        <p className="text-sm text-gray-600 text-center">আপনার রেজিস্টার্ড ইমেল অ্যাড্রেস দিন</p>
                         
-                        <div>
-                            <div className="flex items-center bg-gray-100 rounded-full px-4 mt-1 border border-gray-300">
-                                <AiOutlineMail className="text-gray-500 mr-2" />
-                                <input
-                                    type="email"
-                                    placeholder="আপনার রেজিস্টার্ড ইমেল"
-                                    name="resetEmail" 
-                                    value={resetEmail}
-                                    onChange={(e) => setResetEmail(e.target.value)} 
-                                    className="w-full bg-transparent py-2 text-gray-800 outline-none placeholder-gray-500"
-                                    required
-                                />
-                            </div>
+                        <div className="flex items-center bg-gray-100 rounded-full px-4 mt-1 border border-gray-300">
+                            <AiOutlineMail className="text-gray-500 mr-2" size={20} />
+                            <input
+                                type="email"
+                                placeholder="আপনার ইমেল"
+                                name="resetEmail" 
+                                value={resetEmail}
+                                onChange={(e) => setResetEmail(e.target.value)} 
+                                className="w-full bg-transparent py-2 text-gray-800 outline-none placeholder-gray-500"
+                                required
+                            />
                         </div>
                         
                         {error && (
-                            <p className="text-sm text-red-600 font-semibold text-center mt-2">{error}</p>
+                            <div className="text-sm text-red-600 font-semibold text-center mt-2">
+                                <FaExclamationCircle className="inline-block mr-2" />
+                                {error}
+                            </div>
                         )}
 
                         <button
