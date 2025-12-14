@@ -33,7 +33,6 @@ export default function RegistrationPage() {
     e.preventDefault();
     if (isSubmitting) return; 
     setIsSubmitting(true); 
-    console.log(formData);
 
     const backendUrl = 'http://localhost:4000/api/auth/register'; 
 
