@@ -2,7 +2,6 @@ import Image from "next/image";
 import aboutImage from "@/public/src/image.jpg"; // use actual file name
 import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
 import HeadingDetails from "../Components/HeadingDetails/HeadingDetails";
-import ThemeSong from "../Components/ThemeSong/ThemeSong";
 import PresidentAward from "@/public/src/PresidentAward.jpg";
 import UNDP from "@/public/src/UNDP.jpg";
 import Environmentalist from "@/public/src/Environmentalist.jpg";
