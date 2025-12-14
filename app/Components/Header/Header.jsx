@@ -74,12 +74,12 @@ export default function Header() {
 
             {/* Desktop Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <button className="px-5 py-1.5 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
+              <Link href={'/login'} className="px-5 py-1.5 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
                 Login
-              </button>
-              <button className="px-5 py-1.5 text-lg text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
+              </Link>
+              <Link href={'/registration'} className="px-5 py-1.5 text-lg text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
                 Register
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -107,12 +107,12 @@ export default function Header() {
               ))}
             </nav>
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-gray-200">
-              <button className="w-full py-3 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
+              <Link href={'/login'} className="w-full py-3 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
                 Login
-              </button>
-              <button className="w-full py-3 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
+              </Link>
+              <Link href={'/registration'} className="w-full py-3 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
                 Register
-              </button>
+              </Link>
             </div>
           </div>
         </div>
