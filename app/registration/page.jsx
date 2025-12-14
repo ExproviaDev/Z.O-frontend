@@ -32,9 +32,9 @@ export default function RegistrationPage() {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (isSubmitting) return; 
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
 
-    const backendUrl = 'http://localhost:4000/api/auth/register'; 
+    const backendUrl = 'https://zero-olympiad-server.vercel.app/api/auth/register'; 
 
     const res = await fetch(backendUrl, {
       method: "POST",
