@@ -29,7 +29,7 @@ export default function LoginPage() {
         setLoading(true);
         setError("");
 
-        const backendUrl = "http://localhost:4000/api/auth/login";
+        const backendUrl = "https://zero-olympiad-server.vercel.app/api/auth/login";
 
         try {
             const res = await fetch(backendUrl, {
