@@ -103,7 +103,7 @@ export default function LoginPage() {
                             <button
                                 type="button"
                                 onClick={() => setIsModalOpen(true)}
-                                className="text-sm text-blue-600 hover:text-blue-800"
+                                className="text-md text-Primary hover:text-blue-800"
                             >
                                 Forgot Password?
                             </button>

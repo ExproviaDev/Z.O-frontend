@@ -91,7 +91,7 @@ export default function RegistrationPage() {
 
   return (
     <div className="hero min-h-screen py-10">
-      <div className="container card bg-white max-w-6xl shadow-2xl p-6 rounded-xl">
+      <div className="container card bg-white max-w-3xl shadow-2xl p-6 rounded-xl">
         <div className="text-center gap-4 pb-12 grid">
           <h1 className="text-5xl font-bold text-gray-900">Zero Olympiad Registration</h1>
           <p className="text-sm text-Primary mt-2">Please fill out the registration details to join.</p>
