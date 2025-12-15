@@ -24,13 +24,13 @@ export default function AdminLayout() {
     switch (activeMenu) {
       case "dashboard":
         return (
-          <div className="">
+          <>
             <StatsCards />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
               <RecentActivities />
               <PendingTasks />
             </div>
-          </div>
+          </>
         )
       case "users":
         return <UserManagement />
@@ -48,11 +48,17 @@ export default function AdminLayout() {
   }
 
   return (
-    // 🔒 BODY SCROLL LOCK
-    <div className="h-screen overflow-y-hidden  bg-gray-50">
+    <div className="h-screen overflow-hidden bg-gray-50 flex">
       
-      {/* SIDEBAR (FIXED) */}
-      <aside className="fixed left-0 top-0 h-screen w-64 z-40">
+      {/* ================= SIDEBAR ================= */}
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-40 w-64 bg-white
+          transform transition-transform duration-300
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0
+        `}
+      >
         <Sidebar
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}
@@ -61,22 +67,22 @@ export default function AdminLayout() {
         />
       </aside>
 
-      {/* RIGHT SIDE (OFFSET BY SIDEBAR WIDTH) */}
-      <div className="ml-64 flex h-screen flex-col">
+      {/* ================= MAIN AREA ================= */}
+      <div className="flex flex-col flex-1 lg:ml-64 h-screen">
         
-        {/* TOP NAVBAR (FIXED HEIGHT) */}
-        <div className="h-16 flex-shrink-0">
+        {/* TOP NAVBAR */}
+        <div className="h-16 flex-shrink-0 border-b bg-white">
           <TopNavbar setSidebarOpen={setSidebarOpen} />
         </div>
 
-        {/* ✅ ONLY CONTENT SCROLLS */}
-        <main className="flex-1 overflow-y-auto p-6">
+        {/* CONTENT (ONLY THIS SCROLLS) */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           {renderContent()}
         </main>
 
       </div>
 
-      {/* MOBILE OVERLAY */}
+      {/* ================= MOBILE OVERLAY ================= */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"

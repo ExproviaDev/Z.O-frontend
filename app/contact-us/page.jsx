@@ -30,10 +30,10 @@ export default function Page() {
   ];
 
   return (
-    <div className="bg-white text-black px-4 md:px-10 lg:px-20">
+    <div className="bg-white text-black  max-w-7xl mx-auto">
 
       {/* Header */}
-      <div className="flex flex-col items-center py-12 text-center">
+      <div className="flex p-5 flex-col items-center py-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
           Contact & Support
         </h1>
@@ -43,7 +43,7 @@ export default function Page() {
       </div>
 
       {/* Container */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 pb-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 p-5 gap-10 pb-16">
 
         {/* Office Card */}
         <div className="bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-2xl p-7  transition-all duration-300">
@@ -185,7 +185,7 @@ export default function Page() {
 
 
       {/* Map */}
-      <div className="pt-16 pb-20">
+      <div className="pt-16 pb-20 p-5">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
           Our Location
         </h2>
