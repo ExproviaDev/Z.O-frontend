@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Step1_Personal from "./Step1_Auth";
 import Step2_Academic from "./Step2_Auth";
 import Step3_Auth from "./Step3_Auth";
+import { FaRegClipboard } from "react-icons/fa";
+import Link from "next/link";
 
 export default function RegistrationPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -18,7 +20,7 @@ export default function RegistrationPage() {
     currentLevel: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(""); // Error message state
 
   const updateFormData = (newData) => {
@@ -31,10 +33,10 @@ export default function RegistrationPage() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (isSubmitting) return; 
+    if (isSubmitting) return;
     setIsSubmitting(true);
 
-    const backendUrl = 'https://zero-olympiad-server.vercel.app/api/auth/register'; 
+    const backendUrl = 'https://zero-olympiad-server.vercel.app/api/auth/register';
 
     const res = await fetch(backendUrl, {
       method: "POST",
@@ -45,11 +47,11 @@ export default function RegistrationPage() {
     });
 
     const data = await res.json();
-    setIsSubmitting(false); 
+    setIsSubmitting(false);
 
-    if (res.ok && data.user) { 
+    if (res.ok && data.user) {
       alert("রেজিস্ট্রেশন সফল! আপনার ইমেল যাচাইকরণের জন্য একটি মেইল পাঠানো হয়েছে।");
-      
+
     } else {
       setError(data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে।");
     }
@@ -80,8 +82,8 @@ export default function RegistrationPage() {
             formData={formData}
             updateFormData={updateFormData}
             prevStep={prevStep}
-            handleSubmit={handleSignup}  
-            isSubmitting={isSubmitting}  
+            handleSubmit={handleSignup}
+            isSubmitting={isSubmitting}
           />
         );
       default:
@@ -91,10 +93,10 @@ export default function RegistrationPage() {
 
   return (
     <div className="hero min-h-screen py-10">
-      <div className="container card bg-white max-w-6xl shadow-2xl p-6 rounded-xl">
+      <div className="container card bg-white max-w-2xl shadow-2xl p-8 rounded-2xl">
         <div className="text-center gap-4 pb-12 grid">
-          <h1 className="text-5xl font-bold text-gray-900">Zero Olympiad Registration</h1>
-          <p className="text-sm text-Primary mt-2">Please fill out the registration details to join.</p>
+          <h1 className="text-4xl font-bold text-Primary flex justify-center items-center gap-4"> <FaRegClipboard className="text-Primary" size={38} /> Zero Olympiad Registration</h1>
+          <p className="text-md text-Primary mt-2">Please fill out the registration details to join.</p>
         </div>
 
         <div className="space-y-6">
@@ -111,6 +113,13 @@ export default function RegistrationPage() {
             />
           </div>
           <p className="text-center text-sm text-gray-500 mt-2">Step {currentStep} of 3</p>
+
+          <p className="mt-2 text-center">
+            If you Don't Have Any Account!{" "}
+            <Link href="/login" className="underline cursor-pointer text-Primary hover:text-gray-600 font-bold">
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>

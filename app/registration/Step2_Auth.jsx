@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FaBookOpen, FaListAlt, FaRegCalendarAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaBookOpen, FaListAlt, FaRegCalendarAlt, FaRunning } from "react-icons/fa";
 
 export default function Step2_Academic({ formData, updateFormData, nextStep, prevStep }) {
     const educationTypes = [
@@ -49,15 +49,15 @@ export default function Step2_Academic({ formData, updateFormData, nextStep, pre
     return (
         <form onSubmit={nextStep} className="space-y-6">
             {/* Education Type */}
-            <div>
-                <label className="block text-sm font-medium text-Primary">Education Type *</label>
+            <div className="pb-4">
+                <label className="block text-md font-medium text-Primary pb-2">Education Type *</label>
                 <div className="flex items-center border border-Primary rounded-lg">
                     <FaBookOpen className="text-gray-600 ml-2" />
                     <select
                         name="educationType"
                         value={formData.educationType}
                         onChange={handleChange}
-                        className="w-full p-2 text-sm focus:outline-none"
+                        className="w-full p-2 text-md focus:outline-none"
                         required
                     >
                         <option value="" disabled>Select one</option>
@@ -71,15 +71,15 @@ export default function Step2_Academic({ formData, updateFormData, nextStep, pre
             </div>
 
             {/* Grade Level */}
-            <div>
-                <label className="block text-sm font-medium text-Primary">Grade Level *</label>
+            <div className="pb-4">
+                <label className="block text-md font-medium text-Primary pb-2">Grade Level *</label>
                 <div className="flex items-center border border-Primary rounded-lg">
                     <FaListAlt className="text-gray-600 ml-2" />
                     <select
                         name="gradeLevel"
                         value={formData.gradeLevel}
                         onChange={handleChange}
-                        className="w-full p-2 text-sm  border-Primary focus:outline-none"
+                        className="w-full p-2 text-md  border-Primary focus:outline-none"
                         required
                     >
                         <option value="" disabled>Select one</option>
@@ -99,15 +99,15 @@ export default function Step2_Academic({ formData, updateFormData, nextStep, pre
                 formData.gradeLevel !== "অষ্টম শ্রেণী, Grade 8" &&
                 formData.gradeLevel !== "নবম শ্রেণী, Grade 9" &&
                 formData.gradeLevel !== "দশম শ্রেণী, Grade 10") && (
-                    <div>
-                        <label className="block text-sm font-medium text-Primary">Current Level *</label>
+                    <div className="pb-4">
+                        <label className="block text-md font-medium text-Primary pb-2">Current Level *</label>
                         <div className="flex items-center border border-Primary rounded-lg">
                             <FaRegCalendarAlt className="text-gray-600 ml-2" />
                             <select
                                 name="currentLevel"
                                 value={formData.currentLevel}
                                 onChange={handleChange}
-                                className="w-full p-2 text-sm  border-Primary focus:outline-none"
+                                className="w-full p-2 text-md  border-Primary focus:outline-none"
                                 required
                             >
                                 <option value="" disabled>Select one</option>
@@ -128,22 +128,28 @@ export default function Step2_Academic({ formData, updateFormData, nextStep, pre
                 formData.gradeLevel === "দ্বাদশ শ্রেণী, Grade 12" ||
                 formData.gradeLevel === "এসএসসি পরিক্ষার্থী, O Level Candidate" ||
                 formData.gradeLevel === "এইচএসসি পরিক্ষার্থী, A Level Candidate") && (
-                    <div>
-                        <label className="block text-sm font-medium text-Primary">Activities *</label>
-                        <select
+                    <div className="pb-4">
+                        <label className="block text-md font-medium text-Primary pb-2">Activities *</label>
+                        <div className="flex items-center border border-Primary rounded-lg px-2">
+                            <FaRunning className="text-primary-600" size={16} />
+                            <select
                             name="activity"
                             value={formData.activity}
                             onChange={handleChange}
-                            className="w-full p-2 text-sm rounded-lg border border-Primary focus:outline-none"
+                            className="w-full p-2 text-md rounded-lg  focus:outline-none"
                             required
                         >
                             <option value="" disabled>Select one</option>
                             {activities.map((activity, index) => (
                                 <option key={index} value={activity}>
-                                    {activity}
+                                    {activity} 
                                 </option>
                             ))}
+
                         </select>
+
+                        </div>
+                        
                     </div>
                 )}
 
@@ -151,12 +157,12 @@ export default function Step2_Academic({ formData, updateFormData, nextStep, pre
                 <button
                     type="button"
                     onClick={prevStep}
-                    className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+                    className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 flex justify-center items-center gap-3"
                 >
-                    Back
+                    <FaArrowLeft className="text-primary-600" size={16} />  Back
                 </button>
-                <button type="submit" className="px-5 py-2 rounded-lg bg-Primary text-white hover:bg-indigo-700">
-                    Next
+                <button type="submit" className="px-5 py-2 rounded-lg bg-Primary hover:bg-[#0A4F78] text-white flex justify-center items-center gap-3">
+                    Next <FaArrowRight className="text-primary-600" size={16} />
                 </button>
             </div>
         </form>

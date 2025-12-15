@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FaEnvelope, FaKey } from "react-icons/fa"; // React Icons
+import { FaArrowLeft, FaEnvelope, FaKey, FaPaperPlane } from "react-icons/fa"; // React Icons
 
 export default function Step3_Auth({ formData, updateFormData, prevStep, handleSubmit, isSubmitting }) {
   const handleChange = (e) => {
@@ -10,8 +10,8 @@ export default function Step3_Auth({ formData, updateFormData, prevStep, handleS
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Email */}
-      <div>
-        <label className="block text-sm font-medium text-Primary">Email *</label>
+      <div className="pb-3">
+        <label className="block text-md font-medium text-Primary pb-2">Email *</label>
         <div className="flex items-center border border-Primary rounded-lg">
           <FaEnvelope className="text-gray-600 ml-2" />
           <input
@@ -20,15 +20,15 @@ export default function Step3_Auth({ formData, updateFormData, prevStep, handleS
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full p-2 text-sm rounded-lg focus:outline-none"
+            className="w-full p-2 text-md rounded-lg focus:outline-none"
             required
           />
         </div>
       </div>
 
       {/* Password */}
-      <div>
-        <label className="block text-sm font-medium text-Primary">Password *</label>
+      <div className="pb-3">
+        <label className="block text-md font-medium text-Primary pb-2">Password *</label>
         <div className="flex items-center border border-Primary rounded-lg">
           <FaKey className="text-gray-600 ml-2" />
           <input
@@ -37,7 +37,7 @@ export default function Step3_Auth({ formData, updateFormData, prevStep, handleS
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
-            className="w-full p-2 text-sm rounded-lg focus:outline-none"
+            className="w-full p-2 text-md rounded-lg focus:outline-none"
             required
           />
         </div>
@@ -49,18 +49,20 @@ export default function Step3_Auth({ formData, updateFormData, prevStep, handleS
         <button
           type="button"
           onClick={prevStep}
-          className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+          className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 flex justify-center items-center gap-3"
         >
-          Back
+          <FaArrowLeft className="text-primary-600" size={16} />  Back
         </button>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className={`px-5 py-2 rounded-lg bg-Primary text-white hover:bg-gray-800 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`px-5 py-2 rounded-lg flex justify-center items-center gap-3 bg-Primary text-white hover:bg-gray-700 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isSubmitting}
         >
+
           {isSubmitting ? "Submitting..." : "Submit Registration"}
+          <FaPaperPlane className="text-primary-600" size={16} />
         </button>
       </div>
     </form>
