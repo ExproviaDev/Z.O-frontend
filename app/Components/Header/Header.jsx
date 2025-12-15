@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import logo from "../../../public/src/SiteLogo.png";
 import Image from "next/image";
+import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 
 const navItems = [
   { title: "Home", url: "/" },
@@ -22,19 +23,19 @@ export default function Header() {
     };
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 w-full px-5 bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto">
+    <header className="sticky top-0 left-0 right-0 z-50 w-full  bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <div className="container max-w-7xl mx-auto p-5">
         <div className="container mx-auto">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo and Mobile Menu Toggle */}
             <div className="flex items-center justify-between w-full lg:w-auto">
               {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center gap-8 pr-8">
+              <nav className="hidden lg:flex items-center gap-6 pr-10">
                 {navItems.map((item) => (
                   <Link
                     key={item.title}
                     href={item.url}
-                    className="text-xl font-medium text-gray-700 hover:text-primary transition-colors relative group"
+                    className="text-md font-semibold text-gray-700 hover:text-primary transition-colors relative group"
                   >
                     {item.title}
                   </Link>
@@ -42,7 +43,7 @@ export default function Header() {
               </nav>
 
               {/* Logo */}
-              <div className="flex items-center justify-center gap-2 lg:px-16 ">
+              <div className="flex items-center justify-center gap-2 lg:px-8 ">
                 <Link href="/" className="flex items-center gap-2">
                   <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
                     <Image src={logo} alt="siteLogo" width={56} height={56} />
@@ -74,11 +75,11 @@ export default function Header() {
 
             {/* Desktop Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <Link href={'/login'} className="px-5 py-1.5 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
-                Login
+              <Link href={'/login'} className="px-5 py-1.5 flex justify-center items-center gap-2 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
+               <FaSignInAlt size={18} /> Login
               </Link>
-              <Link href={'/registration'} className="px-5 py-1.5 text-lg text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
-                Register
+              <Link href={'/registration'} className="px-5 py-1.5 text-lg flex justify-center items-center gap-2 text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
+               <FaUserPlus size={18} /> Register
               </Link>
             </div>
           </div>
@@ -107,11 +108,11 @@ export default function Header() {
               ))}
             </nav>
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-gray-200">
-              <Link href={'/login'} className="w-full py-3 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
-                Login
+              <Link href={'/login'} className="w-full py-3 flex justify-center items-center gap-2 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
+               <FaSignInAlt size={16} /> Login
               </Link>
-              <Link href={'/registration'} className="w-full py-3 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
-                Register
+              <Link href={'/registration'} className="w-full py-3 flex justify-center items-center gap-2 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
+                <FaUserPlus size={18} /> Register
               </Link>
             </div>
           </div>
