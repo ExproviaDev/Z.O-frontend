@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Banner from "./Components/Banner/Banner";
+import WhyChooseUs from "./Components/WhyChooseUs/WhyChooseUs";
 
 export default function Page() {
   const targetDate = new Date();
@@ -37,21 +39,25 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
-      <div className="text-center text-white">
-        <h1 className="text-4xl font-bold text-blue-600">Zero Olympiad</h1>
-        <p className="mt-4 text-xl">Coming Soon!</p>
-        <p className="mt-2 text-lg">Get ready for something amazing!</p>
+    // <div className="flex items-center justify-center h-screen bg-black">
+    //   <div className="text-center text-white">
+    //     <h1 className="text-4xl font-bold text-blue-600">Zero Olympiad</h1>
+    //     <p className="mt-4 text-xl">Coming Soon!</p>
+    //     <p className="mt-2 text-lg">Get ready for something amazing!</p>
 
-        <div className="mt-8 text-3xl font-mono">
-          <p>
-            {String(timeLeft.days).padStart(2, "0")} days{" "}
-            {String(timeLeft.hours).padStart(2, "0")} hours{" "}
-            {String(timeLeft.minutes).padStart(2, "0")} minutes{" "}
-            {String(timeLeft.seconds).padStart(2, "0")} seconds{" "}
-          </p>
-        </div>
-      </div>
+    //     <div className="mt-8 text-3xl font-mono">
+    //       <p>
+    //         {String(timeLeft.days).padStart(2, "0")} days{" "}
+    //         {String(timeLeft.hours).padStart(2, "0")} hours{" "}
+    //         {String(timeLeft.minutes).padStart(2, "0")} minutes{" "}
+    //         {String(timeLeft.seconds).padStart(2, "0")} seconds{" "}
+    //       </p>
+    //     </div>
+    //   </div>
+    // </div>
+    <div>
+      {/* <Banner></Banner> */}
+      <WhyChooseUs />
     </div>
   );
 }
