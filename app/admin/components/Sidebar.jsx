@@ -54,7 +54,7 @@ export default function Sidebar() {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="h-16 flex items-center px-6 border-b border-gray-200">
-            <h1 className="text-xl font-bold text-gray-800">Admin Panel</h1>
+            <h1 className="text-xl font-bold pl-10 text-gray-800">Admin Panel</h1>
           </div>
 
           {/* Menu Items */}
