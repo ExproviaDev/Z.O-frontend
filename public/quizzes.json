@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "quizName": "Zero Olympiad 2025",
+    "description": "National level olympiad for students",
+    "date": "2025-01-15",
+    "category": "Bangla Medium (Bangla & English Version)",
+    "grade": "grade9",
+    "status": "Draft",
+    "questions": [
+      {
+        "question": "What is the meaning of Zero in Mathematics?",
+        "options": ["Nothing", "Infinity", "Unknown", "All of these"],
+        "correctAnswer": "A"
+      }
+    ]
+  }
+]
