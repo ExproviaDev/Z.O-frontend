@@ -92,7 +92,7 @@ import { FaRegHeart, FaRegLightbulb, FaLaptop } from "react-icons/fa";
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-white py-30">
+    <section className="bg-white py-16 lg:py-30">
       <div className="container mx-auto px-5 lg:px-20 max-w-screen-7xl flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0  border-rose-800 gap-10">
         {/* Right Content (Video Section) */}
         <div className="w-full lg:w-1/2">
