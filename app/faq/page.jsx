@@ -2,15 +2,13 @@
 
 import React, { useState, useRef } from "react";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import bannerImg from "@/public/src/faq.jpg"; // <-- YOUR FAQ BANNER IMAGE
+import bannerImg from "../../public/src/faq.jpg"; // <-- YOUR FAQ BANNER IMAGE
 import Image from "next/image";
 
 export default function FAQPage() {
   const [open, setOpen] = useState(null);
   const [activeCategory, setActiveCategory] = useState("intro");
   const contentRefs = useRef([]);
-
-  // ====================== QUIZ DATA ============================
   const quizData = {
     intro: [
       { q: "Zero Olympiad-এর মূল উদ্দেশ্য কী?", a: "“Reducing to Zero, Rising as Hero” – সামাজিক সমস্যা সমাধানে শিশুদের উদ্বুদ্ধ করা।" },
