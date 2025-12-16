@@ -16,6 +16,7 @@ const nextConfig = {
       "media.licdn.com",
       "media.prothomalo.com",
       "scontent.fdac198-1.fna.fbcdn.net",
+      "images.unsplash.com",
     ],
   },
 };

@@ -1,8 +1,7 @@
-'use client';
-import React, { useState, useEffect } from 'react'
+"use client";
+import React, { useState, useEffect } from "react";
 
 export default function Page() {
-    
   const targetDate = new Date();
   targetDate.setMonth(targetDate.getMonth() + 1);
 
@@ -10,7 +9,7 @@ export default function Page() {
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
   });
 
   useEffect(() => {
@@ -25,7 +24,9 @@ export default function Page() {
       }
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
@@ -44,10 +45,10 @@ export default function Page() {
 
         <div className="mt-8 text-3xl font-mono">
           <p>
-            {String(timeLeft.days).padStart(2, '0')} days {' '}
-            {String(timeLeft.hours).padStart(2, '0')} hours {' '}
-            {String(timeLeft.minutes).padStart(2, '0')} minutes {' '}
-            {String(timeLeft.seconds).padStart(2, '0')} seconds {' '}
+            {String(timeLeft.days).padStart(2, "0")} days{" "}
+            {String(timeLeft.hours).padStart(2, "0")} hours{" "}
+            {String(timeLeft.minutes).padStart(2, "0")} minutes{" "}
+            {String(timeLeft.seconds).padStart(2, "0")} seconds{" "}
           </p>
         </div>
       </div>

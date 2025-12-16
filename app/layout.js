@@ -3,6 +3,9 @@ import "./globals.css";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import ReduxProvider from "./store/ReduxProvider";
+import Timeline from "./Components/Timeline/TimelineEvent";
+import JuryBoard from "./Components/JuryBoard/JuryBoard";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +34,7 @@ export default function RootLayout({ children }) {
             {children}
           </ReduxProvider>
         </main>
+    
         <Footer></Footer>
       </body>
     </html>
