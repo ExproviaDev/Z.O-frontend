@@ -1,15 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import Sidebar from "./Sidebar"
-import Header from "./Header"
-import DashboardHome from "./DashboardHome"
-import RoleManagement from "./RoleManagement"
-import StudentManagement from "./StudentManagement"
-import QuizManagement from "./QuizManagement"
-import EventManagement from "./EventManagement"
-import Video from "./Video"
-import Settings from "./Settings"
+import Sidebar from "./components/Sidebar"
+import Header from "./components/Header"
+import DashboardHome from "./components/DashboardHome"
+import RoleManagement from "./components/RoleManagement"
+import StudentManagement from "./components/StudentManagement"
+import QuizManagement from "./components/QuizManagement"
+import EventManagement from "./components/EventManagement"
+import Video from "./components/Video"
+import Settings from "./components/Settings"
 
 export default function DashboardPage() {
   const [activeMenu, setActiveMenu] = useState("dashboard")

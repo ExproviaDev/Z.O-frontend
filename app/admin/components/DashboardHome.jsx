@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { FiUsers, FiCalendar, FiClock } from "react-icons/fi"
-import StatCard from "./components/StatCard"
-import Chart from "./components/Chart"
+// import StatCard from "./components/StatCard"
+import StatCard from "../components/ChartStatTable/StatCard"
+
+import Chart from "../components/ChartStatTable/Chart"
 
 export default function DashboardHome() {
   const [stats, setStats] = useState({
