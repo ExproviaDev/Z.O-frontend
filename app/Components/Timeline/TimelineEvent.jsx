@@ -1,61 +1,150 @@
-import React from "react";
-import { FaRocket, FaTrophy, FaHandRock, FaCalendarAlt, FaBookOpen, FaUsersCog } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useMotionValue } from "framer-motion";
+import {
+  FaClock,
+  FaHourglassHalf,
+  FaSearch,
+  FaHandsHelping,
+  FaPlayCircle,
+  FaClipboardCheck,
+  FaCertificate,
+  FaCalendarAlt,
+  FaRocket,
+} from "react-icons/fa";
 
-// Timeline event component
-const TimelineEvent = ({ icon, title, description, isLast }) => {
+/* ---------------- DATA ---------------- */
+const steps = [
+  { title: "মডিউল রিলিজ টাইম", desc: "প্রতিদিন রাত ৮টায় নতুন মডিউল।", side: "left", icon: <FaClock /> },
+  { title: "ওয়াচ টাইম ডিউরেশন", desc: "প্রতি মডিউলে ১০টি ভিডিও।", side: "right", icon: <FaHourglassHalf /> },
+  { title: "সিলেবাস টপিক সাপোর্ট", desc: "প্রতিটি টপিকের জন্য আলাদা গাইড।", side: "left", icon: <FaSearch /> },
+  { title: "আটকে গেলে সাপোর্ট", desc: "কমিউনিটি ও লাইভ সাপোর্ট।", side: "right", icon: <FaHandsHelping /> },
+  { title: "লাইভ সেশন", desc: "সাপ্তাহিক লাইভ ক্লাস।", side: "left", icon: <FaPlayCircle /> },
+  { title: "অ্যাসাইনমেন্ট", desc: "প্রতিটি মডিউলের শেষে।", side: "right", icon: <FaClipboardCheck /> },
+  { title: "SCIC", desc: "Career instruction & counseling।", side: "left", icon: <FaCertificate /> },
+  { title: "২২–২৪ সপ্তাহ", desc: "পুরো বুটক্যাম্প।", side: "right", icon: <FaCalendarAlt /> },
+];
+
+/* ---------------- PATH → CARD Y MAP ---------------- */
+const CARD_Y = [
+  140, 430, 720, 1020, 1350, 1660, 2000, 2300,
+];
+
+/* ---------------- COMPONENT ---------------- */
+export default function TimelineEvent() {
+  const wrapperRef = useRef(null);
+  const pathRef = useRef(null);
+
+  const rocketX = useMotionValue(0);
+  const rocketY = useMotionValue(0);
+  const rocketRotate = useMotionValue(0);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start center", "end end"],
+  });
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+
+    const length = path.getTotalLength();
+
+    return scrollYProgress.on("change", (v) => {
+      const progress = Math.min(Math.max(v, 0), 1);
+      const point = path.getPointAtLength(length * progress);
+      const next = path.getPointAtLength(length * Math.min(progress + 0.002, 1));
+
+      rocketX.set(point.x);
+      rocketY.set(point.y);
+
+      const angle =
+        Math.atan2(next.y - point.y, next.x - point.x) * (180 / Math.PI);
+      rocketRotate.set(angle);
+
+      setActiveIndex(Math.floor(progress * steps.length));
+    });
+  }, [scrollYProgress]);
+
   return (
-    <div className={`timeline-event flex items-center mb-6 ${isLast ? '' : 'border-b-2 border-gray-200 pb-4'}`}>
-      <div className="icon-container bg-yellow-500 text-white rounded-full p-4 mr-4 transition-transform duration-500 transform hover:scale-110">
-        {icon}
-      </div>
-      <div className="event-content">
-        <h4 className="text-xl font-semibold text-gray-800">{title}</h4>
-        <p className="text-sm text-gray-600 mt-2">{description}</p>
-      </div>
+    <div ref={wrapperRef} className="relative h-[2600px] bg-white overflow-hidden">
+      {/* SVG PATH */}
+      <svg
+        className="absolute left-1/2 -translate-x-1/2"
+        width="1100"
+        height="2600"
+        viewBox="0 0 1100 2600"
+      >
+        <path
+          ref={pathRef}
+          d="
+            M 520,140 L 780,140
+            Q 820,140 820,180
+            L 820,420
+            Q 820,460 820,460
+            L 300,460
+            Q 260,460 260,500
+            L 260,700
+            Q 260,740 260,740
+            L 780,740
+            Q 820,740 820,780
+            L 820,1040
+            L 300,1040
+            L 300,1370
+            L 780,1370
+            L 780,1700
+            L 300,1700
+            L 300,2000
+            L 780,2000
+            L 780,2320
+          "
+          stroke="#9CA3AF"
+          strokeWidth="2"
+          strokeDasharray="8 8"
+          fill="none"
+        />
+      </svg>
+
+      {/* ROCKET */}
+      <motion.div
+        className="absolute text-indigo-600"
+        style={{
+          x: rocketX,
+          y: rocketY,
+          rotate: rocketRotate,
+          translateX: 380,
+          translateY: -13,
+        }}
+      >
+        <FaRocket size={28} />
+      </motion.div>
+
+      {/* CARDS */}
+      {steps.map((s, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{
+            top: CARD_Y[i],
+            left: s.side === "left"
+              ? "calc(50% - 560px)"
+              : "calc(50% + 120px)",
+          }}
+        >
+          <div
+            className={`w-[420px] rounded-2xl p-6 transition-all duration-500 ${
+              activeIndex === i
+                ? "bg-indigo-600 text-white shadow-[0_0_40px_rgba(99,102,241,0.5)] scale-105"
+                : "bg-white text-gray-800 shadow-xl"
+            }`}
+          >
+            <div className="text-3xl mb-4">{s.icon}</div>
+            <h3 className="font-bold text-lg">{s.title}</h3>
+            <p className="mt-2 opacity-90">{s.desc}</p>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
-};
-
-// Main Timeline component
-const Timeline = () => {
-  return (
-    <div className="timeline-container p-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Project Timeline</h2>
-      <div className="timeline-events space-y-6">
-        {/* First Event */}
-        <TimelineEvent
-          icon={<FaRocket className="w-6 h-6" />}
-          title="Rocket Icon"
-          description="The project took off with initial planning and setup, just like a rocket launch!"
-        />
-        {/* Second Event */}
-        <TimelineEvent
-          icon={<FaTrophy className="w-6 h-6" />}
-          title="Won the Challenge"
-          description="Achieved the first milestone and celebrated with a team-wide event."
-        />
-        {/* Third Event */}
-        <TimelineEvent
-          icon={<FaHandRock className="w-6 h-6" />}
-          title="Collaborated with Teams"
-          description="Started collaborating with different teams to bring in new ideas and strategies."
-        />
-        {/* Fourth Event */}
-        <TimelineEvent
-          icon={<FaUsersCog className="w-6 h-6" />}
-          title="SCIC Project Kickoff"
-          description="Launched the SCIC project that would contribute significantly to the success of the company."
-        />
-        {/* Last Event */}
-        <TimelineEvent
-          icon={<FaCalendarAlt className="w-6 h-6" />}
-          title="Final Milestone"
-          description="Successfully reached the final milestone of the project, preparing for future expansion."
-          isLast={true}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default Timeline;
+}
