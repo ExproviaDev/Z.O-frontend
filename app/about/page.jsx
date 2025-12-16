@@ -1,13 +1,13 @@
 import Image from "next/image";
-import aboutImage from "@/public/src/image.jpg"; // use actual file name
-import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
+import aboutImage from "../../public/src/image.jpg";
+import faatiHaaayat from "../..//public/src/faatihaaayat.jpg";
 import HeadingDetails from "../Components/HeadingDetails/HeadingDetails";
-import PresidentAward from "@/public/src/PresidentAward.jpg";
-import UNDP from "@/public/src/UNDP.jpg";
-import Environmentalist from "@/public/src/Environmentalist.jpg";
-import UrbanDebate from "@/public/src/UrbanDebate.jpg";
-import NRBAward from "@/public/src/NRBAward.jpg";
-import CertificateRecognition from "@/public/src/CertificateRecognition.jpg";
+import PresidentAward from "../..//public/src/PresidentAward.jpg";
+import UNDP from "../..//public/src/UNDP.jpg";
+import Environmentalist from "../..//public/src/Environmentalist.jpg";
+import UrbanDebate from "../..//public/src/UrbanDebate.jpg";
+import NRBAward from "../..//public/src/NRBAward.jpg";
+import CertificateRecognition from "../..//public/src/CertificateRecognition.jpg";
 import Link from "next/link";
 
 const Section = () => {

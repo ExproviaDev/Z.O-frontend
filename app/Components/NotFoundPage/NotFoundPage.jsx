@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 // import SiteLogo from "@/public/src/SiteLogo.png";
 export default function NotFoundPage() {
@@ -6,13 +6,13 @@ export default function NotFoundPage() {
     <section className="dark:bg-gray-900  border-red-500">
       <div className=" container min-h-screen px-6 py-12 mx-auto md:flex flex-row-reverse justify-center items-center lg:gap-12">
         <div className="relative w-full mt-8 lg:w-1/2 lg:mt-0  border-green-500 flex justify-center items-center">
-          <Image
+          {/* <Image
             className="rounded-lg object-cover w-56 lg:w-96 "
             src={SiteLogo}
             alt="SiteLogo"
             width={150}
             height={100}
-          />
+          /> */}
         </div>
         <div className=" border-red-500 w-full lg:w-1/2 flex justify-end ">
           <div className="p-4">

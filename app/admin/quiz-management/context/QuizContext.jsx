@@ -13,7 +13,7 @@ export function QuizProvider({ children }) {
 
   useEffect(() => {
     // Load quizzes from JSON file
-    fetch("/data/quizzes.json")
+    fetch("/quizzes.json")
       .then((res) => res.json())
       .then((data) => {
         setQuizzes(data)
