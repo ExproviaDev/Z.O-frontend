@@ -50,7 +50,7 @@ export default function QuizManagementPage() {
 
           <button
             onClick={() => router.push("/admin/quiz-management/add")}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium whitespace-nowrap"
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-primary/90 transition-colors font-medium whitespace-nowrap"
           >
             <FiPlus />
             Add Quiz

@@ -48,7 +48,7 @@ export default function AddQuizPage() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-green-400 text-white rounded-lg hover:bg-primary/90 transition-colors font-medium"
             >
               <FiPlus />
               Add More
