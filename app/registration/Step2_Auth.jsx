@@ -4,165 +4,147 @@ import { FaArrowLeft, FaArrowRight, FaBookOpen, FaListAlt, FaRegCalendarAlt, FaR
 
 export default function Step2_Academic({ formData, updateFormData, nextStep, prevStep }) {
     const educationTypes = [
-        "বাংলা মাধ্যম (বাংলা ও ইংরেজি ভার্সন)",
-        "ইংরেজি মাধ্যম (IGCSE & IB)",
-        "মাদ্রাসা (আলিয়া ও কওমি)",
-        "উচ্চ শিক্ষা (বিশ্ববিদ্যালয় ও সমমান)",
-        "ভোকেশনাল, ডিপ্লোমা ও অন্যান্য কারিগরি শিক্ষা",
-        "একটি নয়",
+        "Bangla Medium (Bangla & English Version)",
+        "English Medium (IGCSE & IB)",
+        "Madrasha (Alia & Qawmi)",
+        "Higher Education (University and Equivalent)",
+        "Vocational, Diploma & Other Technical Education",
+        "None of These",
     ];
 
     const gradeLevels = [
-        "পঞ্চম শ্রেণী, Grade 5",
-        "ষষ্ঠ শ্রেণী, Grade 6",
-        "সপ্তম শ্রেণী, Grade 7",
-        "অষ্টম শ্রেণী, Grade 8",
-        "নবম শ্রেণী, Grade 9",
-        "দশম শ্রেণী, Grade 10",
-        "এসএসসি পরিক্ষার্থী, O Level Candidate",
-        "একাদশ শ্রেণী, Grade 11",
-        "দ্বাদশ শ্রেণী, Grade 12",
-        "এইচএসসি পরিক্ষার্থী, A Level Candidate",
-        "একটিও নয়",
+        "Class 5, Grade 5, PYP 5, Taysir, Equivalent",
+        "Class 6, Grade 6, MYP 1, Mizan, Equivalent",
+        "Class 7, Grade 7, MYP 2, Nahbameer",
+        "Class 8, Grade 8, MYP 3, Hedayatun Nahu",
+        "Class 9, Grade 9, MYP 4, Kafiya and Bekaya, Equivalent",
+        "Class 10, Grade 10, MYP 5, Kafiya and Bekaya, Equivalent",
+        "SSC Candidate, O Level Candidate, Kafiya and Bekaya Equivalent",
+        "Class 11 (HSC), Grade 11, DP 1, Jalalayn, Equivalent",
+        "Class 12 (HSC), Grade 12, DP 2, Jalalayn, Equivalent",
+        "HSC Candidate, A Level Candidate, Jalalayn Equivalent",
+        "None of These",
     ];
 
     const currentLevels = [
-        "১ম বর্ষ / 1st Year",
-        "২য় বর্ষ / 2nd Year",
-        "৩য় বর্ষ / 3rd Year",
-        "৪র্থ বর্ষ / 4th Year",
-        "Masters / মাষ্টার্স",
-        "ডিপ্লোমা",
-        "একটিও নয়",
+        "1st Year, Fazil, Mishkat",
+        "2nd Year, Fazil, Mishkat",
+        "3rd Year, Fazil, Mishkat",
+        "4th Year, Fazil, Mishkat",
+        "5th Year, Internship, Fazil, Mishkat",
+        "Postgraduate (Masters), Kamil, Dawrah",
+        "Diploma",
+        "None of These",
     ];
 
-    const activities = [
-        "ক্যাম্পাস অ্যাম্বাসেডর হিসেবে রেজিস্ট্রেশন কালেক্ট করা, জাতিসংঘ থেকে প্রদত্ত কোর্সের উপর অনলাইন ও অফলাইনে পাঠচক্র পরিচালনা করা ইত্যাদি কাজ করতে চাই",
-        "ঢাকায় গ্র্যান্ড ফিনালে অনুষ্ঠানে ইভেন্ট ম্যানেজমেন্টের কাজ করতে চাই",
-        "জিরো অলিম্পিয়াডে শুধুমাত্র প্রতিযোগী হিসেবে অংশ নিতে চাই",
+    const activitiesOptions = [
+        "Being a campus ambassador, I want to collect registrations, conduct online and offline study session of the course provided by the United Nations etc. | The best campus ambassador will be awarded",
+        "I want to work in event management at the grand finale in Dhaka | The best event manager will be awarded",
+        "I want only to participate in the Zero Olympiad as a competitor, I don't want to do any such work.",
     ];
 
     const handleChange = (e) => {
-        updateFormData({ [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        updateFormData({ [name]: value });
+
+        // ক্লাস ৫-১০ হলে currentLevel-এ অটোমেটিক ভ্যালু সেট হবে
+        const juniorClasses = gradeLevels.slice(0, 6);
+        if (name === "gradeLevel" && juniorClasses.includes(value)) {
+            updateFormData({ 
+                gradeLevel: value,
+                currentLevel: value 
+            });
+        }
     };
 
+    const handleCheckboxChange = (activity) => {
+        let selectedActivities = formData.activities || [];
+        if (selectedActivities.includes(activity)) {
+            selectedActivities = selectedActivities.filter((item) => item !== activity);
+        } else {
+            selectedActivities = [...selectedActivities, activity];
+        }
+        updateFormData({ activities: selectedActivities });
+    };
+
+    // চেক করছি ইউজার ১০ম এর উপরে কি না
+    const isHigherThanClass10 = gradeLevels.slice(6).includes(formData.gradeLevel);
+
     return (
-        <form onSubmit={nextStep} className="space-y-6">
-            {/* Education Type */}
-            <div className="pb-4">
-                <label className="block text-md font-medium text-Primary pb-2">Education Type *</label>
+        <form onSubmit={(e) => { e.preventDefault(); nextStep(); }} className="space-y-6">
+            
+            {/* 1. Education Type */}
+            <div className="pb-2">
+                <label className="block text-lg font-bold text-Primary pb-2">Education Type*</label>
                 <div className="flex items-center border border-Primary rounded-lg">
                     <FaBookOpen className="text-gray-600 ml-2" />
-                    <select
-                        name="educationType"
-                        value={formData.educationType}
-                        onChange={handleChange}
-                        className="w-full p-2 text-md focus:outline-none"
-                        required
-                    >
+                    <select name="educationType" value={formData.educationType} onChange={handleChange} className="w-full p-2 focus:outline-none bg-transparent" required>
                         <option value="" disabled>Select one</option>
-                        {educationTypes.map((type, index) => (
-                            <option key={index} value={type}>
-                                {type}
-                            </option>
-                        ))}
+                        {educationTypes.map((type, index) => <option key={index} value={type}>{type}</option>)}
                     </select>
                 </div>
             </div>
 
-            {/* Grade Level */}
-            <div className="pb-4">
-                <label className="block text-md font-medium text-Primary pb-2">Grade Level *</label>
+            {/* 2. Grade Level */}
+            <div className="pb-2">
+                <label className="block text-lg font-bold text-Primary pb-2">School/Madrasha Class (January 2026)*</label>
+                <label className="block text-sm font-sm text-Primary pb-2 pt-2 italic">From 5th to 12th Grade - Choose Your Class</label>
                 <div className="flex items-center border border-Primary rounded-lg">
                     <FaListAlt className="text-gray-600 ml-2" />
-                    <select
-                        name="gradeLevel"
-                        value={formData.gradeLevel}
-                        onChange={handleChange}
-                        className="w-full p-2 text-md  border-Primary focus:outline-none"
-                        required
-                    >
+                    <select name="gradeLevel" value={formData.gradeLevel} onChange={handleChange} className="w-full p-2 focus:outline-none bg-transparent" required>
                         <option value="" disabled>Select one</option>
-                        {gradeLevels.map((level, index) => (
-                            <option key={index} value={level}>
-                                {level}
-                            </option>
-                        ))}
+                        {gradeLevels.map((level, index) => <option key={index} value={level}>{level}</option>)}
                     </select>
                 </div>
             </div>
 
-            {/* Current Level */}
-            {(formData.gradeLevel !== "পঞ্চম শ্রেণী, Grade 5" &&
-                formData.gradeLevel !== "ষষ্ঠ শ্রেণী, Grade 6" &&
-                formData.gradeLevel !== "সপ্তম শ্রেণী, Grade 7" &&
-                formData.gradeLevel !== "অষ্টম শ্রেণী, Grade 8" &&
-                formData.gradeLevel !== "নবম শ্রেণী, Grade 9" &&
-                formData.gradeLevel !== "দশম শ্রেণী, Grade 10") && (
-                    <div className="pb-4">
-                        <label className="block text-md font-medium text-Primary pb-2">Current Level *</label>
-                        <div className="flex items-center border border-Primary rounded-lg">
-                            <FaRegCalendarAlt className="text-gray-600 ml-2" />
-                            <select
-                                name="currentLevel"
-                                value={formData.currentLevel}
-                                onChange={handleChange}
-                                className="w-full p-2 text-md  border-Primary focus:outline-none"
-                                required
-                            >
-                                <option value="" disabled>Select one</option>
-                                {currentLevels.map((level, index) => (
-                                    <option key={index} value={level}>
-                                        {level}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                )}
-
-            {/* Activities for students in Grade 9 or above */}
-            {(formData.gradeLevel === "নবম শ্রেণী, Grade 9" ||
-                formData.gradeLevel === "দশম শ্রেণী, Grade 10" ||
-                formData.gradeLevel === "একাদশ শ্রেণী, Grade 11" ||
-                formData.gradeLevel === "দ্বাদশ শ্রেণী, Grade 12" ||
-                formData.gradeLevel === "এসএসসি পরিক্ষার্থী, O Level Candidate" ||
-                formData.gradeLevel === "এইচএসসি পরিক্ষার্থী, A Level Candidate") && (
-                    <div className="pb-4">
-                        <label className="block text-md font-medium text-Primary pb-2">Activities *</label>
-                        <div className="flex items-center border border-Primary rounded-lg px-2">
-                            <FaRunning className="text-primary-600" size={16} />
-                            <select
-                            name="activity"
-                            value={formData.activity}
-                            onChange={handleChange}
-                            className="w-full p-2 text-md rounded-lg  focus:outline-none"
-                            required
+            {/* 3. Current Level - Animated Transition */}
+            <div className={`grid transition-all duration-500 ease-in-out ${isHigherThanClass10 ? "grid-rows-[1fr] opacity-100 mb-4" : "grid-rows-[0fr] opacity-0 overflow-hidden"}`}>
+                <div className="min-h-0">
+                    <label className="block text-lg font-bold text-Primary pb-2 pt-2">Higher Education Level*</label>
+                    <label className="block text-sm font-sm text-Primary pb-2 pt-2 italic">Degree Pass, Bachelor's Honours, Postgraduate, Medical, Engineering, Marine, Marine Fisheries, Diploma, Qawmi & Alia Madrasa, Other Students - Choose Your Class </label>
+                    <div className="flex items-center border border-Primary rounded-lg">
+                        <FaRegCalendarAlt className="text-gray-600 ml-2" />
+                        <select 
+                            name="currentLevel" 
+                            value={formData.currentLevel} 
+                            onChange={handleChange} 
+                            className="w-full p-2 focus:outline-none bg-transparent"
+                            required={isHigherThanClass10}
                         >
                             <option value="" disabled>Select one</option>
-                            {activities.map((activity, index) => (
-                                <option key={index} value={activity}>
-                                    {activity} 
-                                </option>
-                            ))}
-
+                            {currentLevels.map((level, index) => <option key={index} value={level}>{level}</option>)}
                         </select>
-
-                        </div>
-                        
                     </div>
-                )}
+                </div>
+            </div>
 
-            <div className="flex justify-between mt-6">
-                <button
-                    type="button"
-                    onClick={prevStep}
-                    className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 flex justify-center items-center gap-3"
-                >
-                    <FaArrowLeft className="text-primary-600" size={16} />  Back
+            {/* 4. Activities - Always Visible (Multiple Select Checkboxes) */}
+            <div className="pb-4">
+                <label className="block text-lg font-bold text-Primary pb-2">Activities (Multiple Select)*</label>
+                <p className="text-sm text-gray-600 mb-3 italic">Which of the following activities would you like to do with Faatiha Aayat?</p>
+                <div className="grid grid-cols-1 gap-3 border border-Primary p-4 rounded-lg bg-white">
+                    {activitiesOptions.map((option, index) => (
+                        <label key={index} className="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-blue-50 transition-colors duration-200">
+                            <input
+                                type="checkbox"
+                                checked={formData.activities?.includes(option)}
+                                onChange={() => handleCheckboxChange(option)}
+                                className="w-5 h-5 accent-Primary cursor-pointer"
+                            />
+                            <span className="text-md text-gray-700">{option}</span>
+                        </label>
+                    ))}
+                </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
+                <button type="button" onClick={prevStep} className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 transition flex items-center gap-3">
+                    <FaArrowLeft /> Back
                 </button>
-                <button type="submit" className="px-5 py-2 rounded-lg bg-Primary hover:bg-[#0A4F78] text-white flex justify-center items-center gap-3">
-                    Next <FaArrowRight className="text-primary-600" size={16} />
+                <button type="submit" className="px-8 py-2 rounded-lg bg-Primary hover:bg-[#084264] text-white font-semibold transition flex items-center gap-3 shadow-md">
+                    Next <FaArrowRight />
                 </button>
             </div>
         </form>
