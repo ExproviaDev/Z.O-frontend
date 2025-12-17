@@ -1,4 +1,5 @@
-import RoundStatusCard from "@/app/Components/RoundStatusCard/RoundStatusCard";
+// import RoundStatusCard from "@/app/Components/RoundStatusCard/RoundStatusCard";
+import RoundStatusCard from '../../Components/RoundStatusCard/RoundStatusCard'
 
 export default function page() {
   return (
