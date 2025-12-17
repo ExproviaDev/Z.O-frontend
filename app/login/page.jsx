@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -49,7 +48,7 @@ export default function LoginPage() {
                 const user = data.user;
                 localStorage.setItem("access_token", token);
 
-                dispatch(setLogin({ user }));
+                dispatch(setLogin({ user: user, isAuthenticated: true }));
                 console.log("Login successful!"); 
                 router.push("/dashboard"); 
 
