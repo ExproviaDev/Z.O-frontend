@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { FiPlus, FiMinus } from "react-icons/fi";
-import bannerImg from "../../public/src/faq.jpg"; // <-- YOUR FAQ BANNER IMAGE
+import bannerImg from "../../public/src/faq.jpg";
 import Image from "next/image";
 
 export default function FAQPage() {
