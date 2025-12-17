@@ -1,6 +1,6 @@
 // import Image from "next/image";
 
-// import SiteLogo from "@/public/src/SiteLogo.png";
+// import SiteLogo from "../../public/src/SiteLogo.png";
 export default function NotFoundPage() {
   return (
     <section className="dark:bg-gray-900  border-red-500">

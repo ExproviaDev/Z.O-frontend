@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
+import faatiHaaayat from "../../public/src/faatihaaayat.jpg";
 export default function ThemeSong() {
   const [play, setPlay] = useState(false);
 
