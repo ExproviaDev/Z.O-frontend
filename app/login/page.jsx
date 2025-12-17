@@ -6,9 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ForgotPasswordModal from "../Components/ForgotPasswordModal"
 import { FaSignInAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../store/slices/authSlice";
 
 export default function LoginPage() {
     const router = useRouter(); 
+    const dispatch = useDispatch();
 
     const initialValues = {
         email: "",
