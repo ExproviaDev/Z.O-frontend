@@ -162,7 +162,7 @@ const Section = () => {
           }
         ></HeadingDetails>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
+        <div className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-10">
           {/* Card 1 */}
           <div className="w-full overflow-hidden bg-white rounded-lg shadow-lg">
             <iframe
