@@ -37,7 +37,7 @@ export default function RegistrationPage() {
     if (isSubmitting) return;
     setIsSubmitting(true);
 
-    const backendUrl = 'https://zero-olympiad-server.vercel.app/api/auth/register';
+    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/register`;
 
     const res = await fetch(backendUrl, {
       method: "POST",

@@ -41,6 +41,7 @@ import {
   FaTheaterMasks,
 } from "react-icons/fa"
 import EventGallery from "../EventGallery/EventGallery"
+import JurySection from "../JuryCard/Jury"
 
 export default function HomePage() {
   const [animatedSections, setAnimatedSections] = useState(new Set())
@@ -87,7 +88,7 @@ export default function HomePage() {
             }`}
           >
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Welcome to <span className="text-pink-500">Zero Olympiad</span>
+              Welcome to <span className="text-pink-600">Zero Olympiad</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
               Unleash your potential, compete with the brightest minds, and embark on a journey of academic excellence and discovery.
@@ -200,14 +201,14 @@ export default function HomePage() {
   <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col justify-center h-full">
     <h2
       data-section="participate-title"
-      className={`text-4xl md:text-5xl font-bold text-center text-white mb-4 transition-all duration-1000 ${
+      className={`text-[28px] md:text-[40px] font-bold text-center text-white mb-4 transition-all duration-1000 ${
         animatedSections.has("participate-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
       Why should you participate?
     </h2>
 
-    <p className="text-center text-gray-300 text-lg mb-12 max-w-3xl mx-auto">
+    <p className="text-center text-gray-300 text-[16px] md:text-[18px] mb-12 max-w-3xl mx-auto">
       Choose the category that matches your academic level and begin your journey to excellence
     </p>
 
@@ -309,13 +310,13 @@ export default function HomePage() {
     <div className="text-center mb-12">
       <h2
         data-section="categories-title"
-        className={`text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-1000 ${
+        className={`text-[28px] md:text-[40px] font-bold text-gray-900 mb-4 transition-all duration-1000 ${
           animatedSections.has("categories-title") ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
       >
         Registration <span className="text-pink-500">Categories</span>
       </h2>
-      <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+      <p className="text-gray-600 text-[16px] md:text-[18px] max-w-3xl mx-auto">
         Choose the category that matches your academic level and begin your journey to excellence
       </p>
     </div>
@@ -332,9 +333,7 @@ export default function HomePage() {
       price: "৳300",
       level: "Class 5-8",
       features: [
-        "Participants from Grade 5/PYP 5 to Grade 8/MYP 3 will be called SDG Activists.",
-        "Four SDG Activists from each class who win first and second rounds will present in front of the jury board.",
-        "Highest scorer will receive SDG Defender Award."
+        "Participants from Grade 5/PYP 5 to Grade 8/MYP 3 will be called SDG Activists. Four SDG Activists from four classes (5th, 6th, 7th and 8th) who win the first and second rounds will give presentations in front of the jury board at the grand finale ceremony. The one with the highest score will be given the SDG Defender Award."
       ],
       bg: "bg-[#F4FAFF]",
       highlighted: false,
@@ -344,9 +343,7 @@ export default function HomePage() {
       price: "৳300",
       level: "Class 8-12",
       features: [
-        "Participants from Grade 9/MYP 4 to HSC examinees/A Level candidates called SDG Ambassadors.",
-        "6 ambassadors from 9th, 10th, SSC examinees, 11th, 12th, HSC examinees will present before jury board.",
-        "Highest scorer will receive SDG Leader Award."
+        "Participants from Grade 9/MYP 4 to HSC examinees/A Level Candidate will be called SDG Ambassadors. 9th, 10th, SSC examinees, 11th, 12th, HSC examinees – six SDG Ambassadors from these six classes will give presentations before the jury board at the grand finale ceremony. The one who gets the highest marks will be given the SDG Leader Award."
       ],
       bg: "bg-[#FFF7FB]",
       highlighted: true,
@@ -356,9 +353,7 @@ export default function HomePage() {
       price: "৳300",
       level: "Bachelor to Masters",
       features: [
-        "Participants from 1st year to Postgraduate from Degree Pass, Graduation, Honors, Medical, Engineering, Marine Fisheries, Diploma.",
-        "Presentations before jury board at grand finale ceremony.",
-        "Highest scorer will receive SDG Pioneer Award."
+        "Seven SDG Achievers from 1st year to Postgraduate from Degree Pass, Graduation, Honors, Postgraduate, Medical, Engineering, Marine, Marine Fisheries, Diploma will give presentations before the jury board at the grand finale ceremony. The one who gets the highest marks will be given the SDG Pioneer Award."
       ],
       bg: "bg-[#F6FFF7]",
       highlighted: false,
@@ -378,21 +373,21 @@ export default function HomePage() {
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       {/* Icon */}
-      <div className="w-14 h-14 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110">
+      <div className="w-14 h-14 rounded-xl bg-blue-100 text-blue-700  flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110">
         <FaBookOpen size={22} />
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold mb-1">{category.title}</h3>
-      <p className="text-pink-500 text-sm font-medium mb-4">
+      <h3 className="text-[24px] font-bold mb-1">{category.title}</h3>
+      <p className="text-pink-500 text-[18px] font-medium mb-4">
         {category.level}
       </p>
 
       {/* Features */}
-      <ul className="space-y-3 text-sm text-gray-600 flex-1">
+      <ul className="space-y-3 text-[16px] text-gray-600 flex-1">
         {category.features.map((feature, i) => (
           <li key={i} className="flex gap-3 leading-relaxed">
-            <span className="text-pink-500 mt-1">•</span>
+            <span className="text-pink-500 mt-1"></span>
             {feature}
           </li>
         ))}
@@ -419,9 +414,6 @@ export default function HomePage() {
     </div>
   ))}
 </div>
-
-
-
     
   </div>
 </section>
@@ -446,7 +438,7 @@ export default function HomePage() {
       <span className="inline-block mb-3 px-4 py-1 rounded-full bg-pink-500/20 text-pink-400 text-sm">
         🎖 17 finalists who will receive awards
       </span>
-      <h2 className="text-4xl md:text-5xl font-bold text-white">
+      <h2 className="text-2xl md:text-[40px] font-bold text-white">
         Awards & <span className="text-pink-500">Opportunities</span>
       </h2>
     </div>
@@ -467,7 +459,7 @@ export default function HomePage() {
         {
           icon: FaFlag,
           title: "National Zero Olympiad Envoy",
-          desc: "Inclusion in Zero Olympiad Clubs formed in educational institutions across the country.",
+          desc: "Inclusion in Zero Olympiad Clubs formed in educational institutions across the country through various activities.",
         },
       ].map((item, i) => (
         <div
@@ -481,8 +473,8 @@ export default function HomePage() {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <item.icon className="text-pink-500 text-3xl mb-4" />
-          <h3 className="text-white font-semibold mb-2">{item.title}</h3>
+          <item.icon className="bg-pink-600 text-white  text-4xl p-1 rounded-xs mb-4" />
+          <h3 className="text-white font-semibold mb-2 text-[18px] md:text-2xl">{item.title }</h3>
           <p className="text-gray-300 text-sm leading-relaxed">{item.desc}</p>
         </div>
       ))}
@@ -495,12 +487,12 @@ export default function HomePage() {
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
       {[
-        { icon: FaSchool, title: "Daffodil Institute Scholarship", desc: "Full scholarship for empowering future leaders." },
-        { icon: FaBookOpen, title: "Saflur’s IELTS Course", desc: "27 classes & 39 comprehensive lessons." },
-        { icon: FaClock, title: "10 Minute School", desc: "Customized scholarship from top e-learning platform." },
-        { icon: FaWater, title: "Mana Bay Water Park", desc: "Day-long pass with thrilling rides." },
-        { icon: FaHeart, title: "Ad Din Foundation Medical", desc: "Zero-fee medical vouchers for healthcare services." },
-        { icon: FaFutbol, title: "Sports Development", desc: "Professional coaching & training facilities." },
+        { icon: FaSchool, title: "Daffodil Institute Scholarship", desc: "Full scholarship for 'Empowering Future Leaders' program - 8 modules, 24 sessions on Entrepreneurship, Sustainable Development & 21st-Century Skills." },
+        { icon: FaBookOpen, title: "Saflur’s IELTS Course", desc: "Full scholarship for online IELTS course - 27 classes and 39 comprehensive lessons." },
+        { icon: FaClock, title: "10 Minute School", desc: "Customized course scholarship from Bangladesh's leading e-learning platform." },
+        { icon: FaWater, title: "Mana Bay Water Park", desc: "Day Long Pass for unlimited aquatic adventure on 17 thrilling rides across 60,000 sq ft." },
+        { icon: FaHeart, title: "Ad Din Foundation Medical", desc: "Zero Fee Medical vouchers for healthcare services." },
+        { icon: FaFutbol, title: "Sports Development", desc: "Full scholarship from Bangladesh Sports Development Foundation to learn from Professional Coaches." },
       ].map((item, i) => (
         <div
           key={i}
@@ -513,29 +505,29 @@ export default function HomePage() {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <item.icon className="text-pink-500 text-3xl mb-4" />
-          <h3 className="text-white font-semibold mb-2">{item.title}</h3>
+          <item.icon className="bg-pink-600 text-white  text-4xl p-1 rounded-xs mb-4" />
+          <h3 className="text-white font-semibold mb-2 text-[18px] md:text-2xl">{item.title}</h3>
           <p className="text-gray-300 text-sm">{item.desc}</p>
         </div>
       ))}
     </div>
 
     {/* ================= Activities ================= */}
-    <h3 className="text-3xl font-bold text-center text-white mb-10">
+    <h3 className="text-3xl md:text-[40px] font-bold text-center text-white mb-10">
       Additional <span className="text-pink-500">Activities</span>
     </h3>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {[
-        { icon: FaGavel, title: "Case Study Competition", desc: "Solve real-world social problems collaboratively." },
-        { icon: FaComments, title: "Debate & Public Speaking", desc: "Enhance argumentation & presentation skills." },
-        { icon: FaTools, title: "Workshops & Seminars", desc: "Hands-on professional skill development." },
-        { icon: FaRocket, title: "Project Implementation", desc: "Funding support to bring ideas into reality." },
+        { icon: FaGavel, title: "Case Study Competition", desc: "Teams collaborate to find innovative solutions to various social problems." },
+        { icon: FaComments, title: "Debate & Public Speaking", desc: "Present ideas and develop argumentation skills in competitive settings." },
+        { icon: FaTools, title: "Workshops & Seminars", desc: "Special training sessions focused on practical skill development." },
+        { icon: FaRocket, title: "Project Implementation", desc: "Funding opportunities to implement your innovative ideas into reality." },
       ].map((item, i) => (
         <div
           key={i}
           data-section={`activity-${i}`}
-          className={`flex items-start gap-4 rounded-2xl p-6 border-2 border-pink-500 bg-white/5 backdrop-blur-md
+          className={`flex items-start gap-4 rounded-2xl p-6  bg-gray-900 backdrop-blur-md
           hover:bg-white/10 transition-all duration-500
           ${
             animatedSections.has(`activity-${i}`)
@@ -543,9 +535,9 @@ export default function HomePage() {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <item.icon className="text-pink-500 text-3xl mt-1" />
+          <item.icon className="bg-pink-600 text-white  text-4xl p-1 rounded-xs mb-4 mt-1" />
           <div>
-            <h4 className="text-white font-semibold mb-1">{item.title}</h4>
+            <h4 className="text-white font-semibold mb-1 text-[18px] md:text-2xl">{item.title}</h4>
             <p className="text-gray-300 text-sm">{item.desc}</p>
           </div>
         </div>
@@ -646,83 +638,7 @@ export default function HomePage() {
 
 
 {/* Confirmed Guest & Jury Section */}
-<section className="relative w-full py-20 px-5 bg-[#2b1b668f] overflow-hidden">
-  {/* background image */}
-  <Image
-    src="/src/UNDP.jpg"
-    alt="Jury Background"
-    fill
-    className="object-cover opacity-20"
-  />
-  <div className="absolute inset-0 bg-[#2b1b66]/80" />
-
-  <div className="relative z-10 max-w-7xl mx-auto">
-    {/* Title Section */}
-    <div className="text-center mb-16">
-      <h2
-        className={`text-3xl md:text-5xl font-bold text-white mb-4 transition-all duration-1000 ${
-          typeof animatedSections !== 'undefined' && animatedSections.has("jury-title") 
-          ? "opacity-100 translate-y-0" 
-          : "opacity-100 translate-y-0" // এখানে কন্ডিশন ফেইল করলেও যাতে দেখা যায় তাই opacity-100 রাখা হয়েছে
-        }`}
-      >
-        Confirmed Guest & Jury
-      </h2>
-      <p className="text-gray-200 max-w-3xl mx-auto text-base md:text-lg font-light">
-        Distinguished academics and professionals who guide and evaluate our participants
-      </p>
-    </div>
-
-    {/* Jury Cards Container */}
-    <div className="flex flex-wrap justify-center gap-6">
-      {[
-        { name: "Heidi Solba", role: "Head of global Dev\nLet's Do It World", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[23%]" },
-        { name: "Yousef Ramada", role: "Palestine Ambassador", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[23%]" },
-        { name: "Shykh Seraj", role: "Journalist, Agriculture Activist", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[23%]" },
-        { name: "Md Sabur Khan", role: "Founder & Chairman, DIU", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[23%]" },
-        
-        { name: "Syed Farhad Ahmed", role: "Honorary Consul of Estonia", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[18%]" },
-        { name: "Saifur Rahman", role: "Founder of S@ifur's", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[18%]" },
-        { name: "Rumana Rashid Ishita", role: "Television Artist", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[18%]" },
-        { name: "Sadat Rahman", role: "Int'l Peace Prize Winner", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[18%]" },
-        { name: "RJ Kebria", role: "Media Personality", image: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop", width: "w-full sm:w-[calc(50%-1.5rem)] lg:w-[18%]" },
-      ].map((jury, index) => (
-        <div
-          key={index}
-          className={`${jury.width} bg-white rounded-[20px] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col items-center justify-center ${
-            typeof animatedSections !== 'undefined' && animatedSections.has(`jury-${index}`) 
-            ? "opacity-100 translate-y-0" 
-            : "opacity-100 translate-y-0" 
-          }`}
-          style={{ transitionDelay: `${index * 50}ms` }}
-        >
-          {/* Circular Avatar with Dotted Border */}
-          <div className="relative w-24 h-24 mb-4 p-1 rounded-full border-[3px] border-dashed border-[#e91e63]">
-            <div className="relative w-full h-full rounded-full overflow-hidden">
-                <Image
-                src={jury.image}
-                alt={jury.name}
-                fill
-                className="object-cover"
-                unoptimized
-                />
-            </div>
-          </div>
-
-          {/* Name */}
-          <h3 className="text-lg font-extrabold text-[#1a1a1a] mb-1 leading-tight">
-            {jury.name}
-          </h3>
-
-          {/* Role */}
-          <p className="text-[12px] text-gray-500 font-medium leading-snug whitespace-pre-line">
-            {jury.role}
-          </p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+<JurySection></JurySection>
 
       
 
@@ -732,21 +648,21 @@ export default function HomePage() {
   <div className="max-w-7xl mx-auto px-4">
     <h2
       data-section="gallery-title"
-      className={`text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4 transition-all duration-1000 ${
+      className={`text-2xl md:text-[40px] font-semibold text-center text-gray-900 mb-4 transition-all duration-1000 ${
         animatedSections.has("gallery-title")
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-8"
       }`}
     >
-      <span className="text-pink-500">Gallery</span>
+      <span className="">Gallery</span>
     </h2>
 
-    <p className="text-center text-gray-600 text-lg mb-12 max-w-3xl mx-auto">
+    <p className="text-center text-gray-500 text-lg mb-12 max-w-3xl mx-auto">
       Compete for glory and be rewarded with prizes that recognize your hard work and dedication
     </p>
 
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-      {Array.from({ length: 12 }).map((_, index) => (
+      {Array.from({ length: 9 }).map((_, index) => (
         <div
           key={index}
           data-section={`gallery-${index}`}
@@ -758,20 +674,21 @@ export default function HomePage() {
           style={{ transitionDelay: `${index * 50}ms` }}
         >
           <Image
-            src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&fit=crop"
+            src={`/src/gallery/img${index + 1}.jpg`}
             alt={`Gallery image ${index + 1}`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-           
+            {/* optional caption */}
           </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
 
 
       {/* CTA Section - Full Width */}
