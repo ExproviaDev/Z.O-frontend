@@ -1,51 +1,89 @@
-import React from "react";
-import { FaRegEdit } from "react-icons/fa";
-const page = () => {
+"use client";
+import { useSelector } from "react-redux";
+import { FaRegEdit, FaUserCircle, FaGraduationCap, FaAward } from "react-icons/fa";
+import Link from "next/link";
+
+const ProfilePage = () => {
+  const { user, loading } = useSelector((state) => state.user);
+
+  if (loading) return <div className="p-10 text-center">Loading Profile...</div>;
+  if (!user) return <div className="p-10 text-center text-red-500">No profile data found. Please login again.</div>;
+
   return (
-    <main className="border-2 border-red-500 p-5 shadow-lg rounded-xl ">
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md transition-all ease-in-out duration-300 flex flex-col gap-5">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl lg:text-3xl font-semibold lg:mb-6">
-            My Profile
-          </h1>
-          <button className="cursor-pointer flex items-center px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-            <FaRegEdit />
-
-            <span className="mx-1">Edit</span>
-          </button>
+    <main className="p-4 lg:p-10 bg-gray-50 min-h-screen">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-blue-50 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-6">
+            <img
+              src={user.profile_image_url || "https://via.placeholder.com/150"}
+              alt="Profile"
+              className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow-sm"
+            />
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">{user.name}</h1>
+              <p className="text-blue-600 font-medium">{user.role || "Participant"}</p>
+            </div>
+          </div>
+          <Link href="/dashboard/profile/edit">
+            <button className="flex items-center px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold shadow-md active:scale-95">
+              <FaRegEdit className="mr-2" />
+              Edit Profile
+            </button>
+          </Link>
         </div>
 
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold">Registration Date</h2>
-          <p>February 25, 2025 6:01 am</p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold"> First Name</h2>
-          <p>Faati </p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold"> Last Name</h2>
-          <p> Haaayat</p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold"> Username</h2>
-          <p>faatihaaayat</p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold"> Email</h2>
-          <p>faatihaaayat@gmail.com</p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold"> Version</h2>
-          <p>English</p>
-        </div>
-        <div className=" border-red-300 flex justify-start text-lg lg:text-xl">
-          <h2 className="w-1/2 font-semibold">Class</h2>
-          <p>O Level Candidate</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex items-center gap-2 mb-4 text-blue-600 border-b pb-2">
+              <FaUserCircle size={20} />
+              <h2 className="font-bold text-lg">Personal Details</h2>
+            </div>
+            <div className="space-y-3">
+              <ProfileItem label="Email" value={user.email} />
+              <ProfileItem label="Phone" value={user.phone} />
+              <ProfileItem label="District" value={user.district} />
+            </div>
+          </section>
+          <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex items-center gap-2 mb-4 text-green-600 border-b pb-2">
+              <FaGraduationCap size={22} />
+              <h2 className="font-bold text-lg">Academic Background</h2>
+            </div>
+            <div className="space-y-3">
+              <ProfileItem label="Institution" value={user.institution} />
+              <ProfileItem label="Education Type" value={user.education_type} />
+              <ProfileItem label="Grade Level" value={user.grade_level} />
+              <ProfileItem label="Current Year" value={user.current_level} />
+            </div>
+          </section>
+          <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 md:col-span-2">
+            <div className="flex items-center gap-2 mb-4 text-purple-600 border-b pb-2">
+              <FaAward size={20} />
+              <h2 className="font-bold text-lg">Participation & Role</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+              <ProfileItem label="SDG Role" value={user.sdg_role} />
+              <ProfileItem label="Round Type" value={user.round_type} />
+              <div className="md:col-span-2 py-2">
+                <h3 className="text-sm font-semibold text-gray-500 mb-1">Activities Role/Interest:</h3>
+                <p className="text-gray-800 bg-gray-50 p-3 rounded-lg italic border-l-4 border-purple-200">
+                  {user.activities_role || "No activities specified"}
+                </p>
+              </div>
+            </div>
+          </section>
+
         </div>
       </div>
     </main>
   );
 };
 
-export default page;
+const ProfileItem = ({ label, value }) => (
+  <div className="flex flex-col py-1">
+    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{label}</span>
+    <span className="text-gray-800 font-medium">{value || "Not Provided"}</span>
+  </div>
+);
+
+export default ProfilePage;
