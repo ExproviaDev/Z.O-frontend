@@ -18,9 +18,9 @@ const navItems = [
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    
+
     // // রিডাক্স স্টেট থেকে ডাটা নিচ্ছি
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector((state) => state.user);
     const { user = null, isLoggedIn = false, loading = true } = authState || {};
 
     // // ব্রাউজার কনসোলে ডাটা চেক করার জন্য
