@@ -85,7 +85,7 @@ export default function QuizCard({ quiz, onDelete }) {
               {q.question}
             </p>
 
-            <div className="space-y-1 mb-2 flex justify-between">
+            <div className="space-y-1 mb-2 md:flex justify-between">
               <p className="text-sm text-muted-foreground font-medium">
                 Options:
               </p>

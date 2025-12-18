@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./store/ReduxProvider";
@@ -19,6 +21,8 @@ import ConditionalLayout from './ConditionalLayout';
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
+      <Analytics />
+      <SpeedInsights />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

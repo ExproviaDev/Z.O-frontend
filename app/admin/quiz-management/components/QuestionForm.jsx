@@ -43,52 +43,76 @@ export default function QuestionForm({ onAddQuestion }) {
           placeholder="Enter your question here"
         />
       </div>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+  <div className="w-full">
+    <label className="block text-sm font-medium text-card-foreground mb-2">
+      Option A
+    </label>
+    <input
+      type="text"
+      required
+      value={question.optionA}
+      onChange={(e) =>
+        setQuestion({ ...question, optionA: e.target.value })
+      }
+      className="w-full max-w-full px-3 py-2 border border-border rounded-lg 
+                 focus:outline-none focus:ring-2 focus:ring-ring 
+                 bg-background text-foreground break-all"
+    />
+  </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-card-foreground mb-2">Option A</label>
-          <input
-            type="text"
-            required
-            value={question.optionA}
-            onChange={(e) => setQuestion({ ...question, optionA: e.target.value })}
-            className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-          />
-        </div>
+  <div className="w-full">
+    <label className="block text-sm font-medium text-card-foreground mb-2">
+      Option B
+    </label>
+    <input
+      type="text"
+      required
+      value={question.optionB}
+      onChange={(e) =>
+        setQuestion({ ...question, optionB: e.target.value })
+      }
+      className="w-full max-w-full px-3 py-2 border border-border rounded-lg 
+                 focus:outline-none focus:ring-2 focus:ring-ring 
+                 bg-background text-foreground break-all"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-card-foreground mb-2">Option B</label>
-          <input
-            type="text"
-            required
-            value={question.optionB}
-            onChange={(e) => setQuestion({ ...question, optionB: e.target.value })}
-            className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-          />
-        </div>
+  <div className="w-full">
+    <label className="block text-sm font-medium text-card-foreground mb-2">
+      Option C
+    </label>
+    <input
+      type="text"
+      required
+      value={question.optionC}
+      onChange={(e) =>
+        setQuestion({ ...question, optionC: e.target.value })
+      }
+      className="w-full max-w-full px-3 py-2 border border-border rounded-lg 
+                 focus:outline-none focus:ring-2 focus:ring-ring 
+                 bg-background text-foreground break-all"
+    />
+  </div>
 
-        <div>
-          <label className="block text-sm font-medium text-card-foreground mb-2">Option C</label>
-          <input
-            type="text"
-            required
-            value={question.optionC}
-            onChange={(e) => setQuestion({ ...question, optionC: e.target.value })}
-            className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-          />
-        </div>
+  <div className="w-full">
+    <label className="block text-sm font-medium text-card-foreground mb-2">
+      Option D
+    </label>
+    <input
+      type="text"
+      required
+      value={question.optionD}
+      onChange={(e) =>
+        setQuestion({ ...question, optionD: e.target.value })
+      }
+      className="w-full max-w-full px-3 py-2 border border-border rounded-lg 
+                 focus:outline-none focus:ring-2 focus:ring-ring 
+                 bg-background text-foreground break-all"
+    />
+  </div>
+</div>
 
-        <div>
-          <label className="block text-sm font-medium text-card-foreground mb-2">Option D</label>
-          <input
-            type="text"
-            required
-            value={question.optionD}
-            onChange={(e) => setQuestion({ ...question, optionD: e.target.value })}
-            className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-          />
-        </div>
-      </div>
 
       <div>
         <label className="block text-sm font-medium text-card-foreground mb-2">Correct Answer</label>

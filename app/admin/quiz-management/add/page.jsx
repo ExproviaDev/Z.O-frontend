@@ -99,31 +99,67 @@ export default function AddQuizPage() {
           <QuestionForm onAddQuestion={handleAddQuestion} />
         )}
 
-        {/* Questions List */}
-        {questions.length > 0 && (
-          <div className="mt-6 bg-card border border-border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Added Questions ({questions.length})</h3>
-            <div className="space-y-4">
-              {questions.map((q, index) => (
-                <div key={index} className="bg-muted/50 rounded-lg p-4">
-                  <p className="font-medium text-sm text-card-foreground mb-2">
-                    <span className="text-muted-foreground">Q{index + 1}:</span> {q.question}
-                  </p>
-                  <div className="space-y-1 mb-2 text-sm text-muted-foreground">
-                    <p className="ml-4">A. {q.optionA}</p>
-                    <p className="ml-4">B. {q.optionB}</p>
-                    <p className="ml-4">C. {q.optionC}</p>
-                    <p className="ml-4">D. {q.optionD}</p>
-                  </div>
-                  <p className="text-sm">
-                    <span className="text-muted-foreground">Correct Answer:</span>{" "}
-                    <span className="text-green-600 dark:text-green-400 font-semibold">{q.correctAnswer}</span>
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+       {/* Questions List */}
+{questions.length > 0 && (
+  <div className="mt-6 bg-card border border-border rounded-lg p-4 sm:p-6">
+    <h3 className="text-base sm:text-lg font-semibold text-card-foreground mb-4">
+      Added Questions ({questions.length})
+    </h3>
+
+    <div className="space-y-4">
+      {questions.map((q, index) => (
+        <div
+          key={index}
+          className="bg-muted/50 rounded-lg p-3 sm:p-4 space-y-3"
+        >
+          {/* Question */}
+          <p className="font-medium text-sm sm:text-base text-card-foreground">
+            <span className="text-muted-foreground mr-1">
+              Q{index + 1}:
+            </span>
+            {q.question}
+          </p>
+
+          {/* Options */}
+          {/* Options */}
+<div className="flex flex-col gap-2 mt-2 w-full max-w-full">
+  <div className="flex items-start gap-2 w-full">
+    <span className="font-semibold shrink-0">A.</span>
+    <span className="break-words w-full">{q.optionA}</span>
+  </div>
+
+  <div className="flex items-start gap-2 w-full">
+    <span className="font-semibold shrink-0">B.</span>
+    <span className="break-words w-full">{q.optionB}</span>
+  </div>
+
+  <div className="flex items-start gap-2 w-full">
+    <span className="font-semibold shrink-0">C.</span>
+    <span className="break-words w-full">{q.optionC}</span>
+  </div>
+
+  <div className="flex items-start gap-2 w-full">
+    <span className="font-semibold shrink-0">D.</span>
+    <span className="break-words w-full">{q.optionD}</span>
+  </div>
+</div>
+
+
+          {/* Correct Answer */}
+          <p className="text-xs sm:text-sm">
+            <span className="text-muted-foreground">
+              Correct Answer:
+            </span>{" "}
+            <span className="text-green-600 dark:text-green-400 font-semibold">
+              {q.correctAnswer}
+            </span>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
       </div>
 
       {/* Modal */}
