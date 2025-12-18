@@ -160,9 +160,9 @@ export default function Step2_Academic({
             Higher Education Level*
           </label>
           <label className="block text-sm font-sm text-Primary pb-2 pt-2 italic">
-            Degree Pass, Bachelor's Honours, Postgraduate, Medical, Engineering,
+            {`Degree Pass, Bachelor's Honours, Postgraduate, Medical, Engineering,
             Marine, Marine Fisheries, Diploma, Qawmi & Alia Madrasa, Other
-            Students - Choose Your Class{" "}
+            Students - Choose Your Class`}
           </label>
           <div className="flex items-center border border-Primary rounded-lg">
             <FaRegCalendarAlt className="text-gray-600 ml-2" />
