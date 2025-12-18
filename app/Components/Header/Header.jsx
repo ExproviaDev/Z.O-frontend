@@ -17,20 +17,20 @@ const navItems = [
 ];
 
 export default function Header() {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // // রিডাক্স স্টেট থেকে ডাটা নিচ্ছি
-    const authState = useSelector((state) => state.user);
-    const { user = null, isLoggedIn = false, loading = true } = authState || {};
+  const authState = useSelector((state) => state.user);
+  // const { user = null, isLoggedIn = false, loading = true } = authState || {};
 
-    // // ব্রাউজার কনসোলে ডাটা চেক করার জন্য
-    console.log("Is Authenticated:", isLoggedIn);
-    console.log("User Profile Data:", user);
-    console.log("Loading State:", loading);
+  // console.log("Is Authenticated:", isLoggedIn);
+  // console.log("User Profile Data:", user);
+  // console.log("Loading State:", loading);
+  const user = false;
+  console.log("user", user);
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 w-full  bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
@@ -84,14 +84,23 @@ export default function Header() {
             </div>
 
             {/* Desktop Buttons */}
-            <div className="hidden lg:flex items-center gap-4">
-              <Link href={'/login'} className="px-5 py-1.5 flex justify-center items-center gap-2 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all">
-               <FaSignInAlt size={18} /> Login
-              </Link>
-              <Link href={'/registration'} className="px-5 py-1.5 text-lg flex justify-center items-center gap-2 text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all">
-               <FaUserPlus size={18} /> Register
-              </Link>
-            </div>
+            {user && (
+              <div className="hidden lg:flex items-center gap-4">
+                <Link
+                  href={"/login"}
+                  className="px-5 py-1.5 flex justify-center items-center gap-2 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all"
+                >
+                  <FaSignInAlt size={18} /> Login
+                </Link>
+                <Link
+                  href={"/registration"}
+                  className="px-5 py-1.5 text-lg flex justify-center items-center gap-2 text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all"
+                >
+                  <FaUserPlus size={18} /> Register
+                </Link>
+              </div>
+            )}
+            {!user && <div>hello</div>}
           </div>
         </div>
 
@@ -118,10 +127,16 @@ export default function Header() {
               ))}
             </nav>
             <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-gray-200">
-              <Link href={'/login'} className="w-full py-3 flex justify-center items-center gap-2 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
-               <FaSignInAlt size={16} /> Login
+              <Link
+                href={"/login"}
+                className="w-full py-3 flex justify-center items-center gap-2 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all"
+              >
+                <FaSignInAlt size={16} /> Login
               </Link>
-              <Link href={'/registration'} className="w-full py-3 flex justify-center items-center gap-2 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all">
+              <Link
+                href={"/registration"}
+                className="w-full py-3 flex justify-center items-center gap-2 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all"
+              >
                 <FaUserPlus size={18} /> Register
               </Link>
             </div>
