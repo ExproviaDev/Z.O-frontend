@@ -20,13 +20,13 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const authState = useSelector((state) => state.user);
-  // const { user = null, isLoggedIn = false, loading = true } = authState || {};
+  const { user = null, isLoggedIn = false, loading = true } = authState || {};
 
-  // console.log("Is Authenticated:", isLoggedIn);
-  // console.log("User Profile Data:", user);
-  // console.log("Loading State:", loading);
-  const user = false;
-  console.log("user", user);
+  console.log("Is Authenticated:", isLoggedIn);
+  console.log("User Profile Data:", user);
+  console.log("Loading State:", loading);
+  // const user = false;
+  // console.log("user", user);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
