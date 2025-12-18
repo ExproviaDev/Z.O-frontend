@@ -1,9 +1,6 @@
-// public/countdown.js (আপনার প্রোজেক্টে উপযুক্ত জায়গায় রাখতে পারেন)
 export function startCountdown() {
-  // লক্ষ্য তারিখ (আপনার পছন্দ অনুযায়ী পরিবর্তন করুন)
-  const targetDate = new Date(60).getTime(); // এখানে আপনার লক্ষ্য তারিখ
+  const targetDate = new Date(60).getTime();
 
-  // কাউন্টডাউন আপডেট হবে প্রতি এক সেকেন্ডে
   const countdownInterval = setInterval(function () {
     const now = new Date().getTime();
     const distance = targetDate - now;
