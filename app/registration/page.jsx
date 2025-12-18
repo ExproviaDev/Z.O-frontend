@@ -18,6 +18,7 @@ export default function RegistrationPage() {
     educationType: "",
     gradeLevel: "",
     currentLevel: "",
+    activities: [],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);

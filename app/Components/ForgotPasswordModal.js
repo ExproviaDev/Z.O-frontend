@@ -4,7 +4,6 @@ import { AiOutlineMail, AiOutlineClose } from 'react-icons/ai';
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import { FaPaperPlane, FaSpinner } from 'react-icons/fa';
-import { MdMail } from 'react-icons/md';
 
 export default function ForgotPasswordModal({ onClose }) {
     const [resetEmail, setResetEmail] = useState("");

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React from "react";
 
-import SiteLogo from "@/public/src/SiteLogo.png";
-import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
+import SiteLogo from "../../../public/src/SiteLogo.png";
+import faatiHaaayat from "../../../public/src/faatihaaayat.jpg";
 
 const Dashboard = () => {
   return (

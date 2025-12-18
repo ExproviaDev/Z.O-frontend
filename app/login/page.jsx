@@ -1,14 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; 
-import ForgotPasswordModal from "@/app/Components/ForgotPasswordModal"; 
+import { useRouter } from "next/navigation";
+import ForgotPasswordModal from "../Components/ForgotPasswordModal"
 import { FaSignInAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../store/slices/authSlice";
 
 export default function LoginPage() {
     const router = useRouter(); 
+    const dispatch = useDispatch();
 
     const initialValues = {
         email: "",
@@ -43,10 +45,13 @@ export default function LoginPage() {
 
             if (res.ok && data.session) {
                 const token = data.session.access_token;
+                const user = data.user;
                 localStorage.setItem("access_token", token);
-                
-                console.log("Login successful! Redirecting to dashboard."); 
+
+                dispatch(setLogin({ user: user, isAuthenticated: true }));
+                console.log("Login successful!"); 
                 router.push("/dashboard"); 
+
 
             } else {
                 setError(data.message || "Login failed. Please check your credentials.");
