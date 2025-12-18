@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserProfile } from "../../../store/slices/authSlice";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function EditProfile() {
     const educationTypes = ["Bangla Medium (Bangla & English Version)", "English Medium (IGCSE & IB)", "Madrasha (Alia & Qawmi)", "Higher Education (University and Equivalent)", "Vocational, Diploma & Other Technical Education", "None of These"];
@@ -71,9 +72,11 @@ export default function EditProfile() {
                     <div className="relative group">
                         <div className="w-28 h-28 rounded-full border-4 border-blue-100 overflow-hidden bg-gray-50 shadow-sm transition-transform group-hover:scale-105">
                             {formData.profile_image_url ? (
-                                <img
+                                <Image
                                     src={formData.profile_image_url}
                                     alt="Profile"
+                                    height={300}
+                                    width={300}
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
