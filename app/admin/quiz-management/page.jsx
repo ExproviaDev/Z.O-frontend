@@ -1,4 +1,4 @@
-export default function QuizManagement() {
+export default function page() {
   return (
     <div>
       <h1 className="text-2xl font-bold text-gray-900">Quiz Management</h1>

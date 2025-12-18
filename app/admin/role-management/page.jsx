@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { FiSearch } from "react-icons/fi"
-import Table from "./components/Table"
-import RoleEditModal from "./RoleEditModal"
+import Table from "../components/ChartStatTable/Table"
+import RoleEditModal from "../components/RoleEditModal"
 
-export default function RoleManagement() {
+export default function page() {
   const [users, setUsers] = useState([])
   const [filteredUsers, setFilteredUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
