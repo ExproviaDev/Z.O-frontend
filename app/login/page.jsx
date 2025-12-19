@@ -47,11 +47,11 @@ export default function LoginPage() {
 
       if (res.ok && data.session) {
         const token = data.session.access_token;
-        const user = data.user;
         localStorage.setItem("access_token", token);
+        const user = data.user;
         Cookies.set("access_token", token, { expires: 7 });
         await dispatch(fetchUserProfile(token));
-        dispatch(setLogin({ user: user, isAuthenticated: true }));
+        // dispatch(setLogin({ user: user, isAuthenticated: true }));
 
         console.log("Login successful!");
         // router.push("/dashboard");
