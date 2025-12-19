@@ -34,7 +34,7 @@ export default function EditProfile() {
         if (!file) return;
         setLoading(true);
         try {
-            const options = { maxSizeMB: 0.1, maxWidthOrHeight: 800, useWebWorker: true }; // ১০০ কেবি টার্গেট
+            const options = { maxSizeMB: 0.1, maxWidthOrHeight: 800, useWebWorker: true };
             const compressedFile = await imageCompression(file, options);
             const data = new FormData();
             data.append("file", compressedFile);

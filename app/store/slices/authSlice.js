@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import Cookies from "js-cookie";
 export const fetchUserProfile = createAsyncThunk(
     'auth/fetchUserProfile',
     async (token, { rejectWithValue }) => {
@@ -30,6 +30,7 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.loading = false;
             localStorage.removeItem("access_token");
+            Cookies.remove("access_token");
         },
         setLogin: (state, action) => {
             state.user = action.payload.user;
@@ -56,6 +57,8 @@ const authSlice = createSlice({
                 state.isLoggedIn = false;
                 state.user = null;
                 state.error = action.payload;
+                localStorage.removeItem("access_token");
+                Cookies.remove("access_token");
             });
     }
 });

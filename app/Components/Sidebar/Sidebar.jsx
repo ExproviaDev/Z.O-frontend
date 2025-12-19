@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaUser, FaHome, FaBook, FaRegBookmark, FaStar } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import LogoutButton from "../LogoutButton";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -81,11 +82,7 @@ export default function Sidebar() {
           );
         })}
 
-        {/* Logout */}
-        <button className="flex items-center gap-3 px-4 py-2 mt-3 text-gray-700 hover:bg-gray-100 rounded-md w-full text-left">
-          <FiLogOut className="text-lg" />
-          <span className="font-medium">Logout</span>
-        </button>
+          <LogoutButton />
       </nav>
     </aside>
   );
