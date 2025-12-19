@@ -7,6 +7,8 @@ import ForgotPasswordModal from "../Components/ForgotPasswordModal";
 import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../store/slices/authSlice";
+import Cookies from "js-cookie";
+import { fetchUserProfile } from "../store/slices/authSlice";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -47,10 +49,13 @@ export default function LoginPage() {
         const token = data.session.access_token;
         const user = data.user;
         localStorage.setItem("access_token", token);
-
+        Cookies.set("access_token", token, { expires: 7 });
+        await dispatch(fetchUserProfile(token));
         dispatch(setLogin({ user: user, isAuthenticated: true }));
+
         console.log("Login successful!");
-        router.push("/dashboard");
+        // router.push("/dashboard");
+        window.location.href = "/dashboard";
       } else {
         setError(
           data.message || "Login failed. Please check your credentials."
