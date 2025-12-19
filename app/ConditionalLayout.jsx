@@ -2,23 +2,26 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; 
 import { fetchUserProfile, stopLoading } from "./store/slices/authSlice";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-import ReduxProvider from "./store/ReduxProvider";
 
 function AuthWrapper({ children }) {
   const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user); 
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    
     if (token) {
-      dispatch(fetchUserProfile(token));
+      if (!user) {
+        dispatch(fetchUserProfile(token));
+      }
     } else {
       dispatch(stopLoading());
     }
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   return <>{children}</>;
 }
@@ -32,15 +35,10 @@ export default function ConditionalLayout({ children }) {
   );
 
   return (
-    <ReduxProvider>
-      {" "}
-      <AuthWrapper>
-        {!shouldHideHeaderFooter && <Header />}
-
-        <main className="min-h-screen mx-auto">{children}</main>
-
-        {!shouldHideHeaderFooter && <Footer />}
-      </AuthWrapper>
-    </ReduxProvider>
+    <AuthWrapper>
+      {!shouldHideHeaderFooter && <Header />}
+      <main className="min-h-screen mx-auto">{children}</main>
+      {!shouldHideHeaderFooter && <Footer />}
+    </AuthWrapper>
   );
 }

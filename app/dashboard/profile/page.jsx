@@ -4,7 +4,12 @@ import { FaRegEdit, FaUserCircle, FaGraduationCap, FaAward } from "react-icons/f
 import Link from "next/link";
 
 const ProfilePage = () => {
-  const { user, loading } = useSelector((state) => state.user);
+  // const { user, loading } = useSelector((state) => state.user);
+  const authState = useSelector((state) => state.user);
+  const loading = authState?.loading;
+  const user = authState?.user?.user || authState?.user;
+  console.log('user data', user)
+  
 
   if (loading) return <div className="p-10 text-center">Loading Profile...</div>;
   if (!user) return <div className="p-10 text-center text-red-500">No profile data found. Please login again.</div>;

@@ -21,6 +21,7 @@ const authSlice = createSlice({
     initialState: {
         user: null,
         isLoggedIn: false,
+        isHydrated: false,
         loading: true,
         error: null,
     },
@@ -30,6 +31,7 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.loading = false;
             localStorage.removeItem("access_token");
+            localStorage.removeItem("persist:root");
             Cookies.remove("access_token");
         },
         setLogin: (state, action) => {
@@ -39,7 +41,10 @@ const authSlice = createSlice({
         },
         stopLoading: (state) => {
             state.loading = false;
-        }
+        },
+        setHydrated: (state) => {
+        state.isHydrated = true;
+    }
     },
     extraReducers: (builder) => {
         builder
@@ -49,8 +54,9 @@ const authSlice = createSlice({
             })
             .addCase(fetchUserProfile.fulfilled, (state, action) => {
                 state.loading = false;
-                state.isLoggedIn = action.payload.isAuthenticated; 
-                state.user = action.payload.user;
+                state.isLoggedIn = action.payload.isAuthenticated || true;
+                state.user = action.payload.user || action.payload;
+                state.error = null;
             })
             .addCase(fetchUserProfile.rejected, (state, action) => {
                 state.loading = false;
