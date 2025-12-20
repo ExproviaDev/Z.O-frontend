@@ -51,10 +51,8 @@ export default function LoginPage() {
         const user = data.user;
         Cookies.set("access_token", token, { expires: 7 });
         await dispatch(fetchUserProfile(token));
-        // dispatch(setLogin({ user: user, isAuthenticated: true }));
 
         console.log("Login successful!");
-        // router.push("/dashboard");
         window.location.href = "/dashboard";
       } else {
         setError(
@@ -71,10 +69,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen w-full flex items-center p-5 justify-center bg-white relative overflow-hidden">
-      {/* <div className="absolute inset-0">
-                <Image src="/src/loginBg.png" alt="Background" fill className="object-cover opacity-60" priority />
-            </div>
-            <div className="absolute inset-0 bg-black/80 backdrop-blur-xs"></div> */}
 
       <div className="relative z-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/30 backdrop-blur-xs p-10 rounded-3xl shadow-2xl">
         <div className="text-Primary flex flex-col justify-center">

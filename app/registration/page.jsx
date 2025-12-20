@@ -17,7 +17,7 @@ export default function RegistrationPage() {
     institution: "",
     educationType: "",
     gradeLevel: "",
-    currentLevel: "",
+    currentLevel: "N/A",
     activities: [],
   });
 
@@ -36,26 +36,37 @@ export default function RegistrationPage() {
     e.preventDefault();
     if (isSubmitting) return;
     setIsSubmitting(true);
+    setError("");
 
     const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`;
 
-    const res = await fetch(backendUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const res = await fetch(backendUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await res.json();
-    setIsSubmitting(false);
+      const data = await res.json();
+      setIsSubmitting(false);
 
-    if (res.ok && data.user) {
-      alert("রেজিস্ট্রেশন সফল! আপনার ইমেল যাচাইকরণের জন্য একটি মেইল পাঠানো হয়েছে।");
+      if (res.ok && data.user) {
+        alert("রেজিস্ট্রেশন সফল! আপনার ইমেল যাচাইকরণের জন্য একটি মেইল পাঠানো হয়েছে।");
+        window.location.href = "/login";
 
-    } else {
-      setError(data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে।");
+
+      } else {
+        setError(data.message || "Registration failed. Please try again.");
+      }
+
+    } catch (err) {
+      setIsSubmitting(false);
+      setError("Network error. Please check your connection.");
+
     }
+
   };
 
   const renderStep = () => {
@@ -85,6 +96,8 @@ export default function RegistrationPage() {
             prevStep={prevStep}
             handleSubmit={handleSignup}
             isSubmitting={isSubmitting}
+            serverError={error}
+            setServerError={setError}
           />
         );
       default:

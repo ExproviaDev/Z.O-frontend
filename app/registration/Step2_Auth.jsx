@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaArrowLeft,
   FaArrowRight,
   FaBookOpen,
   FaListAlt,
   FaRegCalendarAlt,
-  FaRunning,
 } from "react-icons/fa";
 
 export default function Step2_Academic({
@@ -15,6 +14,8 @@ export default function Step2_Academic({
   nextStep,
   prevStep,
 }) {
+  const [stepError, setStepError] = useState("");
+
   const educationTypes = [
     "Bangla Medium (Bangla & English Version)",
     "English Medium (IGCSE & IB)",
@@ -57,15 +58,22 @@ export default function Step2_Academic({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    updateFormData({ [name]: value });
-
-    const juniorClasses = gradeLevels.slice(0, 6);
-    if (name === "gradeLevel" && juniorClasses.includes(value)) {
-      updateFormData({
-        gradeLevel: value,
-        currentLevel: value,
-      });
+    
+    if (name === "gradeLevel") {
+      const isJunior = gradeLevels.slice(0, 6).includes(value);
+      if (isJunior) {
+        updateFormData({ 
+          gradeLevel: value, 
+          currentLevel: "N/A" 
+        });
+      } else {
+        updateFormData({ [name]: value });
+      }
+    } else {
+      updateFormData({ [name]: value });
     }
+    
+    if (stepError) setStepError("");
   };
 
   const handleCheckboxChange = (activity) => {
@@ -78,6 +86,17 @@ export default function Step2_Academic({
       selectedActivities = [...selectedActivities, activity];
     }
     updateFormData({ activities: selectedActivities });
+    if (stepError) setStepError("");
+  };
+
+  const handleNextSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.activities || formData.activities.length === 0) {
+      setStepError("Please select at least one activity to proceed.");
+      return;
+    }
+
+    nextStep();
   };
 
   const isHigherThanClass10 = gradeLevels
@@ -85,14 +104,7 @@ export default function Step2_Academic({
     .includes(formData.gradeLevel);
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        nextStep();
-      }}
-      className="space-y-6"
-    >
-      {/* 1. Education Type */}
+    <form onSubmit={handleNextSubmit} className="space-y-6">
       <div className="pb-2">
         <label className="block text-lg font-bold text-Primary pb-2">
           Education Type*
@@ -117,8 +129,6 @@ export default function Step2_Academic({
           </select>
         </div>
       </div>
-
-      {/* 2. Grade Level */}
       <div className="pb-2">
         <label className="block text-lg font-bold text-Primary pb-2">
           School/Madrasha Class (January 2026)*
@@ -146,8 +156,6 @@ export default function Step2_Academic({
           </select>
         </div>
       </div>
-
-      {/* 3. Current Level - Animated Transition */}
       <div
         className={`grid transition-all duration-500 ease-in-out ${
           isHigherThanClass10
@@ -168,7 +176,7 @@ export default function Step2_Academic({
             <FaRegCalendarAlt className="text-gray-600 ml-2" />
             <select
               name="currentLevel"
-              value={formData.currentLevel}
+              value={formData.currentLevel === "N/A" ? "" : formData.currentLevel}
               onChange={handleChange}
               className="w-full p-2 focus:outline-none bg-transparent"
               required={isHigherThanClass10}
@@ -185,8 +193,6 @@ export default function Step2_Academic({
           </div>
         </div>
       </div>
-
-      {/* 4. Activities - Always Visible (Multiple Select Checkboxes) */}
       <div className="pb-4">
         <label className="block text-lg font-bold text-Primary pb-2">
           Activities (Multiple Select)*
@@ -195,25 +201,24 @@ export default function Step2_Academic({
           Which of the following activities would you like to do with Faatiha
           Aayat?
         </p>
-        <div className="grid grid-cols-1 gap-3 border border-Primary p-4 rounded-lg bg-white">
+        <div className={`grid grid-cols-1 gap-3 border p-4 rounded-lg bg-white transition-colors ${stepError ? 'border-red-500 shadow-sm' : 'border-Primary'}`}>
           {activitiesOptions.map((option, index) => (
             <label
               key={index}
-              className="flex items-center space-x-3 cursor-pointer p-2 rounded hover:bg-blue-50 transition-colors duration-200"
+              className="flex items-start space-x-3 cursor-pointer p-2 rounded hover:bg-blue-50 transition-colors duration-200"
             >
               <input
                 type="checkbox"
                 checked={formData.activities?.includes(option)}
                 onChange={() => handleCheckboxChange(option)}
-                className="w-5 h-5 accent-Primary cursor-pointer"
+                className="w-5 h-5 mt-1 accent-Primary cursor-pointer"
               />
               <span className="text-md text-gray-700">{option}</span>
             </label>
           ))}
         </div>
+        {stepError && <p className="text-red-500 text-sm mt-2 font-medium">{stepError}</p>}
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
         <button
           type="button"
