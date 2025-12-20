@@ -3,8 +3,7 @@ import { FaBookOpenReader } from "react-icons/fa6";
 import { LuMonitorPlay } from "react-icons/lu";
 import { LiaCertificateSolid } from "react-icons/lia";
 
-const Dashboard = () => {
-  // ডেটাগুলো একটি অ্যারেতে রাখা হয়েছে কোড ক্লিন রাখার জন্য
+const page = () => {
   const stats = [
     {
       id: 1,
@@ -97,4 +96,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default page;

@@ -2,18 +2,18 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile, stopLoading } from "./store/slices/authSlice";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 
 function AuthWrapper({ children }) {
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.user); 
+  const { user, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    
+
     if (token) {
       if (!user) {
         dispatch(fetchUserProfile(token));
@@ -28,7 +28,12 @@ function AuthWrapper({ children }) {
 
 export default function ConditionalLayout({ children }) {
   const pathname = usePathname();
-  const routesToHideHeaderFooter = ["/admin", "/login", "/registration"];
+  const routesToHideHeaderFooter = [
+    "/admin",
+    "/login",
+    "/registration",
+    "/dashboard",
+  ];
 
   const shouldHideHeaderFooter = routesToHideHeaderFooter.some((route) =>
     pathname.startsWith(route)

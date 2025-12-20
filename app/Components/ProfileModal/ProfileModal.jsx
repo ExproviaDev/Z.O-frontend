@@ -26,14 +26,11 @@ export default function ProfileModal({ isOpen, onClose }) {
 
   return (
     <div className="absolute md:right-5 lg:right-0 top-full mt-2 z-50">
-      {/* বর্ডারকে উজ্জ্বল করার জন্য মূল কন্টেইনার (এখানে ২ পিক্সেল প্যাডিং এবং শ্যাডো বাড়ানো হয়েছে) */}
       <div
         ref={modalRef}
         className="relative p-[2px] rounded-2xl bg-gradient-to-b from-purple-500 via-purple-800 to-transparent shadow-[0_0_20px_rgba(168,85,247,0.4)]"
       >
-        {/* মেইন কন্টেন্ট বক্স (এই বক্সের কালার একটু ডার্ক রাখা হয়েছে যাতে বর্ডার ফুটে ওঠে) */}
         <div className="w-72 rounded-[14px] bg-[#0b0418] p-5">
-          {/* প্রোফাইল ইনফো এবং সার্কেল বর্ডার */}
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2.5px] rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 shadow-lg">
               {user.profile_image_url ? (
@@ -66,10 +63,8 @@ export default function ProfileModal({ isOpen, onClose }) {
             </Link>
           </div>
 
-          {/* মেনু আইটেমগুলোর মাঝে খুব হালকা ডিভাইডার */}
           <div className="my-5 h-[1px] bg-gradient-to-r from-transparent via-purple-800/50 to-transparent" />
 
-          {/* মেনু লিস্ট */}
           <ul className="space-y-1 text-sm font-medium">
             {[
               { label: "My Classes", path: "/dashboard/classes" },
@@ -90,7 +85,6 @@ export default function ProfileModal({ isOpen, onClose }) {
             ))}
           </ul>
 
-          {/* Logout বাটন */}
           <div className="mt-4 border-t border-purple-900/40 pt-3">
             <button className="flex w-full items-center justify-between text-purple-400 hover:text-purple-300 transition-colors font-semibold group">
               Logout

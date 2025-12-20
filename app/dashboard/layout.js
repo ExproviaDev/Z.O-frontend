@@ -1,4 +1,3 @@
-// /app/dashboard/layout.jsx
 import Dashboard from "../Components/Dashboard/Dashboard";
 import Sidebar from "../Components/Sidebar/Sidebar";
 
