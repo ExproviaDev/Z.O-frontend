@@ -37,7 +37,7 @@ export default function RegistrationPage() {
     if (isSubmitting) return;
     setIsSubmitting(true);
 
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/register`;
+    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`;
 
     const res = await fetch(backendUrl, {
       method: "POST",
@@ -116,9 +116,9 @@ export default function RegistrationPage() {
           <p className="text-center text-sm text-gray-500 mt-2">Step {currentStep} of 3</p>
 
           <p className="mt-2 text-center">
-            If you Don't Have Any Account!{" "}
+            Already Have An Account Please !{" "}
             <Link href="/login" className="underline cursor-pointer text-Primary hover:text-gray-600 font-bold">
-              Register
+              Login
             </Link>
           </p>
         </div>
