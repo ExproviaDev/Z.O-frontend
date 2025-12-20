@@ -10,7 +10,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ProfilePage = () => {
-  const { user, loading } = useSelector((state) => state.user);
+  // const { user, loading } = useSelector((state) => state.user);
+  const authState = useSelector((state) => state.user);
+  const loading = authState?.loading;
+  const user = authState?.user?.user || authState?.user;
+  console.log('user data', user)
+  
 
   console.log(user, loading);
   if (loading)

@@ -17,7 +17,11 @@ const nextConfig = {
       "media.prothomalo.com",
       "scontent.fdac198-1.fna.fbcdn.net",
       "images.unsplash.com",
+<<<<<<< HEAD
       "via.placeholder.com",
+=======
+      "res.cloudinary.com"
+>>>>>>> 65cc2321c4834a9db6c9d5125c6862b883e77da7
     ],
   },
 };

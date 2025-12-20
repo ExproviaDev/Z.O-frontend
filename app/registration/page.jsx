@@ -116,9 +116,9 @@ export default function RegistrationPage() {
           <p className="text-center text-sm text-gray-500 mt-2">Step {currentStep} of 3</p>
 
           <p className="mt-2 text-center">
-            If you Don't Have Any Account!{" "}
+            Already Have An Account Please !{" "}
             <Link href="/login" className="underline cursor-pointer text-Primary hover:text-gray-600 font-bold">
-              Register
+              Login
             </Link>
           </p>
         </div>
