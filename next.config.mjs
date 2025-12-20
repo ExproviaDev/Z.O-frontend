@@ -18,6 +18,7 @@ const nextConfig = {
       "scontent.fdac198-1.fna.fbcdn.net",
       "images.unsplash.com",
       "via.placeholder.com",
+      "res.cloudinary.com",
     ],
   },
 };

@@ -86,7 +86,7 @@ export default function Header() {
             </div>
 
             {/* Desktop Buttons */}
-            {user && (
+            {!user && (
               <div className="hidden lg:flex items-center gap-4">
                 <Link
                   href={"/login"}

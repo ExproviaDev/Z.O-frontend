@@ -14,8 +14,7 @@ const ProfilePage = () => {
   const authState = useSelector((state) => state.user);
   const loading = authState?.loading;
   const user = authState?.user?.user || authState?.user;
-  console.log('user data', user)
-  
+  console.log("user data", user);
 
   console.log(user, loading);
   if (loading)
