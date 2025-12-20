@@ -5,6 +5,7 @@ import { fetchUserProfile } from "../../../store/slices/authSlice";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function EditProfile() {
   const educationTypes = [
@@ -148,7 +149,7 @@ export default function EditProfile() {
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-gray-400 font-medium">
-                  No Image
+                  <FaUserCircle size={100}></FaUserCircle>
                 </div>
               )}
             </div>

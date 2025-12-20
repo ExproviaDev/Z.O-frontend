@@ -32,7 +32,7 @@ const ProfilePage = () => {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-blue-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-6">
             <Image
-              src={user.profile_image_url || "https://via.placeholder.com/150"}
+              src={user.profile_image_url || <FaUserCircle size={100}></FaUserCircle>}
               alt="Profile"
               width={200}
               height={200}

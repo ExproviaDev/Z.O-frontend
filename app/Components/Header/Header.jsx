@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import logo from "../../../public/src/SiteLogo.png";
 import Image from "next/image";
-import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
+import { FaSignInAlt, FaUserCircle, FaUserPlus } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileModal from "../ProfileModal/ProfileModal";
 
@@ -96,7 +96,7 @@ export default function Header() {
                     >
                       <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
                         <Image
-                          src={user.profile_image_url}
+                          src={user.profile_image_url || <FaUserCircle size={80}></FaUserCircle>}
                           alt="avatar"
                           width={200}
                           height={200}
