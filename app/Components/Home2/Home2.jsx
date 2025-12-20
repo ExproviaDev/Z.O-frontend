@@ -149,15 +149,19 @@ export default function HomePage() {
                 develop leadership skills, and engage them in achieving the United Nations Sustainable Development Goals (SDGs). The Zero Olympiad is a platform where participants are inspired to find effective solutions to various problems in society through their own thinking and solutions
               </p>
 
-              <div className="flex gap-4">
-               <button className="flex items-center gap-3 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+              <div className="md:flex gap-4">
+              <div className="mb-4">
+                 <button className="flex  items-center gap-3 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 English Instructions
                 <FaArrowRight />
               </button>
-               <button className="flex items-center gap-3 border-2 border-pink-500 text-black hover:text-white hover:bg-pink-600  px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+              </div>
+               <div>
+                <button className="flex items-center gap-3 border-2 border-pink-500 text-black hover:text-white hover:bg-pink-600  px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 Bangla Instructions
                 <FaArrowRight />
               </button>
+               </div>
               </div>
 
             </div>
