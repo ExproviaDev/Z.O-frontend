@@ -42,6 +42,7 @@ import {
 } from "react-icons/fa"
 import EventGallery from "../EventGallery/EventGallery"
 import JurySection from "../JuryCard/Jury"
+import HeroSection from "../HeroSection/Hero"
 
 export default function HomePage() {
   const [animatedSections, setAnimatedSections] = useState(new Set())
@@ -70,69 +71,21 @@ export default function HomePage() {
   return (
     <main className="overflow-x-hidden ">
       {/* Hero Section - Full Width */}
-      <section className="p-5 relative min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
-        <div className="absolute inset-0 bg-black/40" />
-        <Image
-          src="/src/bannerForLogin.png"
-          alt="Hero Background"
-          fill
-          className="object-cover mix-blend-overlay opacity-30"
-          priority
-        />
+    <section>
+      <HeroSection></HeroSection>
+    </section>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 pt-32 pb-20">
-          <div
-            data-section="hero"
-            className={`text-center transition-all duration-1000 ${
-              animatedSections.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              Welcome to <span className="text-pink-600">Zero Olympiad</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
-              Unleash your potential, compete with the brightest minds, and embark on a journey of academic excellence and discovery.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-16">
-              <button className="flex items-center gap-3 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                Register Now
-                <FaArrowRight />
-              </button>
-               <button className="flex items-center gap-3 border-2 border-pink-500 text-white  hover:bg-pink-600  px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                Learn More
-                <FaArrowRight />
-              </button>
-            </div>
-          </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-            {[
-               { icon: FaCalendarAlt, number: "Jan 15", label: "Registration Dateline" },
-              { icon: FaUsers, number: "3 Categories", label: "For All Student" },
-              
-              { icon: FaTrophy, number: "17 SDGs", label: "Competition Topic" },
-             
-            ].map((stat, index) => (
-              <div
-                key={index}
-                data-section={`stat-${index}`}
-                className={`bg-white/10 backdrop-blur-md rounded-2xl p-8 text-center border border-white/20 transition-all duration-700 hover:scale-105 hover:bg-white/20 ${
-                  animatedSections.has(`stat-${index}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <stat.icon className="text-5xl text-pink-400 mx-auto mb-4" />
-                <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
-                <div className="text-gray-300 text-lg">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
+
+
+
+
+
+
 
       {/* Zero Olympiad Instructions */}
-      <section className="py-20 p-5 bg-white">
+      <section className="py-20 p-7 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div
@@ -217,7 +170,7 @@ export default function HomePage() {
     </p>
 
     {/* Cards Grid */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  h-full">
+    <div className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  h-full">
       {[
         {
           badge: "SDG",
@@ -308,7 +261,7 @@ export default function HomePage() {
 
 
 {/* Registration Categories */}
-<section className="relative w-full min-h-screen bg-gray-50 flex items-center py-20 px-5">
+<section className="relative  w-full min-h-screen bg-gray-50 flex items-center py-20 px-5">
   <div className="max-w-7xl mx-auto w-full">
     {/* Section Title */}
     <div className="text-center mb-12">
@@ -330,7 +283,7 @@ export default function HomePage() {
 
     {/* Cards Grid */}
    {/* Cards Grid */}
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+<div className="grid grid-cols-1 p-5 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
   {[
     {
       title: "SDG Activist",
@@ -469,7 +422,7 @@ export default function HomePage() {
         <div
           key={i}
           data-section={`award-${i}`}
-          className={`group rounded-2xl p-6 border-2 border-pink-500 bg-white/5 backdrop-blur-md
+          className={`group rounded-2xl p-6 border border-pink-500 bg-white/5 backdrop-blur-md
           hover:bg-white/10 hover:-translate-y-1 transition-all duration-500
           ${
             animatedSections.has(`award-${i}`)
@@ -501,7 +454,7 @@ export default function HomePage() {
         <div
           key={i}
           data-section={`scholar-${i}`}
-          className={`group rounded-2xl p-6 border-2 border-pink-500 bg-white/5 backdrop-blur-md
+          className={`group rounded-2xl p-6 border border-pink-500 bg-white/5 backdrop-blur-md
           hover:bg-white/10 hover:-translate-y-1 transition-all duration-500
           ${
             animatedSections.has(`scholar-${i}`)
@@ -642,13 +595,15 @@ export default function HomePage() {
 
 
 {/* Confirmed Guest & Jury Section */}
-<JurySection></JurySection>
+<section className="">
+  <JurySection></JurySection>
 
+</section>
       
 
       {/* Gallery */}
   {/* Gallery */}
-<section className="py-20 bg-white">
+<section className="py-20 p-5 bg-white">
   <div className="max-w-7xl mx-auto px-4">
     <h2
       data-section="gallery-title"
