@@ -58,21 +58,19 @@ export default function ProfileModal({ isOpen, onClose }) {
         {/* Menu */}
         <ul className="space-y-1 text-sm">
           {[
-            "Dashboard",
-            "My Profile",
-            "My Quizzes",
-            "My Certificates",
-            "Payment History",
-            "Settings",
+            { label: "Dashboard", path: "/dashboard" },
+            { label: "My Profile", path: "/dashboard/profile" },
+            { label: "My Quizzes", path: "/dashboard/quizzes" },
+            { label: "My Certificates", path: "/dashboard/certificates" },
+            { label: "Payment History", path: "/dashboard/history" },
+            // { label: "Settings", path: "/account/settings" },
           ].map((item) => (
             <li
-              key={item}
-              className="cursor-pointer rounded-lg px-3 py-2 text-gray-300 hover:bg-purple-700/20 hover:text-white"
+              key={item.label}
+              className="cursor-pointer rounded-lg px-3 py-2 text-gray-300 hover:bg-purple-700/20 hover:text-white transition-colors"
             >
-              <Link
-                href={`/dashboard/${item.toLowerCase().replace(/ /g, "-")}`}
-              >
-                {item}
+              <Link href={item.path} onClick={onClose} className="block w-full">
+                {item.label}
               </Link>
             </li>
           ))}
@@ -80,7 +78,7 @@ export default function ProfileModal({ isOpen, onClose }) {
 
         {/* Logout */}
         <div className="mt-4 border-t border-purple-800/40 pt-3">
-          <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300">
+          <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300 cursor-pointer">
             Logout <span className="text-lg">↩</span>
           </button>
         </div>
