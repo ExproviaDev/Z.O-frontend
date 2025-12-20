@@ -1,14 +1,19 @@
-"use client"
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import { 
-  persistStore, 
+"use client";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import {
+  persistStore,
   persistReducer,
-  FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER 
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 const rootReducer = combineReducers({
-  user: authReducer, 
+  user: authReducer,
 });
 const persistConfig = {
   key: "root",
@@ -26,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }), 
+    }),
 });
 
 export const persistor = persistStore(store);
