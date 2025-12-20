@@ -95,7 +95,7 @@ export default function Header() {
                       className="flex items-center focus:outline-none cursor-pointer"
                     >
                       <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
-                        <Image
+                        {/* <Image
                           src={user.profile_image_url || <FaUserCircle size={80}></FaUserCircle>}
                           alt="avatar"
                           width={200}
@@ -103,7 +103,20 @@ export default function Header() {
                           quality={100}
                           priority
                           className="object-cover h-full w-full"
-                        />
+                        /> */}
+                        {user.profile_image_url ? (
+                          <Image
+                            src={user.profile_image_url || "no image"}
+                            alt="Profile"
+                            width={112}
+                            height={112}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                            <FaUserCircle size={100}></FaUserCircle>
+                          </div>
+                        )}
                       </div>
                     </button>
                   )}
@@ -113,15 +126,19 @@ export default function Header() {
                       className="flex items-center focus:outline-none cursor-pointer"
                     >
                       <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
-                        <Image
-                          src={user.profile_image_url}
-                          alt="avatar"
-                          width={200}
-                          height={200}
-                          quality={100}
-                          priority
-                          className="object-cover h-full w-full"
-                        />
+                        {user.profile_image_url ? (
+                          <Image
+                            src={user.profile_image_url}
+                            alt="Profile"
+                            width={112}
+                            height={112}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                            <FaUserCircle size={100}></FaUserCircle>
+                          </div>
+                        )}
                       </div>
                     </button>
                   )}
@@ -148,11 +165,10 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden top-0 left-0 right-0 border-t border-gray-200 shadow-lg transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen
-              ? "flex opacity-100 translate-y-0"
-              : "hidden opacity-0 -translate-y-4 pointer-events-none"
-          }`}
+          className={`lg:hidden top-0 left-0 right-0 border-t border-gray-200 shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen
+            ? "flex opacity-100 translate-y-0"
+            : "hidden opacity-0 -translate-y-4 pointer-events-none"
+            }`}
         >
           <div className="container mx-auto px-4 py-6">
             <nav className="flex flex-col gap-4">

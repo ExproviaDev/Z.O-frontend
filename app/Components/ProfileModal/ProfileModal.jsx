@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function ProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
@@ -35,16 +36,19 @@ export default function ProfileModal({ isOpen, onClose }) {
           {/* প্রোফাইল ইনফো এবং সার্কেল বর্ডার */}
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2.5px] rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 shadow-lg">
-              <Image
-                src={
-                  user?.profile_image_url ||
-                  "https://images.unsplash.com/photo-1517841905240-472988babdf9"
-                }
-                alt="profile"
-                width={80}
-                height={80}
-                className="rounded-full w-20 h-20 object-cover bg-[#0b0418]"
-              />
+              {user.profile_image_url ? (
+                <Image
+                  src={user.profile_image_url}
+                  alt="Profile"
+                  width={112}
+                  height={112}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                  <FaUserCircle size={100}></FaUserCircle>
+                </div>
+              )}
             </div>
             <h3 className="mt-3 font-bold text-white tracking-wide">
               {user?.name || "Md Shoriful Islam"}
