@@ -1,7 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { FaIdCard, FaTrophy, FaGraduationCap, FaUserCircle } from "react-icons/fa";
+import {
+  FaIdCard,
+  FaTrophy,
+  FaGraduationCap,
+  FaUserCircle,
+} from "react-icons/fa";
 
 // Ensure the path to your logo is correct
 import SiteLogo from "../../../public/src/SiteLogo.png";
@@ -114,7 +119,7 @@ const Dashboard = () => {
       </div>
 
       {/* Modern Circular Rotation Animation Keyframes */}
-      <style>{`
+      {/* <style>{`
         @keyframes rotateCircular {
           from {
             transform: rotate(0deg) translateX(15px) rotate(0deg);
@@ -123,7 +128,7 @@ const Dashboard = () => {
             transform: rotate(360deg) translateX(15px) rotate(-360deg);
           }
         }
-      `}</style>
+      `}</style> */}
     </section>
   );
 };
