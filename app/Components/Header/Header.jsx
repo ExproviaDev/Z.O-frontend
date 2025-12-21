@@ -164,9 +164,9 @@ export default function Header() {
               className="lg:hidden p-2 rounded-xl bg-gray-50 text-gray-700 focus:outline-none"
             >
               {isMobileMenuOpen ? (
-                <AiOutlineClose size={24} />
+                <AiOutlineClose size={24} className="cursor-pointer" />
               ) : (
-                <AiOutlineMenu size={24} />
+                <AiOutlineMenu size={24} className="cursor-pointer" />
               )}
             </button>
           </div>
@@ -174,7 +174,7 @@ export default function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl z-[90] animate-in slide-in-from-top duration-300">
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl z-[90] animate-in slide-in-from-left ease-in-out translate-x duration-300">
           <nav className="flex flex-col p-4 space-y-4">
             {filteredNavItems.map((item) => (
               <Link
