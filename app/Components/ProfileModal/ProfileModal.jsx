@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import LogoutButton  from "../LogoutButton"
 
 export default function ProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
@@ -39,10 +40,10 @@ export default function ProfileModal({ isOpen, onClose }) {
                   alt="Profile"
                   width={112}
                   height={112}
-                  className="w-full h-full object-cover"
+                  className="w-[90px] h-[90px] rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                <div className="flex h-full rounded-full items-center justify-center text-gray-400 font-medium">
                   <FaUserCircle size={100}></FaUserCircle>
                 </div>
               )}
@@ -86,12 +87,9 @@ export default function ProfileModal({ isOpen, onClose }) {
           </ul>
 
           <div className="mt-4 border-t border-purple-900/40 pt-3">
-            <button className="flex w-full items-center justify-between text-purple-400 hover:text-purple-300 transition-colors font-semibold group">
-              Logout
-              <span className="text-xl group-hover:translate-x-1 transition-transform">
-                ↩
-              </span>
-            </button>
+          <LogoutButton>
+
+          </ LogoutButton>
           </div>
         </div>
       </div>
