@@ -84,11 +84,11 @@ export default function JurySection() {
 
 function Card({ jury }) {
   return (
-    <div className="bg-white rounded-[18px] p-6 h-full flex flex-col items-center justify-center text-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+    <div className="bg-white hover:bg-white/15 hover:-translate-y-2 group shadow-2xl hover:text-white rounded-[18px] p-6 h-full flex flex-col items-center justify-center text-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
       {/* Image Container with Pink Dashed Border */}
       <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
         {/* Animated Dashed Border */}
-        <div className="absolute inset-0 rounded-full  border-dashed border-pink-600 border-4 group-hover:rotate-45 transition-transform duration-700" />
+        <div className="absolute inset-0 rounded-full   border-dashed border-pink-600 border-4 group-hover:border-blue-400 amber-400 group-hover:rotate-45 transition-transform duration-700" />
         
         {/* Profile Image */}
         <div className="relative w-[82%] h-[82%] rounded-full overflow-hidden border-2 border-white shadow-inner">
@@ -101,10 +101,10 @@ function Card({ jury }) {
         </div>
       </div>
 
-      <h3 className="text-[18px] font-bold text-[#1a1a1a] mb-1 leading-tight">
+      <h3 className="text-[18px] font-bold   mb-1 leading-tight">
         {jury.name}
       </h3>
-      <p className="text-[12px] text-gray-500 font-medium whitespace-pre-line leading-snug">
+      <p className="text-[12px]  font-medium whitespace-pre-line leading-snug">
         {jury.role}
       </p>
     </div>

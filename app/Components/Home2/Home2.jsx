@@ -379,13 +379,13 @@ export default function HomePage() {
 
 
 
- <section className="relative w-full py-24 p-5 px-5 bg-gradient-to-br from-[#182a8d8f] via-[#0b3c97] to-[#121974de] overflow-hidden">
+ <section className="relative w-full py-24 p-5 px-5 bg-gradient-to-br from-[#2034a88f] via-[#134bb3] to-[#1f28aade] overflow-hidden">
   {/* background image */}
   <Image
     src="/src/NRBAward.jpg"
     alt="Background"
     fill
-    className="object-cover opacity-20 mix-blend-overlay"
+    className="object-cover scroll opacity-20 mix-blend-overlay"
   />
   <div className="absolute inset-0 bg-black/60" />
 
@@ -603,50 +603,7 @@ export default function HomePage() {
 
       {/* Gallery */}
   {/* Gallery */}
-<section className="py-20 p-5 bg-white">
-  <div className="max-w-7xl mx-auto px-4">
-    <h2
-      data-section="gallery-title"
-      className={`text-2xl md:text-[40px] font-semibold text-center text-gray-900 mb-4 transition-all duration-1000 ${
-        animatedSections.has("gallery-title")
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-8"
-      }`}
-    >
-      <span className="">Gallery</span>
-    </h2>
-
-    <p className="text-center text-gray-500 text-lg mb-12 max-w-3xl mx-auto">
-      Compete for glory and be rewarded with prizes that recognize your hard work and dedication
-    </p>
-
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-      {Array.from({ length: 9 }).map((_, index) => (
-        <div
-          key={index}
-          data-section={`gallery-${index}`}
-          className={`relative aspect-square rounded-xl overflow-hidden group cursor-pointer transition-all duration-700 ${
-            animatedSections.has(`gallery-${index}`)
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-95"
-          }`}
-          style={{ transitionDelay: `${index * 50}ms` }}
-        >
-          <Image
-            src={`/src/gallery/img${index + 1}.jpg`}
-            alt={`Gallery image ${index + 1}`}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-            {/* optional caption */}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+<EventGallery></EventGallery>
 
 
 
