@@ -25,7 +25,7 @@ export default function Sidebar() {
     <aside className="lg:w-64 border-2 border-green-600 rounded-xl p-6 shadow-sm bg-white">
       {/* Welcome text */}
       <h2 className="text-sm font-semibold text-gray-500 mb-4">
-        WELCOME, JONE DUE
+        WELCOME, Zero Olympiad
       </h2>
       {/* Main menu */}
       <nav className="space-y-2">
