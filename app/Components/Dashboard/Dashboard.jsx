@@ -1,7 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { FaIdCard, FaTrophy, FaGraduationCap, FaUserCircle } from "react-icons/fa";
+import {
+  FaIdCard,
+  FaTrophy,
+  FaGraduationCap,
+  FaUserCircle,
+} from "react-icons/fa";
 
 // Ensure the path to your logo is correct
 import SiteLogo from "../../../public/src/SiteLogo.png";
@@ -36,7 +41,7 @@ const Dashboard = () => {
                     Zero Olympiad
                   </h1>
                   <p className="text-lg md:text-xl font-light italic opacity-90">
-                    "Reducing To Zero, Rising As Hero"
+                    {`"Reducing To Zero, Rising As Hero"`}
                   </p>
                 </div>
 
@@ -44,9 +49,9 @@ const Dashboard = () => {
                 <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-2xl bg-black/10 backdrop-blur-md border border-white/5 shadow-inner">
                   <div className="relative group">
                     <div className="absolute -inset-1 from-yellow-400 to-pink-500 rounded-full blur opacity-40 transition duration-500"></div>
-                    {user.profile_image_url ? (
+                    {user?.profile_image_url ? (
                       <Image
-                        src={user.profile_image_url}
+                        src={user?.profile_image_url}
                         alt="Profile"
                         width={300}
                         height={300}
@@ -112,18 +117,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Modern Circular Rotation Animation Keyframes */}
-      <style>{`
-        @keyframes rotateCircular {
-          from {
-            transform: rotate(0deg) translateX(15px) rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg) translateX(15px) rotate(-360deg);
-          }
-        }
-      `}</style>
     </section>
   );
 };

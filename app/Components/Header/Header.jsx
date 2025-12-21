@@ -132,7 +132,7 @@ export default function Header() {
                             alt="Profile"
                             width={112}
                             height={112}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full rounded-full object-cover"
                           />
                         ) : (
                           <div className="flex h-full items-center justify-center text-gray-400 font-medium">
