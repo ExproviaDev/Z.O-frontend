@@ -12,7 +12,8 @@ import ProfileModal from "../ProfileModal/ProfileModal";
 
 const navItems = [
   { title: "Home", url: "/" },
-  { title: "About Us", url: "/about" },
+   { title: "About Us", url: "/about" },
+  { title: "About Faatiha", url: "/aboutFaatiha" },
   { title: "Leaderboard", url: "/leaderboard" },
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
@@ -158,13 +159,77 @@ export default function Header() {
               </div>
             )}
 
-            {/* Mobile Toggle Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-gray-50 text-gray-700 focus:outline-none"
-            >
-              {isMobileMenuOpen ? (
-                <AiOutlineClose size={24} className="cursor-pointer" />
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={toggleMobileMenu}
+                className="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? (
+                  <AiOutlineClose className="w-6 h-6" />
+                ) : (
+                  <AiOutlineMenu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+
+            <div>
+              {email ? (
+                <div className="mt-0 flex items-center gap-4 lg:mt-0">
+                  {!isProfileOpen && (
+                    <button
+                      onClick={() => setIsProfileOpen((prev) => !prev)}
+                      className="flex items-center focus:outline-none cursor-pointer"
+                    >
+                      <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
+                        {/* <Image
+                          src={user.profile_image_url || <FaUserCircle size={80}></FaUserCircle>}
+                          alt="avatar"
+                          width={200}
+                          height={200}
+                          quality={100}
+                          priority
+                          className="object-cover h-full w-full"
+                        /> */}
+                        {user.profile_image_url ? (
+                          <Image
+                            src={user.profile_image_url || "no image"}
+                            alt="Profile"
+                            width={112}
+                            height={112}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                            <FaUserCircle size={100}></FaUserCircle>
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  )}
+                  {isProfileOpen && (
+                    <button
+                      onClose={() => setIsProfileOpen(false)}
+                      className="flex items-center focus:outline-none cursor-pointer"
+                    >
+                      <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
+                        {user.profile_image_url ? (
+                          <Image
+                            src={user.profile_image_url}
+                            alt="Profile"
+                            width={112}
+                            height={112}
+                            className="w-full h-full rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
+                            <FaUserCircle size={100}></FaUserCircle>
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  )}
+                </div>
               ) : (
                 <AiOutlineMenu size={24} className="cursor-pointer" />
               )}

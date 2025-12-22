@@ -95,9 +95,6 @@ export default function ProfileModal({ isOpen, onClose }) {
 
           {/* Logout */}
           <div className="mt-4 border-t border-purple-800/30 pt-3">
-            {/* <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300 cursor-pointer transition-colors">
-              Logout <span className="text-lg">↩</span>
-            </button> */}
             <LogoutButton />
           </div>
         </div>

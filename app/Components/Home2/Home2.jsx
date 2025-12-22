@@ -28,10 +28,11 @@ import {
   FaLightbulb,
   FaChalkboardTeacher,
   FaTheaterMasks,
-} from "react-icons/fa";
-import EventGallery from "../EventGallery/EventGallery";
-import JurySection from "../JuryCard/Jury";
-import HeroSection from "../HeroSection/Hero";
+} from "react-icons/fa"
+import EventGallery from "../EventGallery/EventGallery"
+import JurySection from "../JuryCard/Jury"
+import HeroSection from "../HeroSection/Hero"
+import TimelineEvent from "../Timeline/TimelineEvent"
 
 export default function HomePage() {
   const [animatedSections, setAnimatedSections] = useState(new Set());
@@ -355,61 +356,66 @@ export default function HomePage() {
               ? "bg-pink-500 text-white hover:bg-pink-600"
               : "border border-pink-500 text-pink-500 hover:bg-pink-50"
           }`}
-                  >
-                    Register Now
-                    <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        >
+          Register Now
+          <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+    
+  </div>
+</section>
 
-      <section className="relative w-full py-24 p-5 px-5 bg-gradient-to-br from-[#182a8d8f] via-[#0b3c97] to-[#121974de] overflow-hidden">
-        {/* background image */}
-        <Image
-          src="/src/NRBAward.jpg"
-          alt="Background"
-          fill
-          className="object-cover opacity-20 mix-blend-overlay"
-        />
-        <div className="absolute inset-0 bg-black/60" />
 
-        <div className="relative z-10 max-w-7xl mx-auto">
-          {/* ================= Header ================= */}
-          <div className="text-center mb-16">
-            <span className="inline-block mb-3 px-4 py-1 rounded-full bg-pink-500/20 text-pink-400 text-sm">
-              🎖 17 finalists who will receive awards
-            </span>
-            <h2 className="text-2xl md:text-[40px] font-bold text-white">
-              Awards & <span className="text-pink-500">Opportunities</span>
-            </h2>
-          </div>
 
-          {/* ================= Awards ================= */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            {[
-              {
-                icon: FaUserGraduate,
-                title: "SDG Fellowship Support",
-                desc: "Comprehensive support in applying for SDG Fellowship during admission to Overseas Universities.",
-              },
-              {
-                icon: FaUniversity,
-                title: "UN SDG Summit Recommendation",
-                desc: "Recommendation for participation in the SDG Summit held at the United Nations every year.",
-              },
-              {
-                icon: FaFlag,
-                title: "National Zero Olympiad Envoy",
-                desc: "Inclusion in Zero Olympiad Clubs formed in educational institutions across the country through various activities.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                data-section={`award-${i}`}
-                className={`group rounded-2xl p-6 border border-pink-500 bg-white/5 backdrop-blur-md
+
+
+ <section className="relative w-full py-24 p-5 px-5 bg-gradient-to-br from-[#2034a88f] via-[#134bb3] to-[#1f28aade] overflow-hidden">
+  {/* background image */}
+  <Image
+    src="/src/NRBAward.jpg"
+    alt="Background"
+    fill
+    className="object-cover scroll opacity-20 mix-blend-overlay"
+  />
+  <div className="absolute inset-0 bg-black/60" />
+
+  <div className="relative z-10 max-w-7xl mx-auto">
+    {/* ================= Header ================= */}
+    <div className="text-center mb-16">
+      <span className="inline-block mb-3 px-4 py-1 rounded-full bg-pink-500/20 text-pink-400 text-sm">
+        🎖 17 finalists who will receive awards
+      </span>
+      <h2 className="text-2xl md:text-[40px] font-bold text-white">
+        Awards & <span className="text-pink-500">Opportunities</span>
+      </h2>
+    </div>
+
+    {/* ================= Awards ================= */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+      {[
+        {
+          icon: FaUserGraduate,
+          title: "SDG Fellowship Support",
+          desc: "Comprehensive support in applying for SDG Fellowship during admission to Overseas Universities.",
+        },
+        {
+          icon: FaUniversity,
+          title: "UN SDG Summit Recommendation",
+          desc: "Recommendation for participation in the SDG Summit held at the United Nations every year.",
+        },
+        {
+          icon: FaFlag,
+          title: "National Zero Olympiad Envoy",
+          desc: "Inclusion in Zero Olympiad Clubs formed in educational institutions across the country through various activities.",
+        },
+      ].map((item, i) => (
+        <div
+          key={i}
+          data-section={`award-${i}`}
+          className={`group rounded-2xl p-6 border border-pink-500 bg-white/5 backdrop-blur-md
           hover:bg-white/10 hover:-translate-y-1 transition-all duration-500
           ${
             animatedSections.has(`award-${i}`)
@@ -539,101 +545,9 @@ export default function HomePage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 p-5 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2
-            data-section="timeline-title"
-            className={`text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4 transition-all duration-1000 ${
-              animatedSections.has("timeline-title")
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            Time <span className="text-pink-500">Line</span>
-          </h2>
-          <p className="text-center text-gray-600 text-lg mb-16 max-w-3xl mx-auto">
-            Important dates and milestones for the competition
-          </p>
-
-          <div className="relative">
-            {/* Center Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-pink-500 via-purple-500 to-indigo-500 hidden lg:block" />
-
-            <div className="space-y-12">
-              {[
-                {
-                  date: "March 15, 2024",
-                  title: "Registration Deadline",
-                  description: "Last day to register for the competition",
-                  side: "left",
-                },
-                {
-                  date: "April 1, 2024",
-                  title: "1st Round MCQ Test",
-                  description: "Multiple choice screening test",
-                  side: "right",
-                },
-                {
-                  date: "April 20, 2024",
-                  title: "2nd Round Video Contest",
-                  description: "Submit your creative video entry",
-                  side: "left",
-                },
-                {
-                  date: "May 10, 2024",
-                  title: "3rd Round Written Analysis",
-                  description: "In-depth written evaluation",
-                  side: "right",
-                },
-                {
-                  date: "June 1, 2024",
-                  title: "Grand Finale",
-                  description: "Final competition and award ceremony",
-                  side: "left",
-                },
-              ].map((event, index) => (
-                <div
-                  key={index}
-                  data-section={`timeline-${index}`}
-                  className={`relative flex items-center ${
-                    event.side === "left"
-                      ? "lg:justify-start"
-                      : "lg:justify-end"
-                  }`}
-                >
-                  <div
-                    className={`w-full lg:w-5/12 transition-all duration-1000 ${
-                      animatedSections.has(`timeline-${index}`)
-                        ? "opacity-100 translate-x-0"
-                        : event.side === "left"
-                        ? "opacity-0 -translate-x-8"
-                        : "opacity-0 translate-x-8"
-                    }`}
-                    style={{ transitionDelay: `${index * 150}ms` }}
-                  >
-                    <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-l-4 border-pink-500">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold">
-                          {index + 1}
-                        </div>
-                        <div className="text-sm text-pink-500 font-semibold">
-                          {event.date}
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        {event.title}
-                      </h3>
-                      <p className="text-gray-600">{event.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Center Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-pink-500 rounded-full border-4 border-gray-50 hidden lg:block" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <section className="px-5 py-20">
+        
+       <TimelineEvent></TimelineEvent>
       </section>
 
       {/* Confirmed Guest & Jury Section */}
@@ -642,52 +556,10 @@ export default function HomePage() {
       </section>
 
       {/* Gallery */}
-      {/* Gallery */}
-      <section className="py-20 p-5 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2
-            data-section="gallery-title"
-            className={`text-2xl md:text-[40px] font-semibold text-center text-gray-900 mb-4 transition-all duration-1000 ${
-              animatedSections.has("gallery-title")
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            <span className="">Gallery</span>
-          </h2>
+  {/* Gallery */}
+<EventGallery></EventGallery>
 
-          <p className="text-center text-gray-500 text-lg mb-12 max-w-3xl mx-auto">
-            Compete for glory and be rewarded with prizes that recognize your
-            hard work and dedication
-          </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 9 }).map((_, index) => (
-              <div
-                key={index}
-                data-section={`gallery-${index}`}
-                className={`relative aspect-square rounded-xl overflow-hidden group cursor-pointer transition-all duration-700 ${
-                  animatedSections.has(`gallery-${index}`)
-                    ? "opacity-100 scale-100"
-                    : "opacity-0 scale-95"
-                }`}
-                style={{ transitionDelay: `${index * 50}ms` }}
-              >
-                <Image
-                  src={`/src/gallery/img${index + 1}.jpg`}
-                  alt={`Gallery image ${index + 1}`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  {/* optional caption */}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section - Full Width */}
       <section className="relative p-5 w-full py-32 bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600">
