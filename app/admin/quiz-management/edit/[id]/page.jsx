@@ -62,7 +62,7 @@ export default function EditQuizPage() {
         setIsUpdating(true);
         try {
             const token = localStorage.getItem("access_token");
-            const response = await axios.put(`http://https://zero-olympiad-server.vercel.app/api/admin/update-quiz/${id}`, data, {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}}/api/admin/update-quiz/${id}`, data, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
