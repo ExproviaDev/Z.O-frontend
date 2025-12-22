@@ -1,260 +1,309 @@
-// "use client"
+"use client";
+import { useEffect, useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUsers } from "../../store/slices/userSlice";
+import axios from "axios";
+import {
+  FaUserCircle, FaTrashAlt, FaBan, FaCheckCircle,
+  FaUserShield, FaSearch, FaFilter, FaChevronLeft, FaChevronRight, FaEye
+} from "react-icons/fa";
 
-// import { useState, useEffect } from "react"
-// import { FiSearch } from "react-icons/fi"
-// import Table from "../components/ChartStatTable/Table"
-// import RoleEditModal from "../components/RoleEditModal"
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+const InfoCard = ({ label, value }) => (
+  <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-sm">
+    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+    <p className="text-slate-800 font-bold text-sm">{value || "N/A"}</p>
+  </div>
+);
 
-// export default function page() {
-//   const [users, setUsers] = useState([])
-//   const [filteredUsers, setFilteredUsers] = useState([])
-//   const [searchTerm, setSearchTerm] = useState("")
-//   const [roleFilter, setRoleFilter] = useState("All")
-//   const [editingUser, setEditingUser] = useState(null)
+export default function RoleManagement() {
+  const dispatch = useDispatch();
+  const { users, loading } = useSelector((state) => state.users);
+  const [updatingId, setUpdatingId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const usersPerPage = 8;
 
-//   useEffect(() => {
-//     fetch("/roles.json")
-//       .then((res) => res.json())
-//       .then((data) => {
-//         setUsers(data)
-//         setFilteredUsers(data)
-//       })
-//       .catch((err) => console.error("Error loading roles:", err))
-//   }, [])
-
-//   useEffect(() => {
-//     let filtered = users
-
-//     // Filter by search term
-//     if (searchTerm) {
-//       filtered = filtered.filter(
-//         (user) =>
-//           user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//           user.email.toLowerCase().includes(searchTerm.toLowerCase()),
-//       )
-//     }
-
-//     // Filter by role
-//     if (roleFilter !== "All") {
-//       filtered = filtered.filter((user) => user.role === roleFilter)
-//     }
-
-//     setFilteredUsers(filtered)
-//   }, [searchTerm, roleFilter, users])
-
-//   const handleEdit = (user) => {
-//     setEditingUser(user)
-//   }
-
-//   const handleSave = (updatedData) => {
-//     const updatedUsers = users.map((user) => (user.id === editingUser.id ? { ...user, ...updatedData } : user))
-//     setUsers(updatedUsers)
-//     setEditingUser(null)
-//   }
-
-//   const handleBlock = (userId) => {
-//     const updatedUsers = users.map((user) =>
-//       user.id === userId ? { ...user, status: user.status === "Active" ? "Blocked" : "Active" } : user,
-//     )
-//     setUsers(updatedUsers)
-//   }
-
-//   const handleDelete = (userId) => {
-//     if (confirm("Are you sure you want to delete this user?")) {
-//       setUsers(users.filter((user) => user.id !== userId))
-//     }
-//   }
-
-//   return (
-//     <div>
-//       <h1 className="text-2xl font-bold text-gray-900 mb-6">Role Management</h1>
-
-//       {/* Filters */}
-//       <div className="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-200">
-//         <div className="flex flex-col sm:flex-row gap-4">
-//           {/* Search */}
-//           <div className="flex-1 relative">
-//             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-//             <input
-//               type="text"
-//               placeholder="Search by name or email"
-//               value={searchTerm}
-//               onChange={(e) => setSearchTerm(e.target.value)}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-//             />
-//           </div>
-
-//           {/* Role Filter */}
-//           <select
-//             value={roleFilter}
-//             onChange={(e) => setRoleFilter(e.target.value)}
-//             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-//           >
-//             <option value="All">All Roles</option>
-//             <option value="User">User</option>
-//             <option value="Admin">Admin</option>
-//             <option value="Manager">Manager</option>
-//           </select>
-//         </div>
-//       </div>
-
-//       {/* Table */}
-//       <Table data={filteredUsers} onEdit={handleEdit} onBlock={handleBlock} onDelete={handleDelete} />
-
-//       {/* Edit Modal */}
-//       {editingUser && <RoleEditModal user={editingUser} onClose={() => setEditingUser(null)} onSave={handleSave} />}
-//     </div>
-//   )
-// }
-
-
-
-
-"use client"
-
-import { useState, useEffect } from "react"
-import { FiSearch } from "react-icons/fi"
-import Table from "../components/ChartStatTable/Table"
-import RoleEditModal from "../components/RoleEditModal"
-
-export default function Page() {
-  // ✅ SAFE DEFAULTS
-  const [users, setUsers] = useState([])
-  const [filteredUsers, setFilteredUsers] = useState([])
-  const [selectedUsers, setSelectedUsers] = useState([])
-
-  const [searchTerm, setSearchTerm] = useState("")
-  const [roleFilter, setRoleFilter] = useState("All")
-  const [editingUser, setEditingUser] = useState(null)
-
-  /* ========= LOAD DATA ========= */
   useEffect(() => {
-    fetch("/roles.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const safeData = Array.isArray(data) ? data : []
-        setUsers(safeData)
-        setFilteredUsers(safeData)
-      })
-      .catch(() => {
-        setUsers([])
-        setFilteredUsers([])
-      })
-  }, [])
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      const matchesSearch = user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesRole = roleFilter === "all" || user.role === roleFilter;
+      const matchesStatus = statusFilter === "all" ||
+        (statusFilter === "blocked" ? user.is_blocked : !user.is_blocked);
+      return matchesSearch && matchesRole && matchesStatus;
+    });
+  }, [users, searchQuery, roleFilter, statusFilter]);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  /* ========= FILTER ========= */
-  useEffect(() => {
-    let filtered = [...users]
-
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (u) =>
-          u?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          u?.email?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const handleUpdate = async (id, updatedData) => {
+    setUpdatingId(id);
+    try {
+      const token = localStorage.getItem("access_token");
+      await axios.put(`${API_URL}/api/admin/update-user/${id}`, updatedData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      dispatch(fetchAllUsers());
+    } catch (error) {
+      alert("Update failed!");
+    } finally {
+      setUpdatingId(null);
     }
+  };
 
-    if (roleFilter !== "All") {
-      filtered = filtered.filter((u) => u?.role === roleFilter)
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure?")) return;
+    try {
+      const token = localStorage.getItem("access_token");
+      await axios.delete(`${API_URL}/api/admin/delete-user/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      dispatch(fetchAllUsers());
+    } catch (error) {
+      alert("Delete failed!");
     }
+  };
+  const handleViewDetails = (user) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
 
-    setFilteredUsers(filtered)
-    setSelectedUsers([]) // reset checkbox
-  }, [searchTerm, roleFilter, users])
-
-  /* ========= SELECT ========= */
-  const toggleSelectUser = (id) => {
-    setSelectedUsers((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    )
-  }
-
-  const toggleSelectAll = () => {
-    if (filteredUsers.length === 0) return
-
-    setSelectedUsers(
-      selectedUsers.length === filteredUsers.length
-        ? []
-        : filteredUsers.map((u) => u.id)
-    )
-  }
-
-  /* ========= ACTIONS ========= */
-  const handleEdit = (user) => setEditingUser(user)
-
-  const handleSave = (updated) => {
-    if (!editingUser) return
-
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.id === editingUser.id ? { ...u, ...updated } : u
-      )
-    )
-    setEditingUser(null)
-  }
-
-  const handleBlock = (id) => {
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.id === id
-          ? { ...u, status: u.status === "Active" ? "Blocked" : "Active" }
-          : u
-      )
-    )
-  }
-
-  const handleDelete = (id) => {
-    if (!confirm("Delete this user?")) return
-    setUsers((prev) => prev.filter((u) => u.id !== id))
-  }
+  if (loading) return <div className="h-screen flex items-center justify-center font-bold text-blue-600">Loading Dashboard...</div>;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Role Management</h1>
+    <div className="w-full min-h-screen bg-[#f8fafc] p-2 md:p-6 relative">
+      <div className="w-full bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+        <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-900 to-slate-800">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+              <h1 className="text-2xl font-black text-white flex items-center gap-2">
+                <FaUserShield className="text-blue-400" /> Role Control Center
+              </h1>
+              <p className="text-slate-400 text-sm">Managing {filteredUsers.length} total users</p>
+            </div>
 
-      {/* SEARCH + FILTER */}
-      <div className="bg-white p-4 rounded mb-6 flex gap-4">
-        <div className="flex-1 relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search name or email"
-            className="w-full pl-10 border rounded px-3 py-2"
-          />
+            <div className="relative w-full md:w-96">
+              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+              <input
+                type="text"
+                placeholder="Find user by name or email..."
+                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+              />
+            </div>
+          </div>
         </div>
 
-        <select
-          value={roleFilter}
-          onChange={(e) => setRoleFilter(e.target.value)}
-          className="border rounded px-4"
-        >
-          <option value="All">All</option>
-          <option value="User">User</option>
-          <option value="Admin">Admin</option>
-          <option value="Manager">Manager</option>
-        </select>
+        {/* Filters Bar */}
+        <div className="p-4 bg-slate-50 border-b border-slate-100 flex flex-wrap gap-4">
+          <select
+            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none"
+            value={roleFilter}
+            onChange={(e) => { setRoleFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Roles</option>
+            <option value="admin">Admins</option>
+            <option value="manager">Managers</option>
+            <option value="user">Users</option>
+          </select>
+
+          <select
+            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none"
+            value={statusFilter}
+            onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Status</option>
+            <option value="active">Active Only</option>
+            <option value="blocked">Suspended Only</option>
+          </select>
+        </div>
+
+        {/* User Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="bg-slate-50 text-slate-500 text-[11px] font-black uppercase tracking-tighter">
+                <th className="p-5">User Profile</th>
+                <th className="p-5">System Role</th>
+                <th className="p-5">Account Status</th>
+                <th className="p-5 text-right">Administrative Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {currentUsers.map((user) => (
+                <tr key={user.user_id} className={`group hover:bg-blue-50/40 transition-all ${user.is_blocked ? 'bg-red-50/30' : ''}`}>
+                  <td className="p-5">
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        {user.profile_image_url ? (
+                          <img src={user.profile_image_url} className="w-12 h-12 rounded-full object-cover shadow-md" alt="" />
+                        ) : (
+                          <FaUserCircle className="w-12 h-12 text-slate-200" />
+                        )}
+                        <span className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${user.is_blocked ? 'bg-red-500' : 'bg-green-500'}`}></span>
+                      </div>
+                      <div>
+                        <p className={`font-black text-slate-800 ${user.is_blocked ? 'line-through opacity-40' : ''}`}>{user.name}</p>
+                        <p className="text-xs text-slate-500">{user.email}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="p-5">
+                    <select
+                      value={user.role}
+                      onChange={(e) => handleUpdate(user.user_id, { role: e.target.value })}
+                      disabled={updatingId === user.user_id}
+                      className="p-2.5 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="user">USER</option>
+                      <option value="manager">MANAGER</option>
+                      <option value="admin">ADMIN</option>
+                    </select>
+                  </td>
+                  <td className="p-5">
+                    <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest ${user.is_blocked ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                      {user.is_blocked ? "Suspended" : "Access Active"}
+                    </span>
+                  </td>
+                  <td className="p-5 text-right">
+                    <div className="flex justify-end gap-2">
+                      {/* View Detail Button */}
+                      <button
+                        onClick={() => handleViewDetails(user)}
+                        className="flex items-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                      >
+                        <FaEye /> View Profile
+                      </button>
+
+                      <button
+                        onClick={() => handleUpdate(user.user_id, { is_blocked: !user.is_blocked })}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl font-black text-[10px] uppercase tracking-tighter transition-all ${user.is_blocked ? 'bg-green-600 text-white shadow-lg' : 'bg-white text-orange-600 border border-orange-100 hover:bg-orange-50'}`}
+                      >
+                        {user.is_blocked ? <><FaCheckCircle /> Reactivate</> : <><FaBan /> Suspend</>}
+                      </button>
+                      
+                      <button
+                        onClick={() => handleDelete(user.user_id)}
+                        className="flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-red-100 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-red-500 hover:text-white transition-all"
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-slate-500 font-medium">
+            Showing <span className="font-bold text-slate-800">{indexOfFirstUser + 1}</span> to <span className="font-bold text-slate-800">{Math.min(indexOfLastUser, filteredUsers.length)}</span> of <span className="font-bold text-slate-800">{filteredUsers.length}</span> Users
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(prev => prev - 1)}
+              className="p-3 rounded-xl bg-white border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+            >
+              <FaChevronLeft />
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`w-10 h-10 rounded-xl font-bold text-sm transition-all shadow-sm ${currentPage === i + 1 ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-600'}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              className="p-3 rounded-xl bg-white border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+            >
+              <FaChevronRight />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* TABLE */}
-      <Table
-        data={filteredUsers || []}
-        selectedUsers={selectedUsers || []}
-        onSelectUser={toggleSelectUser}
-        onSelectAll={toggleSelectAll}
-        onEdit={handleEdit}
-        onBlock={handleBlock}
-        onDelete={handleDelete}
-      />
+      {/* --- User Profile Details Modal --- */}
+      {isModalOpen && selectedUser && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all">
+          <div className="bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            
+            {/* Modal Header */}
+            <div className="p-6 bg-slate-900 text-white flex justify-between items-center">
+              <h2 className="text-xl font-black flex items-center gap-2">
+                <FaUserShield className="text-blue-400" /> User Information
+              </h2>
+              <button 
+                onClick={() => setIsModalOpen(false)} 
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500 transition-all text-xl"
+              >
+                &times;
+              </button>
+            </div>
 
-      {/* MODAL */}
-      {editingUser && (
-        <RoleEditModal
-          user={editingUser}
-          onClose={() => setEditingUser(null)}
-          onSave={handleSave}
-        />
+            <div className="p-8">
+              {/* Profile Top Section */}
+              <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-8 pb-8 border-b border-slate-100">
+                <div className="relative">
+                  {selectedUser.profile_image_url ? (
+                    <img src={selectedUser.profile_image_url} className="w-32 h-32 rounded-full object-cover ring-4 ring-slate-50 shadow-xl" alt="" />
+                  ) : (
+                    <FaUserCircle className="w-32 h-32 text-slate-200" />
+                  )}
+                  <span className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-[9px] font-black uppercase border-2 border-white text-white ${selectedUser.is_blocked ? 'bg-red-500' : 'bg-green-500'}`}>
+                    {selectedUser.is_blocked ? "Suspended" : "Active"}
+                  </span>
+                </div>
+                <div className="text-center md:text-left">
+                  <h3 className="text-3xl font-black text-slate-800">{selectedUser.name}</h3>
+                  <p className="text-blue-600 font-bold uppercase tracking-widest text-xs mt-1">{selectedUser.role} • Member</p>
+                  <p className="text-slate-400 text-sm mt-1">{selectedUser.email}</p>
+                </div>
+              </div>
+
+              {/* Information Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InfoCard label="Full Name" value={selectedUser.name} />
+                <InfoCard label="Email Address" value={selectedUser.email} />
+                <InfoCard label="Phone Number" value={selectedUser.phone} />
+                <InfoCard label="District / Location" value={selectedUser.district} />
+                <InfoCard label="Assigned Course" value={selectedUser.assigned_course} />
+                <InfoCard label="Role/Activity" value={selectedUser.activities_role} />
+                <InfoCard label="Account Status" value={selectedUser.is_blocked ? "Blocked/Suspended" : "Active Member"} />
+                <InfoCard 
+                  label="Registration Date" 
+                  value={new Date(selectedUser.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })} 
+                />
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 bg-slate-50 flex justify-end gap-3">
+            </div>
+          </div>
+        </div>
       )}
     </div>
-  )
+  );
 }
