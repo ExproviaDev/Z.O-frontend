@@ -52,7 +52,7 @@ export default function LoginPage() {
         Cookies.set("access_token", token, { expires: 7 });
         await dispatch(fetchUserProfile(token));
 
-        console.log("Login successful!");
+        // console.log("Login successful!");
         window.location.href = "/dashboard";
       } else {
         setError(
@@ -69,7 +69,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen w-full flex items-center p-5 justify-center bg-white relative overflow-hidden">
-
       <div className="relative z-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/30 backdrop-blur-xs p-10 rounded-3xl shadow-2xl">
         <div className="text-Primary flex flex-col justify-center">
           <h1 className="text-4xl  font-bold leading-tight ">

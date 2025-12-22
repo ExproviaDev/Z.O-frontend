@@ -1,19 +1,20 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { FiBell, FiUser } from "react-icons/fi"
+import Link from "next/link";
+import { FiBell, FiUser } from "react-icons/fi";
 import { FaArrowLeft } from "react-icons/fa";
 
 export default function Header() {
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex-1 pl-12">
-        <button className="btn btn-primary"><Link className="flex items-center gap-2" href={"/"}><FaArrowLeft />  Home</Link></button>
+        <button className="btn btn-primary">
+          <Link className="flex items-center gap-2" href={"/"}>
+            <FaArrowLeft />
+            Home
+          </Link>
+        </button>
       </div>
-
-     
-        
-      
 
       <div className="flex items-center gap-4">
         {/* Notifications */}
@@ -34,5 +35,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

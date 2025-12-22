@@ -2,55 +2,91 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebookF, FaLinkedinIn, FaYoutube  } from "react-icons/fa";
-import LogoFooter from "../../../public/src/SiteLogo.png";
- import {MdEmail, MdPhone, MdLocationOn} from "react-icons/md";
+import { FaMapPin } from "react-icons/fa";
+import {
+    FaFacebookF,
+    FaLinkedinIn,
+    FaYoutube,
+    FaInstagram,
+    FaXTwitter,
+    FaPhone,
+    FaEnvelope,
+    FaClock,
+} from "react-icons/fa6";
+import logo from "../../../public/src/SiteLogo.png"
 
 export default function Footer() {
+    const currentYear = new Date().getFullYear();
+
+    const socialLinks = [
+        { icon: FaFacebookF, url: "https://www.facebook.com/FaatihaAayatOfficial/" },
+        { icon: FaYoutube, url: "https://www.youtube.com/@FaatihaAayat" },
+        { icon: FaInstagram, url: "https://www.instagram.com/faatiha.aayat/" },
+        { icon: FaXTwitter, url: "https://x.com/faatihaaayat" },
+        { icon: FaLinkedinIn, url: "https://www.linkedin.com/in/faatihaaayat/" },
+    ];
+
+    const quickLinks = [
+        { name: "Home", href: "/" },
+        { name: "About Us", href: "/about" },
+        { name: "Contact Us", href: "/contact" },
+        { name: "Privacy Policy", href: "/privacyPolicy" },
+        { name: "Terms & Conditions", href: "/tramsAndCondition" },
+    ];
+
     return (
-        <footer className="bg-[#F4F4F4] text-black px-5 ">
-            <div className="container max-w-7xl mx-auto  lg:px-4 py-12 lg:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <footer className="font-sans w-full">
+            {/* Newsletter CTA */}
+            <div className="relative overflow-hidden bg-gradient-to-r from-[#5B2EFF] via-[#6A2BBF] to-[#A31D7E] py-20 text-center text-white">
+                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_1px_1px,#ffffff_1px,transparent_0)] [background-size:18px_18px]" />
+                <div className="relative z-10 px-4">
+                    <h5 className="text-sm tracking-[0.2em] uppercase mb-4 opacity-90">
+                        Subscribe to Newsletter
+                    </h5>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-8">
+                        Want Something Extra?
+                    </h2>
+                    <Link
+                        href="#"
+                        className="inline-block rounded-xl bg-[#FF1F8F] px-8 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#ff3aa0] transition"
+                    >
+                        Register Soon!
+                    </Link>
+                </div>
+            </div>
 
-                    {/* Brand Section */}
+            {/* Main Footer */}
+            <div className="bg-[#14142B] text-white/70 px-5 pt-20 pb-6">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    {/* Brand */}
                     <div>
-                        <Link href="/" className="flex items-center gap-3 mb-4 group">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-transform duration-300 group-hover:scale-105">
-                                <Image
-                                    src={LogoFooter}
-                                    width={40}
-                                    height={40}
-                                    alt="Zero Olympiad Footer Logo"
-                                    className="rounded-lg"
-                                />
+                        <Link href="/" className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
+                                <Image src={logo} alt="siteLogo" width={56} height={56} />
                             </div>
-
-                            <span className="text-2xl font-bold">
-                                Zero <span className="text-primary">Olympiad</span>
-                            </span>
+                            <div className="flex flex-col">
+                                <span className="text-lg lg:text-xl font-bold text-white tracking-tight">
+                                    Zero Olympiad
+                                </span>
+                                <span className="text-[10px] lg:text-xs text-gray-300 uppercase tracking-widest">
+                                    Excellence Awaits
+                                </span>
+                            </div>
                         </Link>
-
-                        <p className="text-lg text-black/70 leading-relaxed">
-                            Challenge your knowledge, compete with the best, and rise to the
-                            top on the ultimate quiz competition platform.
+                        <p className="text-sm text-white/60 leading-relaxed">
+                            Challenge your knowledge, compete with the best, and rise to the top on the ultimate quiz competition platform.
                         </p>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-                        <ul className="space-y-3 text-lg">
-                            {[
-                                { name: "Home", path: "/" },
-                                { name: "About Us", path: "/about" },
-                                { name: "Contact Us", path: "/contact-us" },
-                                { name: "Privacy Policy", path: "/privacyPolicy" },
-                                { name: "Terms & Conditions", path: "/tramsAndCondition" },
-                            ].map((link) => (
+                        <h4 className="font-semibold text-white mb-4">Quick Links</h4>
+                        <ul className="space-y-3">
+                            {quickLinks.map((link) => (
                                 <li key={link.name}>
                                     <Link
-                                        href={link.path}
-                                        className="text-black/70 hover:text-primary transition-colors duration-200"
+                                        href={link.href}
+                                        className="text-white/70 text-sm hover:text-[#5B2EFF] transition"
                                     >
                                         {link.name}
                                     </Link>
@@ -60,51 +96,69 @@ export default function Footer() {
                     </div>
 
                     {/* Contact Info */}
-                   
-
-                    <div>
-                        <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-                        <ul className="space-y-3 text-lg text-black">
-
-                            <li className="flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <MdEmail className="w-4 h-4 text-primary" />
-                                </span>
-                                <a href="mailto:faatiha.aayat@gmail.com" className="hover:text-primary transition-colors">
-                                    faatiha.aayat@gmail.com
-                                </a>
+                    <div className="lg:col-span-1">
+                        <h4 className="font-semibold text-white mb-4">Contact Us</h4>
+                        <ul className="space-y-4 text-sm">
+                            {/* Address */}
+                            <li className="flex flex-col sm:flex-row sm:items-start gap-3">
+                                <FaMapPin className="mt-1 flex-shrink-0" size={20} />
+                                <div className="leading-relaxed">
+                                    <p>House #23, Road #7</p>
+                                    <p>Dhanmondi, Dhaka-1205</p>
+                                    <p>Bangladesh</p>
+                                </div>
                             </li>
 
-                            <li className="flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <MdPhone className="w-4 h-4 text-primary" />
-                                </span>
-                                <a href="tel:+880-1973-570203" className="hover:text-primary transition-colors">
-                                    +880-1973-570203
-                                </a>
+                            {/* Phone */}
+                            <li className="flex flex-col sm:flex-row sm:items-start gap-3">
+                                <FaPhone className="mt-1  flex-shrink-0" size={20} />
+                                <div className="leading-relaxed">
+                                    <p>
+                                        <a href="tel:+8801234567890" className="hover:text-[#5B2EFF] transition">
+                                            +880 1234-567890
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="tel:+8809876543210" className="hover:text-[#5B2EFF] transition">
+                                            +880 9876-543210
+                                        </a>
+                                    </p>
+                                </div>
                             </li>
 
-                            <li className="flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <MdLocationOn className="w-4 h-4 text-primary" />
-                                </span>
-                                <span className="hover:text-primary transition-colors">
-                                    Khulna, Bangladesh
-                                </span>
+                            {/* Email */}
+                            <li className="flex flex-col sm:flex-row sm:items-start gap-3">
+                                <FaEnvelope className="mt-1 flex-shrink-0" size={20} />
+                                <div className="leading-relaxed">
+                                    <p>
+                                        <a href="mailto:info@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
+                                            info@zeroolympiad.bd
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="mailto:support@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
+                                            support@zeroolympiad.bd
+                                        </a>
+                                    </p>
+                                </div>
                             </li>
 
+                            {/* Working Hours */}
+                            <li className="flex flex-col sm:flex-row sm:items-start gap-3">
+                                <FaClock className="mt-1 flex-shrink-0" size={20} />
+                                <div className="leading-relaxed">
+                                    <p>Working Hours</p>
+                                    <p>Sat - Thu: 9:00 AM - 5:00 PM</p>
+                                </div>
+                            </li>
                         </ul>
                     </div>
 
-                    {/* Social Links */}
+                    {/* Social */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
-                        <div className="flex gap-3">
-                            {[
-                                { icon: FaFacebookF, url: "https://facebook.com" },
-                                { icon: FaLinkedinIn, url: "https://linkedin.com" },
-                                { icon: FaYoutube , url: "https://youtube.com" },
-                            ].map((s, i) => {
+                        <h4 className="font-semibold text-white mb-4">Follow Us</h4>
+                        <div className="flex gap-3 mb-4">
+                            {socialLinks.map((s, i) => {
                                 const Icon = s.icon;
                                 return (
                                     <a
@@ -112,41 +166,32 @@ export default function Footer() {
                                         href={s.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex h-10 w-10 items-center justify-center rounded-full bg-black/10 text-black/70 hover:bg-primary hover:text-white transition-all duration-300"
+                                        className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white hover:bg-[#5B2EFF] transition"
                                     >
-                                        <Icon size={20} />
+                                        <Icon size={16} />
                                     </a>
                                 );
                             })}
                         </div>
-
-                        <p className="mt-4 text-lg text-black/70">
-                            Stay connected for the latest updates and competitions.
+                        <p className="text-sm text-white/60">
+                            Stay connected for latest updates & competitions.
                         </p>
                     </div>
                 </div>
 
-                {/* Bottom Bar */}
-                <div className="mt-12 pt-8 border-t border-black/10">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <p className="text-lg text-black/60">
-                            © {new Date().getFullYear()} Zero Olympiad. All rights reserved.
-                        </p>
 
-                        <div className="flex items-center gap-6 text-lg">
-                            <Link
-                                href="/privacyPolicy"
-                                className="text-black/60 hover:text-primary transition-colors"
-                            >
-                                Privacy
-                            </Link>
-                            <Link
-                                href="/tramsAndCondition"
-                                className="text-black/60 hover:text-primary transition-colors"
-                            >
-                                Terms
-                            </Link>
-                        </div>
+                {/* Divider */}
+                <div className="h-px bg-white/20 my-6"></div>
+
+                {/* Bottom Bar */}
+                <div className="flex flex-col sm:flex-row md:items-center justify-between gap-2 text-sm">
+                    <p className="text-white/50">
+                        © {currentYear} Zero Olympiad. All rights reserved.
+                    </p>
+                    <div className="flex flex-wrap gap-6">
+                        <Link href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
+                        <Link href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
+                        <Link href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>
             </div>

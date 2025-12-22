@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useMotionValue } from "framer-motion";
 import {
@@ -6,28 +6,40 @@ import {
   FaHourglassHalf,
   FaSearch,
   FaHandsHelping,
-  FaPlayCircle,
-  FaClipboardCheck,
-  FaCertificate,
-  FaCalendarAlt,
 } from "react-icons/fa";
 
 /* ---------------- DATA ---------------- */
 const steps = [
-  { title: "মডিউল রিলিজ টাইম", desc: "প্রতিদিন রাত ৮টায় নতুন মডিউল।", side: "left", icon: <FaClock /> },
-  { title: "ওয়াচ টাইম ডিউরেশন", desc: "প্রতি মডিউলে ১০টি ভিডিও।", side: "right", icon: <FaHourglassHalf /> },
-  { title: "সিলেবাস টপিক সাপোর্ট", desc: "প্রতিটি টপিকের জন্য আলাদা গাইড।", side: "left", icon: <FaSearch /> },
-  { title: "আটকে গেলে সাপোর্ট", desc: "কমিউনিটি ও লাইভ সাপোর্ট।", side: "right", icon: <FaHandsHelping /> },
-  { title: "লাইভ সেশন", desc: "সাপ্তাহিক লাইভ ক্লাস।", side: "left", icon: <FaPlayCircle /> },
-  { title: "অ্যাসাইনমেন্ট", desc: "প্রতিটি মডিউলের শেষে।", side: "right", icon: <FaClipboardCheck /> },
-  { title: "SCIC", desc: "Career instruction & counseling।", side: "left", icon: <FaCertificate /> },
-  { title: "২২–২৪ সপ্তাহ", desc: "পুরো বুটক্যাম্প।", side: "right", icon: <FaCalendarAlt /> },
+  {
+    title: "Registration Deadline",
+    desc: "২০২৫ সালের জানুয়ারি মাসে তুমি কোন ক্লাসে পড় সেই অনুযায়ী নির্ধারিত ক্যাটাগরিতে রেজিস্ট্রেশন কর।",
+    side: "left",
+    icon: <FaClock />,
+  },
+  {
+    title: "1st Round MCQ Test",
+    desc: "রেজিস্ট্রেশনের পরে তুমি যেই ইমেইল পেয়েছ সেখানে জাতিসংঘ স্বীকৃত যে কোর্স এর তালিকা দেয়া আছে সেখান থেকেই প্রথম রাউন্ডের MCQ পরীক্ষা অনুষ্ঠিত হবে ১০ জানুয়ারী।",
+    side: "right",
+    icon: <FaHourglassHalf />,
+  },
+  {
+    title: "2nd Round Video Contest",
+    desc: "প্রথম রাউন্ডের MCQ পরীক্ষায় সর্বোচ্চ নম্বর প্রাপ্তির ভিত্তিতে দ্বিতীয় রাউন্ডে অংশ গ্রহণের জন্য ইমেইল করা হবে। ভিডিও জমা দেয়ার শেষ তারিখ ৩১ জানুয়ারী।",
+    side: "left",
+    icon: <FaSearch />,
+  },
+  {
+    title: "Grand Finale",
+    desc: "জুরি বোর্ডের সিদ্ধান্ত অনুযায়ী ৫১ জনকে ঢাকায় গ্র্যান্ড ফিনালে আমন্ত্রণ জানানো হবে।",
+    side: "right",
+    icon: <FaHandsHelping />,
+  },
 ];
 
-/* ---------------- PATH → CARD Y MAP ---------------- */
-const CARD_Y = [
-  70, 380, 660, 960, 1300, 1620, 1920, 2300,
-];
+/* ---------------- CONSTANTS ---------------- */
+const CARD_GAP = 260;
+const START_TOP = 160;
+const SECTION_HEIGHT = START_TOP + steps.length * CARD_GAP + 200;
 
 /* ---------------- COMPONENT ---------------- */
 export default function TimelineEvent() {
@@ -45,6 +57,7 @@ export default function TimelineEvent() {
     offset: ["start start", "end end"],
   });
 
+  /* ---------------- ROCKET FOLLOW PATH ---------------- */
   useEffect(() => {
     const path = pathRef.current;
     if (!path) return;
@@ -52,56 +65,55 @@ export default function TimelineEvent() {
     const length = path.getTotalLength();
 
     return scrollYProgress.on("change", (v) => {
-      const progress = Math.min(Math.max(v, 0), 1);
-      const speed = 1;
-      const point = path.getPointAtLength(length * progress * speed);
-      const next = path.getPointAtLength(length * Math.min(progress + 0.000010, 1));
+      const progress = Math.min(Math.max(v * 1.5, 0), 1);
+      const point = path.getPointAtLength(length * progress);
+      const next = path.getPointAtLength(
+        length * Math.min(progress + 0.001, 1)
+      );
 
       rocketX.set(point.x);
       rocketY.set(point.y);
 
       const angle =
-        Math.atan2(next.y - point.y, next.x - point.x) * (180 / Math.PI);
-      rocketRotate.set(angle);
+        Math.atan2(next.y - point.y, next.x - point.x) *
+        (180 / Math.PI);
 
+      rocketRotate.set(angle);
       setActiveIndex(Math.floor(progress * steps.length));
     });
   }, [scrollYProgress]);
 
   return (
-    <div>
-      <div ref={wrapperRef} className="relative h-[2600px] hidden md:block  bg-white overflow-hidden px-5">
+    <>
+      {/* ================= DESKTOP ================= */}
+      <section
+        ref={wrapperRef}
+        style={{ minHeight: SECTION_HEIGHT }}
+        className="relative  hidden md:block bg-white overflow-hidden py-40"
+      >
         {/* SVG PATH */}
         <svg
-          className="absolute left-1/2 -translate-x-1/2 hidden md:block"
+          className="absolute left-1/2 -translate-x-1/2"
           width="1100"
-          height="2600"
-          viewBox="0 0 1100 2600"
+          height="1200"
+          viewBox="0 0 1100 1200"
         >
           <path
             ref={pathRef}
             d="
-            M 380,140 L 780,140
-            Q 820,140 820,180
-            L 820,420
-            Q 820,460 820,460
-            L 300,460
-            Q 260,460 260,500
-            L 260,700
-            Q 260,740 260,740
-            L 780,740
-            Q 820,740 820,780
-            L 820,1040
-            L 300,1040
-            L 300,1370
-            L 780,1370
-            L 780,1700
-            L 300,1700
-            L 300,2000
-            L 780,2000
-            L 780,2320
-          "
-            stroke="#000000"
+              M 380,120 L 780,120
+              Q 820,120 820,160
+              L 820,380
+              Q 820,420 780,420
+              L 320,420
+              Q 280,420 280,460
+              L 280,650
+              Q 280,690 320,690
+              L 780,690
+              Q 820,690 820,730
+              L 820,850
+            "
+            stroke="#000"
             strokeWidth="1"
             strokeDasharray="6 6"
             fill="none"
@@ -110,13 +122,13 @@ export default function TimelineEvent() {
 
         {/* ROCKET */}
         <motion.div
-          className="absolute pointer-events-none hidden md:block"
+          className="absolute pointer-events-none"
           style={{
             x: rocketX,
             y: rocketY,
             rotate: rocketRotate,
             translateX: 350,
-            translateY: -19,
+            translateY: -20,
           }}
         >
           <svg
@@ -181,74 +193,46 @@ export default function TimelineEvent() {
           </svg>
         </motion.div>
 
-
         {/* CARDS */}
         {steps.map((s, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute w-full flex justify-center md:block"
-            style={{
-              top: CARD_Y[i],
-              left:
-                typeof window !== "undefined" && window.innerWidth < 768
-                  ? "50%"
-                  : s.side === "left"
-                    ? "calc(50% - 560px)"
-                    : "calc(50% + 120px)",
-              transform:
-                typeof window !== "undefined" && window.innerWidth < 768
-                  ? "translateX(-60%)"
-                  : "none",
-            }}
+            className={`absolute w-[420px] ${s.side === "left"
+              ? "left-[calc(50%-560px)]"
+              : "left-[calc(50%+120px)]"
+              }`}
+            style={{ top: START_TOP + i * CARD_GAP }}
           >
             <div
-              className={`w-full max-w-[420px] rounded-2xl p-5 md:p-6 transition-all duration-500 ${activeIndex === i
-                ? "bg-indigo-600 text-white shadow-[0_0_40px_rgba(99,102,241,0.5)] scale-105"
+              className={`rounded-2xl p-6 transition-all duration-500 ${activeIndex === i
+                ? "bg-indigo-600 text-white scale-105 shadow-[0_0_40px_rgba(99,102,241,0.5)]"
                 : "bg-white text-gray-800 shadow-xl"
                 }`}
             >
-
-              <div className="text-3xl mb-4">{s.icon}</div>
+              <div className="text-3xl mb-3">{s.icon}</div>
               <h3 className="font-bold text-lg">{s.title}</h3>
-              <p className="mt-2 opacity-90">{s.desc}</p>
+              <p className="mt-2 text-sm opacity-90">{s.desc}</p>
             </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* ewsponsive part */}
-
-      <div className="block md:hidden bg-gray-50 py-10 px-4">
-        <div className="relative">
-          {/* Vertical connector line */}
-          <div className="absolute left-4 top-0 h-full border-l-4 border-indigo-300"></div>
-
-          <div className="space-y-10">
-            {steps.map((s, i) => (
-              <div key={i} className="relative flex items-start">
-                {/* Step circle */}
-                <div className="flex flex-col items-center mr-4">
-                  <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-lg font-bold">
-                    {i + 1}
-                  </div>
-                  {i !== steps.length - 1 && (
-                    <div className="flex-1 w-0.5 bg-indigo-300 mt-1"></div>
-                  )}
-                </div>
-
-                {/* Card */}
-                <div className="bg-white rounded-2xl shadow-lg p-4 flex-1 hover:shadow-indigo-500/30 transition duration-300">
-                  <div className="text-indigo-600 text-2xl mb-2">{s.icon}</div>
-                  <h3 className="font-semibold text-base">{s.title}</h3>
-                  <p className="text-gray-600 text-sm mt-1">{s.desc}</p>
-                </div>
-              </div>
-            ))}
           </div>
+        ))}
+      </section>
+
+      {/* ================= MOBILE ================= */}
+      <section className="md:hidden bg-gray-50 py-12 px-4">
+        <div className="space-y-8">
+          {steps.map((s, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow-lg p-5">
+              <div className="text-indigo-600 text-2xl mb-2">
+                {s.icon}
+              </div>
+              <h3 className="font-semibold">{s.title}</h3>
+              <p className="text-gray-600 text-sm mt-1">
+                {s.desc}
+              </p>
+            </div>
+          ))}
         </div>
-      </div>
-
-
-    </div>
+      </section>
+    </>
   );
 }
