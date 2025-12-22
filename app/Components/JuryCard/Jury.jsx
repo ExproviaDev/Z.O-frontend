@@ -8,15 +8,15 @@ import "swiper/css";
 export default function JurySection() {
   // আপনার লোকাল ইমেজের পাথ অনুযায়ী ডাটা আপডেট করা হয়েছে
   const juryData = [
-    { name: "Heidi Solba", role: "Head of global Dev\nLet's Do It World", image: "/src/jury/img1.jpg" },
-    { name: "Yousef Ramada", role: "Palestine Ambassador", image: "/src/jury/img2.jpg" },
-    { name: "Shykh Seraj", role: "Journalist, Agriculture Activist", image: "/src/jury/img3.jpg" },
-    { name: "Md Sabur Khan", role: "Founder & Chairman, DIU", image: "/src/jury/img4.jpg" },
-    { name: "Syed Farhad Ahmed", role: "Honorary Consul of Estonia", image: "/src/jury/img5.jpeg" },
-    { name: "Saifur Rahman", role: "Founder of S@ifur's", image: "/src/jury/img6.webp" },
-    { name: "Rumana Rashid Ishita", role: "Television. Artist", image: "/src/jury/img7.jpg" },
-    { name: "Sadat Rahman", role: "Int'l Peace Prize Winner", image: "/src/jury/img8.jpg" },
-    { name: "RJ Kebria", role: "Media Personality", image: "/src/jury/img9.webp" },
+    { name: "Heidi Solba", role: "Head of global Dev\nLet's Do It World", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412286/img1_cxu00j.jpg" },
+    { name: "Yousef Ramada", role: "Palestine Ambassador", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412449/img2_ail852.webp" },
+    { name: "Shykh Seraj", role: "Journalist, Agriculture Activist", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412287/img3_sffg2u.jpg" },
+    { name: "Md Sabur Khan", role: "Founder & Chairman, DIU", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412287/img4_ffoum4.jpg" },
+    { name: "Syed Farhad Ahmed", role: "Honorary Consul of Estonia", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412288/img5_dvxbhk.jpg" },
+    { name: "Saifur Rahman", role: "Founder of S@ifur's", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412254/images_1_raneax.jpg" },
+    { name: "Rumana Rashid Ishita", role: "Television. Artist", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412288/img7_zhlssm.jpg" },
+    { name: "Sadat Rahman", role: "Int'l Peace Prize Winner", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412290/img8_pgfqds.jpg" },
+    { name: "RJ Kebria", role: "Media Personality", image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766412253/download_hwzpve.jpg" },
   ];
 
   return (

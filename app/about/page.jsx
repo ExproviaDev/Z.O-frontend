@@ -18,7 +18,8 @@ import {
 } from 'react-icons/fa';
 import Sdg from './components/Sdg';
 import Image from 'next/image';
-import img5 from '../../public/src/gallery/img5.jpg';
+// import img5 from '../../public/src/gallery/img5.jpg';
+import HeroSection from './components/heroSection';
 
 /**
  * ZERO OLYMPIAD - GLOBAL HOME PAGE
@@ -62,46 +63,9 @@ export default function ZeroOlympiad() {
       
 
       {/* --- 1. HERO SECTION --- */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950">
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/30 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-500/20 rounded-full blur-[120px]" />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 text-center">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-8 animate-fade-in-up">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="text-white text-xs font-bold tracking-[0.2em] uppercase">Global Youth Initiative 2025</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-8xl font-black text-white leading-[0.95] mb-8 tracking-tighter italic">
-            Empowering Youth to <br/> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-indigo-200 to-emerald-300">
-              Zero Global Challenges
-            </span>
-          </h1>
-          
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-12">
-            The world doesn't need more spectators. It needs architects of change. Zero Olympiad is the global platform where youth leadership meets the UN Sustainable Development Goals to create measurable human impact.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <button className="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-500/20 flex items-center justify-center space-x-3 group">
-              <span>JOIN ZERO OLYMPIAD</span>
-              <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
-            </button>
-            <button className="w-full sm:w-auto px-10 py-5 bg-white/5 backdrop-blur-md border border-white/10 text-white rounded-2xl font-black text-lg hover:bg-white/10 transition-all">
-              EXPLORE THE SDGs
-            </button>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
-            <div className="w-1 h-2 bg-indigo-400 rounded-full" />
-          </div>
-        </div>
-      </section>
+    <section>
+      <HeroSection></HeroSection>
+    </section>
 
       {/* --- 2. ABOUT SECTION --- */}
       <section id="mission" className="py-32 bg-white">
@@ -109,7 +73,7 @@ export default function ZeroOlympiad() {
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50 rounded-full -z-10" />
-              <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-black mb-8 leading-tight">
                 A Global Movement for <br/> 
                 <span className="text-indigo-600">Planetary Progress.</span>
               </h2>
@@ -135,13 +99,15 @@ export default function ZeroOlympiad() {
             </div>
             <div className="relative group">
               <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
-              <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
-                <img 
-                  src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&q=80&w=1200" 
-                  alt="Youth Change Makers" 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
-                />
-              </div>
+              <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100 group">
+  <Image
+    src="https://i.ibb.co/602Z7P69/IMG-8701.jpg" // ImgBB er Direct Link ekhane hobe
+    alt="Youth Change Makers"
+    fill // Next.js e external image er jonno fill use kora best
+    sizes="(max-width: 768px) 100vw, 50vw"
+    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+  />
+</div>
             </div>
           </div>
         </div>
@@ -228,12 +194,12 @@ export default function ZeroOlympiad() {
 
       {/* --- 6. YOUTUBE SECTION --- */}
 {/* --- 6. YOUTUBE SECTION --- */}
-<section className="py-32 bg-white">
+<section className="py-10 bg-white">
   <div className="max-w-7xl mx-auto px-6 text-center">
     <div className="mb-20">
-      <span className="text-indigo-600 font-black tracking-[0.3em] uppercase text-xs mb-4 block">Our Impact in Motion</span>
-      <h2 className="text-4xl md:text-6xl font-black mb-6 italic tracking-tighter">
-        Voices of <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">Change</span>
+      <span className="text-pink-600 font-black tracking-[0.3em] uppercase text-xs mb-4 block">Our Impact in Motion</span>
+      <h2 className="text-3xl md:text-5xl font-black mb-6 italic tracking-tighter">
+        Voices of <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500 px-2">Change</span>
       </h2>
       <div className="h-1.5 w-24 bg-indigo-600 mx-auto rounded-full mb-8"></div>
       <p className="text-slate-500 max-w-xl mx-auto font-medium">
@@ -294,7 +260,7 @@ export default function ZeroOlympiad() {
 </section>
 
       {/* --- 7. SDGs GRID --- */}
-      <section id="impact" className="py-32 bg-slate-50 overflow-hidden">
+      <section id="impact" >
            <Sdg />
       </section>
 
@@ -304,7 +270,7 @@ export default function ZeroOlympiad() {
           <div className="bg-slate-900 rounded-[4rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
             <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
               <Image
-                src={img5} 
+                 href={`https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg`}
                 alt="Fatiha Ayat" 
                 className="w-full h-full object-cover grayscale"
               />
@@ -334,7 +300,7 @@ export default function ZeroOlympiad() {
       </section>
 
       {/* --- 9. FINAL CTA --- */}
-      <section className="py-32 relative overflow-hidden bg-white">
+      {/* <section className="py-32 relative overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <div className="bg-indigo-600 p-12 lg:p-32 rounded-[4rem] text-white shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
@@ -349,7 +315,7 @@ export default function ZeroOlympiad() {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       
 

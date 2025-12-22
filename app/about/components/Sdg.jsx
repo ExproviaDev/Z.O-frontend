@@ -60,7 +60,7 @@ export default function Sdg() {
   ];
 
   return (
-    <section id="sdg-mapping" className="py-24 bg-white overflow-hidden antialiased">
+    <section id="sdg-mapping" className="py-24 bg-gray-200 overflow-hidden antialiased">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Modern Header Section */}
@@ -70,8 +70,8 @@ export default function Sdg() {
               <span className="h-px w-12 bg-indigo-600"></span>
               <span className="text-indigo-600 font-bold uppercase tracking-widest text-xs">Road to Dhaka 2025</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900 leading-[0.9]">
-              TRACK YOUR <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">SDG MISSION</span>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 leading-[1]">
+              TRACK YOUR <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">SDG</span> MISSION
             </h2>
             <p className="mt-8 text-lg text-slate-500 font-medium leading-relaxed max-w-2xl">
               দ্বিতীয় রাউন্ডের ৩ মিনিটের ভিডিও থেকে নির্বাচিত ৫১ জন অংশগ্রহণকারীকে ঢাকায় গ্র্যান্ড ফিনালেতে আমন্ত্রণ জানানো হবে। আপনার নির্ধারিত SDG এবং ক্যাটাগরি দেখে নিন।
