@@ -34,7 +34,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
-    const backendUrl = "https://zero-olympiad-server.vercel.app/api/auth/login";
+    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`;
 
     try {
       const res = await fetch(backendUrl, {
