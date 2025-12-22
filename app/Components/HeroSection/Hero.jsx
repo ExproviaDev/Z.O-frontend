@@ -98,7 +98,7 @@ export default function HeroSection() {
               <div className="text-4xl text-white mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
               </div>
-              <div className="text-3xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
+              <div className="text-xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
               <div className="text-gray-300 text-xs font-semibold uppercase tracking-widest opacity-80">{stat.label}</div>
             </div>
           ))}
