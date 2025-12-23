@@ -26,22 +26,30 @@ export default function RoleManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const usersPerPage = 8;
 
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
   const filteredUsers = useMemo(() => {
+    if (!users) return [];
     return users.filter((user) => {
-      const matchesSearch = user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesRole = roleFilter === "all" || user.role === roleFilter;
+      const name = user.name?.toLowerCase() || "";
+      const email = user.email?.toLowerCase() || "";
+      const query = searchQuery.toLowerCase();
+      const matchesSearch = name.includes(query) || email.includes(query);
+      const userRole = user.role?.toLowerCase() || "user";
+      const filterRole = roleFilter.toLowerCase();
+      const matchesRole = filterRole === "all" || userRole === filterRole;
       const matchesStatus = statusFilter === "all" ||
-        (statusFilter === "blocked" ? user.is_blocked : !user.is_blocked);
+        (statusFilter === "blocked" ? user.is_blocked === true : user.is_blocked === false);
+
       return matchesSearch && matchesRole && matchesStatus;
     });
   }, [users, searchQuery, roleFilter, statusFilter]);
+
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
@@ -193,7 +201,7 @@ export default function RoleManagement() {
                       >
                         {user.is_blocked ? <><FaCheckCircle /> Reactivate</> : <><FaBan /> Suspend</>}
                       </button>
-                      
+
                       <button
                         onClick={() => handleDelete(user.user_id)}
                         className="flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-red-100 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-red-500 hover:text-white transition-all"
@@ -248,14 +256,14 @@ export default function RoleManagement() {
       {isModalOpen && selectedUser && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all">
           <div className="bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            
+
             {/* Modal Header */}
             <div className="p-6 bg-slate-900 text-white flex justify-between items-center">
               <h2 className="text-xl font-black flex items-center gap-2">
                 <FaUserShield className="text-blue-400" /> User Information
               </h2>
-              <button 
-                onClick={() => setIsModalOpen(false)} 
+              <button
+                onClick={() => setIsModalOpen(false)}
                 className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500 transition-all text-xl"
               >
                 &times;
@@ -291,9 +299,9 @@ export default function RoleManagement() {
                 <InfoCard label="Assigned Course" value={selectedUser.assigned_course} />
                 <InfoCard label="Role/Activity" value={selectedUser.activities_role} />
                 <InfoCard label="Account Status" value={selectedUser.is_blocked ? "Blocked/Suspended" : "Active Member"} />
-                <InfoCard 
-                  label="Registration Date" 
-                  value={new Date(selectedUser.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })} 
+                <InfoCard
+                  label="Registration Date"
+                  value={new Date(selectedUser.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}
                 />
               </div>
             </div>
