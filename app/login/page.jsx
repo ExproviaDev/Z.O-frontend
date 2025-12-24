@@ -7,12 +7,9 @@ import ForgotPasswordModal from "../Components/ForgotPasswordModal";
 import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../store/slices/authSlice";
-import Cookies from "js-cookie";
-<<<<<<< HEAD
-import { fetchUserProfile } from "../store/slices/authSlice";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-=======
->>>>>>> 5e285236a44fca7ef57b94e8c01df8f578e7f842
+
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -82,14 +79,8 @@ export default function LoginPage() {
       <div className="relative z-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/30 backdrop-blur-xs p-10 rounded-3xl shadow-2xl">
      
         <div className="text-Primary flex flex-col justify-center">
-<<<<<<< HEAD
-          
-          <h1 className="text-4xl  font-bold leading-tight ">
-            <p>Login To Zero Olympiad</p>
-=======
           <h1 className="text-4xl font-bold leading-tight ">
             Login To Zero Olympiad
->>>>>>> 5e285236a44fca7ef57b94e8c01df8f578e7f842
           </h1>
           <p className="mt-6 text-md leading-relaxed">
             Login to continue your journey, access your dashboard, track your
