@@ -3,6 +3,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import quizReducer from "./slices/quizSlice";
 import userReducer from "./slices/userSlice";
+import userQuizSlice from "./slices/userQuizSlice";
 import {
   persistStore,
   persistReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   quiz: quizReducer,
   users: userReducer,
+  userQuiz: userQuizSlice,
 });
 
 const persistConfig = {
