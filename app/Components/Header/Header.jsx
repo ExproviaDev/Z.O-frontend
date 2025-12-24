@@ -28,7 +28,7 @@ export default function Header() {
 
   const profileAreaRef = useRef(null);
 
-  const authState = useSelector((state) => state.user);
+  const authState = useSelector((state) => state.auth);
   const { user = null, isLoggedIn = false } = authState || {};
   const email = user?.email;
 

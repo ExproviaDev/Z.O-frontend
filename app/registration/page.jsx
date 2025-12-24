@@ -39,7 +39,7 @@ export default function RegistrationPage() {
     setIsSubmitting(true);
     setError("");
 
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`;
+    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/user/register`;
 
     try {
       const res = await fetch(backendUrl, {

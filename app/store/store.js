@@ -15,7 +15,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 const rootReducer = combineReducers({
-  user: authReducer,
+  auth: authReducer,
   quiz: quizReducer,
   users: userReducer,
 });
@@ -24,7 +24,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["user"],
+  whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

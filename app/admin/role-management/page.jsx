@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+
 const InfoCard = ({ label, value }) => (
   <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-sm">
     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
@@ -18,7 +19,11 @@ const InfoCard = ({ label, value }) => (
 
 export default function RoleManagement() {
   const dispatch = useDispatch();
+
+  // ১. স্লাইস থেকে ইউজার এবং লগইন করা অ্যাডমিন ইনফো নিন (পাথ ঠিক করা হয়েছে)
   const { users, loading } = useSelector((state) => state.users);
+  const { user: currentUser } = useSelector((state) => state.auth); // state.user থেকে state.auth করা হয়েছে
+
   const [updatingId, setUpdatingId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
@@ -26,22 +31,45 @@ export default function RoleManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const usersPerPage = 8;
 
+  // ২. রিফ্রেশ প্রোটেকশন: লোকাল স্টোরেজ থেকে রোল চেক করা
+  const getAdminStatus = () => {
+    if (currentUser?.role === 'admin') return true;
+    if (typeof window !== "undefined") {
+      const savedUser = JSON.parse(localStorage.getItem("user_data"));
+      return savedUser?.role === 'admin';
+    }
+    return false;
+  };
+
+  const isAdmin = getAdminStatus();
+
+  // ৩. শুধুমাত্র অ্যাডমিন হলে ডাটা ফেচ হবে
   useEffect(() => {
-    dispatch(fetchAllUsers());
-  }, [dispatch]);
+    if (isAdmin && users.length === 0) {
+      dispatch(fetchAllUsers());
+    }
+  }, [dispatch, isAdmin, users.length]);
+
   const filteredUsers = useMemo(() => {
-    return users.filter((user) => {
-      const matchesSearch = user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesRole = roleFilter === "all" || user.role === roleFilter;
+    if (!users) return [];
+    return users.filter((u) => {
+      const name = u.name?.toLowerCase() || "";
+      const email = u.email?.toLowerCase() || "";
+      const query = searchQuery.toLowerCase();
+      const matchesSearch = name.includes(query) || email.includes(query);
+      const userRole = u.role?.toLowerCase() || "user";
+      const filterRole = roleFilter.toLowerCase();
+      const matchesRole = filterRole === "all" || userRole === filterRole;
       const matchesStatus = statusFilter === "all" ||
-        (statusFilter === "blocked" ? user.is_blocked : !user.is_blocked);
+        (statusFilter === "blocked" ? u.is_blocked === true : u.is_blocked === false);
+
       return matchesSearch && matchesRole && matchesStatus;
     });
   }, [users, searchQuery, roleFilter, statusFilter]);
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
@@ -74,16 +102,42 @@ export default function RoleManagement() {
       alert("Delete failed!");
     }
   };
+
   const handleViewDetails = (user) => {
     setSelectedUser(user);
     setIsModalOpen(true);
   };
 
-  if (loading) return <div className="h-screen flex items-center justify-center font-bold text-blue-600">Loading Dashboard...</div>;
+  // ৪. লোডিং এবং অ্যাক্সেস চেক লজিক ফিক্স
+  if (loading && users.length === 0) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center font-bold text-blue-600 gap-4">
+        <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        <p className="animate-pulse tracking-widest uppercase text-xs">Loading Security Protocol...</p>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center text-red-500 font-black uppercase tracking-tighter gap-4">
+        <p className="text-2xl font-black">403 | Access Denied</p>
+        <p className="text-xs text-slate-500 normal-case font-medium">You do not have permission to view this command center.</p>
+        <button
+          onClick={() => window.location.href = '/dashboard'}
+          className="bg-slate-900 text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-slate-800 transition-all"
+        >
+          Return to Dashboard
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-[#f8fafc] p-2 md:p-6 relative">
       <div className="w-full bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+
+        {/* Header Section */}
         <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-900 to-slate-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
@@ -109,7 +163,7 @@ export default function RoleManagement() {
         {/* Filters Bar */}
         <div className="p-4 bg-slate-50 border-b border-slate-100 flex flex-wrap gap-4">
           <select
-            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none"
+            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none hover:border-blue-500 transition-colors"
             value={roleFilter}
             onChange={(e) => { setRoleFilter(e.target.value); setCurrentPage(1); }}
           >
@@ -120,7 +174,7 @@ export default function RoleManagement() {
           </select>
 
           <select
-            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none"
+            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-700 outline-none hover:border-blue-500 transition-colors"
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}
           >
@@ -134,7 +188,7 @@ export default function RoleManagement() {
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-slate-50 text-slate-500 text-[11px] font-black uppercase tracking-tighter">
+              <tr className="bg-slate-50 text-slate-500 text-[11px] font-black uppercase tracking-widest">
                 <th className="p-5">User Profile</th>
                 <th className="p-5">System Role</th>
                 <th className="p-5">Account Status</th>
@@ -165,7 +219,7 @@ export default function RoleManagement() {
                       value={user.role}
                       onChange={(e) => handleUpdate(user.user_id, { role: e.target.value })}
                       disabled={updatingId === user.user_id}
-                      className="p-2.5 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
+                      className="p-2 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 shadow-sm focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="user">USER</option>
                       <option value="manager">MANAGER</option>
@@ -179,24 +233,24 @@ export default function RoleManagement() {
                   </td>
                   <td className="p-5 text-right">
                     <div className="flex justify-end gap-2">
-                      {/* View Detail Button */}
                       <button
                         onClick={() => handleViewDetails(user)}
-                        className="flex items-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                        className="p-2 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                        title="View Full Profile"
                       >
-                        <FaEye /> View Profile
+                        <FaEye />
                       </button>
 
                       <button
                         onClick={() => handleUpdate(user.user_id, { is_blocked: !user.is_blocked })}
                         className={`flex items-center gap-2 px-3 py-2 rounded-xl font-black text-[10px] uppercase tracking-tighter transition-all ${user.is_blocked ? 'bg-green-600 text-white shadow-lg' : 'bg-white text-orange-600 border border-orange-100 hover:bg-orange-50'}`}
                       >
-                        {user.is_blocked ? <><FaCheckCircle /> Reactivate</> : <><FaBan /> Suspend</>}
+                        {user.is_blocked ? "Reactivate" : "Suspend"}
                       </button>
-                      
+
                       <button
                         onClick={() => handleDelete(user.user_id)}
-                        className="flex items-center gap-2 px-3 py-2 bg-white text-red-600 border border-red-100 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-red-500 hover:text-white transition-all"
+                        className="p-2 bg-white text-red-600 border border-red-100 rounded-xl hover:bg-red-500 hover:text-white transition-all"
                       >
                         <FaTrashAlt />
                       </button>
@@ -208,7 +262,7 @@ export default function RoleManagement() {
           </table>
         </div>
 
-        {/* Pagination Controls */}
+        {/* Pagination Section */}
         <div className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-slate-500 font-medium">
             Showing <span className="font-bold text-slate-800">{indexOfFirstUser + 1}</span> to <span className="font-bold text-slate-800">{Math.min(indexOfLastUser, filteredUsers.length)}</span> of <span className="font-bold text-slate-800">{filteredUsers.length}</span> Users
@@ -223,15 +277,17 @@ export default function RoleManagement() {
               <FaChevronLeft />
             </button>
 
-            {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`w-10 h-10 rounded-xl font-bold text-sm transition-all shadow-sm ${currentPage === i + 1 ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-600'}`}
-              >
-                {i + 1}
-              </button>
-            ))}
+            <div className="flex gap-1">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`w-10 h-10 rounded-xl font-bold text-sm transition-all ${currentPage === i + 1 ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-600'}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
 
             <button
               disabled={currentPage === totalPages}
@@ -244,62 +300,43 @@ export default function RoleManagement() {
         </div>
       </div>
 
-      {/* --- User Profile Details Modal --- */}
+      {/* Profile Detail Modal */}
       {isModalOpen && selectedUser && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all">
           <div className="bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            
-            {/* Modal Header */}
             <div className="p-6 bg-slate-900 text-white flex justify-between items-center">
-              <h2 className="text-xl font-black flex items-center gap-2">
-                <FaUserShield className="text-blue-400" /> User Information
+              <h2 className="text-xl font-black flex items-center gap-2 uppercase tracking-tighter">
+                <FaUserShield className="text-blue-400" /> Member Identity Card
               </h2>
-              <button 
-                onClick={() => setIsModalOpen(false)} 
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500 transition-all text-xl"
-              >
-                &times;
-              </button>
+              <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500 transition-all font-bold text-2xl">×</button>
             </div>
 
             <div className="p-8">
-              {/* Profile Top Section */}
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-8 pb-8 border-b border-slate-100">
                 <div className="relative">
                   {selectedUser.profile_image_url ? (
-                    <img src={selectedUser.profile_image_url} className="w-32 h-32 rounded-full object-cover ring-4 ring-slate-50 shadow-xl" alt="" />
+                    <img src={selectedUser.profile_image_url} className="w-32 h-32 rounded-full object-cover ring-4 ring-blue-50 shadow-xl" alt="" />
                   ) : (
                     <FaUserCircle className="w-32 h-32 text-slate-200" />
                   )}
-                  <span className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-[9px] font-black uppercase border-2 border-white text-white ${selectedUser.is_blocked ? 'bg-red-500' : 'bg-green-500'}`}>
-                    {selectedUser.is_blocked ? "Suspended" : "Active"}
-                  </span>
                 </div>
                 <div className="text-center md:text-left">
-                  <h3 className="text-3xl font-black text-slate-800">{selectedUser.name}</h3>
-                  <p className="text-blue-600 font-bold uppercase tracking-widest text-xs mt-1">{selectedUser.role} • Member</p>
+                  <h3 className="text-3xl font-black text-slate-800 tracking-tighter">{selectedUser.name}</h3>
+                  <p className="text-blue-600 font-black uppercase tracking-[0.2em] text-[10px] mt-1">{selectedUser.role} Account Status</p>
                   <p className="text-slate-400 text-sm mt-1">{selectedUser.email}</p>
                 </div>
               </div>
 
-              {/* Information Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InfoCard label="Full Name" value={selectedUser.name} />
                 <InfoCard label="Email Address" value={selectedUser.email} />
                 <InfoCard label="Phone Number" value={selectedUser.phone} />
-                <InfoCard label="District / Location" value={selectedUser.district} />
+                <InfoCard label="District" value={selectedUser.district} />
                 <InfoCard label="Assigned Course" value={selectedUser.assigned_course} />
-                <InfoCard label="Role/Activity" value={selectedUser.activities_role} />
-                <InfoCard label="Account Status" value={selectedUser.is_blocked ? "Blocked/Suspended" : "Active Member"} />
-                <InfoCard 
-                  label="Registration Date" 
-                  value={new Date(selectedUser.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })} 
-                />
+                <InfoCard label="Activity Role" value={selectedUser.activities_role} />
+                <InfoCard label="Status" value={selectedUser.is_blocked ? "Blocked" : "Active"} />
+                <InfoCard label="Registered On" value={new Date(selectedUser.created_at).toLocaleDateString()} />
               </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-6 bg-slate-50 flex justify-end gap-3">
             </div>
           </div>
         </div>
