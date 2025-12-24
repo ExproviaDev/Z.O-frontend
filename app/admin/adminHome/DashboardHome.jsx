@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react"
 import { FiUsers, FiCalendar, FiClock } from "react-icons/fi"
 // import StatCard from "./components/StatCard"
-import StatCard from "../components/ChartStatTable/StatCard"
+// import StatCard from "../components/ChartStatTable/StatCard"
 
 import Chart from "../components/ChartStatTable/Chart"
+import StatsSection from "../components/ChartStatTable/StatCard"
 
 export default function DashboardHome() {
   const [stats, setStats] = useState({
@@ -26,32 +27,11 @@ export default function DashboardHome() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h1>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <StatCard
-          title="Total Registrations"
-          value={stats.totalRegistrations}
-          icon={FiUsers}
-          bgColor="bg-blue-100"
-          iconColor="text-blue-600"
-        />
-        <StatCard
-          title="Ongoing Events"
-          value={stats.ongoingEvents}
-          icon={FiCalendar}
-          bgColor="bg-green-100"
-          iconColor="text-green-600"
-        />
-        <StatCard
-          title="Pending Approvals"
-          value={stats.pendingApprovals}
-          icon={FiClock}
-          bgColor="bg-orange-100"
-          iconColor="text-orange-600"
-        />
-      </div>
+      <StatsSection></StatsSection>
 
       {/* Chart */}
       <Chart />
+      
     </div>
   )
 }
