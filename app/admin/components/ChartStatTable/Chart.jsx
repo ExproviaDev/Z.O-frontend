@@ -242,26 +242,27 @@ export default function Chart() {
 
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-      <div className="md:flex justify-between">
-        <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-6">
+   <div className="bg-white  shadow-sm p-4 sm:p-6 border border-gray-200">
+  <div className="flex flex-col xl:flex-row gap-6">
+
+    {/* LEFT: CHART */}
+    <div className="w-full xl:w-2/4">
+      <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 sm:mb-6">
         User Distribution by Group
       </h3>
 
-      <div className="w-full lg:w-2xl h-[280px] sm:h-[320px] md:h-[360px] lg:h-[400px]">
-  <Bar data={data} options={options} />
-</div>
-
-
-
-      </div>
-
-     
-      <div>
-        <TopCourses></TopCourses>
-      </div>
+      <div className="w-full h-[240px] sm:h-[300px] md:h-[360px] lg:h-[380px] xl:h-[400px]">
+        <Bar data={data} options={options} />
       </div>
     </div>
+
+    {/* RIGHT: TOP COURSES */}
+    <div className="w-full xl:w-2/4">
+      <TopCourses />
+    </div>
+
+  </div>
+</div>
+
   )
 }

@@ -1,38 +1,108 @@
-import React from "react";
-import { IoCalendarClearOutline } from "react-icons/io5";
+"use client"
 
-const page = () => {
+import React, { useState } from 'react';
+import { FaHistory, FaDownload, FaSearch } from 'react-icons/fa';
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable"; // সরাসরি autoTable ইম্পোর্ট করা হয়েছে
+
+const PaymentHistory = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const transactions = [
+    { id: "#TRX-98421", courseName: "Mastering TypeScript & Node.js", date: "Dec 12, 2024", amount: "1200", method: "bKash", status: "Success" },
+    { id: "#TRX-87510", courseName: "Full Stack Web Development", date: "Nov 28, 2024", amount: "2500", method: "Nagad", status: "Success" },
+  ];
+
+  // PDF জেনারেট করার ফিক্সড ফাংশন
+  const downloadInvoice = (trx) => {
+    const doc = new jsPDF();
+
+    // Header Design
+    doc.setFontSize(20);
+    doc.setTextColor(40);
+    doc.text("Zero Olympiad", 14, 22);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text("Official Payment Receipt", 14, 28);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 34);
+
+    // Transaction Details Table (doc.autoTable এর বদলে autoTable(doc, ...) ব্যবহার করা হয়েছে)
+    autoTable(doc, {
+      startY: 45,
+      head: [['Description', 'Details']],
+      body: [
+        ['Transaction ID', trx.id],
+        ['Course Name', trx.courseName],
+        ['Payment Method', trx.method],
+        ['Date', trx.date],
+        ['Status', trx.status],
+        ['Total Amount', `BDT ${trx.amount}`],
+      ],
+      theme: 'striped',
+      headStyles: { fillColor: [37, 99, 235] }, 
+    });
+
+    // Footer (doc.lastAutoTable এর বদলে autoTable এর পর ডাইনামিক পজিশন নেওয়া হয়েছে)
+    const finalY = (doc).lastAutoTable.finalY || 150;
+    doc.setFontSize(10);
+    doc.text("Thank you for your payment!", 14, finalY + 10);
+    doc.text("This is a computer-generated receipt.", 14, finalY + 16);
+
+    // Save PDF
+    doc.save(`Invoice-${trx.id}.pdf`);
+  };
+
+  const filteredTransactions = transactions.filter(item =>
+    item.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <main className="border-2 border-red-500 p-5 shadow-lg rounded-xl ">
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md transition-all ease-in-out duration-300 flex flex-col gap-5">
-        <h1 className="text-2xl lg:text-3xl font-semibold lg:mb-6">
-          My Certificates
+    <div className="max-w-7xl mx-auto p-4 md:p-8">
+      <div className="mb-10">
+        <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+          <FaHistory className="text-blue-600" /> Payment History
         </h1>
-        <div className="relative overflow-hidden border-l-2 lg:border-l-[6px] border border-blue-200 border-l-blue-600 bg-white py-8 px-6 shadow-md rounded-xl">
-          <div className="flex items-center justify-between">
-            <div className="space-y-3 flex gap-5 justify-center items-center">
-              <div className="text-6xl bg-amber-100 p-2 rounded-xl">
-                <IoCalendarClearOutline />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-black">৳210</h3>
+        <p className="text-gray-500 mt-2 font-medium">Download your payment slips for official records.</p>
+      </div>
 
-                <div className="flex items-center gap-6 text-lg text-gray-500">
-                  2025-01-15 • bKash
-                </div>
-              </div>
-            </div>
-
-            <button className="flex items-center gap-1.5 rounded-full text-white bg-green-600 cursor-pointer  text-lg font-medium  py-1 px-4 transition-all ease-in-out duration-300">
-              {/* <CheckCircle2 className="h-3.5 w-3.5" /> */}
-
-              <span>Success</span>
-            </button>
-          </div>
+      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Trx ID</th>
+                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Course</th>
+                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Amount</th>
+                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Slip</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filteredTransactions.map((trx) => (
+                <tr key={trx.id} className="hover:bg-blue-50/20 transition-all">
+                  <td className="px-8 py-5 font-mono text-sm font-bold text-blue-600">{trx.id}</td>
+                  <td className="px-8 py-5">
+                    <div className="font-bold text-gray-800">{trx.courseName}</div>
+                    <div className="text-xs text-gray-400 italic">via {trx.method}</div>
+                  </td>
+                  <td className="px-8 py-5 font-black text-gray-900">BDT {trx.amount}</td>
+                  <td className="px-8 py-5 text-right">
+                    <button 
+                      onClick={() => downloadInvoice(trx)}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl transition-all font-bold text-sm shadow-lg shadow-blue-100 active:scale-95"
+                    >
+                      <FaDownload size={12} /> Download Slip
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 
-export default page;
+export default PaymentHistory;
