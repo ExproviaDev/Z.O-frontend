@@ -19,6 +19,7 @@ export default function AddQuiz() {
       title: "",
       category: "",
       start_at: "",
+      ends_at: "", // নতুন এন্ড টাইম ফিল্ড
       time_limit: 30,
       questions: [{ question_text: "", optionA: "", optionB: "", optionC: "", optionD: "", correct_answer: "" }],
     },
@@ -28,13 +29,29 @@ export default function AddQuiz() {
 
   const onSubmit = async (data) => {
     setErrorMessage("");
+    
+    // ডুপ্লিকেট প্রশ্ন চেক
     const questionTexts = data.questions.map(q => q.question_text.trim().toLowerCase());
     if (new Set(questionTexts).size !== questionTexts.length) {
       setErrorMessage("Duplicate questions detected! Please ensure all questions are unique.");
       return;
     }
+
+    // টাইম ভ্যালিডেশন (Start Time অবশ্যই End Time এর আগে হতে হবে)
+    if (new Date(data.start_at) >= new Date(data.ends_at)) {
+      setErrorMessage("End time must be after the start time!");
+      return;
+    }
+
+    // টাইম ফরম্যাট কনভার্ট (Local to ISO/UTC)
+    const formattedData = {
+      ...data,
+      start_at: new Date(data.start_at).toISOString(),
+      ends_at: new Date(data.ends_at).toISOString(), // এন্ড টাইম কনভার্ট
+    };
+
     try {
-      const resultAction = await dispatch(createQuizAction(data)).unwrap();
+      const resultAction = await dispatch(createQuizAction(formattedData)).unwrap();
 
       if (resultAction.success) {
         alert("Quiz set published successfully!");
@@ -80,10 +97,11 @@ export default function AddQuiz() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-1">
+            <div className="space-y-1 md:col-span-2">
               <label className={labelStyle}>Quiz Title*</label>
               <input {...register("title", { required: true })} placeholder="e.g. SDG Global Challenge" className={inputStyle} />
             </div>
+            
             <div className="space-y-1">
               <label className={labelStyle}>Category</label>
               <select {...register("category", { required: true })} className={inputStyle}>
@@ -91,18 +109,25 @@ export default function AddQuiz() {
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div className="space-y-1">
-              <label className={labelStyle}>Start Date & Time</label>
-              <input {...register("start_at", { required: true })} type="datetime-local" className={inputStyle} />
-            </div>
+
             <div className="space-y-1">
               <label className={labelStyle}>Time Limit (Min)</label>
               <input {...register("time_limit", { required: true })} type="number" className={inputStyle} />
             </div>
+
+            <div className="space-y-1">
+              <label className={labelStyle}>Start Date & Time (Local Time)*</label>
+              <input {...register("start_at", { required: true })} type="datetime-local" className={inputStyle} />
+            </div>
+
+            <div className="space-y-1">
+              <label className={labelStyle}>End Date & Time (Local Time)*</label>
+              <input {...register("ends_at", { required: true })} type="datetime-local" className={inputStyle} />
+            </div>
           </div>
         </section>
 
-        {/* Section 2: Questions */}
+        {/* Section 2: Questions (বাকি অংশ আগের মতোই থাকবে) */}
         <section className="space-y-8">
           <div className="flex items-center justify-between sticky top-4 z-10 bg-white/80 backdrop-blur-md py-2 px-4 rounded-2xl border border-slate-100">
             <div className="flex items-center gap-3">

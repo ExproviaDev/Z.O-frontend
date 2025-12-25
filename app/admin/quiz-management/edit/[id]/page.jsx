@@ -10,16 +10,20 @@ import { FaTrash, FaPlus, FaSave, FaArrowLeft } from "react-icons/fa";
 const categories = ["SDG Activist", "SDG Ambassador", "SDG Achiever"];
 
 export default function EditQuizPage() {
-    const { id } = useParams(); // URL থেকে ডাইনামিক ID নেওয়া
+    const { id } = useParams();
     const router = useRouter();
     const dispatch = useDispatch();
 
-    // Redux থেকে বর্তমান কুইজের ডাটা আনা
     const { currentQuiz, loading, error } = useSelector((state) => state.quiz);
     const [isUpdating, setIsUpdating] = useState(false);
 
     const { register, control, handleSubmit, setValue, reset } = useForm({
         defaultValues: {
+            title: "",
+            category: "",
+            start_at: "",
+            ends_at: "", // নতুন ফিল্ড
+            time_limit: 30,
             questions: []
         }
     });
@@ -29,22 +33,32 @@ export default function EditQuizPage() {
         name: "questions"
     });
 
-    // ১. পেজ লোড হলে কুইজের ডাটা ব্যাকএন্ড থেকে ফেচ করা
+    // টাইমজোন হ্যান্ডেলিং: UTC/ISO ডাটাকে datetime-local ইনপুটের উপযোগী করা
+    const formatDateTimeLocal = (dateString) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        // লোকাল টাইম অফসেট ক্যালকুলেশন করে YYYY-MM-DDTHH:mm ফরম্যাটে আনা
+        const tzOffset = date.getTimezoneOffset() * 60000;
+        const localISOTime = new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
+        return localISOTime;
+    };
+
     useEffect(() => {
         if (id) {
             dispatch(fetchSingleQuiz(id));
         }
     }, [id, dispatch]);
 
-    // ২. ডাটা আসার পর ফর্মে ডাটা সেট করা
     useEffect(() => {
         if (currentQuiz) {
             setValue("title", currentQuiz.title);
             setValue("category", currentQuiz.category);
-            setValue("start_at", currentQuiz.start_at);
             setValue("time_limit", currentQuiz.time_limit);
+            
+            // টাইম ফরম্যাট করে ইনপুটে সেট করা
+            setValue("start_at", formatDateTimeLocal(currentQuiz.start_at));
+            setValue("ends_at", formatDateTimeLocal(currentQuiz.ends_at));
 
-            // প্রশ্নগুলোকে ফর্মের ফরম্যাটে সাজিয়ে বসানো
             const formattedQuestions = currentQuiz.questions.map(q => ({
                 question_text: q.question_text,
                 optionA: q.options.A,
@@ -57,12 +71,19 @@ export default function EditQuizPage() {
         }
     }, [currentQuiz, setValue, replace]);
 
-    // ৩. আপডেট রিকোয়েস্ট পাঠানো
     const onSubmit = async (data) => {
         setIsUpdating(true);
+        
+        // সাবমিট করার আগে টাইমকে পুনরায় ISO/UTC ফরম্যাটে রূপান্তর
+        const formattedData = {
+            ...data,
+            start_at: new Date(data.start_at).toISOString(),
+            ends_at: new Date(data.ends_at).toISOString(),
+        };
+
         try {
             const token = localStorage.getItem("access_token");
-            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/update-quiz/${id}`, data, {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/update-quiz/${id}`, formattedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -93,30 +114,35 @@ export default function EditQuizPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 {/* Basic Info Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                    <div className="space-y-2">
+                    <div className="space-y-2 md:col-span-2">
                         <label className="text-sm font-bold text-slate-600">Quiz Title</label>
-                        <input {...register("title")} className="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter quiz title" />
+                        <input {...register("title", { required: true })} className="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Enter quiz title" />
                     </div>
 
                     <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-600">Category</label>
-                        <select {...register("category")} className="w-full p-3 rounded-xl border outline-none">
+                        <select {...register("category", { required: true })} className="w-full p-3 rounded-xl border outline-none">
                             {categories.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-600">Start Date & Time</label>
-                        <input {...register("start_at")} type="datetime-local" className="w-full p-3 rounded-xl border outline-none" />
+                        <label className="text-sm font-bold text-slate-600">Time Limit (Minutes)</label>
+                        <input {...register("time_limit", { required: true })} type="number" className="w-full p-3 rounded-xl border outline-none" />
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-600">Time Limit (Minutes)</label>
-                        <input {...register("time_limit")} type="number" className="w-full p-3 rounded-xl border outline-none" />
+                        <label className="text-sm font-bold text-slate-600">Start Date & Time (Local)</label>
+                        <input {...register("start_at", { required: true })} type="datetime-local" className="w-full p-3 rounded-xl border outline-none" />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-600">End Date & Time (Local)</label>
+                        <input {...register("ends_at", { required: true })} type="datetime-local" className="w-full p-3 rounded-xl border outline-none" />
                     </div>
                 </div>
 
-                {/* Dynamic Questions Section */}
+                {/* Questions Section */}
                 <div className="space-y-6">
                     <h2 className="text-xl font-bold text-slate-800">Questions List ({fields.length})</h2>
                     {fields.map((field, index) => (
@@ -132,7 +158,7 @@ export default function EditQuizPage() {
                             <div className="mb-4">
                                 <label className="text-sm font-bold text-slate-500 mb-1 block">Question {index + 1}</label>
                                 <textarea
-                                    {...register(`questions.${index}.question_text`)}
+                                    {...register(`questions.${index}.question_text`, { required: true })}
                                     className="w-full p-3 border rounded-xl outline-none focus:border-blue-500"
                                     placeholder="Type your question here..."
                                 />
@@ -143,7 +169,7 @@ export default function EditQuizPage() {
                                     <div key={opt} className="flex items-center gap-2 border p-2 rounded-xl">
                                         <span className="font-bold text-slate-400">{opt}:</span>
                                         <input
-                                            {...register(`questions.${index}.option${opt}`)}
+                                            {...register(`questions.${index}.option${opt}`, { required: true })}
                                             placeholder={`Option ${opt}`}
                                             className="w-full outline-none"
                                         />
@@ -159,7 +185,7 @@ export default function EditQuizPage() {
                                             <input
                                                 type="radio"
                                                 value={opt}
-                                                {...register(`questions.${index}.correct_answer`)}
+                                                {...register(`questions.${index}.correct_answer`, { required: true })}
                                                 className="w-4 h-4 text-blue-600"
                                             />
                                             <span className="font-bold">{opt}</span>

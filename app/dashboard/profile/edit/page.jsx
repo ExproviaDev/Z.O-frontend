@@ -46,7 +46,8 @@ export default function EditProfile() {
     "I want only to participate in the Zero Olympiad...",
   ];
 
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -66,11 +67,22 @@ export default function EditProfile() {
     profile_image_url: "",
   });
 
-  useEffect(() => {
-    if (user) {
-      setFormData({ ...user });
-    }
-  }, [user]);
+useEffect(() => {
+  if (user) {
+    setFormData({
+      name: user.name || "",
+      email: user.email || "",
+      phone: user.phone || "",
+      district: user.district || "",
+      institution: user.institution || "",
+      education_type: user.education_type || "",
+      grade_level: user.grade_level || "",
+      current_level: user.current_level || "",
+      activities_role: user.activities_role || "",
+      profile_image_url: user.profile_image_url || "",
+    });
+  }
+}, [user]);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -109,24 +121,47 @@ export default function EditProfile() {
     e.preventDefault();
     setIsSaving(true);
     const token = localStorage.getItem("access_token");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/update-profile`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
+
+    if (!token) {
+      alert("Session expired. Please login again.");
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/update-profile`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Profile updated successfully!");
+        dispatch(fetchUserProfile(token));
+        router.push("/dashboard/profile");
+      } else {
+        // সার্ভার থেকে আসা নির্দিষ্ট এরর মেসেজ দেখানো
+        alert(`Error: ${result.error || "Failed to update"}`);
+        if (response.status === 401) {
+          // টোকেন ইনভ্যালিড হলে লগআউট করানো বা রিডাইরেক্ট করা ভালো
+          router.push("/login");
+        }
       }
-    );
-    if (response.ok) {
-      alert("Profile updated!");
-      dispatch(fetchUserProfile(token));
-      router.push("/dashboard/profile");
+    } catch (err) {
+      console.error("Submit Error:", err);
+      alert("Network error. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
-
   const inputStyle =
     "w-full border p-3 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 outline-none";
 
@@ -342,8 +377,8 @@ export default function EditProfile() {
           type="submit"
           disabled={isSaving || loading}
           className={`w-full py-4 rounded-xl font-bold shadow-lg transition-all flex items-center justify-center gap-2 ${isSaving || loading
-              ? "bg-blue-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 text-white"
+            ? "bg-blue-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700 text-white"
             }`}
         >
           {(isSaving || loading) ? (

@@ -12,7 +12,7 @@ import { AiOutlineClockCircle, AiOutlineArrowLeft } from "react-icons/ai";
 import { MdSecurity } from "react-icons/md";
 import { clearActiveQuiz } from "../../store/slices/userQuizSlice";
 
-const QuizForm = ({ questions }) => {
+const QuizForm = ({ questions, quizInfo }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -27,19 +27,49 @@ const QuizForm = ({ questions }) => {
   const [warningCount, setWarningCount] = useState(0);
   const [isBlurred, setIsBlurred] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // ১. টাইম লিমিট সেট করা (কুইজের নিজস্ব সময়সীমা)
   useEffect(() => {
-    if (activeQuiz?.time_limit) {
-      setTimeLeft(activeQuiz.time_limit * 60);
+    if (quizInfo?.time_limit) {
+      setTimeLeft(quizInfo.time_limit * 60);
     } else if (questions && questions.length > 0) {
       setTimeLeft(30 * 60);
     }
-  }, [activeQuiz, questions]);
+  }, [quizInfo, questions]);
+
+  // ২. কুইজ চলাকালীন 'Ends At' বা ডেডলাইন চেক করার লজিক
+  useEffect(() => {
+    if (!isQuizStarted || isSubmitting) return;
+
+    const checkDeadline = () => {
+      const now = new Date().getTime();
+      const deadline = new Date(quizInfo?.ends_at).getTime();
+
+      // যদি কুইজের শেষ সময় (ডেডলাইন) পার হয়ে যায়
+      if (deadline && now > deadline) {
+        setIsQuizStarted(false);
+        Swal.fire({
+          title: "Exam Period Over!",
+          text: "The overall quiz time for today has ended. Auto-submitting your answers.",
+          icon: "warning",
+          timer: 3000,
+          showConfirmButton: false,
+          allowOutsideClick: false
+        }).then(() => {
+          handleSubmitAnswers(); // ডেডলাইন শেষ হলে অটো সাবমিট
+        });
+      }
+    };
+
+    const deadlineTimer = setInterval(checkDeadline, 5000); // প্রতি ৫ সেকেন্ডে ডেডলাইন চেক করবে
+    return () => clearInterval(deadlineTimer);
+  }, [isQuizStarted, isSubmitting, quizInfo]);
 
   const handleSubmitAnswers = async () => {
     if (isSubmitting) return;
     const finalUserId = user?.user_id || user?.id;
-    const finalQuizSetId = activeQuiz?.id || questions[0]?.quiz_set_id;
-    const totalTimeInSeconds = (activeQuiz?.time_limit || 30) * 60;
+    const finalQuizSetId = quizInfo?.id || questions[0]?.quiz_set_id;
+    const totalTimeInSeconds = (quizInfo?.time_limit || 30) * 60;
     const timeSpent = totalTimeInSeconds - timeLeft;
 
     if (!finalUserId || !finalQuizSetId) {
@@ -55,11 +85,12 @@ const QuizForm = ({ questions }) => {
     setIsSubmitting(true);
     setIsQuizStarted(false);
     setIsBlurred(false);
+    
     const submissionData = {
       user_id: finalUserId,
       quiz_set_id: finalQuizSetId,
       answers: answers,
-      time_taken: timeSpent,
+      time_taken: Math.max(timeSpent, 1),
     };
 
     try {
@@ -92,6 +123,7 @@ const QuizForm = ({ questions }) => {
       setIsSubmitting(false);
     }
   };
+
   const reportViolation = (reason) => {
     if (!isQuizStarted || isSubmitting || Swal.isVisible()) return;
     setIsBlurred(true);
@@ -118,6 +150,7 @@ const QuizForm = ({ questions }) => {
       return newCount;
     });
   };
+
   useEffect(() => {
     if (!isQuizStarted) return;
     const handleBlur = () => reportViolation("Tab switching detected!");
@@ -134,6 +167,7 @@ const QuizForm = ({ questions }) => {
       window.removeEventListener("keydown", handleKey);
     };
   }, [isQuizStarted]);
+
   useEffect(() => {
     if (!isQuizStarted || timeLeft <= 0) {
       if (timeLeft <= 0 && isQuizStarted) {
@@ -171,7 +205,15 @@ const QuizForm = ({ questions }) => {
       <div className={`transition-all duration-700 min-h-screen ${isBlurred ? "blur-3xl grayscale" : "blur-0"}`}>
         <div className="flex px-3 flex-col items-center py-4 no-select" onContextMenu={(e) => e.preventDefault()}>
 
-          {showStartModal && <StartModal onStart={handleStartQuiz} />}
+          {/* ৩. StartModal এ endTime পাস করা হয়েছে */}
+          {showStartModal && (
+            <StartModal 
+              onStart={handleStartQuiz} 
+              startTime={quizInfo?.start_at} 
+              endTime={quizInfo?.ends_at} 
+            />
+          )}
+
           <TimeUpModal show={showTimeUpModal} />
 
           <div className="w-full max-w-5xl bg-white rounded-[32px] shadow-2xl overflow-hidden border border-gray-100 flex flex-col">
