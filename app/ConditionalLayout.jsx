@@ -44,6 +44,7 @@ export default function ConditionalLayout({ children }) {
     "/login",
     "/registration",
     "/dashboard",
+    '/quiz',
   ];
 
   const shouldHideHeaderFooter = routesToHideHeaderFooter.some((route) =>
