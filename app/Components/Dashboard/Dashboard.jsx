@@ -1,124 +1,89 @@
-"use client";
-import Image from "next/image";
-import { useSelector } from "react-redux";
-import {
-  FaIdCard,
-  FaTrophy,
-  FaGraduationCap,
-  FaUserCircle,
-} from "react-icons/fa";
 
-// Ensure the path to your logo is correct
-import SiteLogo from "../../../public/src/SiteLogo.png";
 
-const Dashboard = () => {
-  const authState = useSelector((state) => state.user);
-  const { user = null } = authState || {};
+
+"use client"
+
+import React, { useState } from 'react';
+import {  FaChevronDown, FaBars } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import Link from 'next/link';
+import { RxDashboard } from "react-icons/rx";
+
+
+const DashboardHeader = ({ onMenuClick }) => { // Sidebar টগল করার জন্য props
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
-    <section className="relative min-h-[500px] lg:min-h-[600px] overflow-hidden bg-[#f8fafc]">
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-[450px] lg:h-[500px] bg-gradient-to-br from-indigo-700 via-purple-600 to-pink-500">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl"></div>
+    <header className="bg-white border-b border-gray-100 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
+      
+      {/* Left Section: Logo & Mobile Toggle */}
+      <div className="flex items-center gap-4">
+        {/* মোবাইল বাটন: এটি শুধুমাত্র মোবাইলে (lg:hidden) দেখা যাবে */}
+        <button 
+          onClick={onMenuClick} 
+          className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
+        >
+          <FaBars size={20} />
+        </button>
+
+        {/* Logo Section - Sidebar এর সাথে এলাইন করা */}
+        <Link href={'/'} className="flex gap-2 items-center transition-opacity hover:opacity-80">
+          <div className="bg-blue-600 p-2 rounded-lg text-white">
+            <RxDashboard  size={22} />
+          </div>
+          <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hidden sm:block">
+            User Dashboard
+          </h3>
+        </Link>
       </div>
 
-      {/* Main Content Container */}
-      <div className="relative container mx-auto px-4 pt-16 lg:pt-24 pb-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Glassmorphism Hero Card */}
-          <div className="relative overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] lg:rounded-[3rem] shadow-2xl transition-all duration-500 hover:shadow-purple-500/20">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 to-emerald-500/80 z-0"></div>
+      {/* Right Section: Notifications & Profile */}
+      <div className="flex items-center gap-2 md:gap-5">
+        
+     
 
-            <div className="relative z-10 p-8 lg:p-16 flex flex-col lg:flex-row justify-between items-center gap-12">
-              {/* Left Side: Profile & Information */}
-              <div className="flex-1 text-center lg:text-left text-white space-y-8">
-                <div className="space-y-2">
-                  <h2 className="inline-block px-4 py-1 rounded-full bg-white/20 text-xs md:text-sm font-medium tracking-widest uppercase backdrop-blur-sm border border-white/10">
-                    Looking Forward to learning
-                  </h2>
-                  <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight">
-                    Zero Olympiad
-                  </h1>
-                  <p className="text-lg md:text-xl font-light italic opacity-90">
-                    {`"Reducing To Zero, Rising As Hero"`}
-                  </p>
-                </div>
+        <div className="h-8 w-[1px] bg-gray-200 mx-1"></div>
 
-                {/* Profile Detail Card */}
-                <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-2xl bg-black/10 backdrop-blur-md border border-white/5 shadow-inner">
-                  <div className="relative group">
-                    <div className="absolute -inset-1 from-yellow-400 to-pink-500 rounded-full blur opacity-40 transition duration-500"></div>
-                    {user?.profile_image_url ? (
-                      <Image
-                        src={user?.profile_image_url}
-                        alt="Profile"
-                        width={300}
-                        height={300}
-                        className="w-[100px] h-[100px] rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-gray-400 font-medium">
-                        <FaUserCircle size={100}></FaUserCircle>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1 space-y-3">
-                    <h2 className="text-2xl lg:text-3xl font-bold tracking-wide">
-                      {user?.name || "Faati Haaayat"}
-                    </h2>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm md:text-base">
-                      <div className="flex items-center gap-2 opacity-90">
-                        <FaIdCard className="text-yellow-400" />
-                        <span className="font-medium text-gray-100">
-                          ID: {user?.student_id || "ZO2025-12345"}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 opacity-90">
-                        <FaTrophy className="text-yellow-400" />
-                        <span className="font-medium text-gray-100">
-                          Rank: #{user?.rank || "0"}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-yellow-400 text-gray-900 font-bold text-sm shadow-lg transform hover:scale-105 transition-transform cursor-default">
-                        <FaGraduationCap size={18} />
-                        {user?.category || "Junior Category"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Side: Site Logo with Circular Rotation Animation */}
-              <div className="flex-shrink-0 relative group">
-                <div className="absolute -inset-4 bg-white/20 rounded-full blur-2xl group-hover:bg-white/30 transition duration-700"></div>
-
-                <div
-                  style={{
-                    animation: "rotateCircular 8s linear infinite",
-                  }}
-                  className="relative"
-                >
-                  <Image
-                    src={SiteLogo}
-                    width={300}
-                    height={300}
-                    alt="Site Logo"
-                    className="w-40 h-40 md:w-56 md:h-56 lg:w-72 lg:h-72 drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
-                  />
-                </div>
-              </div>
+        {/* User Profile Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className="flex items-center gap-2 p-1 md:pr-3 hover:bg-gray-50 rounded-full md:rounded-xl transition-all border border-transparent hover:border-gray-100"
+          >
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
+              A
             </div>
-          </div>
+            <div className="hidden md:block text-left">
+              <p className="text-sm font-bold text-gray-800 leading-none">Alex Shatter</p>
+              <p className="text-[10px] text-gray-500 font-semibold mt-1 uppercase tracking-wider">Pro Member</p>
+            </div>
+            <FaChevronDown className={`text-gray-400 text-[10px] hidden md:block transition-transform duration-300 ${isProfileOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {/* Dropdown Menu */}
+          <AnimatePresence>
+            {isProfileOpen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-[60] overflow-hidden"
+              >
+                <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                  <p className="text-xs text-gray-400 uppercase font-bold tracking-tighter">Account</p>
+                </div>
+                <Link href="/dashboard/profile" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">My Profile</Link>
+                <Link href="/dashboard/settings" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Settings</Link>
+                <hr className="my-1 border-gray-100" />
+                <button className="w-full text-left block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition font-bold">Logout</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </section>
+    </header>
   );
 };
 
-export default Dashboard;
+export default DashboardHeader;

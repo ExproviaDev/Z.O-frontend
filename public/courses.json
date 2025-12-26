@@ -1,0 +1,46 @@
+{
+  "courses": [
+    {
+      "course_title": "Zero Energy Champions",
+      "rating": 4.8,
+      "total_enrollments": 2760,
+      "revenue": "৳6,90,000",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411352/IMG_8443_pqducv.jpg"
+    },
+    {
+      "course_title": "Zero Waste Heroes",
+      "rating": 4.7,
+      "total_enrollments": 2120,
+      "revenue": "৳5,30,000",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411351/IMG_8428_tnynyo.jpg"
+    },
+    {
+      "course_title": "Zero Plastic Protectors",
+      "rating": 4.7,
+      "total_enrollments": 1854,
+      "revenue": "৳4,63,500",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410972/EYE02095_qdhbwj.jpg"
+    },
+    {
+      "course_title": "Zero Plastic Protectors",
+      "rating": 4.7,
+      "total_enrollments": 1854,
+      "revenue": "৳4,63,500",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410972/EYE02095_qdhbwj.jpg"
+    },
+    {
+      "course_title": "Zero Plastic Protectors",
+      "rating": 4.7,
+      "total_enrollments": 1854,
+      "revenue": "৳4,63,500",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410972/EYE02095_qdhbwj.jpg"
+    },
+    {
+      "course_title": "Zero Water Warriors",
+      "rating": 4.8,
+      "total_enrollments": 1515,
+      "revenue": "৳3,78,750",
+      "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410930/EYE02019_lucym2.jpg"
+    }
+  ]
+}

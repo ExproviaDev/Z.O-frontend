@@ -267,13 +267,15 @@ export default function ZeroOlympiad() {
       {/* --- 8. FOUNDER SPOTLIGHT --- */}
       <section id="founder" className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-slate-900 rounded-[4rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
+          <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
             <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
-              <Image
-                 href={`https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg`}
-                alt="Fatiha Ayat" 
-                className="w-full h-full object-cover grayscale"
-              />
+             <Image
+  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg"
+  alt="Fatiha Ayat"
+  fill
+  sizes="(max-width: 1024px) 100vw, 50vw"
+  className="object-cover grayscale"
+/>
               <div className="absolute inset-0 bg-indigo-900/30 mix-blend-multiply" />
             </div>
             <div className="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center text-white">

@@ -7,6 +7,8 @@ import ForgotPasswordModal from "../Components/ForgotPasswordModal";
 import { FaSignInAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../store/slices/authSlice";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+
 import Cookies from "js-cookie";
 
 export default function LoginPage() {
@@ -73,7 +75,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen w-full flex items-center p-5 justify-center bg-white relative overflow-hidden">
+      
       <div className="relative z-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/30 backdrop-blur-xs p-10 rounded-3xl shadow-2xl">
+     
         <div className="text-Primary flex flex-col justify-center">
           <h1 className="text-4xl font-bold leading-tight ">
             Login To Zero Olympiad
@@ -82,7 +86,16 @@ export default function LoginPage() {
             Login to continue your journey, access your dashboard, track your
             progress, and unlock your achievements.
           </p>
+          {/* back button */}
+            <div className="pt-7">
+                  <Link href={'/'} className="">
+                    <button className="flex items-center btn btn-active btn-primary">
+                      <MdOutlineArrowBackIos />  back
+                    </button>
+                  </Link>
+            </div>
         </div>
+        
         <div className="bg-gray-200 backdrop-blur-xl border border-gray-200 rounded-2xl p-6 shadow-lg">
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">Login</h2>
 

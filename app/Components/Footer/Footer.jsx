@@ -47,7 +47,7 @@ export default function Footer() {
                         Want Something Extra?
                     </h2>
                     <Link
-                        href="#"
+                        href="/registration"
                         className="inline-block rounded-xl bg-[#FF1F8F] px-8 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#ff3aa0] transition"
                     >
                         Register Soon!

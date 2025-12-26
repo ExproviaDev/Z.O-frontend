@@ -372,7 +372,7 @@ export default function HomePage() {
 
 
 
- <section className="relative w-full py-24 p-5 px-5 bg-gradient-to-br from-[#2034a88f] via-[#134bb3] to-[#1f28aade] overflow-hidden">
+ <section className="relative w-full py-24  px-10 bg-gradient-to-br from-[#2034a88f] via-[#134bb3] to-[#1f28aade] overflow-hidden">
   {/* background image */}
   <Image
     src="/src/NRBAward.jpg"
@@ -545,46 +545,26 @@ export default function HomePage() {
       </section>
 
       {/* Timeline */}
-      <section className="px-5 py-20">
+      <section className="px-5 ">
         
        <TimelineEvent></TimelineEvent>
       </section>
 
       {/* Confirmed Guest & Jury Section */}
-      <section className="">
+      <section>
         <JurySection></JurySection>
       </section>
 
       {/* Gallery */}
   {/* Gallery */}
-<EventGallery></EventGallery>
+<section>
+  <EventGallery></EventGallery>
+</section>
 
 
 
       {/* CTA Section - Full Width */}
-      <section className="relative p-5 w-full py-32 bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600">
-        <div className="absolute inset-0 bg-black/30" />
-
-        <div
-          data-section="cta"
-          className={`relative z-10 max-w-4xl mx-auto px-4 text-center transition-all duration-1000 ${
-            animatedSections.has("cta")
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-95"
-          }`}
-        >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Want Something Extra?
-          </h2>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Join thousands of students who are already part of this incredible
-            journey. Don't miss out on this opportunity!
-          </p>
-          <button className="bg-white text-pink-600 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 shadow-2xl">
-            Get Started
-          </button>
-        </div>
-      </section>
+      
     </main>
   );
 }
