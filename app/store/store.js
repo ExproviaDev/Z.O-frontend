@@ -1,9 +1,44 @@
-"use client"
-import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../features/userSlice'; 
+"use client";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import quizReducer from "./slices/quizSlice";
+import userReducer from "./slices/userSlice";
+import userQuizSlice from "./slices/userQuizSlice";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+const rootReducer = combineReducers({
+  auth: authReducer,
+  quiz: quizReducer,
+  users: userReducer,
+  userQuiz: userQuizSlice,
+});
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["auth"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    user: userReducer, 
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
+export const persistor = persistStore(store);

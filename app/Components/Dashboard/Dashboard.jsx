@@ -1,83 +1,89 @@
-import Image from "next/image";
-import React from "react";
 
-import SiteLogo from "@/public/src/SiteLogo.png";
-import faatiHaaayat from "@/public/src/faatihaaayat.jpg";
 
-const Dashboard = () => {
+
+"use client"
+
+import React, { useState } from 'react';
+import {  FaChevronDown, FaBars } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import Link from 'next/link';
+import { RxDashboard } from "react-icons/rx";
+
+
+const DashboardHeader = ({ onMenuClick }) => { // Sidebar টগল করার জন্য props
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   return (
-    <section>
-      <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 bg-cover bg-center p-28 lg:p-48"></div>
-      <div className="-mt-56 flex justify-center items-center ">
-        <div className="max-w-7xl w-full px-5 border-red-300 p-2">
-          <div className="bg-gradient-to-r from-blue-500 to-green-500 p-5 lg:p-16 rounded-lg space-y-8">
-            <div className="flex justify-between lg:items-center  border-red-600">
-              <div className="text-white">
-                <h2 className="uppercase text-sm md:text-base lg:text-xl">
-                  Looking Forward to learning.
-                </h2>
-                <h2 className="text-2xl md:text-4xl lg:text-7xl font-bold lg:my-3">
-                  Zero Olympiad
-                </h2>
-                <p className="text-sm lg:text-xl italic">
-                  Reducing To Zero, Rising As Hero
-                </p>
+    <header className="bg-white border-b border-gray-100 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
+      
+      {/* Left Section: Logo & Mobile Toggle */}
+      <div className="flex items-center gap-4">
+        {/* মোবাইল বাটন: এটি শুধুমাত্র মোবাইলে (lg:hidden) দেখা যাবে */}
+        <button 
+          onClick={onMenuClick} 
+          className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
+        >
+          <FaBars size={20} />
+        </button>
 
-                <div className="md:flex justify-start items-center gap-5 mt-8">
-                  <Image
-                    src={faatiHaaayat}
-                    width={150}
-                    height={150}
-                    alt="SiteLogo"
-                    className="rounded-full border-4 border-red-500 "
-                  />
-                  <div className="mt-2">
-                    <h2 className="text-2xl lg:text-3xl font-semibold">
-                      Faati Haaayat
-                    </h2>
-
-                    <div className="flex items-center">
-                      {/* <span className="mr-1 text-xl">🎓</span> */}
-                      <span className="text-base md:text-lg mr-2 font-semibold">
-                        Student ID :
-                      </span>
-                      ZO2025-12345
-                    </div>
-                    <div className="flex items-center">
-                      {/* <span className="mr-1 text-xl">🎓</span> */}
-                      <span className="text-base md:text-lg mr-2 font-semibold">
-                        Current Rank :
-                      </span>
-                      0
-                    </div>
-                    <div className="flex items-center border-red-500">
-                      {/* <span className="mr-1 text-xl">🎓</span> */}
-                      <span className="md:text-lg font-semibold border border-gray-500  py-1 px-5 bg-amber-300 rounded-xl ">
-                        Junior Category
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* <div>
-                <Image src={SiteLogo} width={280} height={280} alt="SiteLogo" />
-              </div> */}
-              <div>
-                <Image
-                  src={SiteLogo}
-                  width={280}
-                  height={280}
-                  alt="SiteLogo"
-                  className="w-28 h-28  md:w-56 md:h-56 lg:w-64 lg:h-64                     "
-                />
-              </div>
-            </div>
+        {/* Logo Section - Sidebar এর সাথে এলাইন করা */}
+        <Link href={'/'} className="flex gap-2 items-center transition-opacity hover:opacity-80">
+          <div className="bg-blue-600 p-2 rounded-lg text-white">
+            <RxDashboard  size={22} />
           </div>
+          <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hidden sm:block">
+            User Dashboard
+          </h3>
+        </Link>
+      </div>
+
+      {/* Right Section: Notifications & Profile */}
+      <div className="flex items-center gap-2 md:gap-5">
+        
+     
+
+        <div className="h-8 w-[1px] bg-gray-200 mx-1"></div>
+
+        {/* User Profile Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className="flex items-center gap-2 p-1 md:pr-3 hover:bg-gray-50 rounded-full md:rounded-xl transition-all border border-transparent hover:border-gray-100"
+          >
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
+              A
+            </div>
+            <div className="hidden md:block text-left">
+              <p className="text-sm font-bold text-gray-800 leading-none">Alex Shatter</p>
+              <p className="text-[10px] text-gray-500 font-semibold mt-1 uppercase tracking-wider">Pro Member</p>
+            </div>
+            <FaChevronDown className={`text-gray-400 text-[10px] hidden md:block transition-transform duration-300 ${isProfileOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {/* Dropdown Menu */}
+          <AnimatePresence>
+            {isProfileOpen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-[60] overflow-hidden"
+              >
+                <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                  <p className="text-xs text-gray-400 uppercase font-bold tracking-tighter">Account</p>
+                </div>
+                <Link href="/dashboard/profile" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">My Profile</Link>
+                <Link href="/dashboard/settings" className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Settings</Link>
+                <hr className="my-1 border-gray-100" />
+                <button className="w-full text-left block px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition font-bold">Logout</button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </section>
+    </header>
   );
 };
 
-export default Dashboard;
+export default DashboardHeader;
