@@ -33,6 +33,7 @@ import EventGallery from "../EventGallery/EventGallery"
 import JurySection from "../JuryCard/Jury"
 import HeroSection from "../HeroSection/Hero"
 import TimelineEvent from "../Timeline/TimelineEvent"
+import WhyParticipate from "../Participate/participate";
 
 export default function HomePage() {
   const [animatedSections, setAnimatedSections] = useState(new Set());
@@ -67,9 +68,15 @@ export default function HomePage() {
         <HeroSection></HeroSection>
       </section>
 
+   
+
       {/* Zero Olympiad Instructions */}
-      <section className="py-20 p-7 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="w-full py-20  p-7 bg-white"
+      style={{
+        backgroundImage: "radial-gradient(#E5E7EB 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+      }}>
+        <div className="max-w-7xl  mx-auto px-7">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div
               data-section="instructions-text"
@@ -82,7 +89,7 @@ export default function HomePage() {
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Zero Olympiad Instructions
               </h2>
-              <p className="text-gray-600 text-lg mb-4 leading-relaxed">
+              <p className="text-gray-800 text-lg mb-4 leading-relaxed">
                 The Zero Olympiad is a groundbreaking initiative that aims to
                 inspire and activate the young generation to address global
                 issues. Led by Fatiha Ayat, the Olympiad is working to raise
@@ -98,13 +105,13 @@ export default function HomePage() {
 
               <div className="md:flex gap-4">
                 <div className="mb-4">
-                  <button className="flex  items-center gap-3 bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                  <button className="flex  btn-primary">
                     English Instructions
                     <FaArrowRight />
                   </button>
                 </div>
                 <div>
-                  <button className="flex items-center gap-3 border-2 border-pink-500 text-black hover:text-white hover:bg-pink-600  px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                  <button className="flex btn-Secondary">
                     Bangla Instructions
                     <FaArrowRight />
                   </button>
@@ -137,121 +144,7 @@ export default function HomePage() {
       </section>
 
       {/* Why Should You Participate - Full Width */}
-      <section className="relative w-full min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 p-5 flex flex-col justify-center">
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50" />
-        <Image
-          src="/src/image.jpg"
-          alt="Participate Background"
-          fill
-          className="object-cover mix-blend-overlay opacity-20"
-        />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 flex flex-col justify-center h-full">
-          <h2
-            data-section="participate-title"
-            className={`text-[28px] md:text-[40px] font-bold text-center text-white mb-4 transition-all duration-1000 ${
-              animatedSections.has("participate-title")
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            Why should you participate?
-          </h2>
-
-          <p className="text-center text-gray-300 text-[16px] md:text-[18px] mb-12 max-w-3xl mx-auto">
-            Choose the category that matches your academic level and begin your
-            journey to excellence
-          </p>
-
-          {/* Cards Grid */}
-          <div className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8  h-full">
-            {[
-              {
-                badge: "SDG",
-                badgeColor: "bg-blue-500",
-                title: "Fellowship Support",
-                description:
-                  "Support for applying to the SDG Fellowship during overseas university admission.",
-                icon: "✨",
-              },
-              {
-                badge: "SDG",
-                badgeColor: "bg-purple-500",
-                title: "Summit Participation",
-                description:
-                  "Recommendation for participation in the SDG Summit at the United Nations every year.",
-                icon: "🤝",
-              },
-              {
-                badge: "National",
-                badgeColor: "bg-orange-500",
-                title: "Zero Olympiad Envoy",
-                description:
-                  "Inclusion of National Zero Olympiad Envoys in Zero Olympiad Clubs nationwide.",
-                icon: "🧑‍💻",
-              },
-              {
-                badge: "UN",
-                badgeColor: "bg-orange-400",
-                title: "Certificate Course",
-                description:
-                  "Register for UN-accredited courses via Zero Olympiad for free online learning.",
-                icon: "🏆",
-              },
-              {
-                badge: "Case Study",
-                badgeColor: "bg-green-500",
-                title: "Debate & Public Speaking",
-                description:
-                  "Case Study Competition, Debate, and Public Speaking events for idea presentation.",
-                icon: "📊",
-              },
-              {
-                badge: "Workshops",
-                badgeColor: "bg-pink-500",
-                title: "Seminars & Project Implementation",
-                description:
-                  "Special skill development workshops, seminars, and funding opportunities for projects.",
-                icon: "🏆",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                data-section={`benefit-${index}`}
-                className={`relative bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between  h-full ${
-                  animatedSections.has(`benefit-${index}`)
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                {/* Badge */}
-                <span
-                  className={`inline-block ${item.badgeColor} text-white text-sm font-semibold px-4 py-1 rounded-full w-1/3 text-center mb-4`}
-                >
-                  {item.badge}
-                </span>
-
-                {/* Content */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed pr-12">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Right Icon */}
-                <div className="absolute bottom-6 right-6 text-4xl opacity-80">
-                  {item.icon}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyParticipate></WhyParticipate>
 
       {/* Registration Categories */}
       <section className="relative  w-full min-h-screen bg-gray-50 flex items-center py-20 px-5">
@@ -345,17 +238,21 @@ export default function HomePage() {
 
                 {/* Price */}
                 <div className="mt-6">
-                  <p className="text-3xl font-bold">{category.price}</p>
-                  <p className="text-sm text-gray-500 mb-4">/ participant</p>
+                 <div className="flex pb-3.5 gap-1 align-bottom">
+                   <p className="text-3xl font-bold ">{category.price}</p>
+                  <p className="text-lg text-gray-500 mt-4 ">/ participant</p>
+                 </div>
 
                   {/* Button */}
                   <button
-                    className={`w-full flex items-center justify-center gap-2 py-3 rounded-full font-semibold transition-all duration-300
+                    className={`
           ${
             category.highlighted
-              ? "bg-pink-500 text-white hover:bg-pink-600"
-              : "border border-pink-500 text-pink-500 hover:bg-pink-50"
-          }`}
+              ? "btn-primary"
+              : "btn-Secondary"
+              
+          }` }
+           style={{ width: '100%' }}
         >
           Register Now
           <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />

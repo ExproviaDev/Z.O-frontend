@@ -37,7 +37,7 @@ export default function HeroSection() {
 
                 <div className="absolute inset-0 bg-[#191280ec] opacity-65 mix-blend-hard-light" />
 
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1e1b4b]/90 via-[#4c1d95]/40 to-[#0f172a]/90" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2a719f]/90 via-[#2a719f]/40 to-[#076297]/90" />
 
                 <div className="absolute inset-0 bg-black/20" />
               </div>
@@ -50,36 +50,33 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 flex flex-col items-center text-center">
         {/* Floating Badge */}
         <div className="mb-8">
-          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-5 py-2 rounded-full text-xs md:text-sm font-medium flex items-center gap-2 shadow-2xl">
-            <span className="text-pink-500 animate-pulse">★</span> Reducing to
-            Zero, Rising as Hero
+          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-5 py-2 rounded-full text-xs md:text-[18px] font-medium flex items-center gap-2 shadow-2xl">
+            <span className="text-pink-500 animate-pulse">★</span> 
+            Welcome to Zero Olympiad
           </span>
         </div>
 
         {/* Hero Title */}
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]">
-          Welcome to{" "}
-          <span className="text-pink-600 drop-shadow-[0_10px_20px_rgba(255,26,117,0.5)]">
-            Zero Olympiad
+          Reducing to Zero,{" "}
+          <span className="text ">
+            Rising as Hero
           </span>
         </h1>
 
         {/* Hero Description */}
-        <p className="text-base md:text-xl text-gray-100 max-w-2xl mx-auto font-light leading-relaxed mb-10 drop-shadow-md">
-          Unleash Your Potential, Compete With The Brightest Minds, And Embark
-          On A Journey Of Academic Excellence And Discovery.
-        </p>
+        
 
         {/* Buttons Section */}
         <div className="flex flex-wrap justify-center gap-5 mb-16">
           <Link href={'/registration'}>
-          <button className="flex items-center gap-3 bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 shadow-[0_15px_30px_-10px_rgba(255,26,117,0.6)] group">
+          <button className="btn-primary ">
             Register Now
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
           </Link>
 
-          <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white/20 text-white hover:bg-pink-700 px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+          <button className="bg-btn">
             Learn More{" "}
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -108,7 +105,7 @@ export default function HeroSection() {
               key={index}
               className="bg-white/5 backdrop-blur-[15px] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/15 hover:-translate-y-2 group shadow-2xl"
             >
-              <div className="text-4xl text-white mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="text-4xl text mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
               </div>
               <div className="text-xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
