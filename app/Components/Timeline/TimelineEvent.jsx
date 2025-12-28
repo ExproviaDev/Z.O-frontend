@@ -84,13 +84,41 @@ export default function TimelineEvent() {
   }, [scrollYProgress]);
 
   return (
-    <>
+    <div className="bg-white" 
+    
+
+     style={{
+           backgroundImage: "radial-gradient(#E5E7EB 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+
+         }}
+        // c
+
+    >
       {/* ================= DESKTOP ================= */}
+
+
+
+        <div className="mx-auto max-w-7xl text-center pt-10">
+          <h3 className="text-5xl font-bold">Time Line</h3>
+          <p className="pt-5 font-bold">Follow the path from registration to the grand finale.  Each milestone brings you closer to <br /> achieving excellence.</p>
+        </div>
+
       <section
+      className="w-full  relative  hidden md:block  overflow-hidden py-40"
         ref={wrapperRef}
-        style={{ minHeight: SECTION_HEIGHT }}
-        className="relative  hidden md:block bg-white overflow-hidden py-40"
+        style={{ minHeight: SECTION_HEIGHT,
+          
+
+         }}
+        // className="relative  hidden md:block bg-white overflow-hidden py-40"
+
+        
+        
+
+        
       >
+       
         {/* SVG PATH */}
         <svg
           className="absolute left-1/2 -translate-x-1/2"
@@ -233,6 +261,6 @@ export default function TimelineEvent() {
           ))}
         </div>
       </section>
-    </>
+    </div>
   );
 }
