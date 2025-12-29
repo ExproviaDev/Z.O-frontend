@@ -171,7 +171,7 @@ const AwardsPage = () => {
                 <motion.div
                   whileHover={{ rotate: 6, scale: 1.15 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="text-blue-300 text-2xl mb-4"
+                  className="w-10 h-10 text-2xl bg-[#df6319] rounded-lg flex items-center justify-center mb-4"
                 >
                   {item.icon}
                 </motion.div>
@@ -214,7 +214,7 @@ const AwardsPage = () => {
                 <motion.div
                   whileHover={{ rotate: 6, scale: 1.15 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="text-blue-300 text-2xl mb-4"
+                   className="w-10 h-10 text-2xl bg-[#df6319] rounded-lg flex items-center justify-center mb-4"
                 >
                   {item.icon}
                 </motion.div>
@@ -257,8 +257,7 @@ const AwardsPage = () => {
                 <motion.div
                   whileHover={{ rotate: -6, scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 260 }}
-                  className="bg-[#1F4A65] p-3 rounded-md text-blue-300 text-xl
-                  border border-white/10 group-hover:bg-blue-600"
+                  className="w-12 h-12 text-2xl bg-[#df6319] rounded-lg flex items-center justify-center mb-4"
                 >
                   {item.icon}
                 </motion.div>

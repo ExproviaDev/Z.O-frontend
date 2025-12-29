@@ -119,7 +119,7 @@ const paginatedStudents = tableStudents.slice(
 
   if (loading) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100">
+    <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100">
       <div className="flex flex-col items-center gap-6">
 
         {/* Outer glow */}
@@ -148,8 +148,10 @@ const paginatedStudents = tableStudents.slice(
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    
+    <div className="min-h-screen  bg-gradient-to-br  from-blue-50 to-indigo-100 py-8 px-4">
+      
+      <div className="max-w-7xl pt-22 mx-auto ">
 
         {/* Header */}
         <div className="text-center mb-8">

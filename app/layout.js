@@ -24,7 +24,9 @@ export default function RootLayout({ children }) {
       >
         <ReduxProvider>
           <ConditionalLayout>
+
             {children}
+            
           </ConditionalLayout>
         </ReduxProvider>
       </body>

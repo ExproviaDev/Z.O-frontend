@@ -63,7 +63,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="overflow-x-hidden ">
+    <main className="overflow-x-hidden">
       {/* Hero Section - Full Width */}
       <section>
         <HeroSection></HeroSection>
@@ -72,7 +72,7 @@ export default function HomePage() {
    
 
       {/* Zero Olympiad Instructions */}
-      <section className="w-full py-20  p-7 bg-white"
+      <section className="w-full py-20  p-7 mt-10 bg-white"
       style={{
         backgroundImage: "radial-gradient(#E5E7EB 1px, transparent 1px)",
         backgroundSize: "20px 20px",

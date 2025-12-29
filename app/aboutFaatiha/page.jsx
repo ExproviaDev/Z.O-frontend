@@ -24,7 +24,7 @@ export default function AboutFaatihaPage() {
   const [selectedMedia, setSelectedMedia] = useState(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-x-hidden">
+    <div className="min-h-screen pt-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-x-hidden">
       
       {/* 1️⃣ CINEMATIC HERO SECTION */}
       <section className="relative h-screen w-full overflow-hidden">

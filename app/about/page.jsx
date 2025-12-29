@@ -58,10 +58,10 @@ export default function ZeroOlympiad() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
+    <div className="min-h-screen  bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
     
       
-
+<div className='pt-20'>
       {/* --- 1. HERO SECTION --- */}
     <section>
       <HeroSection></HeroSection>
@@ -317,6 +317,7 @@ export default function ZeroOlympiad() {
           scroll-behavior: smooth;
         }
       `}</style>
+    </div>
     </div>
   );
 }
