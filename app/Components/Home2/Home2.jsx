@@ -8,6 +8,8 @@ import TimelineEvent from "../Timeline/TimelineEvent"
 import Instructions from "../Instructions/Instructions";
 import WhyParticipate from "../WhyParticipate/WhyParticipate";
 import Registration from "../Registration/Registration";
+import Awards from "../Awards/Award";
+
 
 export default function HomePage() {
   const [animatedSections, setAnimatedSections] = useState(new Set());
@@ -37,22 +39,22 @@ export default function HomePage() {
 
   return (
     <main className="overflow-x-hidden">
-      <section>
+
         <HeroSection></HeroSection>
-      </section>
+      
 
       <Instructions></Instructions>
       <WhyParticipate></WhyParticipate>
       <Registration></Registration>
-      <section className="px-5 ">
+
+      <Awards></Awards>
+      
         <TimelineEvent></TimelineEvent>
-      </section>
-      <section>
+      
         <JurySection></JurySection>
-      </section>
-      <section>
+     
         <EventGallery></EventGallery>
-      </section>
+
     </main>
   );
 }
