@@ -70,13 +70,13 @@ export default function HeroSection() {
         {/* Buttons Section */}
         <div className="flex flex-wrap justify-center gap-5 mb-16">
           <Link href={'/registration'}>
-          <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
+          <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
             Register Now
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
           </Link>
 
-          <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+          <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
             Learn More{" "}
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>

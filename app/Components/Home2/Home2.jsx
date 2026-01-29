@@ -1,34 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import {
-  FaUniversity,
-  FaFlag,
-  FaSchool,
-  FaClock,
-  FaWater,
-  FaHeart,
-  FaFutbol,
-  FaGavel,
-  FaComments,
-  FaTools,
-  FaRocket,
-  FaBookOpen,
-  FaArrowRight,
-  FaTrophy,
-  FaUsers,
-  FaCalendarAlt,
-  FaCertificate,
-  FaUserGraduate,
-  FaMedal,
-  FaAward,
-  FaHandshake,
-  FaBook,
-  FaLightbulb,
-  FaChalkboardTeacher,
-  FaTheaterMasks,
-} from "react-icons/fa"
 import EventGallery from "../EventGallery/EventGallery"
 import JurySection from "../JuryCard/Jury"
 import HeroSection from "../HeroSection/Hero"
@@ -65,59 +37,22 @@ export default function HomePage() {
 
   return (
     <main className="overflow-x-hidden">
-      {/* Hero Section - Full Width */}
       <section>
         <HeroSection></HeroSection>
       </section>
 
-   
-
-      {/* Zero Olympiad Instructions */}
-      
-<Instructions></Instructions>
-
-
-
-      {/* Why Should You Participate - Full Width */}
-     <WhyParticipate></WhyParticipate>
-
-
-
-      {/* Registration Categories */}
-    
-<Registration></Registration>
-
-
-
-
-
-
-<AwardsPage></AwardsPage>
-
-
-
-
-      {/* Timeline */}
+      <Instructions></Instructions>
+      <WhyParticipate></WhyParticipate>
+      <Registration></Registration>
       <section className="px-5 ">
-        
-       <TimelineEvent></TimelineEvent>
+        <TimelineEvent></TimelineEvent>
       </section>
-
-      {/* Confirmed Guest & Jury Section */}
       <section>
         <JurySection></JurySection>
       </section>
-
-      {/* Gallery */}
-  {/* Gallery */}
-<section>
-  <EventGallery></EventGallery>
-</section>
-
-
-
-      {/* CTA Section - Full Width */}
-      
+      <section>
+        <EventGallery></EventGallery>
+      </section>
     </main>
   );
 }
