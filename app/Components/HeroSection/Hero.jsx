@@ -39,7 +39,7 @@ export default function HeroSection() {
 
                 <div className="absolute inset-0  opacity-65 mix-blend-hard-light" />
 
-                <div className="absolute inset-0 bg-gradient-to-br from-[#266D9A]/90 via-[#266D9A]/40 to-[#266D9A]/90" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#266D9A]/50 via-[#266D9A]/60 to-[#266D9A]/50" />
 
                 <div className="absolute inset-0 bg-Secondary/70" />
               </div>
@@ -58,7 +58,7 @@ export default function HeroSection() {
         </div>
 
         {/* Hero Title */}
-        <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]">
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
           Reducing to Zero,{" "}
           <span className="text-Primary">
             Rising as Hero
