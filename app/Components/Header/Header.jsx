@@ -71,77 +71,75 @@ export default function Header() {
   const rightMenu = navItems.slice(3);
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          hideHeader ? "-translate-y-full" : "translate-y-0"
-        } ${
-          scrolled
-            ? "bg-black/95 backdrop-blur shadow-lg"
-            : isHomePage
-            ? "bg-transparent border-b border-white/20"
-            : "bg-[#1A1831]"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative flex items-center justify-between h-20">
-            {/* DESKTOP LEFT NAV */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {leftMenu.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.url}
-                  className={`text-sm font-bold transition hover:text-orange-400 ${
-                    pathname === item.url ? "text-orange-400" : "text-white"
+    <header
+      className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+          : "bg-white py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center group">
+            <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
+              <Image
+                src={logo}
+                alt="Zero Olympiad"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="ml-3">
+              <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary bg-clip-text  leading-none">
+                Zero Olympiad
+              </h1>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-medium">
+                Excellence Awaits
+              </p>
+            </div>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {filteredNavItems.map((item) => (
+              <Link
+                key={item.title}
+                href={item.url}
+                className={`relative text-sm font-bold transition-colors duration-300 hover:text-primary ${
+                  pathname === item.url ? "text-primary" : "text-gray-600"
+                } group`}
+              >
+                {item.title}
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full ${
+                    pathname === item.url ? "w-full" : ""
                   }`}
+                ></span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* User Section */}
+          <div className="flex items-center gap-4">
+            {email ? (
+              <div className="relative" ref={profileAreaRef}>
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none"
                 >
-                  {item.title}
-                </Link>
-              ))}
-            </nav>
-
-            {/* LOGO */}
-            <Link href="/" className="lg:absolute lg:left-1/2 lg:-translate-x-1/2">
-              <div className="relative w-12 h-12">
-                <Image src={logo} alt="Logo" fill className="object-contain" />
-              </div>
-            </Link>
-
-            {/* RIGHT SECTION */}
-            <div className="flex items-center gap-4">
-              <nav className="hidden lg:flex items-center gap-8">
-                {rightMenu.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={item.url}
-                    className={`text-sm font-bold transition hover:text-orange-400 ${
-                      pathname === item.url ? "text-orange-400" : "text-white"
-                    }`}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-              </nav>
-
-              {/* PROFILE (Desktop) */}
-              <div className="hidden md:flex items-center gap-3">
-                {email ? (
-                  <div className="relative" ref={profileAreaRef}>
-                    <button onClick={() => setIsProfileOpen(!isProfileOpen)}>
-                      <div className="w-10 h-10 rounded-full overflow-hidden border border-white/50">
-                        {user?.profile_image_url ? (
-                          <Image
-                            src={user.profile_image_url}
-                            alt="Profile"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                          />
-                        ) : (
-                          <FaUserCircle className="w-full h-full text-gray-300" />
-                        )}
-                      </div>
-                    </button>
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2  border-Secondary transition-colors">
+                    {user.profile_image_url ? (
+                      <Image
+                        src={user.profile_image_url}
+                        alt="Profile"
+                        width={48}
+                        height={48}
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <FaUserCircle className="w-full h-full text-gray-300 bg-gray-100" />
+                    )}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
@@ -170,6 +168,8 @@ export default function Header() {
               </button>
             </div>
           </div>
+
+
         </div>
       </header>
 
@@ -234,8 +234,10 @@ export default function Header() {
               <Link
                 key={item.title}
                 href={item.url}
-                className={`text-lg font-semibold transition ${
-                  pathname === item.url ? "text-orange-400" : "text-white"
+                className={`text-base font-bold py-2 px-4 rounded-lg transition-colors ${
+                  pathname === item.url
+                    ? "bg-primary/10 text-primary"
+                    : "text-gray-600 hover:bg-gray-50"
                 }`}
               >
                 {item.title}

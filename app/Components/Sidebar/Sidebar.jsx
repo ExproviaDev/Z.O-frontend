@@ -9,6 +9,7 @@ import { FaUser, FaHome, FaBook, FaRegBookmark, FaStar, FaSignOutAlt } from "rea
 import { motion, AnimatePresence } from "framer-motion";
 import { GrAnnounce } from "react-icons/gr";
 import Swal from "sweetalert2"; // SweetAlert2 ইম্পোর্ট করা হয়েছে
+import LogoutButton from "../LogoutButton";
 
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
@@ -110,13 +111,7 @@ export default function Sidebar({ isOpen, onClose }) {
             </Link>
             
             {/* এখানে LogoutButton এর পরিবর্তে সরাসরি বাটনটি আপনার ডিজাইনে বসানো হয়েছে */}
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-600 font-medium text-sm hover:bg-red-50 transition-all"
-            >
-              <FaSignOutAlt className="text-xl" />
-              <span>Logout</span>
-            </button>
+            <LogoutButton ></LogoutButton>
           </div>
         </div>
       </aside>

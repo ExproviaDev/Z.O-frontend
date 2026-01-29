@@ -21,11 +21,6 @@ import Image from 'next/image';
 // import img5 from '../../public/src/gallery/img5.jpg';
 import HeroSection from './components/heroSection';
 
-/**
- * ZERO OLYMPIAD - GLOBAL HOME PAGE
- * Designed to International NGO Standards
- * Tech Stack: Next.js (App Router), Tailwind CSS, React Icons
- */
 
 export default function ZeroOlympiad() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,7 +64,7 @@ export default function ZeroOlympiad() {
 
       {/* --- 2. ABOUT SECTION --- */}
       <section id="mission" className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 ">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50 rounded-full -z-10" />
