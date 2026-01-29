@@ -65,8 +65,11 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-white/90 backdrop-blur-md shadow-md py-2" : "bg-white py-4"
-        }`}
+      className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+          : "bg-white py-4"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
@@ -81,7 +84,7 @@ export default function Header() {
               />
             </div>
             <div className="ml-3">
-              <h1 className="text-xl lg:text-2xl font-extrabold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent leading-none">
+              <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary bg-clip-text  leading-none">
                 Zero Olympiad
               </h1>
               <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-medium">
@@ -96,13 +99,15 @@ export default function Header() {
               <Link
                 key={item.title}
                 href={item.url}
-                className={`relative text-sm font-bold transition-colors duration-300 hover:text-primary ${pathname === item.url ? "text-primary" : "text-gray-600"
-                  } group`}
+                className={`relative text-sm font-bold transition-colors duration-300 hover:text-primary ${
+                  pathname === item.url ? "text-primary" : "text-gray-600"
+                } group`}
               >
                 {item.title}
                 <span
-                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full ${pathname === item.url ? "w-full" : ""
-                    }`}
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full ${
+                    pathname === item.url ? "w-full" : ""
+                  }`}
                 ></span>
               </Link>
             ))}
@@ -116,7 +121,7 @@ export default function Header() {
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none"
                 >
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-purple-500 hover:border-primary transition-colors">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2  border-Secondary transition-colors">
                     {user.profile_image_url ? (
                       <Image
                         src={user.profile_image_url}
@@ -169,6 +174,8 @@ export default function Header() {
               )}
             </button>
           </div>
+
+
         </div>
       </div>
 
@@ -179,10 +186,11 @@ export default function Header() {
               <Link
                 key={item.title}
                 href={item.url}
-                className={`text-base font-bold py-2 px-4 rounded-lg transition-colors ${pathname === item.url
+                className={`text-base font-bold py-2 px-4 rounded-lg transition-colors ${
+                  pathname === item.url
                     ? "bg-primary/10 text-primary"
                     : "text-gray-600 hover:bg-gray-50"
-                  }`}
+                }`}
               >
                 {item.title}
               </Link>
