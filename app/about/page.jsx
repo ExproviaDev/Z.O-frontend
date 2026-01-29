@@ -21,11 +21,6 @@ import Image from 'next/image';
 // import img5 from '../../public/src/gallery/img5.jpg';
 import HeroSection from './components/heroSection';
 
-/**
- * ZERO OLYMPIAD - GLOBAL HOME PAGE
- * Designed to International NGO Standards
- * Tech Stack: Next.js (App Router), Tailwind CSS, React Icons
- */
 
 export default function ZeroOlympiad() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,10 +53,10 @@ export default function ZeroOlympiad() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
+    <div className="min-h-screen  bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
     
       
-
+<div className='pt-20'>
       {/* --- 1. HERO SECTION --- */}
     <section>
       <HeroSection></HeroSection>
@@ -69,7 +64,7 @@ export default function ZeroOlympiad() {
 
       {/* --- 2. ABOUT SECTION --- */}
       <section id="mission" className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 ">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50 rounded-full -z-10" />
@@ -267,13 +262,15 @@ export default function ZeroOlympiad() {
       {/* --- 8. FOUNDER SPOTLIGHT --- */}
       <section id="founder" className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-slate-900 rounded-[4rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
+          <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
             <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
-              <Image
-                 href={`https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg`}
-                alt="Fatiha Ayat" 
-                className="w-full h-full object-cover grayscale"
-              />
+             <Image
+  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg"
+  alt="Fatiha Ayat"
+  fill
+  sizes="(max-width: 1024px) 100vw, 50vw"
+  className="object-cover grayscale"
+/>
               <div className="absolute inset-0 bg-indigo-900/30 mix-blend-multiply" />
             </div>
             <div className="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center text-white">
@@ -315,6 +312,7 @@ export default function ZeroOlympiad() {
           scroll-behavior: smooth;
         }
       `}</style>
+    </div>
     </div>
   );
 }

@@ -3,14 +3,17 @@
 import React from "react";
 import Image from "next/image";
 import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy } from "react-icons/fa";
+import { IoIosStarOutline } from "react-icons/io";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
+import Link from "next/link";
 
 export default function HeroSection() {
-  const bgImages = ["/src/gallery/img5.jpg", "/src/gallery/img9.jpg"];
+  const bgImages = ["https://i.ibb.co/k2v3PvBP/IMG-8336.jpg", "https://i.ibb.co/CKpbjfNn/EYE01386.jpg", "https://i.ibb.co/4RTckv6N/EYE02010.jpg"];
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center font-sans">
@@ -34,11 +37,11 @@ export default function HeroSection() {
                   priority
                 />
 
-                <div className="absolute inset-0 bg-[#191280ec] opacity-65 mix-blend-hard-light" />
+                <div className="absolute inset-0  opacity-65 mix-blend-hard-light" />
 
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1e1b4b]/90 via-[#4c1d95]/40 to-[#0f172a]/90" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#266D9A]/90 via-[#266D9A]/40 to-[#266D9A]/90" />
 
-                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 bg-Secondary/70" />
               </div>
             </SwiperSlide>
           ))}
@@ -46,49 +49,47 @@ export default function HeroSection() {
       </div>
 
       {/* --- Main Content Part --- */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-6xl  mx-auto px-6 py-12 flex flex-col items-center text-center">
         {/* Floating Badge */}
         <div className="mb-8">
-          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-5 py-2 rounded-full text-xs md:text-sm font-medium flex items-center gap-2 shadow-2xl">
-            <span className="text-pink-500 animate-pulse">★</span> Reducing to
-            Zero, Rising as Hero
+          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-6 py-2 rounded-full text-sm md:text-sm font-medium flex items-center gap-2 shadow-2xl">
+            <span className="text-Secondary animate-pulse"><IoIosStarOutline /></span> Welcome to Zero Olympiad
           </span>
         </div>
 
         {/* Hero Title */}
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]">
-          Welcome to{" "}
-          <span className="text-pink-600 drop-shadow-[0_10px_20px_rgba(255,26,117,0.5)]">
-            Zero Olympiad
+          Reducing to Zero,{" "}
+          <span className="text-Primary">
+            Rising as Hero
           </span>
         </h1>
 
-        {/* Hero Description */}
-        <p className="text-base md:text-xl text-gray-100 max-w-2xl mx-auto font-light leading-relaxed mb-10 drop-shadow-md">
-          Unleash Your Potential, Compete With The Brightest Minds, And Embark
-          On A Journey Of Academic Excellence And Discovery.
-        </p>
+    
 
         {/* Buttons Section */}
         <div className="flex flex-wrap justify-center gap-5 mb-16">
-          <button className="flex items-center gap-3 bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 shadow-[0_15px_30px_-10px_rgba(255,26,117,0.6)] group">
-            Register Now{" "}
+          <Link href={'/registration'}>
+          <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
+            Register Now
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
+          </Link>
 
-          <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white/20 text-white hover:bg-pink-700 px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+          <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
             Learn More{" "}
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-          {[
+        <div className=" hidden md:block max-w-5xl">
+          <div className="grid  grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            {[
             {
               icon: <FaCalendarAlt />,
-              number: "Jan 15",
-              label: "Registration Dateline",
+              number: "18 February 2026",
+              label: "Registration Deadline",
             },
             {
               icon: <FaUsers />,
@@ -103,15 +104,16 @@ export default function HeroSection() {
           ].map((stat, index) => (
             <div
               key={index}
-              className="bg-white/5 backdrop-blur-[15px] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/15 hover:-translate-y-2 group shadow-2xl"
+              className="bg-white/5  backdrop-blur-[15px] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/15 hover:-translate-y-2 group shadow-2xl"
             >
-              <div className="text-4xl text-white mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="text-4xl text-Primary mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
               </div>
               <div className="text-xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
               <div className="text-gray-300 text-xs font-semibold uppercase tracking-widest opacity-80">{stat.label}</div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 

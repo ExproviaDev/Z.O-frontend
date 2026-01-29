@@ -38,18 +38,21 @@ const Gallery = () => {
   };
 
   return (
-    <section className="py-20 p-5 bg-white">
+    <section className="py-20 p-5 bg-white"
+     style={{
+        backgroundImage: "radial-gradient(#E5E7EB 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl md:text-[40px] font-semibold text-center text-gray-900 mb-4">
+        <h2 className="text-3xl md:text-[40px] font-bold text-center text-gray-900 pb-9">
           Gallery
         </h2>
 
-        <p className="text-center text-gray-500 text-lg mb-12 max-w-3xl mx-auto">
-          Compete for glory and be rewarded with prizes that recognize your hard work and dedication
-        </p>
+       
 
         {/* Grid View */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
           {images.map((src, index) => (
             <div
               key={index}

@@ -5,6 +5,7 @@ import Step2_Academic from "./Step2_Auth";
 import Step3_Auth from "./Step3_Auth";
 import { FaRegClipboard } from "react-icons/fa";
 import Link from "next/link";
+import { MdOutlineArrowBackIos } from "react-icons/md";
 
 export default function RegistrationPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -38,7 +39,7 @@ export default function RegistrationPage() {
     setIsSubmitting(true);
     setError("");
 
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`;
+    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/user/register`;
 
     try {
       const res = await fetch(backendUrl, {
@@ -135,6 +136,14 @@ export default function RegistrationPage() {
             </Link>
           </p>
         </div>
+         {/* back button */}
+            <div className="pt-7">
+                  <Link href={'/'} className="">
+                    <button className="flex items-center btn btn-active btn-primary">
+                      <MdOutlineArrowBackIos />  back
+                    </button>
+                  </Link>
+            </div>
       </div>
     </div>
   );

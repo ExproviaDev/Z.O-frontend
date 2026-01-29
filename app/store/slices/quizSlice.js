@@ -11,6 +11,8 @@ const getAuthConfig = () => {
     },
   };
 };
+
+
 export const fetchQuizzes = createAsyncThunk("quiz/fetchQuizzes", async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get(`${API_URL}/all-quizzes`, getAuthConfig());
@@ -19,6 +21,7 @@ export const fetchQuizzes = createAsyncThunk("quiz/fetchQuizzes", async (_, { re
     return rejectWithValue(error.response?.data?.error || "Failed to fetch quizzes");
   }
 });
+
 export const fetchSingleQuiz = createAsyncThunk("quiz/fetchSingleQuiz", async (id, { rejectWithValue }) => {
   try {
     const response = await axios.get(`${API_URL}/quiz/${id}`, getAuthConfig());
@@ -27,6 +30,8 @@ export const fetchSingleQuiz = createAsyncThunk("quiz/fetchSingleQuiz", async (i
     return rejectWithValue(error.response?.data?.error || "Failed to fetch quiz details");
   }
 });
+
+
 export const createQuizAction = createAsyncThunk("quiz/createQuiz", async (quizData, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${API_URL}/add-quiz`, quizData, getAuthConfig());
@@ -35,6 +40,8 @@ export const createQuizAction = createAsyncThunk("quiz/createQuiz", async (quizD
     return rejectWithValue(error.response?.data?.message || error.response?.data?.error || "Failed to create quiz");
   }
 });
+
+
 export const deleteQuizAction = createAsyncThunk("quiz/deleteQuiz", async (id, { rejectWithValue }) => {
   try {
     await axios.delete(`${API_URL}/delete-quiz/${id}`, getAuthConfig());
@@ -43,6 +50,22 @@ export const deleteQuizAction = createAsyncThunk("quiz/deleteQuiz", async (id, {
     return rejectWithValue(error.response?.data?.error || "Failed to delete quiz");
   }
 });
+
+export const updateQuizStatusAction = createAsyncThunk(
+  "quiz/updateStatus",
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      const response = await axios.patch(
+        `${API_URL}/update-quiz-status/${id}`,
+        { status },
+        getAuthConfig()
+      );
+      return { id, status: response.data.data.status };
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.error || "Failed to update status");
+    }
+  }
+);
 
 const quizSlice = createSlice({
   name: "quiz",
@@ -94,8 +117,15 @@ const quizSlice = createSlice({
       })
       .addCase(deleteQuizAction.fulfilled, (state, action) => {
         state.quizzes = state.quizzes.filter((q) => q.id !== action.payload);
+      })
+      .addCase(updateQuizStatusAction.fulfilled, (state, action) => {
+        const { id, status } = action.payload;
+        const index = state.quizzes.findIndex((q) => q.id === id);
+        if (index !== -1) {
+          state.quizzes[index].status = status; // লোকাল স্টেট আপডেট
+        }
       });
-  },
+},
 });
 
 export const { resetQuizStatus } = quizSlice.actions;
