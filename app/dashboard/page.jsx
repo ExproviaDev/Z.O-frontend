@@ -59,7 +59,7 @@ const UserDashboard = () => {
             >
               <FaPlay className="text-xs" /> Continue Learning
             </button>
-            <button className="rounded-full bg-white bg-opacity-20 px-6 py-3 font-semibold text-white backdrop-blur-md transition hover:bg-opacity-30">
+            <button className="rounded-full bg-white bg-opacity-20 px-6 py-3 font-semibold text-blue-600 backdrop-blur-md transition hover:bg-opacity-30">
               View Progress
             </button>
           </div>
