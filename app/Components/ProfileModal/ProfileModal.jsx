@@ -8,7 +8,8 @@ import LogoutButton from "../LogoutButton";
 
 export default function ProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
-  const authState = useSelector((state) => state.user);
+  // const authState = useSelector((state) => state.user);
+  const authState = useSelector((state) => state.auth);
   const { user = null, isLoggedIn = false, loading = true } = authState || {};
 
   // Outside click close
@@ -28,22 +29,19 @@ export default function ProfileModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute md:right-5 lg:right-0 top-full mt-1 z-50">
+    <div className="absolute md:right-5 lg:right-0 top-full mt-3 z-50">
       {/* বর্ডার ইফেক্টের জন্য বাইরের কন্টেইনার */}
       <div
         ref={modalRef}
-        className="relative p-[1px] rounded-2xl bg-gradient-to-b from-purple-500/80 via-purple-600/20 to-transparent shadow-2xl"
+        className="relative p-[1px] rounded-2xl bg-Secondary to-transparent shadow-2xl"
       >
         {/* মেইন কন্টেন্ট বক্স */}
-        <div className="w-72 rounded-2xl bg-[#0b0418] p-4">
+        <div className="w-72 rounded-2xl bg-[#2b2e5c] p-4">
           {/* Profile Info */}
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-purple-500 to-blue-500">
               <Image
-                src={
-                  user?.profile_image_url ||
-                  "https://images.unsplash.com/photo-1517841905240-472988babdf9"
-                }
+               src={user?.profile_image_url || "/https://i.ibb.co.com/cSVq7Mpd/Profile-avatar-placeholder-large-1.png"}
                 alt="profile"
                 width={64}
                 height={64}
@@ -72,8 +70,8 @@ export default function ProfileModal({ isOpen, onClose }) {
           {/* Menu */}
           <ul className="space-y-1 text-sm">
             {[
-              { label: "Dashboard", path: "/dashboard" },
-              { label: "My Profile", path: "/dashboard/profile" },
+              
+              
               { label: "My Quizzes", path: "/dashboard/quizzes" },
               { label: "My Certificates", path: "/dashboard/certificates" },
               { label: "Payment History", path: "/dashboard/history" },
