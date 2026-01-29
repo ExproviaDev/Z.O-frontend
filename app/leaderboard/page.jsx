@@ -13,13 +13,6 @@ import { FaCrown, FaMedal } from "react-icons/fa"
 
 
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select"
 
 export default function LiveLeaderboard() {
   // State management
@@ -125,18 +118,40 @@ const paginatedStudents = tableStudents.slice(
 
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="text-xl font-semibold text-gray-700">
-          Loading leaderboard...
+  return (
+    <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100">
+      <div className="flex flex-col items-center gap-6">
+
+        {/* Outer glow */}
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full bg-indigo-400 opacity-20 blur-xl animate-pulse"></div>
+
+          {/* Spinner */}
+          <div className="relative w-16 h-16 border-[5px] border-indigo-300 border-t-indigo-600 rounded-full animate-spin"></div>
         </div>
+
+        {/* Text */}
+        <div className="text-center">
+          <p className="text-lg font-semibold text-gray-700 tracking-wide">
+            Loading Leaderboard
+          </p>
+          <p className="text-sm text-gray-500 mt-1 animate-pulse">
+            Please wait a moment...
+          </p>
+        </div>
+
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    
+    <div className="min-h-screen  bg-gradient-to-br  from-blue-50 to-indigo-100 py-8 px-4">
+      
+      <div className="max-w-7xl pt-22 mx-auto ">
 
         {/* Header */}
         <div className="text-center mb-8">

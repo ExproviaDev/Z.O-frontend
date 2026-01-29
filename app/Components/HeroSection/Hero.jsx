@@ -49,7 +49,7 @@ export default function HeroSection() {
       </div>
 
       {/* --- Main Content Part --- */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-6xl  mx-auto px-6 py-12 flex flex-col items-center text-center">
         {/* Floating Badge */}
         <div className="mb-8">
           <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-6 py-2 rounded-full text-sm md:text-sm font-medium flex items-center gap-2 shadow-2xl">
@@ -83,8 +83,9 @@ export default function HeroSection() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-          {[
+        <div className=" hidden md:block max-w-5xl">
+          <div className="grid  grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            {[
             {
               icon: <FaCalendarAlt />,
               number: "18 February 2026",
@@ -103,7 +104,7 @@ export default function HeroSection() {
           ].map((stat, index) => (
             <div
               key={index}
-              className="bg-white/5 backdrop-blur-[15px] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/15 hover:-translate-y-2 group shadow-2xl"
+              className="bg-white/5  backdrop-blur-[15px] border border-white/10 rounded-3xl p-8 transition-all hover:bg-white/15 hover:-translate-y-2 group shadow-2xl"
             >
               <div className="text-4xl text-Primary mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
@@ -112,6 +113,7 @@ export default function HeroSection() {
               <div className="text-gray-300 text-xs font-semibold uppercase tracking-widest opacity-80">{stat.label}</div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 

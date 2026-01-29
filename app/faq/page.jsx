@@ -62,7 +62,7 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="bg-white text-black  ">
+    <div className="bg-white pt-20 text-black  ">
 
       {/* ===================== TOP BANNER ===================== */}
      <div className="relative w-full h-60 sm:h-[300px] md:h-[380px] lg:h-[420px] overflow-hidden">
