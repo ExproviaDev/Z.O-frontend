@@ -15,7 +15,7 @@ const navItems = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/about" },
   { title: "About Faatiha", url: "/aboutFaatiha" },
-  { title: "Leaderboard", url: "/leaderboard" },
+  { title: "Ramadan Reflection", url: "/ramadan-zero" },
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
 ];
