@@ -33,7 +33,6 @@ export default function Header() {
   const { user = null } = authState || {};
   const email = user?.email;
 
-  /* Scroll logic */
   useEffect(() => {
     const handleScroll = () => {
       const current = window.scrollY;
@@ -46,7 +45,6 @@ export default function Header() {
 
   useEffect(() => setIsMobileMenuOpen(false), [pathname]);
 
-  // Close profile sidebar on click outside
   useEffect(() => {
     const handleClick = (e) => {
       if (
@@ -72,7 +70,6 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <Link href="/" className="flex items-center group">
               <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
                 <Image
@@ -92,9 +89,8 @@ export default function Header() {
               </div>
             </Link>
 
-            {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => ( // filteredNavItems-কে navItems দিয়ে ঠিক করা হয়েছে
+              {navItems.map((item) => (
                 <Link
                   key={item.title}
                   href={item.url}
@@ -112,7 +108,6 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* User Section */}
             <div className="flex items-center gap-4">
               {email ? (
                 <div className="relative" ref={profileAreaRef}>
@@ -134,6 +129,7 @@ export default function Header() {
                       )}
                     </div>
                   </button>
+                  <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                 </div>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
@@ -152,7 +148,6 @@ export default function Header() {
                 </div>
               )}
 
-              {/* HAMBURGER BUTTON */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="lg:hidden text-gray-600 p-2"
@@ -164,31 +159,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* --- PROFILE SIDEBAR --- */}
-      <div
-        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300 ${
-          isProfileOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={() => setIsProfileOpen(false)}
-      >
-        <div
-          className={`fixed top-0 left-0 h-full w-[300px] bg-[#1A1831] border-r border-white/10 p-6 transition-transform duration-300 ${
-            isProfileOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-white font-bold text-xl">Account</h2>
-            <button onClick={() => setIsProfileOpen(false)} className="text-white">
-              <AiOutlineClose size={24} />
-            </button>
-          </div>
-          <p className="border-b border-white/30 my-4"></p>
-          <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
-        </div>
-      </div>
-
-      {/* --- MOBILE SIDEBAR MENU --- */}
       <div
         className={`fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
