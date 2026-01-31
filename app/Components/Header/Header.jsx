@@ -33,6 +33,9 @@ export default function Header() {
   const { user = null } = authState || {};
   const email = user?.email;
 
+  // Role check: Admin ba Manager (Jury) ki na
+  const isStaff = user?.role === "admin" || user?.role === "manager";
+
   useEffect(() => {
     const handleScroll = () => {
       const current = window.scrollY;
@@ -70,6 +73,7 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
+            {/* Logo Section */}
             <Link href="/" className="flex items-center group">
               <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
                 <Image
@@ -89,6 +93,7 @@ export default function Header() {
               </div>
             </Link>
 
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
@@ -108,29 +113,43 @@ export default function Header() {
               ))}
             </nav>
 
+            {/* Right Action Section */}
             <div className="flex items-center gap-4">
               {email ? (
-                <div className="relative" ref={profileAreaRef}>
-                  <button
-                    onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none"
-                  >
-                    <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-Secondary">
-                      {user.profile_image_url ? (
-                        <Image
-                          src={user.profile_image_url}
-                          alt="Profile"
-                          width={48}
-                          height={48}
-                          className="object-cover w-full h-full"
-                        />
-                      ) : (
-                        <FaUserCircle className="w-full h-full text-gray-300 bg-gray-100" />
-                      )}
+                <>
+                  {/* logic: Staff hole Admin Panel button, User hole Profile Icon */}
+                  {isStaff ? (
+                    <Link
+                      href="/admin"
+                      className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-Primary rounded-lg hover:bg-opacity-90 transition-all shadow-md active:scale-95"
+                    >
+                      <RxDashboard size={18} />
+                      Admin Panel
+                    </Link>
+                  ) : (
+                    <div className="relative" ref={profileAreaRef}>
+                      <button
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none"
+                      >
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-Secondary">
+                          {user.profile_image_url ? (
+                            <Image
+                              src={user.profile_image_url}
+                              alt="Profile"
+                              width={48}
+                              height={48}
+                              className="object-cover w-full h-full"
+                            />
+                          ) : (
+                            <FaUserCircle className="w-full h-full text-gray-300 bg-gray-100" />
+                          )}
+                        </div>
+                      </button>
+                      <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
-                  </button>
-                  <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
-                </div>
+                  )}
+                </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link
@@ -159,6 +178,7 @@ export default function Header() {
         </div>
       </header>
 
+      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -209,14 +229,24 @@ export default function Header() {
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
-                  <FaUserCircle size={24} />
-                  <span className="font-bold">My Account</span>
-                </Link>
-                <Link href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
-                  <RxDashboard size={24} />
-                  <span className="font-bold">Dashboard</span>
-                </Link>
+                {/* Mobile Menu logic: Staff hole Admin link, User hole Profile/Dashboard */}
+                {isStaff ? (
+                  <Link href="/admin" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                    <RxDashboard size={24} />
+                    <span className="font-bold">Admin Panel</span>
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                      <RxDashboard size={24} />
+                      <span className="font-bold">Dashboard</span>
+                    </Link>
+                    <Link href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                      <FaUserCircle size={24} />
+                      <span className="font-bold">My Account</span>
+                    </Link>
+                  </>
+                )}
               </div>
             )}
           </div>
