@@ -76,10 +76,12 @@ export default function HeroSection() {
           </button>
           </Link>
 
+        <Link href="/instruction">
           <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
             Learn More{" "}
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
+        </Link>
         </div>
 
   

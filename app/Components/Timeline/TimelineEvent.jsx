@@ -1,7 +1,12 @@
 import React from "react";
-import { 
-  FaUserEdit, FaFileAlt, FaRegEdit, 
-  FaRegCheckCircle, FaVideo, FaAward, FaTrophy 
+import {
+  FaUserEdit,
+  FaFileAlt,
+  FaRegEdit,
+  FaRegCheckCircle,
+  FaVideo,
+  FaAward,
+  FaTrophy,
 } from "react-icons/fa";
 
 const timelineData = [
@@ -58,38 +63,43 @@ const timelineData = [
 
 const Timeline = () => {
   return (
-    <section 
-      className="relative py-24 px-4 min-h-screen overflow-hidden"
-      style={{ 
+    <section
+      className="relative py-24 p-2 px-4 min-h-screen overflow-hidden"
+      style={{
         backgroundImage: `url('https://i.ibb.co/99HFrKfK/speaker-bg.png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed' 
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       <div className="max-w-7xl mx-auto relative">
+        <div className="text-center space-y-4 pb-4 text-black">
+          <h1 className="md:text-5xl text-4xl font-medium">Time Line</h1>
+          <p className="pb-10 opacity-80">
+            Follow the path from registration to the grand finale. Each
+            milestone brings you closer to <br className="hidden md:block" />{" "}
+            achieving excellence.
+          </p>
+        </div>
 
- <div className="text-center space-y-4 pb-4">
-                <h1 className="md:text-5xl text-4xl font-medium">Time Line</h1>
-                <p className="pb-10">Follow the path from registration to the grand finale. Each milestone brings you closer to <br /> achieving excellence.</p>
-              </div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] h-[calc(100%-250px)] bg-gray-200/30 hidden md:block top-48"></div>
 
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] h-full bg-gray-200 hidden md:block"></div>
+        <div className="absolute left-4 top-40 w-[1px] h-[calc(100%-200px)] bg-gray-200/30 md:hidden"></div>
 
-
-
-        <div className="space-y-8 md:space-y-24">
+        <div className="space-y-12 pl-8 md:space-y-24">
           {timelineData.map((item, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`relative flex flex-col md:flex-row items-center justify-between w-full ${
                 item.align === "right" ? "md:flex-row-reverse" : ""
               }`}
             >
-             
-              <div className="w-full md:w-[46%] z-10">
-                <div className="group relative bg-Primary p-8 lg:p-10 rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.1)] transition-all duration-500 hover:bg-Secondary  overflow-visible">
-                  
+              <div className="md:hidden self-start mb-3 ml-8 font-semibold text-black text-sm italic">
+                {item.date}
+              </div>
+
+              <div className="w-full md:w-[46%] z-10 ml-6 md:ml-0">
+                <div className="group relative bg-Primary p-8 lg:p-10 rounded-[20px] shadow-2xl transition-all duration-500 hover:bg-Secondary overflow-visible cursor-pointer">
                   <div className="absolute bottom-6 left-6 text-white/5 text-8xl lg:text-[140px] pointer-events-none transition-transform duration-700 group-hover:scale-110">
                     {item.icon}
                   </div>
@@ -107,19 +117,27 @@ const Timeline = () => {
                       {item.desc}
                     </p>
                   </div>
-                  
-                  <div className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${
-                    item.align === "left" ? "-right-4" : "-left-4"
-                  }`}></div>
+
+                  <div
+                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${
+                      item.align === "left" ? "-right-4" : "-left-4"
+                    }`}
+                  ></div>
+
+                  <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-4 h-4 bg-inherit transform rotate-45 md:hidden"></div>
                 </div>
               </div>
 
-              <div className="relative flex items-center justify-center w-full md:w-[8%] my-10 md:my-0">
-                <div className="z-20 w-5 h-5 bg-white border-[3px] border-[#2563EB] rounded-full shadow-md"></div>
-                
-                <span className={`md:absolute whitespace-nowrap font-bold text-gray-800 text-sm lg:text-lg ${
-                  item.align === "left" ? "md:left-14 lg:left-16" : "md:right-14 lg:right-16"
-                }`}>
+              <div className="hidden md:flex relative items-center justify-center w-[8%]">
+                <div className="z-20 w-5 h-5 bg-white border-[3px] border-Secondary rounded-full shadow-md"></div>
+
+                <span
+                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${
+                    item.align === "left"
+                      ? "md:left-14 lg:left-16"
+                      : "md:right-14 lg:right-16"
+                  }`}
+                >
                   {item.date}
                 </span>
               </div>

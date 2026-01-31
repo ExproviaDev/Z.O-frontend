@@ -56,7 +56,7 @@ export default function ZeroOlympiad() {
     <div className="min-h-screen  bg-white text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
     
       
-<div className='pt-20'>
+<div className=''>
       {/* --- 1. HERO SECTION --- */}
     <section>
       <HeroSection></HeroSection>

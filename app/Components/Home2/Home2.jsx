@@ -9,6 +9,9 @@ import Instructions from "../Instructions/Instructions";
 import WhyParticipate from "../WhyParticipate/WhyParticipate";
 import Registration from "../Registration/Registration";
 import Awards from "../Awards/Award";
+import RamadanReflection from "../RamadanReflection/RamadanReflection";
+import Supporters from "../Supporters/Supporters";
+import OurTeam from "../OurTeam/OurTeam";
 
 
 export default function HomePage() {
@@ -44,6 +47,7 @@ export default function HomePage() {
       
 
       <Instructions></Instructions>
+      <RamadanReflection></RamadanReflection>
       <WhyParticipate></WhyParticipate>
       <Registration></Registration>
 
@@ -52,8 +56,12 @@ export default function HomePage() {
         <TimelineEvent></TimelineEvent>
       
         <JurySection></JurySection>
+
+        <Supporters></Supporters>
      
         <EventGallery></EventGallery>
+
+        <OurTeam></OurTeam>
 
     </main>
   );
