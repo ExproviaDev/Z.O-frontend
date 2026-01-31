@@ -8,6 +8,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import GalleryHeroSection from "../Components/GalleryHeroSection/GalleryHeroSection";
+import Link from "next/link";
 
 const GalleryPage = () => {
   const allImages = [
@@ -86,6 +87,7 @@ const GalleryPage = () => {
             Memorable Moments of Victory{" "}
             <span className="text-orange-500">(Season-One)</span>
           </h2>
+          <p className="py-4">A collection of the best moments from Zero Olympiad Season one and the smiling <br /> faces of our young winners.</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -177,13 +179,17 @@ const GalleryPage = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+              <Link href={"registration"}>
               <button className="bg-Primary hover:bg-Secondary hover:border-Secondary text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all transform hover:-translate-y-1 shadow-lg">
                 Register Now <FaArrowRight size={14} />
               </button>
+              </Link>
 
+             <Link href={"instruction"}>
               <button className="border-2 border-white/40 hover:bg-Primary hover:border-Primary  text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all transform hover:-translate-y-1">
                 Learn More <FaArrowRight size={14} />
               </button>
+             </Link>
             </div>
           </div>
         </div>

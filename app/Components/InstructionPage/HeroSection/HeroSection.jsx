@@ -12,8 +12,8 @@ const HeroSection = () => {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
         <div className="space-y-8 animate-in fade-in slide-in-from-left-10 duration-1000">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full">
-            <p className="text-white text-sm font-medium tracking-wide">
+          <div className=" px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full">
+            <p className="text-white text-sm font-medium text-center tracking-wide">
               Welcome to Zero Olympiad
             </p>
           </div>
@@ -30,7 +30,7 @@ const HeroSection = () => {
           </p>
 
           <Link href={"/registration"}>
-            <button className="bg-Primary hover:bg-Secondary text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-2 transition-all transform hover:scale-105 shadow-lg active:scale-95">
+            <button className="bg-Primary max-w-[230px] inline-block  cursor-pointer hover:bg-Secondary text-white px-8 py-4 rounded-xl  font-bold text-lg flex items-center gap-2 transition-all transform hover:scale-105 shadow-lg active:scale-95">
               Register Now <span>→</span>
             </button>
           </Link>

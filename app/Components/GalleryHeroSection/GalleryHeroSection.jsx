@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -5,11 +6,11 @@ const GalleryHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
-    "https://images.unsplash.com/photo-1523580494863-6f3031224c94",
-    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-    "https://images.unsplash.com/photo-1531482615713-2afd69097998",
-    "https://images.unsplash.com/photo-1501504905252-473c47e087f8",
+    "https://i.ibb.co.com/prWJmYRc/EYE01386.jpg",
+    "https://i.ibb.co.com/4RTckv6N/EYE02010.jpg",
+    "https://i.ibb.co.com/rGNMx82R/IMG-8702.jpg",
+    "https://i.ibb.co.com/KzR3JbsL/IMG-8572.jpg",
+    "https://i.ibb.co.com/VpkCgnqZ/IMG-8409.jpg",
   ];
 
   useEffect(() => {
@@ -67,12 +68,16 @@ const GalleryHeroSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 pointer-events-auto">
-          <button className="bg-Primary hover:bg-orange-600 text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
+          <Link href={"registration"}>
+          <button className="bg-Primary hover:bg-Secondary border border-Primary hover:border-Secondary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Register Now <FaArrowRight className="text-sm" />
           </button>
-          <button className="border-2 border-white/80 hover:bg-white/10 text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
+          </Link>
+          <Link href={"instruction"}>
+          <button className="border border-white/80 hover:bg-Primary hover:border-Primary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Learn More <FaArrowRight className="text-sm" />
           </button>
+          </Link>
         </div>
       </div>
 
