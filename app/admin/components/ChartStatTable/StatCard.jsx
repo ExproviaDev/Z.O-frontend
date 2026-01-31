@@ -1,85 +1,28 @@
-// "use client"
+import { FiUsers, FiUserCheck, FiLayers, FiAward } from "react-icons/fi";
 
-
-import { FaUserGraduate, FaBookOpen, FaCheckCircle, FaDollarSign } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
-
-export default function StatsSection() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // IntersectionObserver to trigger animation when the section comes into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Check if the section is in view
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true); // Set visibility to true when section is in view
-            observer.unobserve(entry.target); // Stop observing once the animation is triggered
-          }
-        });
-      },
-      { threshold: 0.1 } // Trigger animation when 10% of the section is in view
-    );
-
-    const section = document.getElementById('stats-section');
-    if (section) observer.observe(section);
-
-    return () => {
-      if (section) observer.unobserve(section);
-    };
-  }, []);
+export default function StatsSection({ stats }) {
+  const cards = [
+    { label: "Total Enrolment", value: stats.totalEnrolment, icon: FiUsers, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Total Participant", value: stats.totalParticipant, icon: FiUserCheck, color: "text-emerald-600", bg: "bg-emerald-50" },
+    { label: "2nd Round Students", value: stats.secondRound, icon: FiLayers, color: "text-orange-600", bg: "bg-orange-50" },
+    { label: "Total Finalist", value: stats.totalFinalist, icon: FiAward, color: "text-purple-600", bg: "bg-purple-50" },
+  ];
 
   return (
-   <section id="stats-section" className="py-16 bg-gray-100">
-  <div className="max-w-7xl mx-auto px-4">
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      {/* Total Students */}
-      <div
-        className={`w-full text-center p-6 bg-white rounded-xl shadow-lg transition-all duration-700 ${
-          isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'
-        }`}
-      >
-        <FaUserGraduate className="mx-auto text-4xl text-blue-500 mb-4" />
-        <h3 className="text-xl font-semibold">Total Students</h3>
-        <p className="text-3xl font-bold text-gray-800">18K</p>
-      </div>
-
-      {/* Total Enrolled Courses */}
-      <div
-        className={`w-full text-center p-6 bg-white rounded-xl shadow-lg transition-all duration-700 ${
-          isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'
-        }`}
-      >
-        <FaBookOpen className="mx-auto text-4xl text-green-500 mb-4" />
-        <h3 className="text-xl font-semibold">Total Enrolled Courses</h3>
-        <p className="text-3xl font-bold text-gray-800">13K</p>
-      </div>
-
-      {/* Total Subscription */}
-      <div
-        className={`w-full text-center p-6 bg-white rounded-xl shadow-lg transition-all duration-700 ${
-          isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'
-        }`}
-      >
-        <FaCheckCircle className="mx-auto text-4xl text-yellow-500 mb-4" />
-        <h3 className="text-xl font-semibold">Total Subscription</h3>
-        <p className="text-3xl font-bold text-gray-800">10K</p>
-      </div>
-
-      {/* Total Revenue */}
-      <div
-        className={`w-full text-center p-6 bg-white rounded-xl shadow-lg transition-all duration-700 ${
-          isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'
-        }`}
-      >
-        <FaDollarSign className="mx-auto text-4xl text-red-500 mb-4" />
-        <h3 className="text-xl font-semibold">Total Revenue</h3>
-        <p className="text-3xl font-bold text-gray-800">$4.5k</p>
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {cards.map((card, index) => (
+        <div key={index} className="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between">
+            <div className={`p-4 rounded-2xl ${card.bg} ${card.color}`}>
+              <card.icon size={24} />
+            </div>
+          </div>
+          <div className="mt-4">
+            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{card.label}</p>
+            <h3 className="text-2xl font-black text-gray-800 mt-1">{card.value.toLocaleString()}</h3>
+          </div>
+        </div>
+      ))}
     </div>
-  </div>
-</section>
-
   );
 }
