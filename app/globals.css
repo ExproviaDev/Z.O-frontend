@@ -11,6 +11,7 @@
 
 }
 
+
 .text {
   color: var(--color-btn-text);
 }
@@ -33,7 +34,7 @@
 
 
 .btn-primary {
-  background-color: var(--color-btn-text);
+  background-color: var(--color-Secondary);
   color: #ffffff;
   padding: 10px 26px;
   border: 2px solid var(--color-btn-text);
@@ -43,6 +44,7 @@
 
   display: inline-flex;
   align-items: center;
+  
   justify-content: center;
   gap: 8px;
 

@@ -69,12 +69,14 @@ export default function Sidebar() {
       <aside className={`fixed xl:static inset-y-0 left-0 z-40 w-64 bg-[#0f172a] text-gray-400 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}>
         <div className="h-full flex flex-col p-4">
           {/* Brand Logo */}
-          <div className="flex items-center gap-3 px-4 mb-10 h-16">
+         <Link href={"/"}>
+               <div className="flex items-center gap-3 px-4 mb-10 h-16">
             <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white">
               <FiHome size={20} />
             </div>
             <span className="text-white font-bold text-lg tracking-tight">Zero Olympiad</span>
           </div>
+         </Link>
 
           <nav className="flex-1 space-y-1">
             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[2px] px-4 mb-4">Main Menu</p>
