@@ -1,15 +1,20 @@
-
-
 "use client";
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation"; // useRouter যোগ করা হয়েছে
-import { FaUser, FaHome, FaBook, FaRegBookmark, FaStar, FaSignOutAlt } from "react-icons/fa"; // FaSignOutAlt যোগ করা হয়েছে
+import { usePathname, useRouter } from "next/navigation";
+import {
+  FaUser,
+  FaHome,
+  FaBook,
+  FaRegBookmark,
+  FaStar,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { GrAnnounce } from "react-icons/gr";
-import Swal from "sweetalert2"; // SweetAlert2 ইম্পোর্ট করা হয়েছে
-import LogoutButton from "../LogoutButton";
+import Swal from "sweetalert2";
+import LogoutButton from "../../Components/LogoutButton";
 
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
@@ -19,28 +24,32 @@ export default function Sidebar({ isOpen, onClose }) {
     { name: "Dashboard", icon: <FaHome />, href: "/dashboard" },
     { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile" },
     { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes" },
-    { name: "My Certificates", icon: <FaRegBookmark />, href: "/dashboard/certificates" },
+    {
+      name: "My Certificates",
+      icon: <FaRegBookmark />,
+      href: "/dashboard/certificates",
+    },
     { name: "Payment History", icon: <FaStar />, href: "/dashboard/history" },
-    { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement" },
+    {
+      name: "Announcement",
+      icon: <GrAnnounce />,
+      href: "/dashboard/announcement",
+    },
   ];
 
-  // লগআউট হ্যান্ডলার ফাংশন
   const handleLogout = () => {
     Swal.fire({
       title: "Are You Sure?",
       text: "Do you really want to logout?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#2563eb", // আপনার ব্লু থিমের সাথে মিল রেখে
+      confirmButtonColor: "#2563eb",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Logout",
       cancelButtonText: "Cancel",
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        // এখানে আপনার লগআউট লজিক (যেমন: cookie/token clear)
-        // signOut(); // যদি next-auth ব্যবহার করেন
-        
         Swal.fire({
           title: "লগআউট হয়েছে!",
           text: "আপনাকে হোম পেজে পাঠানো হচ্ছে।",
@@ -50,8 +59,8 @@ export default function Sidebar({ isOpen, onClose }) {
         });
 
         setTimeout(() => {
-          onClose(); // সাইডবার বন্ধ করা
-          router.push("/"); // হোম পেজে পাঠানো
+          onClose();
+          router.push("/");
         }, 1500);
       }
     });
@@ -59,10 +68,9 @@ export default function Sidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Sidebar মেইন কন্টেইনার */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-[40] w-64 bg-white border-r border-gray-100
+          fixed inset-y-0 left-0 z-[40] w-64 bg-Secondary border-r border-gray-100
           transform transition-transform duration-300 ease-in-out
           lg:translate-x-0 lg:fixed lg:top-16 lg:h-[calc(100vh-64px)]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
@@ -70,11 +78,8 @@ export default function Sidebar({ isOpen, onClose }) {
         `}
       >
         <div className="flex flex-col h-full p-5">
-          <div className="pb-4 px-2 hidden lg:block">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Main Menu</p>
-          </div>
+          <div className="pb-4 px-2 hidden lg:block"></div>
 
-          {/* মেনু আইটেমসমূহ */}
           <nav className="flex-1 space-y-1 mt-2 overflow-y-auto no-scrollbar">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
@@ -83,12 +88,12 @@ export default function Sidebar({ isOpen, onClose }) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={onClose} 
+                  onClick={onClose}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium 
                   ${
                     isActive
-                      ? "text-blue-600 bg-blue-50 border-r-4 border-blue-600 shadow-sm"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-blue-500"
+                      ? "text-white bg-Primary border-r-4 border-white "
+                      : "text-white hover:bg-gray-500 hover:text-white"
                   }
                 `}
                 >
@@ -99,24 +104,21 @@ export default function Sidebar({ isOpen, onClose }) {
             })}
           </nav>
 
-          {/* নিচের সেকশন (Home & Logout) */}
           <div className="pt-4 border-t border-gray-100 space-y-2">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 font-medium text-sm hover:bg-gray-100 transition-all"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-white font-medium text-sm hover:bg-gray-500 transition-all"
             >
               <FaHome className="text-xl" />
               <span>Back to Home</span>
             </Link>
-            
-            {/* এখানে LogoutButton এর পরিবর্তে সরাসরি বাটনটি আপনার ডিজাইনে বসানো হয়েছে */}
-            <LogoutButton ></LogoutButton>
+
+            <LogoutButton></LogoutButton>
           </div>
         </div>
       </aside>
 
-      {/* মোবাইল ওভারলে */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

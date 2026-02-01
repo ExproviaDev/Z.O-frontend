@@ -34,7 +34,6 @@ export default function Header() {
   const { user = null } = authState || {};
   const email = user?.email;
 
-  // Role check: Admin ba Manager (Jury) ki na
   const isStaff = user?.role === "admin" || user?.role === "manager";
 
   useEffect(() => {
