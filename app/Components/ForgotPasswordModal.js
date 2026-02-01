@@ -24,7 +24,7 @@ export default function ForgotPasswordModal({ onClose }) {
             return;
         }
 
-        const backendUrl = "https://zero-olympiad-server.vercel.app/api/auth/forgot-password";
+        const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/forgot-password`;
 
         try {
 

@@ -30,7 +30,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="bg-white text-black  max-w-7xl mx-auto">
+    <div className="bg-white pt-20 text-black  max-w-7xl mx-auto">
 
       {/* Header */}
       <div className="flex p-5 flex-col items-center py-12 text-center">
