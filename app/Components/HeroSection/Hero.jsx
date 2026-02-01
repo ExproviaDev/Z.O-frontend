@@ -53,7 +53,7 @@ export default function HeroSection() {
    
         <div className="mb-8">
           <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-6 py-2 rounded-full text-sm md:text-sm font-medium flex items-center gap-2 shadow-2xl">
-            <span className="text-Secondary animate-pulse"><IoIosStarOutline /></span> Welcome to Zero Olympiad
+            <span className="text-Primary animate-pulse"><IoIosStarOutline /></span> Welcome to Zero Olympiad
           </span>
         </div>
 
@@ -112,7 +112,7 @@ export default function HeroSection() {
                 {stat.icon}
               </div>
               <div className="text-xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
-              <div className="text-gray-300 text-xs font-semibold uppercase tracking-widest opacity-80">{stat.label}</div>
+              <div className="text-gray-300 text-xs font-semibold tracking-widest opacity-80">{stat.label}</div>
             </div>
           ))}
           </div>
