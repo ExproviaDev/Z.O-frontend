@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -63,10 +64,12 @@ export default function Registration() {
 
         {/* Action Button */}
         <div className="flex justify-center mt-16">
+        <Link href="/instruction">
           <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white px-10 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-2xl group">
             Views More Details
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
+        </Link>
         </div>
       </div>
     </section>

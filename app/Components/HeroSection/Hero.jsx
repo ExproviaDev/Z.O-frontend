@@ -17,7 +17,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center font-sans">
-      {/* --- Background Slider Part --- */}
+
       <div className="absolute inset-0 z-0">
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -48,16 +48,16 @@ export default function HeroSection() {
         </Swiper>
       </div>
 
-      {/* --- Main Content Part --- */}
+      
       <div className="relative z-10 max-w-6xl  mx-auto px-6 py-12 flex flex-col items-center text-center">
-        {/* Floating Badge */}
+   
         <div className="mb-8">
           <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-6 py-2 rounded-full text-sm md:text-sm font-medium flex items-center gap-2 shadow-2xl">
-            <span className="text-Secondary animate-pulse"><IoIosStarOutline /></span> Welcome to Zero Olympiad
+            <span className="text-Primary animate-pulse"><IoIosStarOutline /></span> Welcome to Zero Olympiad
           </span>
         </div>
 
-        {/* Hero Title */}
+
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
           Reducing to Zero,{" "}
           <span className="text-Primary">
@@ -67,7 +67,7 @@ export default function HeroSection() {
 
     
 
-        {/* Buttons Section */}
+
         <div className="flex flex-wrap justify-center gap-5 mb-16">
           <Link href={'/registration'}>
           <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
@@ -76,13 +76,15 @@ export default function HeroSection() {
           </button>
           </Link>
 
+        <Link href="/instruction">
           <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
             Learn More{" "}
             <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
           </button>
+        </Link>
         </div>
 
-        {/* Stats Cards */}
+  
         <div className=" hidden md:block max-w-5xl">
           <div className="grid  grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {[
@@ -110,7 +112,7 @@ export default function HeroSection() {
                 {stat.icon}
               </div>
               <div className="text-xl font-bold text-white mb-1 tracking-tight">{stat.number}</div>
-              <div className="text-gray-300 text-xs font-semibold uppercase tracking-widest opacity-80">{stat.label}</div>
+              <div className="text-gray-300 text-xs font-semibold tracking-widest opacity-80">{stat.label}</div>
             </div>
           ))}
           </div>

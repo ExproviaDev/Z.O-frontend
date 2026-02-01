@@ -15,6 +15,7 @@ export const metadata = {
 };
 
 import ConditionalLayout from './ConditionalLayout';
+import SmoothScroll from "./Components/SmoothScroll";
 
 export default function RootLayout({ children }) {
   return (
@@ -24,9 +25,9 @@ export default function RootLayout({ children }) {
       >
         <ReduxProvider>
           <ConditionalLayout>
-
-            {children}
-            
+            <SmoothScroll>
+              {children}
+            </SmoothScroll>
           </ConditionalLayout>
         </ReduxProvider>
       </body>

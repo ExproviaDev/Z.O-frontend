@@ -14,7 +14,8 @@ import logo from "../../../public/src/SiteLogo.png";
 const navItems = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/about" },
-  { title: "About Faatiha", url: "/aboutFaatiha" },
+  { title: "Instruction", url: "/instruction" },
+  { title: "Galley", url: "/gallery" },
   { title: "Ramadan Reflection", url: "/ramadan-zero" },
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
@@ -33,7 +34,6 @@ export default function Header() {
   const { user = null } = authState || {};
   const email = user?.email;
 
-  // Role check: Admin ba Manager (Jury) ki na
   const isStaff = user?.role === "admin" || user?.role === "manager";
 
   useEffect(() => {

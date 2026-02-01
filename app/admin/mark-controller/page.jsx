@@ -97,7 +97,7 @@ export default function LeaderboardPage() {
                             className="input input-bordered w-full font-bold"
                             placeholder="Mark"
                         />
-                        <button onClick={handleSetPassMark} className="btn btn-primary font-bold px-6">Apply</button>
+                        <button onClick={handleSetPassMark} className="bg-Secondary text-white rounded-xl font-bold px-8 py-2 cursor-pointer hover:bg-Primary transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95">Apply</button>
                     </div>
                 </div>
             </div>
