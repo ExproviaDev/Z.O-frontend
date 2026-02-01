@@ -17,10 +17,9 @@ export default function WhyParticipate() {
 
   return (
     <section className="relative w-full py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
-      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://i.ibb.co/CKpbjfNn/EYE01386.jpg" // আপনার ব্যাকগ্রাউন্ড ইমেজের পাথ দিন
+          src="https://i.ibb.co/CKpbjfNn/EYE01386.jpg" 
           alt="Participation Background"
           fill
           className="object-cover"
@@ -34,13 +33,12 @@ export default function WhyParticipate() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Title */}
+        
         <h2 className="text-3xl md:text-5xl font-bold text-white text-center mb-12">
           Why Should You <span className="text-Primary">Participate?</span>
         </h2>
 
-        {/* Top Content: Text + Certificate Image */}
-        <div className="flex flex-col lg:flex-row gap-10 items-center mb-10 text-white">
+      <div className="flex flex-col lg:flex-row gap-10 items-center mb-10 text-white">
           <div className="w-full lg:w-3/5 space-y-5 text-sm md:text-base leading-relaxed opacity-90">
             <p>
               Participants who register for the <span className="font-bold">Zero Olympiad</span> will receive, immediately after registration, an email containing access links to <span className="font-bold">United Nations–recognized courses</span> offered by the <span className="font-bold text-Primary">United Nations Institute for Training and Research (UNITAR)</span> and the <span className="font-bold">UN Climate Change Learning Partnership (UN CC:e-Learn)</span>.
@@ -59,11 +57,10 @@ export default function WhyParticipate() {
             </p>
           </div>
 
-          {/* Certificate Image Box */}
           <div className="w-full lg:w-2/5 flex justify-center">
             <div className="bg-white p-2 rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300 max-w-sm md:max-w-md">
               <Image 
-                src="https://i.ibb.co/0VrdCw4t/ser.jpg" // সার্টিফিকেটের ইমেজের পাথ দিন
+                src="https://i.ibb.co/0VrdCw4t/ser.jpg" 
                 alt="UN Certificate"
                 width={500}
                 height={350}
@@ -73,7 +70,6 @@ export default function WhyParticipate() {
           </div>
         </div>
 
-        {/* Bottom Content: Benefits List */}
         <div className="text-white mt-12 ">
           <h3 className="text-xl md:text-2xl font-bold mb-6">
             In addition, all Zero Olympiad participants will receive the following opportunities and benefits:

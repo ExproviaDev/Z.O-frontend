@@ -115,22 +115,33 @@ export default function LeaderboardPage() {
       ) : (
         <>
           {/* Podium Section with Frames */}
-          {stats.page === 1 && top3.length > 0 && (
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 items-end px-4">
-              {/* Rank 2 */}
-              <div className="order-2 md:order-1">
-                {top3[1] && <WinnerCard student={top3[1]} rank={2} frame={leaderboard2nd} height="h-80" color="bg-white border-slate-200" activeRound={activeRound} />}
-              </div>
-              {/* Rank 1 */}
-              <div className="order-1 md:order-2 scale-110">
-                {top3[0] && <WinnerCard student={top3[0]} rank={1} frame={leaderboard1st} height="h-96" color="bg-amber-50/50 border-amber-200 shadow-amber-100" isFirst activeRound={activeRound} />}
-              </div>
-              {/* Rank 3 */}
-              <div className="order-3 md:order-3">
-                {top3[2] && <WinnerCard student={top3[2]} rank={3} frame={leaderboard3rd} height="h-72" color="bg-white border-slate-200" activeRound={activeRound} />}
-              </div>
-            </div>
-          )}
+         {stats.page === 1 && top3.length > 0 && (
+    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20  items-end px-4">
+      {/* Rank 2 */}
+      <div className="order-2 md:order-1 relative group">
+        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-10 bg-slate-100 text-slate-600 font-black px-4 py-1 rounded-full border-2 border-slate-200 shadow-sm">
+          #2
+        </div>
+        {top3[1] && <WinnerCard student={top3[1]} rank={2} frame={leaderboard2nd} height="h-80" color="bg-white border-slate-200" activeRound={activeRound} />}
+      </div>
+
+      {/* Rank 1 */}
+      <div className="order-1 md:order-2 scale-110 relative group mt-8">
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-amber-400 to-yellow-500 text-white font-black px-5 py-1.5 rounded-full border-2 border-white shadow-lg ">
+          🏆 #1
+        </div>
+        {top3[0] && <WinnerCard student={top3[0]} rank={1} frame={leaderboard1st} height="h-96" color="bg-amber-50/50 border-amber-200 shadow-amber-100" isFirst activeRound={activeRound} />}
+      </div>
+
+      {/* Rank 3 */}
+      <div className="order-3 md:order-3  relative   group">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10 bg-orange-50 text-orange-700 font-black px-4 py-1 rounded-full border-2 border-orange-100 shadow-sm">
+          #3
+        </div>
+        {top3[2] && <WinnerCard student={top3[2]} rank={3} frame={leaderboard3rd} height="h-80" color="bg-white border-slate-200" activeRound={activeRound} />}
+      </div>
+    </div>
+  )}
 
           {/* Table List */}
           <div className="max-w-7xl mx-auto bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden">
@@ -173,7 +184,6 @@ export default function LeaderboardPage() {
   );
 }
 
-// ফ্রেম সাপোর্টসহ অবতার কম্পোনেন্ট
 const Avatar = ({ image, name, size = "w-12 h-12", frame }) => (
   <div className={`relative ${size} flex items-center justify-center`}>
     {/* মেইন ইমেজ বা ব্যাকআপ লেটার */}

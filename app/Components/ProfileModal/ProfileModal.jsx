@@ -11,7 +11,7 @@ export default function ProfileModal({ isOpen, onClose }) {
   const authState = useSelector((state) => state.auth);
   const { user = null } = authState || {};
 
-  // Outside click close logic
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -29,14 +29,14 @@ export default function ProfileModal({ isOpen, onClose }) {
 
   return (
     <div className="absolute md:right-5 lg:right-0 top-full mt-3 z-50">
-      {/* Outer container for border effect */}
+
       <div
         ref={modalRef}
         className="relative p-[1px] rounded-2xl bg-Secondary shadow-2xl"
       >
-        {/* Main content box */}
+
         <div className="w-72 rounded-2xl bg-[#2b2e5c] p-5">
-          {/* Profile Info */}
+
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-purple-500 to-blue-500">
               <Image
@@ -63,10 +63,10 @@ export default function ProfileModal({ isOpen, onClose }) {
             </Link>
           </div>
 
-          {/* Divider */}
+
           <div className="my-4 h-px bg-purple-800/30" />
 
-          {/* Menu Items */}
+
           <ul className="space-y-1 text-sm">
             {[
               { label: "My Quizzes", path: "/dashboard/quizzes" },
@@ -85,7 +85,7 @@ export default function ProfileModal({ isOpen, onClose }) {
             ))}
           </ul>
 
-          {/* Logout Section */}
+
           <div className="mt-4 border-t border-purple-800/30 pt-3">
             <LogoutButton />
           </div>

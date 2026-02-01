@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -57,10 +58,12 @@ export default function AboutOlympiad() {
               Click the button below to learn how Zero Olympiad will develop students into Global Citizens and Future Leaders through various programs in 2026, as well as to explore the Zero Olympiad Competition.
             </p>
 
+            <Link href="/instruction">
             <button className="flex items-center gap-2 bg-Primary hover:bg-Secondary text-white px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg group">
               View More Details
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
+            </Link>
           </div>
 
           {/* Right Side: Table */}
