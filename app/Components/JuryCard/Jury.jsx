@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image"; // Next.js Image Component import করা হয়েছে
+import Image from "next/image";
 
 const JurySection = () => {
   const [juryData, setJuryData] = useState([]);
@@ -36,12 +36,12 @@ const JurySection = () => {
 
   return (
     <section className="py-20 bg-Secondary relative overflow-hidden">
-      {/* --- Background Dot Pattern --- */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
           backgroundSize: "30px 30px",
-          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1.5px)",
+          backgroundImage:
+            "radial-gradient(circle, #ffffff 1px, transparent 1.5px)",
         }}
       ></div>
 
@@ -52,7 +52,8 @@ const JurySection = () => {
             <span className="text-Primary">(Season One)</span>
           </h1>
           <p className="text-[18px] text-gray-300 py-5 max-w-2xl mx-auto font-medium">
-            Distinguished academics and professionals who guide and evaluate our participants
+            Distinguished academics and professionals who guide and evaluate our
+            participants
           </p>
         </div>
 
@@ -63,19 +64,18 @@ const JurySection = () => {
               className="group bg-white p-8 rounded-[2.5rem] shadow-2xl transition-all duration-500 text-center flex flex-col items-center border border-white/10"
             >
               <div className="relative w-44 h-44 mb-6">
-                
-                {/* --- Dual Color Dashed Border with Gaps --- */}
                 <div
                   className="absolute inset-0 rounded-full transition-transform duration-700 ease-in-out group-hover:rotate-20"
                   style={{
-                    padding: '4px',
+                    padding: "4px",
                     background: `repeating-conic-gradient(
                       #F97316 0deg 15deg, 
                       transparent 15deg 25deg, 
                       #266D9A 25deg 40deg, 
                       transparent 40deg 50deg
                     )`,
-                    WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 4px), #fff 0)",
+                    WebkitMask:
+                      "radial-gradient(farthest-side, transparent calc(100% - 4px), #fff 0)",
                     mask: "radial-gradient(farthest-side, transparent calc(100% - 4px), #fff 0)",
                   }}
                 ></div>
@@ -85,10 +85,10 @@ const JurySection = () => {
                     <Image
                       src={getImagePath(member.image_url)}
                       alt={member.name}
-                      fill 
+                      fill
                       sizes="(max-width: 768px) 100vw, 176px"
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      priority={false} 
+                      priority={false}
                     />
                   </div>
                 </div>

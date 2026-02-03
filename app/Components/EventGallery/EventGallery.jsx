@@ -14,8 +14,6 @@ const Gallery = () => {
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411365/IMG_8708_ksoivs.jpg",
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411364/IMG_8682_mhxnel.jpg",
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411361/IMG_8594_okmn5p.jpg",
-    
-
   ];
 
   const openModal = (index) => {
@@ -64,7 +62,6 @@ const Gallery = () => {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="bg-white/20  border border-white/30"></div>
               </div>
