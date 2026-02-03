@@ -172,7 +172,7 @@ export default function AwardsSection() {
 
         <div className="flex justify-center">
           <Link href="/instruction">
-            <button className="bg-Primary hover:bg-orange-600 text-white font-bold py-4 px-8 md:px-10 rounded-xl transition-all transform hover:scale-105 shadow-xl text-sm md:text-base">
+            <button className="bg-Primary cursor-pointer hover:bg-orange-600 text-white font-bold py-4 px-8 md:px-10 rounded-xl transition-all transform hover:scale-105 shadow-xl text-sm md:text-base">
               What prizes will be awarded in Zero Olympiad 2026? →
             </button>
           </Link>

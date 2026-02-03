@@ -5,91 +5,90 @@ export default function Page() {
   const ADDRESS = "Dhaka, Bangladesh";
 
   return (
-    <div className="max-w-4xl mx-auto  py-10 px-4">
-      <h1 className="text-4xl font-bold mb-6">Terms & Conditions</h1>
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <h1 className="text-4xl font-bold mb-6 text-slate-900">Terms & Conditions</h1>
       
       <div className="pb-6">
-        <hr className="text-gray-400" />
+        <hr className="border-gray-300" />
       </div>
 
-      <p className="mb-4">
-        এই শর্তাবলী (“Terms”) {SITE_NAME} প্লাটফর্ম ব্যবহারের সকল নিয়ম এবং
-        বাধ্যবাধকতা নির্ধারণ করে। সাইট ব্যবহার করলে আপনি এই শর্তাবলীতে সম্মতি
-        দিচ্ছেন।
+      <p className="mb-4 text-slate-700 leading-relaxed">
+        These Terms and Conditions ("Terms") govern the use of the {SITE_NAME} platform. 
+        By accessing or using this site, you agree to comply with and be bound by these Terms.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">১. সাইট ব্যবহারের অধিকার</h2>
-      <p className="mb-4">
-        প্লাটফর্মটি শিক্ষামূলক উদ্দেশ্যে তৈরি। আপনি কোনো অবৈধ, ক্ষতিকর বা
-        বিভ্রান্তিকর কার্যকলাপের জন্য সাইট ব্যবহার করতে পারবেন না।
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">1. Right to Use Site</h2>
+      <p className="mb-4 text-slate-700">
+        This platform is created for educational purposes. You may not use the site for any 
+        illegal, harmful, or misleading activities.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">২. অ্যাকাউন্ট দায়িত্ব</h2>
-      <p className="mb-4">
-        আপনার অ্যাকাউন্টের তথ্য, পাসওয়ার্ড এবং নিরাপত্তা রক্ষা করা সম্পূর্ণ আপনার
-        দায়িত্ব। কোনো অননুমোদিত অ্যাক্সেস হলে অবিলম্বে আমাদের জানাতে হবে।
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">2. Account Responsibility</h2>
+      <p className="mb-4 text-slate-700">
+        Maintaining the confidentiality of your account information, password, and overall 
+        security is entirely your responsibility. You must notify us immediately in the 
+        event of any unauthorized access.
       </p>
 
-      {/* ------------ Your requested content starts from here ----------- */}
-
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৩. রেজিস্ট্রেশন ও ফি</h2>
-      <p className="mb-4">
-        কোনো রেজিস্ট্রেশন ফি থাকলে তার পরিশোধ প্রক্রিয়া তৃতীয় পক্ষের পেমেন্ট
-        গেটওয়ে মাধ্যমে অনুষ্ঠিত হবে। সকল ফি রিফান্ড পলিসি আলাদা শর্তের অধীনে
-        নির্ধারিত হবে — রিফান্ড সম্পর্কিত নির্দিষ্ট নিয়ম রেজিস্ট্রেশন পেজে উল্লেখ
-        থাকবে।
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">3. Registration & Fees</h2>
+      <p className="mb-4 text-slate-700">
+        Payment processes for any registration fees will be conducted through third-party 
+        payment gateways. All fee refund policies are determined under separate terms—specific 
+        rules regarding refunds will be mentioned on the registration page.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৪. অংশগ্রহণকারীর দায়িত্ব</h2>
-      <ul className="list-disc pl-6 mb-4">
-        <li>রেজিস্ট্রেশনকালে সঠিক ও আপ-টু-ডেট তথ্য প্রদান করা।</li>
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">4. Participant Responsibilities</h2>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-slate-700">
+        <li>Provide accurate and up-to-date information during registration.</li>
         <li>
-          প্রতিযোগিতার নিয়মাবলী মেনে চলা; কোনো তৃতীয় পক্ষের কপিরাইট লঙ্ঘন করা
-          অথবা অনুজ্ঞাবিহীন কন্টেন্ট জমা দেওয়া যাবে না।
+          Adhere to competition rules; submission of content that violates third-party 
+          copyrights or is unauthorized is strictly prohibited.
         </li>
-        <li>প্রতারণামূলক আচরণ বা অসদাচরণ করা থেকে বিরত থাকা।</li>
+        <li>Refrain from any fraudulent behavior or misconduct.</li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৫. কপিরাইট ও কন্টেন্ট</h2>
-      <p className="mb-4">
-        সাইটে প্রদর্শিত সমস্ত কন্টেন্ট (লেখা, লোগো, ছবি, ভিডিও) স্বত্বাধিকারী বা
-        লাইসেন্সপ্রাপ্ত। আপনি কোনো কন্টেন্ট জমা দিলে, আপনি সাইটকে বিশ্বব্যাপী,
-        রায়হীন, অ-একচেটিয়া লাইসেন্স প্রদান করেন যাতে সাইট সেই কন্টেন্ট ব্যবহার,
-        প্রদর্শন ও প্রচার করতে পারে (কন্টেন্ট ব্যবহারের বিস্তারিত আলাদা নীতিতে
-        উল্লেখ আছে)।
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">5. Copyright & Content</h2>
+      <p className="mb-4 text-slate-700">
+        All content displayed on the site (text, logos, images, videos) is owned or licensed 
+        by us. By submitting any content, you grant the site a worldwide, royalty-free, 
+        non-exclusive license to use, display, and promote that content (detailed usage 
+        terms are specified in a separate policy).
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৬. দায়-শূন্যতা (Disclaimer)</h2>
-      <p className="mb-4">
-        আমাদের সেবা ‘যেমন আছে’ ভিত্তিতে প্রদান করা হয়। আমরা সুনির্দিষ্ট ফলাফল,
-        সামঞ্জস্যতা বা নিরবিচ্ছিন্ন সেবা সম্পর্কে কোনো নিশ্চয়তা দিই না। আইনি
-        সীমাবদ্ধতা ছাড়া আমরা কোনো সরাসরি বা পরোক্ষ ক্ষতির জন্য দায়ী থাকব না।
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">6. Disclaimer</h2>
+      <p className="mb-4 text-slate-700">
+        Our services are provided on an "as is" basis. We do not guarantee specific results, 
+        compatibility, or uninterrupted service. To the extent permitted by law, we shall not 
+        be liable for any direct or indirect damages.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৭. আইনি বিষয়</h2>
-      <p className="mb-4">
-        এই শর্তাবলী বাংলাদেশ-এর আইন দ্বারা নিয়ন্ত্রিত হবে এবং যেকোনো বিরোধের
-        ক্ষেত্রে ঢাকার আদালত আইনাঞ্চল হিসেবে বিবেচিত হবে (subject to consumer
-        protection laws).
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">7. Legal Matters</h2>
+      <p className="mb-4 text-slate-700">
+        These terms shall be governed by the laws of Bangladesh, and any disputes shall be 
+        subject to the jurisdiction of the courts in Dhaka (subject to consumer protection laws).
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৮. যোগাযোগ</h2>
-      <p className="mb-4">
-        শর্তাবলী বা রেজিস্ট্রেশন সংক্রান্ত কোনো প্রশ্ন থাকলে যোগাযোগ করুন:{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 underline">
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">8. Contact Information</h2>
+      <p className="mb-4 text-slate-700">
+        If you have any questions regarding these terms or registration, please contact us at:{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 underline hover:text-blue-800 transition-colors">
           {CONTACT_EMAIL}
         </a>
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৯. পরিবর্তন</h2>
-      <p className="mb-4">
-        আমরা এই শর্তাবলী সময় সময় আপডেট করতে পারি। বড় কোনো পরিবর্তন হলে সাইটে
-        নোটিশ দেওয়া হবে। সর্বশেষ আপডেট: {new Date().toLocaleDateString("bn-BD")}.
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">9. Amendments</h2>
+      <p className="mb-4 text-slate-700">
+        We may update these terms from time to time. Significant changes will be notified on 
+        the site. Last Updated: {new Date().toLocaleDateString("en-US", {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}.
       </p>
 
       {/* Footer */}
-      <footer className="mt-10 text-sm text-gray-600">
-        <p>
+      <footer className="mt-10 pt-6 border-t border-gray-200 text-sm text-gray-600">
+        <p className="font-medium">
           {SITE_NAME} • {ADDRESS} • {CONTACT_PHONE}
         </p>
       </footer>

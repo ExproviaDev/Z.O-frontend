@@ -3,16 +3,9 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  FaGlobeAmericas,
-  FaLightbulb,
-  FaRocket,
-  FaUsers,
-  FaArrowRight,
-  FaPlay,
+ 
   FaQuoteLeft,
-  FaCheckCircle,
-  FaBars,
-  FaTimes,
+  
 } from "react-icons/fa";
 
 import Image from "next/image";
@@ -52,18 +45,14 @@ export default function ZeroOlympiad() {
   return (
     <div className="min-h-screen   text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
       <div className="">
-        {/* --- 1. HERO SECTION --- */}
         <section>
           <HeroSection></HeroSection>
         </section>
-
-        {/* --- 2. ABOUT SECTION  founder--- */}
 
         <section
           id="mission"
           className="relative py-32 bg-white overflow-hidden"
         >
-          {/* --- Dot Pattern Background Start --- */}
           <div
             className="absolute inset-0 z-0 opacity-40"
             style={{
@@ -71,57 +60,54 @@ export default function ZeroOlympiad() {
               backgroundSize: "24px 24px",
             }}
           />
-          {/* --- Dot Pattern Background End --- */}
 
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
-              {/* Left Content */}
               <div className="relative">
-                {/* Halka Indigo Glow Background - Dot pattern er upore thakbe */}
                 <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
 
-                <div className="flex items-center text-4xl md:text-5xl  font-black mb-8 leading-tight text-slate-900">
-                  <h2 className="   ">
-                    <span className="text-Primary"> Founder </span>
-                    OF Zero Olympiad
-                  </h2>
-                  <span className="text-Secondary">
-                    <IoMdArrowDropright />
-                  </span>
+                <div className="mb-10 group">
+                  <div className="flex flex-col border-l-8 border-Primary pl-6 md:pl-8 py-2">
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                      Faatiha Aayat
+                    </h2>
+
+                    <div className="mt-4 flex items-center gap-3">
+                      <span className="h-[2px] w-12 bg-Secondary"></span>
+                      <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
+                        Founder of Zero Olympiad
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 max-w-2xl"></div>
                 </div>
 
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  I am a thirteen-year-old Child Rights Activist and Climate
-                  Campaigner. I have already spoken in the United Nations, Ford
-                  Foundation, TEDx, Harvard University, Columbia University,
-                  Georgia Tech etc.
+                  Thirteen-year-old Child Rights Activist, Climate Campaigner,
+                  and Global Speaker.
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  I regularly raise my voice against Global Warming, Climate
-                  Change, Carbon Emission, Fossil Fuel etc. I talk to stop Child
-                  Abuse, Gender Discrimination and Domestic Violence. I have
-                  four published books. I run my own organization named CHIL&D
-                  where I work for Climate, Health, Information, Learning and
-                  Development.
+                  I have represented youth voices at the **United Nations,
+                  Harvard, and TEDx**, advocating against climate change and
+                  social injustices. Through my organization, **CHIL&D**, I work
+                  toward sustainable development and global learning.
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  I have pursued a Professional Development Program from the
-                  Department of Continuing Education of University of Harvard. I
-                  have obtained “President’s Award For Outstanding Academic
-                  Excellence – Gold Certificate''. I have completed the "Gender
-                  Equality and Human Rights in Climate Action and Renewable
-                  Energy" course provided by United Nations Institute for
-                  Training and Research.
+                  A published author of four books and a recipient of the
+                  **President’s Academic Excellence Gold Certificate**, I
+                  continue to bridge the gap between human rights and climate
+                  action.
                 </p>
-                <a 
-  className="bg-Primary py-2 px-4 rounded-xs text-white hover:bg-Secondary transition-all duration-300 ease-in-out transform hover:scale-105"
-  href="https://www.linkedin.com/in/faatihaaayat/"
->
-  View More
-</a>
+
+                <a
+                  href="https://www.linkedin.com/in/faatihaaayat/"
+                  className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 w-[150px] border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group"
+                >
+                  View More
+                </a>
               </div>
 
-              {/* Right Image Container */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
@@ -138,13 +124,10 @@ export default function ZeroOlympiad() {
           </div>
         </section>
 
-        {/* --- 2. ABOUT SECTION  Managing derectory--- */}
-
         <section
           id="mission"
           className="relative py-32 bg-white overflow-hidden"
         >
-          {/* --- Dot Pattern Background Start --- */}
           <div
             className="absolute inset-0 z-0 opacity-40"
             style={{
@@ -152,12 +135,9 @@ export default function ZeroOlympiad() {
               backgroundSize: "24px 24px",
             }}
           />
-          {/* --- Dot Pattern Background End --- */}
 
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
-              {/* Left Content */}
-
               <div className="relative group">
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
@@ -171,18 +151,28 @@ export default function ZeroOlympiad() {
                 </div>
               </div>
 
-              {/* Right Image Container */}
               <div className="relative">
-                {/* Halka Indigo Glow Background - Dot pattern er upore thakbe */}
                 <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
 
-                <div className="flex items-center text-4xl md:text-5xl  font-black mb-8 leading-tight text-slate-900">
-                  <h2 className="   ">
-                    Managing <span className="text-Primary"> Director </span>
-                  </h2>
-                  <span className="text-Secondary">
-                    <IoMdArrowDropright />
-                  </span>
+                <div className="mb-10 group">
+                  <div className="flex flex-col border-l-8 border-Primary pl-6 md:pl-8 py-2">
+                    <span className="text-sm font-bold text-Primary uppercase tracking-[0.2em] mb-1 opacity-80">
+                      Barrister-at-Law
+                    </span>
+
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                      Syed Aftab Ahmed
+                    </h2>
+
+                    <div className="mt-4 flex items-center gap-3">
+                      <span className="h-[2px] w-12 bg-Secondary"></span>
+                      <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
+                        Managing Director
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 max-w-lg"></div>
                 </div>
 
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
@@ -194,8 +184,8 @@ export default function ZeroOlympiad() {
                 </p>
 
                 <a
-                  className="bg-Primary py-2 px-4 rounded-xs text-white hover:bg-Secondary transition-all duration-300 ease-in-out transform hover:scale-105"
                   href="https://www.linkedin.com/in/barristeraftab/"
+                  className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 w-[150px] border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group"
                 >
                   View More
                 </a>
@@ -203,8 +193,6 @@ export default function ZeroOlympiad() {
             </div>
           </div>
         </section>
-
-        {/* --- 4. MISSION VISION VALUES --- */}
 
         <section
           id="vision-mission"
@@ -214,14 +202,12 @@ export default function ZeroOlympiad() {
             <div className="w-1/2 h-[2px] bg-gradient-to-r from-transparent via-Primary to-transparent opacity-50"></div>
           </div>
 
-          {/* --- Background Image Wrapper --- */}
           <div className="absolute inset-0 z-0">
             <img
               src="https://i.ibb.co.com/99HFrKfK/speaker-bg.png"
               alt="Architecture Background"
               className="w-full h-full object-cover"
             />
-            {/* Overlay: Jate background image ta cards er upor beshi pressure na dey */}
             <div className="absolute inset-0 "></div>
           </div>
 
@@ -232,19 +218,19 @@ export default function ZeroOlympiad() {
                   title: "Mission",
                   content:
                     "To strategically mobilize 10 million young leaders globally by the year 2030, empowering them to actively dismantle systemic barriers to sustainability and social equality while fostering a movement of impactful, youth-led change across the world.",
-                  bg: "bg-slate-900/90 text-white", // 90% opacity
+                  bg: "bg-slate-900/90 text-white",
                 },
                 {
                   title: "Vision",
                   content:
                     "We envision a future world where every single young person is fully equipped with the necessary agency, technical resources, and global support systems required to confront and solve humanity’s most complex and pressing challenges effectively.",
-                  bg: "bg-white/90 text-slate-900", // 90% opacity
+                  bg: "bg-white/90 text-slate-900",
                 },
                 {
                   title: "Values",
                   content:
                     "Our foundation is built upon Radical Innovation to challenge the status quo, Unwavering Integrity in every action, Global Inclusivity to ensure no one is left behind, and an ‘Action-First’ Mindset that prioritizes tangible results in everything we build.",
-                  bg: "bg-indigo-600/90 text-white", // Thora different color for contrast
+                  bg: "bg-indigo-600/90 text-white",
                 },
               ].map((card, i) => (
                 <div
@@ -263,7 +249,6 @@ export default function ZeroOlympiad() {
           </div>
         </section>
 
-        {/* --- 5. JOURNEY SECTION --- */}
         <section
           id="the-journey"
           className="py-32 bg-slate-950 text-white overflow-hidden"
@@ -329,7 +314,6 @@ export default function ZeroOlympiad() {
           </div>
         </section>
 
-        {/* --- 8. FOUNDER SPOTLIGHT --- */}
         <section id="founder" className="py-32 bg-white">
           <div className="max-w-7xl mx-auto px-6">
             <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
@@ -377,7 +361,6 @@ export default function ZeroOlympiad() {
           </div>
         </section>
 
-        {/* --- ANIMATIONS --- */}
         <style jsx global>{`
           @keyframes fade-in-up {
             from {
