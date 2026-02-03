@@ -16,7 +16,7 @@ const navItems = [
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
   { title: "Galley", url: "/gallery" },
-  { title: "Ramadan Reflection", url: "/ramadan-zero" },
+
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
 ];
@@ -87,9 +87,7 @@ export default function Header() {
                 <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary leading-none">
                   Zero Olympiad
                 </h1>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-medium">
-                  Excellence Awaits
-                </p>
+               
               </div>
             </Link>
 

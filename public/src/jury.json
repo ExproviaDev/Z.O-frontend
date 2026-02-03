@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "SHAMSA ARA DOLLY",
+    "title": "Chairperson, S@ifur's Pvt. Ltd.",
+    "image_url": "shamsara_dolly.png"
+  },
+  {
+    "id": 2,
+    "name": "RATHINDRA NATH DAS",
+    "title": "ED, Daffodil International Professional Training Institute",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770039178/ED-Sir-Updated_drogq8.png"
+  },
+  {
+    "id": 3,
+    "name": "RUMANA RASHID ISHITA",
+    "title": "Cultural Personality",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770050951/15-DSC_0425_dd4wo2.webp"
+  },
+  {
+    "id": 4,
+    "name": "SADAT RAHMAN",
+    "title": "Int'l Children Peace Prize Winner",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770038189/17.-ICPP-Winner_Sadat-2020_xut7kb.jpg"
+  },
+  {
+    "id": 5,
+    "name": "SYED FARHAD AHMED",
+    "title": "Honorary Consul of Estonia",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770039743/images_fvlkx4.jpg"
+  },
+  {
+    "id": 6,
+    "name": "HEIDI SOLBA",
+    "title": "Head of Global Development, Let's Do it World",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770039742/Heidi-Solba-201x300_v0x1yo.jpg"
+  },
+  {
+    "id": 7,
+    "name": "MD MANSURUL HAQUE",
+    "title": "UN Disaster Risk Reduction Fellow",
+    "image_url": "mansurul_haque.png"
+  },
+  {
+    "id": 8,
+    "name": "AMAAN SULAIMAN",
+    "title": "CEO, English Olympiad",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770051491/download_nbkmjq.png"
+  },
+  {
+    "id": 9,
+    "name": "MITALI DAS",
+    "title": "Country Director, Pure Earth Bangladesh",
+    "image_url": "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770038189/Mitali-speaking-at-youth-education-event-scaled_rihtf4.jpg"
+  }
+]

@@ -36,25 +36,7 @@ export default function Footer() {
 
     return (
         <footer className="font-sans w-full">
-            {/* Newsletter CTA */}
-            <div className="relative overflow-hidden bg-gradient-to-r from-[#5B2EFF] via-[#6A2BBF] to-[#A31D7E] py-20 text-center text-white">
-                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_1px_1px,#ffffff_1px,transparent_0)] [background-size:18px_18px]" />
-                <div className="relative z-10 px-4">
-                    <h5 className="text-sm tracking-[0.2em] uppercase mb-4 opacity-90">
-                        Subscribe to Newsletter
-                    </h5>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-8">
-                        Want Something Extra?
-                    </h2>
-                    <Link
-                        href="/registration"
-                        className="inline-block rounded-xl bg-[#FF1F8F] px-8 py-3 text-sm font-semibold text-white shadow-lg hover:bg-[#ff3aa0] transition"
-                    >
-                        Register Soon!
-                    </Link>
-                </div>
-            </div>
-
+           
             {/* Main Footer */}
             <div className="bg-[#14142B] text-white/70 px-5 pt-20 pb-6">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -120,7 +102,7 @@ export default function Footer() {
                                     </p>
                                     <p>
                                         <a href="tel:+8809876543210" className="hover:text-[#5B2EFF] transition">
-                                            +880 9876-543210
+                                           +880 1973-570203
                                         </a>
                                     </p>
                                 </div>
