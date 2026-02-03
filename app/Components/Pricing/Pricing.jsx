@@ -16,8 +16,8 @@ const plans = [
     prize: "499",
     icon: <FiStar className="text-emerald-500" size={24} />,
     features: ["Digital Certificate", "Winner Crests", "SDG Learning Kit"],
-    color: "emerald", // Greenish
-    btnBg: "bg-emerald-600 hover:bg-emerald-700",
+    color: "emerald", 
+    btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-emerald-100",
   },
   {
@@ -27,9 +27,9 @@ const plans = [
     icon: <FiAward className="text-blue-500" size={24} />,
     features: ["Global Mentorship", "Medals & Prizes", "Leadership Training"],
     color: "blue",
-    btnBg: "bg-blue-600 hover:bg-blue-700",
+    btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-blue-100",
-    popular: true, // মাঝখানেরটিকে হাইলাইট করার জন্য
+    popular: true,
   },
   {
     title: "Senior Pioneer",
@@ -38,7 +38,7 @@ const plans = [
     icon: <FiZap className="text-purple-500" size={24} />,
     features: ["Project Incubation", "Networking", "High-Value Rewards"],
     color: "purple",
-    btnBg: "bg-purple-600 hover:bg-purple-700",
+    btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-purple-100",
   },
 ];
@@ -47,7 +47,6 @@ export default function PricingSection() {
   return (
     <section className="py-24 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
             Registration <span className="text-blue-600">Categories</span>
@@ -58,7 +57,6 @@ export default function PricingSection() {
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <motion.div
