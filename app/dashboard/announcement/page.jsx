@@ -2,10 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  HiOutlineSpeakerphone,
-  HiOutlineCalendar,
-} from "react-icons/hi";
+import { HiOutlineSpeakerphone, HiOutlineCalendar } from "react-icons/hi";
 import { motion } from "framer-motion";
 
 export default function AnnouncementPage() {
