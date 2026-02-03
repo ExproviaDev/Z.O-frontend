@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useState, useEffect } from "react";
 
 import {
@@ -18,6 +17,7 @@ import {
 
 import Image from "next/image";
 import HeroSection from "./components/heroSection";
+import { IoMdArrowDropright } from "react-icons/io";
 
 export default function ZeroOlympiad() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,7 +57,7 @@ export default function ZeroOlympiad() {
           <HeroSection></HeroSection>
         </section>
 
-        {/* --- 2. ABOUT SECTION --- */}
+        {/* --- 2. ABOUT SECTION  founder--- */}
 
         <section
           id="mission"
@@ -80,58 +80,45 @@ export default function ZeroOlympiad() {
                 {/* Halka Indigo Glow Background - Dot pattern er upore thakbe */}
                 <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
 
-                <h2 className="text-3xl md:text-4xl font-black mb-8 leading-tight text-slate-900">
-                  A Global Movement for <br />
-                  <span className="text-Primary">Planetary Progress.</span>
-                </h2>
+                <div className="flex items-center text-4xl md:text-5xl  font-black mb-8 leading-tight text-slate-900">
+                  <h2 className="   ">
+                    <span className="text-Primary"> Founder </span>
+                    OF Zero Olympiad
+                  </h2>
+                  <span className="text-Secondary">
+                    <IoMdArrowDropright />
+                  </span>
+                </div>
 
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  Zero Olympiad is not just a competition—it is a launchpad. We
-                  mobilize the boundless creativity of young minds to address
-                  the "Zero" targets: Zero Poverty, Zero Hunger, and Zero
-                  Carbon. By aligning with the United Nations 17 SDGs, we
-                  provide a structured ecosystem for youth to transition from
-                  awareness to action.
+                  I am a thirteen-year-old Child Rights Activist and Climate
+                  Campaigner. I have already spoken in the United Nations, Ford
+                  Foundation, TEDx, Harvard University, Columbia University,
+                  Georgia Tech etc.
                 </p>
-
-                <div className="grid grid-cols-2 gap-8">
-                  {[
-                    {
-                      icon: <FaGlobeAmericas />,
-                      label: "100+ Nations",
-                      sub: "Global Reach",
-                    },
-                    {
-                      icon: <FaUsers />,
-                      label: "Youth-Led",
-                      sub: "Authentic Voice",
-                    },
-                    {
-                      icon: <FaRocket />,
-                      label: "Solution-First",
-                      sub: "Action Oriented",
-                    },
-                    {
-                      icon: <FaLightbulb />,
-                      label: "SDG Aligned",
-                      sub: "Strategic Impact",
-                    },
-                  ].map((stat, i) => (
-                    <div key={i} className="flex items-start space-x-4">
-                      <div className="text-Primary text-2xl mt-1">
-                        {stat.icon}
-                      </div>
-                      <div>
-                        <p className="font-black text-Secondary">
-                          {stat.label}
-                        </p>
-                        <p className="text-sm text-slate-500 font-medium tracking-wide uppercase">
-                          {stat.sub}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  I regularly raise my voice against Global Warming, Climate
+                  Change, Carbon Emission, Fossil Fuel etc. I talk to stop Child
+                  Abuse, Gender Discrimination and Domestic Violence. I have
+                  four published books. I run my own organization named CHIL&D
+                  where I work for Climate, Health, Information, Learning and
+                  Development.
+                </p>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  I have pursued a Professional Development Program from the
+                  Department of Continuing Education of University of Harvard. I
+                  have obtained “President’s Award For Outstanding Academic
+                  Excellence – Gold Certificate''. I have completed the "Gender
+                  Equality and Human Rights in Climate Action and Renewable
+                  Energy" course provided by United Nations Institute for
+                  Training and Research.
+                </p>
+                <a 
+  className="bg-Primary py-2 px-4 rounded-xs text-white hover:bg-Secondary transition-all duration-300 ease-in-out transform hover:scale-105"
+  href="https://www.linkedin.com/in/faatihaaayat/"
+>
+  View More
+</a>
               </div>
 
               {/* Right Image Container */}
@@ -139,13 +126,79 @@ export default function ZeroOlympiad() {
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://zeroolympiad.pronizam.com/wp-content/uploads/2026/02/IMG_8873-1-scaled.jpg"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770098853/DSC_0931_1_vmw4ge.jpg"
                     alt="Youth Change Makers"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+                    className="w-full h-full object-cover  hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- 2. ABOUT SECTION  Managing derectory--- */}
+
+        <section
+          id="mission"
+          className="relative py-32 bg-white overflow-hidden"
+        >
+          {/* --- Dot Pattern Background Start --- */}
+          <div
+            className="absolute inset-0 z-0 opacity-40"
+            style={{
+              backgroundImage: `radial-gradient(#e2e8f0 1.5px, transparent 1.5px)`,
+              backgroundSize: "24px 24px",
+            }}
+          />
+          {/* --- Dot Pattern Background End --- */}
+
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 items-center">
+              {/* Left Content */}
+
+              <div className="relative group">
+                <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
+                <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
+                  <Image
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033230/IMG_8582_h5bn0q.jpg"
+                    alt="Youth Change Makers"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="w-full h-full object-cover  hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+                  />
+                </div>
+              </div>
+
+              {/* Right Image Container */}
+              <div className="relative">
+                {/* Halka Indigo Glow Background - Dot pattern er upore thakbe */}
+                <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
+
+                <div className="flex items-center text-4xl md:text-5xl  font-black mb-8 leading-tight text-slate-900">
+                  <h2 className="   ">
+                    Managing <span className="text-Primary"> Director </span>
+                  </h2>
+                  <span className="text-Secondary">
+                    <IoMdArrowDropright />
+                  </span>
+                </div>
+
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  Having over 16 years of expertise in Business and Migration
+                  Consultancy under my experience belt, I would love to make
+                  more professional acquaintances. I believe in creating and
+                  fostering relationships as a cornerstone of conducting
+                  business.
+                </p>
+
+                <a
+                  className="bg-Primary py-2 px-4 rounded-xs text-white hover:bg-Secondary transition-all duration-300 ease-in-out transform hover:scale-105"
+                  href="https://www.linkedin.com/in/barristeraftab/"
+                >
+                  View More
+                </a>
               </div>
             </div>
           </div>
@@ -276,93 +329,17 @@ export default function ZeroOlympiad() {
           </div>
         </section>
 
-       
-        {/* --- 6. YOUTUBE SECTION --- */}
-        <section className="py-10 bg-white">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <div className="mb-20">
-              <span className="text-pink-600 font-black tracking-[0.3em] uppercase text-xs mb-4 block">
-                Our Impact in Motion
-              </span>
-              <h2 className="text-3xl md:text-5xl font-black mb-6 italic tracking-tighter">
-                Voices of{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500 px-2">
-                  Change
-                </span>
-              </h2>
-              <div className="h-1.5 w-24 bg-indigo-600 mx-auto rounded-full mb-8"></div>
-              <p className="text-slate-500 max-w-xl mx-auto font-medium">
-                Witness the stories of courage, innovation, and leadership from
-                participants across the globe.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-10">
-              {[
-                {
-                  id: "_OzN8MgM8Ck", // প্রথম ভিডিওর আইডি এখানে
-                  title: "The 2024 Impact Documentary",
-                  desc: "A deep dive into how youth projects reached 1M+ beneficiaries.",
-                },
-                {
-                  id: "tEiJtCnmjQ4", // দ্বিতীয় ভিডিওর আইডি এখানে
-                  title: "Pitching for the Planet",
-                  desc: "Watch the winning presentation from our Climate Action track.",
-                },
-                {
-                  id: "dI_UIKjf83Q", // তৃতীয় ভিডিওর আইডি এখানে
-                  title: "Our Founder's Vision",
-                  desc: "Fatiha Ayat shares the 'Why' behind Zero Olympiad.",
-                },
-              ].map((video, i) => (
-                <div
-                  key={i}
-                  className="group flex flex-col items-start text-left"
-                >
-                  <div className="relative aspect-video w-full bg-slate-100 rounded-[2rem] overflow-hidden mb-8 shadow-2xl shadow-slate-200/50">
-                    {/* ভিডিও এমবেড */}
-                    <iframe
-                      className="absolute inset-0 w-full h-full z-10"
-                      src={`https://www.youtube.com/embed/${video.id}`}
-                      title={video.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
-
-                    {/* আপনার আগের ব্লু ওভারলে এবং সাদা-কালো ইফেক্ট সম্পূর্ণ সরিয়ে দেওয়া হয়েছে */}
-                  </div>
-
-                  <div className="px-2">
-                    <h4 className="text-xl font-black mb-3 text-slate-900 group-hover:text-indigo-600 transition-colors duration-300">
-                      {video.title}
-                    </h4>
-                    <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                      {video.desc}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-widest">
-                      <span>Watch Video</span>
-                      <div className="h-px w-8 bg-indigo-600 group-hover:w-12 transition-all duration-300"></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* --- 8. FOUNDER SPOTLIGHT --- */}
         <section id="founder" className="py-32 bg-white">
           <div className="max-w-7xl mx-auto px-6">
             <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
               <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
                 <Image
-                  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410908/EYE02010_snu7ji.jpg"
+                  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033233/IMG_8818_bdrqrv.jpg"
                   alt="Fatiha Ayat"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover grayscale"
+                  className="object-cover "
                 />
                 <div className="absolute inset-0 bg-indigo-900/30 mix-blend-multiply" />
               </div>
