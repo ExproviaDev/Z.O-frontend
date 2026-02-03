@@ -131,11 +131,11 @@ export default function RegistrationPage() {
           <p className="text-center text-sm text-gray-500 mt-2">Step {currentStep} of 3</p>
           <p className="mt-2 text-center text-sm">
             Already Have An Account?{" "}
-            <Link href="/login" className="underline text-Primary font-bold">Login</Link>
+            <Link prefetch={false} href="/login" className="underline text-Primary font-bold">Login</Link>
           </p>
         </div>
         <div className="pt-7">
-          <Link href={'/'}>
+          <Link prefetch={false} href={'/'}>
             <button className="flex items-center btn btn-primary">
               <MdOutlineArrowBackIos /> back
             </button>

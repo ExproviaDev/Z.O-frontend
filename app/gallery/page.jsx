@@ -179,13 +179,13 @@ const GalleryPage = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
-              <Link href={"registration"}>
+              <Link prefetch={false} href={"registration"}>
               <button className="bg-Primary hover:bg-Secondary hover:border-Secondary text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all transform hover:-translate-y-1 shadow-lg">
                 Register Now <FaArrowRight size={14} />
               </button>
               </Link>
 
-             <Link href={"instruction"}>
+             <Link prefetch={false} href={"instruction"}>
               <button className="border-2 border-white/40 hover:bg-Primary hover:border-Primary  text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all transform hover:-translate-y-1">
                 Learn More <FaArrowRight size={14} />
               </button>

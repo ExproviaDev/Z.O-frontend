@@ -74,7 +74,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo Section */}
-            <Link href="/" className="flex items-center group">
+            <Link prefetch={false} href="/" className="flex items-center group">
               <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
                 <Image
                   src={logo}
@@ -95,6 +95,7 @@ export default function Header() {
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
+                prefetch={false}
                   key={item.title}
                   href={item.url}
                   className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${
@@ -118,6 +119,7 @@ export default function Header() {
                   {/* logic: Staff hole Admin Panel button, User hole Profile Icon */}
                   {isStaff ? (
                     <Link
+                    prefetch={false}
                       href="/admin"
                       className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-Primary rounded-lg hover:bg-opacity-90 transition-all shadow-md active:scale-95"
                     >
@@ -151,12 +153,14 @@ export default function Header() {
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link
+                  prefetch={false}
                     href="/login"
                     className="text-sm font-bold text-gray-600 hover:text-orange-500"
                   >
                     Login
                   </Link>
                   <Link
+                  prefetch={false}
                     href="/registration"
                     className="px-6 py-2 text-sm font-bold text-white bg-orange-500 rounded-full hover:bg-orange-600 transition-all"
                   >
@@ -201,6 +205,7 @@ export default function Header() {
               <Link
                 key={item.title}
                 href={item.url}
+                prefetch={false}
                 className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${
                   pathname === item.url
                     ? "bg-orange-50 text-orange-500"
@@ -215,11 +220,13 @@ export default function Header() {
 
             {!email ? (
               <div className="flex flex-col gap-4">
-                <Link href="/login" className="text-gray-600 font-bold px-4 py-2">
+                <Link 
+                prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
                   Login
                 </Link>
                 <Link
                   href="/registration"
+                  prefetch={false}
                   className="bg-orange-500 text-white px-4 py-2 rounded-full text-center font-bold"
                 >
                   Register
@@ -229,17 +236,17 @@ export default function Header() {
               <div className="flex flex-col gap-2">
                 {/* Mobile Menu logic: Staff hole Admin link, User hole Profile/Dashboard */}
                 {isStaff ? (
-                  <Link href="/admin" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                  <Link prefetch={false} href="/admin" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
                     <RxDashboard size={24} />
                     <span className="font-bold">Admin Panel</span>
                   </Link>
                 ) : (
                   <>
-                    <Link href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                    <Link prefetch={false} href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
                       <RxDashboard size={24} />
                       <span className="font-bold">Dashboard</span>
                     </Link>
-                    <Link href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                    <Link prefetch={false} href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
                       <FaUserCircle size={24} />
                       <span className="font-bold">My Account</span>
                     </Link>

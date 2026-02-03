@@ -88,7 +88,7 @@ export default function LoginPage() {
           </p>
           {/* back button */}
             <div className="pt-7">
-                  <Link href={'/'} className="">
+                  <Link prefetch={false} href={'/'} className="">
                     <button className="flex items-center btn btn-active btn-primary">
                       <MdOutlineArrowBackIos />  back
                     </button>
@@ -165,7 +165,7 @@ export default function LoginPage() {
             </button>
             <p className="mt-2 text-center text-sm">
               If you Don't Have Any Account!{" "}
-              <Link href="/registration" className="underline text-indigo-700 font-bold">Register</Link>
+              <Link prefetch={false} href="/registration" className="underline text-indigo-700 font-bold">Register</Link>
             </p>
           </form>
         </div>

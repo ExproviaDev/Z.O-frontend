@@ -42,7 +42,7 @@ export default function Footer() {
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Brand */}
                     <div>
-                        <Link href="/" className="flex items-center gap-3 mb-4">
+                        <Link prefetch={false} href="/" className="flex items-center gap-3 mb-4">
                             <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
                                 <Image src={logo} alt="siteLogo" width={56} height={56} />
                             </div>
@@ -67,6 +67,7 @@ export default function Footer() {
                             {quickLinks.map((link) => (
                                 <li key={link.name}>
                                     <Link
+                                    prefetch={false}
                                         href={link.href}
                                         className="text-white/70 text-sm hover:text-[#5B2EFF] transition"
                                     >
@@ -171,9 +172,9 @@ export default function Footer() {
                         © {currentYear} Zero Olympiad. All rights reserved.
                     </p>
                     <div className="flex flex-wrap gap-6">
-                        <Link href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
-                        <Link href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
-                        <Link href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
+                        <Link prefetch={false} href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
+                        <Link prefetch={false} href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
+                        <Link prefetch={false} href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>
             </div>

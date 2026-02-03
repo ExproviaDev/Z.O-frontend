@@ -90,7 +90,7 @@ const UserDashboard = () => {
             smarter every day.{" "}
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <Link href={"/dashboard/quizzes"}>
+            <Link prefetch={false} href={"/dashboard/quizzes"}>
               <button className="flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blue-600 transition hover:bg-opacity-90 active:scale-95">
                 <FaPlay className="text-xs" /> Continue Quiz
               </button>

@@ -61,7 +61,7 @@ const AdminProfilePage = () => {
 
               {/* Action Button */}
               <div className="mb-2">
-                <Link href="/admin/profile/edit">
+                <Link prefetch={false} href="/admin/profile/edit">
                   <button className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-blue-600 text-blue-600 rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 font-bold shadow-sm active:scale-95">
                     <FaRegEdit />
                     Edit Profile

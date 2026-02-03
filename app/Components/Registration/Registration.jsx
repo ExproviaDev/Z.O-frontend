@@ -113,7 +113,7 @@ export default function Registration() {
         </div>
 
         <div className="flex justify-center mt-16">
-          <Link href="/instruction">
+          <Link prefetch={false} href="/instruction">
             <button className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white px-10 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-2xl group">
               Views More Details
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
