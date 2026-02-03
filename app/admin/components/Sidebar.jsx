@@ -12,17 +12,17 @@ import {
   FiVideo,
   FiMenu,
   FiX,
-  FiUser,
+
 } from "react-icons/fi";
 import { IoMdHome } from "react-icons/io";
-import { MdLeaderboard } from "react-icons/md";
+import { MdLeaderboard, MdCampaign  } from "react-icons/md";
 
 // ১. Access Level onujayi Menu Items
 const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: FiHome, href: "/admin", access: ["admin", "manager"] },
   { id: "video-evaluation", label: "Video Evaluation", icon: FiVideo, href: "/admin/video-evaluation", access: ["admin", "manager"] },
   { id: "leaderboard", label: "Leaderboard", icon: MdLeaderboard, href: "/admin/leaderboard", access: ["admin", "manager"] },
-  { id: "event-management", label: "Event Management", icon: FiCalendar, href: "/admin/event-management", access: ["admin", "manager"] },
+  { id: "Announcement", label: "Announcement", icon: MdCampaign , href: "/admin/announcement", access: ["admin", "manager"] },
 
   // Admin Only Access
   { id: "quiz-management", label: "Quiz Management", icon: FiFileText, href: "/admin/quiz-management", access: ["admin"] },
