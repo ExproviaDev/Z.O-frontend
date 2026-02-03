@@ -3,9 +3,8 @@ import React from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
-import { LuClock4 } from "react-icons/lu";
 import { FaFacebook, FaYoutube, FaInstagram } from "react-icons/fa";
-import Link from "next/link";
+import { GrLinkedin } from "react-icons/gr";
 
 export default function Page() {
   const links = [
@@ -25,6 +24,12 @@ export default function Page() {
       name: "Instagram",
       icon: <FaInstagram className="text-pink-500 text-3xl" />,
       url: "https://www.instagram.com/faatiha.aayat",
+      handle: "@faatiha.aayat",
+    },
+    {
+      name: "Linkedin",
+      icon: <GrLinkedin className="text-[#0A66C2] text-3xl" />,
+      url: "https://www.linkedin.com/in/faatihaaayat/",
       handle: "@faatiha.aayat",
     },
   ];
@@ -58,8 +63,8 @@ export default function Page() {
               Head Office
             </h5>
             <div className="ml-9 mt-2 text-gray-700 leading-relaxed">
-              <p>House #23, Road #7</p>
-              <p>Dhanmondi, Dhaka-1205</p>
+              <p>House #469, Road #31</p>
+              <p>Mohakhali DOHS, Dhaka 1212</p>
               <p>Bangladesh</p>
             </div>
           </div>
@@ -71,8 +76,8 @@ export default function Page() {
               Phone
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
-              <p>+880 1234-567890</p>
-              <p>+880 9876-543210</p>
+              <p>+880 1973-570203</p>
+              <p>+880 1886-286321</p>
             </div>
           </div>
 
@@ -83,22 +88,13 @@ export default function Page() {
               Email
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
-              <p>info@zeroolympiad.bd</p>
-              <p>support@zeroolympiad.bd</p>
+              <p>faatiha.aayat@gmail.com</p>
+              <p>zeroolympiad.bd@gmail.com</p>
             </div>
           </div>
 
           {/* Working Hours */}
-          <div>
-            <h5 className="flex items-center gap-3 text-lg font-semibold text-yellow-600">
-              <LuClock4 className="text-2xl" />
-              Working Hours
-            </h5>
-            <div className="ml-9 mt-2 text-gray-700">
-              <p>Saturday - Thursday</p>
-              <p>9:00 AM - 5:00 PM</p>
-            </div>
-          </div>
+          
         </div>
 
         {/* follow us  */}
@@ -133,76 +129,30 @@ export default function Page() {
             </div>
 
           </div>
-          <div className="mt-8 bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-xl py-3 px-4 text-center">
-            <h3 className="text-3xl pb-3 font-semibold">FAQ Page</h3>
-           <div className="flex justify-center ">
-             <hr className="w-[400px] text-gray-300" />
-           </div>
-            <Link
-              href="/faq"
-              className="block my-2  w-full  rounded-xl  font-semibold 
-                 text-black hover:text-indigo-400
-                 transition-all"
-            >
-              Introduction
-            </Link>
-            <Link
-              href="/faq"
-              className="block my-2  w-full  rounded-xl  font-semibold 
-                 text-black hover:text-indigo-400
-                 transition-all"
-            >
-              Participation
-            </Link>
-            <Link
-              href="/faq"
-              className="block my-2  w-full  rounded-xl  font-semibold 
-                 text-black hover:text-indigo-400
-                 transition-all"
-            >
-              Registration Categories
-            </Link>
-            <Link
-              href="/faq"
-              className="block my-2  w-full  rounded-xl  font-semibold 
-                 text-black hover:text-indigo-400
-                 transition-all"
-            >
-              Awards
-            </Link>
-            <Link
-              href="/faq"
-              className="block my-2  w-full  rounded-xl  font-semibold 
-                 text-black hover:text-indigo-400
-                 transition-all"
-            >
-              Timeline
-            </Link>
-          </div>
+          
         </div>
 
       </div>
 
 
       {/* Map */}
-      <div className="pt-16 pb-20 p-5">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
-          Our Location
-        </h2>
+    <div className="pt-16 pb-20 p-5">
+  <h2 className="text-3xl font-bold text-center mb-6 text-gray-900">
+    Our Location
+  </h2>
 
-        <div className="w-full lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-lg border border-gray-400 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)]">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.214776761477!2d90.37298327476827!3d23.751397489219598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8a36e5ccfdf%3A0xfcf2c98f41a42a40!2sDhanmondi%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1701234567890
-"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-      </div>
+  <div className="w-full lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-lg border border-gray-400">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.171445778841!2d90.39167387533682!3d23.776918878652414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c76afc776077%3A0x7d06e3089d89163!2sMohakhali%20DOHS!5e0!3m2!1sen!2sbd!4v1714567890123!5m2!1sen!2sbd"
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen=""
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
 
     </div>
   );
