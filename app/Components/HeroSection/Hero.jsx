@@ -66,14 +66,14 @@ export default function HeroSection() {
         </h1>
 
         <div className="flex flex-wrap justify-center gap-5 mb-16">
-          <Link href={"/registration"}>
+          <Link prefetch={false} href={"/registration"}>
             <button className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
               Register Now
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
 
-          <Link href="/instruction">
+          <Link prefetch={false} href="/instruction">
             <button className="flex items-center gap-3 cursor-pointer bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
               Learn More{" "}
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />

@@ -69,7 +69,7 @@ export default function Sidebar() {
       <aside className={`fixed xl:static inset-y-0 left-0 z-40 w-64 bg-[#0f172a] text-gray-400 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}>
         <div className="h-full flex flex-col p-4">
           {/* Brand Logo */}
-         <Link href={"/"}>
+         <Link prefetch={false} href={"/"}>
                <div className="flex items-center gap-3 px-4 mb-10 h-16">
             <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white">
               <FiHome size={20} />
@@ -83,7 +83,7 @@ export default function Sidebar() {
             {menuItems.filter(item => item.access.includes(userRole)).map((item) => {
               const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
               return (
-                <Link key={item.id} href={item.href} onClick={() => setIsMobileMenuOpen(false)} 
+                <Link key={item.id} prefetch={false} href={item.href} onClick={() => setIsMobileMenuOpen(false)} 
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? "bg-white/10 text-white font-semibold" : "hover:bg-white/5 hover:text-gray-200"}`}>
                   <item.icon size={20} className={isActive ? "text-emerald-400" : ""} />
                   <span className="text-sm">{item.label}</span>

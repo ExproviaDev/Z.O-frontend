@@ -44,28 +44,26 @@ export default function HomePage() {
   return (
     <main className="overflow-x-hidden">
 
-        <HeroSection></HeroSection>
+      <HeroSection></HeroSection>
       
-
       <Instructions></Instructions>
     
       <WhyParticipate></WhyParticipate>
 
-
       <Pricing></Pricing>
+
       <Registration></Registration>
 
       <Awards></Awards>
       
-        <TimelineEvent></TimelineEvent>
+      <TimelineEvent></TimelineEvent>
       
-        <JurySection></JurySection>
+      <JurySection></JurySection>
 
-        <Supporters></Supporters>
+      <Supporters></Supporters>
      
-        <EventGallery></EventGallery>
+      <EventGallery></EventGallery>
 
-        
     </main>
   );
 }

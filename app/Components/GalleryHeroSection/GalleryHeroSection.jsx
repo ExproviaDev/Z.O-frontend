@@ -68,12 +68,12 @@ const GalleryHeroSection = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 pointer-events-auto">
-          <Link href={"registration"}>
+          <Link prefetch={false} href={"registration"}>
           <button className="bg-Primary hover:bg-Secondary border border-Primary hover:border-Secondary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Register Now <FaArrowRight className="text-sm" />
           </button>
           </Link>
-          <Link href={"instruction"}>
+          <Link prefetch={false} href={"instruction"}>
           <button className="border border-white/80 hover:bg-Primary hover:border-Primary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Learn More <FaArrowRight className="text-sm" />
           </button>

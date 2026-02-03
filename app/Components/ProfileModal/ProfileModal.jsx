@@ -54,7 +54,7 @@ export default function ProfileModal({ isOpen, onClose }) {
               Student Role: {user?.sdg_role || "N/A"}
             </p>
 
-            <Link
+            <Link prefetch={false}
               href="/dashboard/profile"
               className="mt-4 w-full rounded-lg bg-primary py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity text-center"
               onClick={onClose}
@@ -75,6 +75,7 @@ export default function ProfileModal({ isOpen, onClose }) {
             ].map((item) => (
               <li key={item.label}>
                 <Link
+                prefetch={false}
                   href={item.path}
                   onClick={onClose}
                   className="block cursor-pointer rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-all border-b border-white/5 last:border-0"

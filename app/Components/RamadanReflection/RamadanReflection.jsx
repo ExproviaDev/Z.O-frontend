@@ -105,7 +105,7 @@ const RamadanReflection = () => {
         </div>
 
         {/* CTA Button */}
-       <Link href={"/instruction"}>
+       <Link prefetch={false} href={"/instruction"}>
         <button className="group bg-Primary hover:bg-[#d95a1f] text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2 mx-auto hover:-translate-y-1 hover:shadow-lg cursor-pointer">
           Learn More
           <span className="transition-transform duration-300 group-hover:translate-x-2">

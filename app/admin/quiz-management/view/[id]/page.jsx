@@ -35,7 +35,7 @@ export default function ViewQuizPage() {
                     <p className="text-blue-600 font-semibold mt-1">{currentQuiz.category}</p>
                 </div>
 
-                <Link href={`/admin/quiz-management/edit/${id}`}>
+                <Link prefetch={false} href={`/admin/quiz-management/edit/${id}`}>
                     <button className="flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-orange-600 transition-all">
                         <FaEdit /> Edit Quiz
                     </button>

@@ -131,7 +131,7 @@ export default function AboutOlympiad() {
               Competition.
             </p>
 
-            <Link href="/instruction">
+            <Link prefetch={false} href="/instruction">
               <button className="flex items-center gap-2 cursor-pointer bg-Primary hover:bg-Secondary text-white px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg group">
                 View More Details
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />

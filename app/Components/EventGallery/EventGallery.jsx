@@ -70,7 +70,7 @@ const Gallery = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <Link href={"gallery"}>
+          <Link prefetch={false} href={"gallery"}>
             <button className="bg-Primary hover:bg-[#d9561a] text-white font-bold py-3 px-10 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               View More
             </button>

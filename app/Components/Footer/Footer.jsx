@@ -37,12 +37,10 @@ export default function Footer() {
     return (
         <footer className="font-sans w-full">
            
-            {/* Main Footer */}
             <div className="bg-[#14142B] text-white/70 px-5 pt-20 pb-6">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                    {/* Brand */}
                     <div>
-                        <Link href="/" className="flex items-center gap-3 mb-4">
+                        <Link prefetch={false} href="/" className="flex items-center gap-3 mb-4">
                             <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
                                 <Image src={logo} alt="siteLogo" width={56} height={56} />
                             </div>
@@ -60,13 +58,13 @@ export default function Footer() {
                         </p>
                     </div>
 
-                    {/* Quick Links */}
                     <div>
                         <h4 className="font-semibold text-white mb-4">Quick Links</h4>
                         <ul className="space-y-3">
                             {quickLinks.map((link) => (
                                 <li key={link.name}>
                                     <Link
+                                    prefetch={false}
                                         href={link.href}
                                         className="text-white/70 text-sm hover:text-[#5B2EFF] transition"
                                     >
@@ -77,11 +75,9 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Contact Info */}
                     <div className="lg:col-span-1">
                         <h4 className="font-semibold text-white mb-4">Contact Us</h4>
                         <ul className="space-y-4 text-sm">
-                            {/* Address */}
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaMapPin className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
@@ -91,7 +87,6 @@ export default function Footer() {
                                 </div>
                             </li>
 
-                            {/* Phone */}
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaPhone className="mt-1  flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
@@ -108,7 +103,6 @@ export default function Footer() {
                                 </div>
                             </li>
 
-                            {/* Email */}
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaEnvelope className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
@@ -125,7 +119,6 @@ export default function Footer() {
                                 </div>
                             </li>
 
-                            {/* Working Hours */}
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaClock className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
@@ -136,7 +129,6 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Social */}
                     <div>
                         <h4 className="font-semibold text-white mb-4">Follow Us</h4>
                         <div className="flex gap-3 mb-4">
@@ -162,18 +154,16 @@ export default function Footer() {
                 </div>
 
 
-                {/* Divider */}
                 <div className="h-px bg-white/20 my-6"></div>
 
-                {/* Bottom Bar */}
                 <div className="flex flex-col sm:flex-row md:items-center justify-between gap-2 text-sm">
                     <p className="text-white/50">
                         © {currentYear} Zero Olympiad. All rights reserved.
                     </p>
                     <div className="flex flex-wrap gap-6">
-                        <Link href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
-                        <Link href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
-                        <Link href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
+                        <Link prefetch={false} href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
+                        <Link prefetch={false} href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
+                        <Link prefetch={false} href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>
             </div>
