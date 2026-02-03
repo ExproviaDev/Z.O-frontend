@@ -234,7 +234,7 @@ const WinnerCard = ({ student, rank, frame, color, height, isFirst, activeRound 
       {activeRound === 'round_1' && student.time && (
         <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 italic">
           <FiClock /> {student.time}s
-        </span>
+        </span> 
       )}
     </div>
   </div>
