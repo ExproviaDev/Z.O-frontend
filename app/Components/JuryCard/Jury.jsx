@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image"; // Next.js Image Component import করা হয়েছে
 
 const JurySection = () => {
   const [juryData, setJuryData] = useState([]);
@@ -64,7 +65,6 @@ const JurySection = () => {
               <div className="relative w-44 h-44 mb-6">
                 
                 {/* --- Dual Color Dashed Border with Gaps --- */}
-                {/* Eita sudu hover korle rotate hobe, auto ghurbe na */}
                 <div
                   className="absolute inset-0 rounded-full transition-transform duration-700 ease-in-out group-hover:rotate-20"
                   style={{
@@ -80,16 +80,15 @@ const JurySection = () => {
                   }}
                 ></div>
 
-                {/* Image Holder */}
                 <div className="relative w-full h-full p-4">
-                  <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-gray-100 bg-slate-100 shadow-inner">
-                    <img
+                  <div className="relative w-full h-full rounded-full overflow-hidden ring-2 ring-gray-100 bg-slate-100 shadow-inner">
+                    <Image
                       src={getImagePath(member.image_url)}
                       alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/150?text=No+Image";
-                      }}
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 176px"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      priority={false} 
                     />
                   </div>
                 </div>
