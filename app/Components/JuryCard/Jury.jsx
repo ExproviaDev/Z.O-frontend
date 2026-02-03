@@ -1,37 +1,110 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Image from "next/image"; // Next.js Image Component import করা হয়েছে
 
 const JurySection = () => {
-  return (
-    <section
-      className="relative min-h-screen w-full py-20 px-4 flex flex-col items-center justify-center bg-cover bg-fixed bg-center"
-      style={{
-        backgroundImage: `url('https://zeroolympiad.pronizam.com/wp-content/uploads/2025/12/IMG_8285-scaled.jpg')`,
-      }}
-    >
-      <div className="absolute inset-0 bg-Secondary/60 backdrop-brightness-[0.4]"></div>
+  const [juryData, setJuryData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-      <div className="relative z-10 max-w-5xl w-full mx-auto text-center">
-        <div className="mb-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
+  useEffect(() => {
+    const fetchJury = async () => {
+      try {
+        const response = await fetch("/src/jury.json");
+        const data = await response.json();
+        setJuryData(data);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJury();
+  }, []);
+
+  const getImagePath = (url) => {
+    if (url && url.startsWith("http")) return url;
+    return `/src/${url}`;
+  };
+
+  if (loading)
+    return (
+      <div className="text-center py-20 text-white bg-Secondary">
+        Loading...
+      </div>
+    );
+
+  return (
+    <section className="py-20 bg-Secondary relative overflow-hidden">
+      {/* --- Background Dot Pattern --- */}
+      <div
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundSize: "30px 30px",
+          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1.5px)",
+        }}
+      ></div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl text-white font-bold tracking-tight">
             Confirmed Guest Jury{" "}
             <span className="text-Primary">(Season One)</span>
-          </h2>
-          <p className="text-white font-medium text-sm md:text-lg max-w-2xl mx-auto opacity-90">
-            Distinguished academics and professionals who guide and evaluate our
-            participants
+          </h1>
+          <p className="text-[18px] text-gray-300 py-5 max-w-2xl mx-auto font-medium">
+            Distinguished academics and professionals who guide and evaluate our participants
           </p>
         </div>
 
-        <div className="bg-white p-1 md:p-2 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden transform  transition-all duration-500">
-          <img
-            src="https://zeroolympiad.pronizam.com/wp-content/uploads/2026/01/juri_board-1024x618.png"
-            alt="Confirmed Guest Jury Board"
-            className="w-full h-auto rounded-xl"
-          />
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+          {juryData.map((member) => (
+            <div
+              key={member.id}
+              className="group bg-white p-8 rounded-[2.5rem] shadow-2xl transition-all duration-500 text-center flex flex-col items-center border border-white/10"
+            >
+              <div className="relative w-44 h-44 mb-6">
+                
+                {/* --- Dual Color Dashed Border with Gaps --- */}
+                <div
+                  className="absolute inset-0 rounded-full transition-transform duration-700 ease-in-out group-hover:rotate-20"
+                  style={{
+                    padding: '4px',
+                    background: `repeating-conic-gradient(
+                      #F97316 0deg 15deg, 
+                      transparent 15deg 25deg, 
+                      #266D9A 25deg 40deg, 
+                      transparent 40deg 50deg
+                    )`,
+                    WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 4px), #fff 0)",
+                    mask: "radial-gradient(farthest-side, transparent calc(100% - 4px), #fff 0)",
+                  }}
+                ></div>
 
-        <div className="mt-12">
-          <div className="h-1 w-20 bg-white mx-auto rounded-full opacity-50"></div>
+                <div className="relative w-full h-full p-4">
+                  <div className="relative w-full h-full rounded-full overflow-hidden ring-2 ring-gray-100 bg-slate-100 shadow-inner">
+                    <Image
+                      src={getImagePath(member.image_url)}
+                      alt={member.name}
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 176px"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      priority={false} 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight group-hover:text-Primary transition-colors duration-300">
+                  {member.name}
+                </h3>
+                <div className="w-12 h-1 bg-gradient-to-r from-Primary to-Secondary mx-auto rounded-full group-hover:w-24 transition-all duration-500"></div>
+                <p className="text-slate-600 text-sm font-bold leading-relaxed px-2">
+                  {member.title}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

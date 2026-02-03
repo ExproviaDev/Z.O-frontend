@@ -3,7 +3,7 @@ import React from 'react';
 
 const SDGTable1 = () => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-white">
+    <section id='sdg' className="py-20 px-4 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         
         <div className="text-center mb-12 space-y-4">

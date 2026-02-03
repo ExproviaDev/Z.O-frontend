@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 function SmoothScroll({ children }) {
   const pathname = usePathname();
 
-  // যদি ইউআরএল /admin দিয়ে শুরু হয়, তবে লেনিস কাজ করবে না
+
   const isAdminPath = pathname.startsWith('/admin') || pathname.startsWith('/dashboard');
 
   if (isAdminPath) {
@@ -14,7 +14,7 @@ function SmoothScroll({ children }) {
   }
 
   return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 2 }}>
+    <ReactLenis root options={{ lerp: 0.6, duration: 2 }}>
       {children}
     </ReactLenis>
   );
