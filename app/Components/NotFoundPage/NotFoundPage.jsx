@@ -28,6 +28,7 @@ export default function NotFound() {
             Go To Home
           </Link>
         </div>
+        
 
         {/* Right Side: Illustration */}
         <div className="w-full md:w-1/2 relative flex justify-center items-center">

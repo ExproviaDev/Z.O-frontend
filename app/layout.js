@@ -17,6 +17,7 @@ export const metadata = {
 import ConditionalLayout from './ConditionalLayout';
 import SmoothScroll from "./Components/SmoothScroll";
 import Providers from "./Providers";
+import Script from "next/script";
 
 export default function RootLayout({ children }) {
   return (
@@ -24,6 +25,28 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
+
+
+<Script id="google-translate-init" strategy="afterInteractive">
+  {`
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,bn',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  `}
+</Script>
+
+<Script
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  strategy="afterInteractive"
+/>
+
+
         <Providers>
         <ReduxProvider>
           <ConditionalLayout>
@@ -36,4 +59,8 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
+
+  
 }
+
+
