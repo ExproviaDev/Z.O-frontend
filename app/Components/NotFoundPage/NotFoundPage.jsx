@@ -1,73 +1,35 @@
-"use client";
-
 import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white font-sans overflow-hidden">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden relative">
+      
+      <div className="max-w-7xl w-full mx-auto px-6 md:px-12 flex flex-col items-center justify-center relative z-10">
         
-        {/* Left Side: Content */}
-        <div className="w-full md:w-1/2 text-center md:text-left">
-          {/* Animated Glitch 404 */}
-          <h1 className="relative text-8xl md:text-[10rem] font-black text-[#2D4686] leading-none mb-4 animate-pulse">
-            404
-            <span className="absolute top-0 left-0 w-full h-full text-blue-300 opacity-30 animate-ping pointer-events-none">
-              404
-            </span>
-          </h1>
-          
-          <h2 className="text-2xl md:text-4xl font-bold text-[#1A2E5A] tracking-wider uppercase mb-8">
-            Page Not Found
-          </h2>
+        <h1 className="text-[12rem] md:text-[18rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-[#1a1a1a] select-none">
+          404
+        </h1>
 
-          <Link
-            href="/"
-            className="inline-block px-10 py-3 border-2 border-[#2D4686] text-[#2D4686] font-bold rounded-full hover:bg-[#2D4686] hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 uppercase tracking-widest text-sm"
+        <div className="text-center -mt-8 md:-mt-16">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            LOST IN SPACE?
+          </h2>
+          
+          <p className="text-gray-500 text-lg md:text-xl max-w-lg mx-auto mb-10">
+            The page you are looking for doesn't exist or has been moved to another coordinate.
+          </p>
+
+          <Link 
+            href="/" 
+            className="inline-block bg-white text-black hover:bg-Primary hover:text-white px-10 py-4 font-bold rounded-full transition-all duration-300 transform hover:scale-110 uppercase tracking-widest text-sm shadow-[0_0_30px_rgba(255,255,255,0.1)]"
           >
-            Go To Home
+            Back to home
           </Link>
         </div>
-        
-
-        {/* Right Side: Illustration */}
-        <div className="w-full md:w-1/2 relative flex justify-center items-center">
-          {/* Background Shape with Floating Animation */}
-          <div className="relative w-full max-w-lg animate-float">
-            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-              <path 
-                fill="#D4E3FF" 
-                d="M444.5,313.5Q414,377,354.5,414Q295,451,228.5,429.5Q162,408,103,371.5Q44,335,46.5,267.5Q49,200,99,149.5Q149,99,216,77Q283,55,348,87.5Q413,120,444,185Q475,250,444.5,313.5Z" 
-              />
-            </svg>
-
-            {/* Workplace/Computer Illustration (Simplified Placeholder) */}
-            <div className="absolute inset-0 flex items-center justify-center">
-               <div className="w-4/5 h-3/5 bg-[#1A2E5A] rounded-xl shadow-2xl relative flex items-center justify-center transform -rotate-2">
-                  <div className="w-11/12 h-5/6 bg-white rounded-lg flex items-center justify-center border-4 border-[#2D4686]">
-                      <div className="w-16 h-16 border-4 border-red-400 rounded-full flex items-center justify-center animate-bounce">
-                          <span className="text-red-500 text-3xl font-bold">X</span>
-                      </div>
-                  </div>
-                  {/* Table Base */}
-                  <div className="absolute -bottom-8 w-full h-4 bg-[#1A2E5A] rounded-full"></div>
-               </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      {/* Global Animation CSS */}
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/20 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/20 rounded-full blur-[150px] pointer-events-none"></div>
     </div>
   );
 }
