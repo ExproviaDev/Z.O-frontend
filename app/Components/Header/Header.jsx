@@ -82,6 +82,7 @@ export default function Header() {
                   fill
                   className="object-contain"
                 />
+                
               </div>
               <div className="ml-3">
                 <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary leading-none">
@@ -90,6 +91,13 @@ export default function Header() {
                
               </div>
             </Link>
+
+
+
+ 
+
+
+
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
@@ -109,7 +117,9 @@ export default function Header() {
                     }`}
                   ></span>
                 </Link>
+                
               ))}
+              
             </nav>
 
             {/* Right Action Section */}
@@ -126,6 +136,7 @@ export default function Header() {
                       <RxDashboard size={18} />
                       Admin Panel
                     </Link>
+                    
                   ) : (
                     <div className="relative" ref={profileAreaRef}>
                       <button
@@ -149,6 +160,7 @@ export default function Header() {
                       <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
                   )}
+                     <div id="google_translate_element" className="google-translate-container"></div>
                 </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
@@ -168,10 +180,11 @@ export default function Header() {
                   </Link>
                 </div>
               )}
+          
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden text-gray-600 p-2"
+                className="lg:hidden text-gray-600 p-2 cursor-pointer"
               >
                 <AiOutlineMenu size={28} />
               </button>
@@ -182,13 +195,13 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r border-gray-200 p-6 transition-transform duration-300 ${
+          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -254,6 +267,7 @@ export default function Header() {
                 )}
               </div>
             )}
+             <div id="google_translate_element" className="google-translate-container"></div>
           </div>
         </div>
       </div>

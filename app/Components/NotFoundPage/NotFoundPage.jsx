@@ -1,44 +1,73 @@
-export default function NotFoundPage() {
+"use client";
+
+import Link from 'next/link';
+
+export default function NotFound() {
   return (
-    <section className="dark:bg-gray-900  border-red-500">
-      <div className=" container min-h-screen px-6 py-12 mx-auto md:flex flex-row-reverse justify-center items-center lg:gap-12">
-        <div className="relative w-full mt-8 lg:w-1/2 lg:mt-0  border-green-500 flex justify-center items-center">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white font-sans overflow-hidden">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+        
+        {/* Left Side: Content */}
+        <div className="w-full md:w-1/2 text-center md:text-left">
+          {/* Animated Glitch 404 */}
+          <h1 className="relative text-8xl md:text-[10rem] font-black text-[#2D4686] leading-none mb-4 animate-pulse">
+            404
+            <span className="absolute top-0 left-0 w-full h-full text-blue-300 opacity-30 animate-ping pointer-events-none">
+              404
+            </span>
+          </h1>
+          
+          <h2 className="text-2xl md:text-4xl font-bold text-[#1A2E5A] tracking-wider uppercase mb-8">
+            Page Not Found
+          </h2>
+
+          <Link
+            href="/"
+            className="inline-block px-10 py-3 border-2 border-[#2D4686] text-[#2D4686] font-bold rounded-full hover:bg-[#2D4686] hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 uppercase tracking-widest text-sm"
+          >
+            Go To Home
+          </Link>
         </div>
-        <div className=" border-red-500 w-full lg:w-1/2 flex justify-end ">
-          <div className="p-4">
-            <h1 className="mt-3 text-xl md:text-3xl lg:text-5xl font-bold dark:text-white text-red-500">
-              Page not found
-            </h1>
-            <p className="mt-4 text-base md:text-base lg:text-xl text-gray-500 dark:text-gray-400">
-              {`Oops! The page you're looking for seems to have drifted off into space. Let's get you back on track.`}
-            </p>
+        
 
-            <div className="flex items-center justify-center mt-6 gap-x-3 ">
-              <button className="cursor-pointer px-5 py-1 lg:py-3 text-lg font-semibold  flex items-center justify-center w-1/2 text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-5 h-5 rtl:rotate-180"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                  />
-                </svg>
-                <span>Go back</span>
-              </button>
+        {/* Right Side: Illustration */}
+        <div className="w-full md:w-1/2 relative flex justify-center items-center">
+          {/* Background Shape with Floating Animation */}
+          <div className="relative w-full max-w-lg animate-float">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+              <path 
+                fill="#D4E3FF" 
+                d="M444.5,313.5Q414,377,354.5,414Q295,451,228.5,429.5Q162,408,103,371.5Q44,335,46.5,267.5Q49,200,99,149.5Q149,99,216,77Q283,55,348,87.5Q413,120,444,185Q475,250,444.5,313.5Z" 
+              />
+            </svg>
 
-              <button className=" w-1/2 px-5 py-2 lg:py-3 text-lg font-semibold cursor-pointer tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                Take me home
-              </button>
+            {/* Workplace/Computer Illustration (Simplified Placeholder) */}
+            <div className="absolute inset-0 flex items-center justify-center">
+               <div className="w-4/5 h-3/5 bg-[#1A2E5A] rounded-xl shadow-2xl relative flex items-center justify-center transform -rotate-2">
+                  <div className="w-11/12 h-5/6 bg-white rounded-lg flex items-center justify-center border-4 border-[#2D4686]">
+                      <div className="w-16 h-16 border-4 border-red-400 rounded-full flex items-center justify-center animate-bounce">
+                          <span className="text-red-500 text-3xl font-bold">X</span>
+                      </div>
+                  </div>
+                  {/* Table Base */}
+                  <div className="absolute -bottom-8 w-full h-4 bg-[#1A2E5A] rounded-full"></div>
+               </div>
             </div>
           </div>
         </div>
+
       </div>
-    </section>
+
+      {/* Global Animation CSS */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
   );
 }

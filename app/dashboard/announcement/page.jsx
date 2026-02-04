@@ -1,35 +1,39 @@
+
+
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { HiOutlineSpeakerphone, HiOutlineCalendar } from "react-icons/hi";
 import { motion } from "framer-motion";
 
 export default function AnnouncementPage() {
-  const [announcements, setAnnouncements] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: announcements = [], isLoading, error } = useQuery({
+    queryKey: ["announcements"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://zero-olympiad-server.vercel.app/api/announcement/all"
+      );
+      return response.data;
+    },
+   
+    staleTime: 1000 * 60 * 5, 
+    refetchOnWindowFocus: false, 
+  });
 
-  useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const response = await axios.get(
-          "https://zero-olympiad-server.vercel.app/api/announcement/all",
-        );
-        setAnnouncements(response.data);
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAnnouncements();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-20 text-red-500 font-semibold">
+        Something went wrong. Please check your connection.
       </div>
     );
   }
@@ -41,12 +45,8 @@ export default function AnnouncementPage() {
           <HiOutlineSpeakerphone size={28} />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">
-            (All Announcements)
-          </h1>
-          <p className="text-sm text-gray-500 font-medium">
-            Find our latest updates and notices here.
-          </p>
+          <h1 className="text-2xl font-bold text-gray-800">(All Announcements)</h1>
+          <p className="text-sm text-gray-500 font-medium">Latest updates from Zero Olympiad.</p>
         </div>
       </div>
 
@@ -56,42 +56,23 @@ export default function AnnouncementPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            key={item.id}
-            className="bg-white border border-gray-100 p-6 rounded-3xl hover:shadow-xl hover:shadow-gray-100 transition-all group"
+            key={item.id || index}
+            className="bg-white border border-gray-100 p-6 rounded-3xl hover:shadow-xl transition-all"
           >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-              <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-600">
-                  New Update
-                </span>
-                <div className="flex items-center text-gray-400 text-sm gap-1">
-                  <HiOutlineCalendar />
-                  <span>{item.date}</span>
-                </div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-600 uppercase">
+                Update
+              </span>
+              <div className="flex items-center text-gray-400 text-sm gap-1">
+                <HiOutlineCalendar />
+                <span>{item.date}</span>
               </div>
             </div>
-            <h3 className="text-lg font-bold text-gray-800 mb-2  transition-colors">
-              {item.title}
-            </h3>
-
-            <p className="text-gray-600 leading-relaxed text-sm">
-              {item.fullDescription}
-            </p>
+            <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
+            <p className="text-gray-600 leading-relaxed text-sm">{item.fullDescription}</p>
           </motion.div>
         ))}
       </div>
-
-      {announcements.length === 0 && (
-        <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-          <HiOutlineSpeakerphone
-            className="mx-auto text-gray-300 mb-4"
-            size={50}
-          />
-          <p className="text-gray-500 font-medium">
-            There are no announcements at this time.
-          </p>
-        </div>
-      )}
     </div>
   );
 }
