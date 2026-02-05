@@ -15,7 +15,7 @@ export default function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -81,9 +81,9 @@ export default function LoginPage() {
 
           <div className="relative z-20 text-white md:ml-10 mt-16 md:mt-0">
             <h1 className="text-4xl font-bold mb-2 tracking-wide">WELCOME</h1>
-            <h2 className="text-xl font-semibold mb-4 opacity-90">YOUR HEADLINE NAME</h2>
+            <h2 className="text-xl font-medium mb-4 text-Primary ">Zero Olympiad</h2>
             <p className="text-blue-100 text-sm max-w-xs leading-relaxed opacity-80">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
+              Challenge your knowledge, compete with the best, and rise to the top on the ultimate quiz competition platform.
             </p>
           </div>
         </div>
@@ -133,10 +133,7 @@ export default function LoginPage() {
               </div>
 
               <div className="flex items-center justify-between text-sm font-medium">
-                <label className="flex items-center text-gray-600 cursor-pointer select-none">
-                  <input type="checkbox" className="mr-2 accent-[#0F4C8A] w-4 h-4 rounded" />
-                  Remember me
-                </label>
+                
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(true)}
@@ -152,7 +149,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#0F4C8A] hover:bg-[#0A3866] text-white font-bold py-3 rounded-lg shadow-md transition-transform active:scale-95 disabled:opacity-70 text-lg"
+                  className="w-full bg-[#0F4C8A] hover:bg-[#0A3866] cursor-pointer text-white font-bold py-3 rounded-lg shadow-md transition-transform active:scale-95 disabled:opacity-70 text-lg"
                 >
                   {loading ? "Signing in..." : "Sign in"}
                 </button>

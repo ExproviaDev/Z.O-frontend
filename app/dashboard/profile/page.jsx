@@ -48,7 +48,7 @@ const ProfilePage = () => {
             </div>
           </div>
           <Link prefetch={false} href="/dashboard/profile/edit">
-            <button className="flex items-center px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold shadow-md active:scale-95">
+            <button className="flex items-center cursor-pointer px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold shadow-md active:scale-95">
               <FaRegEdit className="mr-2" />
               Edit Profile
             </button>

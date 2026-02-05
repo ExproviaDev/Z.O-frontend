@@ -81,7 +81,7 @@ export default function Footer() {
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaMapPin className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
-                                    <p>House #469, Road #31</p>
+                                   
                                     <p>Mohakhali DOHS, Dhaka 1212</p>
                                     <p>Bangladesh</p>
                                 </div>
@@ -156,7 +156,7 @@ export default function Footer() {
                     </p>
                     <div className="flex flex-wrap gap-6">
                         <Link prefetch={false} href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
-                        <Link prefetch={false} href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
+                        <Link prefetch={false} href="/terms&conditions" className="hover:text-white transition">Terms</Link>
                         <Link prefetch={false} href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>
