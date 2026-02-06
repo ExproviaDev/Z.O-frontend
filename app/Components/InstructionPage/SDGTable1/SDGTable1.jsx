@@ -65,7 +65,7 @@ const SDGTable1 = () => {
               </tr>
 
               <tr className="bg-[#f0f7ff]">
-                <td rowSpan="6" className="border-r border-b font-bold p-4">
+                <td rowSpan="7" className="border-r border-b font-bold p-4">
                   <span className="text-blue-600 text-lg block">SDG Leader</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Leader<br/>Others: Ambassador</span>
                 </td>
@@ -104,8 +104,16 @@ const SDGTable1 = () => {
                 <td className="border-r border-b p-3 font-bold">SDG 10</td>
                 <td className="border-r border-b p-3 font-semibold text-gray-600">HSC Candidate</td>
                 <td className="border-r border-b p-3 font-semibold text-gray-600">A Level Candidate</td>
-                <td className="border-r border-b p-3 font-semibold text-gray-600">Alim Candidate</td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600 ">Alim Candidate</td>
               </tr>
+              <tr className="bg-[#f0f7ff]">
+                <td className="border-r border-b p-3 font-bold">SDG 11</td>
+                <td className="border-b p-3 font-semibold text-gray-600"></td>
+                <td className="border-b p-3 font-semibold text-gray-600">University Admission Candidate</td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600"></td>
+                <td className=" border-b p-3 font-semibold text-gray-600 bg-gray-100">Musannif</td>
+              </tr>
+              
 
               <tr className="bg-gray-50 text-[10px] font-bold uppercase text-gray-500">
                 <td colSpan="6" className="py-2 border-b">Honors, Medical, Engineering, Marine, Fisheries, Diploma, Madrasa</td>
