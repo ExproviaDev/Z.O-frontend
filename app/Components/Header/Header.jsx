@@ -178,6 +178,7 @@ export default function Header() {
                   >
                     Register
                   </Link>
+                  <div id="google_translate_element" className="google-translate-container"></div>
                 </div>
               )}
           
