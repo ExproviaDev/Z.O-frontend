@@ -1,7 +1,3 @@
-
-
-
-
 "use client";
 
 import React from "react";
@@ -11,32 +7,44 @@ import Link from "next/link";
 
 const plans = [
   {
-    title: "Junior Delegate",
-    grade: "Grade 1 - 5",
-    prize: "499",
+    title: "SDG Defender",
+    grade: "Class 5 – 8",
+    prize: "499", // You can update price if needed
     icon: <FiStar className="text-emerald-500" size={24} />,
-    features: ["Digital Certificate", "Winner Crests", "SDG Learning Kit"],
-    color: "emerald", 
+    features: [
+      "Bengali & Alia: Class 5 - 8",
+      "English: Grade 5 - 8 / PYP-MYP",
+      "Qawmi: Taisir - Hidayatunnah"
+    ],
+    color: "emerald",
     btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-emerald-100",
   },
   {
-    title: "Intermediate Leader",
-    grade: "Grade 6 - 10",
+    title: "SDG Leader",
+    grade: "Class 9 – 12",
     prize: "499",
     icon: <FiAward className="text-blue-500" size={24} />,
-    features: ["Global Mentorship", "Medals & Prizes", "Leadership Training"],
+    features: [
+      "SSC & HSC / Dakhil & Alim",
+      "O Level & A Level / MYP-DP",
+      "Qawmi: Kafiya, Bekaya & Jalalayn"
+    ],
     color: "blue",
     btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-blue-100",
     popular: true,
   },
   {
-    title: "Senior Pioneer",
-    grade: "Grade 11 - University",
+    title: "SDG Pioneer",
+    grade: "University & Higher Ed",
     prize: "499",
     icon: <FiZap className="text-purple-500" size={24} />,
-    features: ["Project Incubation", "Networking", "High-Value Rewards"],
+    features: [
+      "Honors, Medical, Engineering",
+      "Diploma, Marine & Fisheries",
+      "Madrasa: Fazil, Kamil, Mishkat, Dawra"
+    ],
     color: "purple",
     btnBg: "bg-Primary hover:bg-Secondary",
     shadow: "shadow-purple-100",
@@ -71,7 +79,7 @@ export default function PricingSection() {
             >
               {plan.popular && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-                 
+                  Most Popular
                 </div>
               )}
 
@@ -83,18 +91,21 @@ export default function PricingSection() {
               </div>
 
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.title}</h3>
-              <p className="text-gray-500 text-sm mb-6">Total Prize Pool</p>
+              <p className="text-gray-500 text-sm mb-6">Registration Fee</p>
               
               <div className="flex items-baseline gap-1 mb-8">
                 <span className={`text-4xl font-black text-gray-900`}>{plan.prize}</span>
                 <span className="text-lg font-bold text-gray-400">BDT</span>
               </div>
 
+              {/* Added a small title for the list to explain it contains the specific classes */}
+              <p className="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider">Eligible Classes</p>
+
               <ul className="space-y-4 mb-10">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-600 text-sm">
-                    <FiCheckCircle size={18} className={`text-${plan.color}-500`} />
-                    {feature}
+                  <li key={i} className="flex items-start gap-3 text-gray-600 text-sm">
+                    <FiCheckCircle size={18} className={`text-${plan.color}-500 mt-0.5 shrink-0`} />
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>

@@ -125,43 +125,8 @@
 
 
 /*  */
-/* ১. গুগলের লোগো এবং আইকন পুরোপুরি হাইড করা */
-.goog-logo-link, 
-.goog-te-gadget img, 
-.goog-te-gadget span img {
-    display: none !important;
-}
+/* Hide Google Translate top banner */
 
-/* ২. "Powered by" লেখা লুকানো কিন্তু ড্রপ-ডাউন রাখা */
-.goog-te-gadget {
-    color: transparent !important;
-    font-size: 0 !important;
-}
 
-/* ৩. ড্রপ-ডাউন বক্সের টেক্সট কালার এবং স্টাইল */
-.goog-te-gadget .goog-te-combo {
-    display: inline-block !important;
-    visibility: visible !important;
-    font-size: 14px !important;
-    color: #ffffff !important; /* আপনার হেডারের ব্যাকগ্রাউন্ড অনুযায়ী টেক্সট কালার */
-    background-color: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-radius: 8px !important;
-    padding: 6px 10px !important;
-    cursor: pointer !important;
-}
 
-/* ৪. যখন ভাষা বাংলা হবে তখন ফন্ট ঠিক রাখা */
-[lang="bn"] .goog-te-gadget .goog-te-combo {
-    font-family: 'Hind Siliguri', sans-serif !important;
-}
 
-/* ৫. ওপরের বাড়তি ব্যানার হাইড করা */
-.goog-te-banner-frame.skiptranslate, 
-.skiptranslate > iframe {
-    display: none !important;
-}
-
-body {
-    top: 0px !important;
-}

@@ -68,14 +68,14 @@ export default function HeroSection() {
 
         <div className="flex flex-wrap justify-center gap-5 mb-16">
           <Link prefetch={false} href={"/registration"}>
-            <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
+            <button className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
               Join Zero Olympiad
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
 
           <Link prefetch={false} href="/instruction#sdg">
-            <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+            <button className="flex items-center cursor-pointer gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
               Explore The SDG{" "}
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>

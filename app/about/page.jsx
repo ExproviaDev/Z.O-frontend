@@ -75,7 +75,7 @@ export default function ZeroOlympiad() {
                     <div className="mt-4 flex items-center gap-3">
                       <span className="h-[2px] w-12 bg-Secondary"></span>
                       <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
-                        Founder of Zero Olympiad
+                        Founder & CEO of Zero Olympiad
                       </span>
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function ZeroOlympiad() {
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770098853/DSC_0931_1_vmw4ge.jpg"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219566/FAATIHA_AAYAT_1_ltnjp2.jpg"
                     alt="Youth Change Makers"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -142,7 +142,7 @@ export default function ZeroOlympiad() {
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033230/IMG_8582_h5bn0q.jpg"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219567/SYED_AFTAB_AHMED_1_mnqdha.jpg"
                     alt="Youth Change Makers"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -217,19 +217,19 @@ export default function ZeroOlympiad() {
                 {
                   title: "Mission",
                   content:
-                    "To strategically mobilize 10 million young leaders globally by the year 2030, empowering them to actively dismantle systemic barriers to sustainability and social equality while fostering a movement of impactful, youth-led change across the world.",
+                    "To engage and empower students through competitions, learning, and action-based initiatives that build leadership, critical thinking, and social responsibility. Zero Olympiad aims to inspire youth to actively address global challenges and local problems.",
                   bg: "bg-slate-900/90 text-white",
                 },
                 {
                   title: "Vision",
                   content:
-                    "We envision a future world where every single young person is fully equipped with the necessary agency, technical resources, and global support systems required to confront and solve humanity’s most complex and pressing challenges effectively.",
+                    "To nurture a generation of informed, ethical, and courageous young leaders who think critically, act responsibly, and work collectively to build a peaceful, just, and sustainable world where every voice matters.",
                   bg: "bg-white/90 text-slate-900",
                 },
                 {
                   title: "Values",
                   content:
-                    "Our foundation is built upon Radical Innovation to challenge the status quo, Unwavering Integrity in every action, Global Inclusivity to ensure no one is left behind, and an ‘Action-First’ Mindset that prioritizes tangible results in everything we build.",
+                    "Integrity and honesty in all actions, inclusivity and respect for diversity, excellence and curiosity in learning, collaboration and teamwork, compassion and empathy, and a strong commitment to service and positive impact in society.",
                   bg: "bg-indigo-600/90 text-white",
                 },
               ].map((card, i) => (

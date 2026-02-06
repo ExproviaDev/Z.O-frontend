@@ -81,8 +81,8 @@ export default function Footer() {
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaMapPin className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
-                                    <p>House #23, Road #7</p>
-                                    <p>Dhanmondi, Dhaka-1205</p>
+                                   
+                                    <p>Mohakhali DOHS, Dhaka 1212</p>
                                     <p>Bangladesh</p>
                                 </div>
                             </li>
@@ -92,12 +92,12 @@ export default function Footer() {
                                 <div className="leading-relaxed">
                                     <p>
                                         <a href="tel:+8801234567890" className="hover:text-[#5B2EFF] transition">
-                                            +880 1234-567890
+                                            +880 1973-570203
                                         </a>
                                     </p>
                                     <p>
                                         <a href="tel:+8809876543210" className="hover:text-[#5B2EFF] transition">
-                                           +880 1973-570203
+                                           +880 1886-286321
                                         </a>
                                     </p>
                                 </div>
@@ -108,24 +108,18 @@ export default function Footer() {
                                 <div className="leading-relaxed">
                                     <p>
                                         <a href="mailto:info@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
-                                            info@zeroolympiad.bd
+                                            faatiha.aayat@gmail.com
                                         </a>
                                     </p>
                                     <p>
                                         <a href="mailto:support@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
-                                            support@zeroolympiad.bd
+                                            zeroolympiad.bd@gmail.com
                                         </a>
                                     </p>
                                 </div>
                             </li>
 
-                            <li className="flex flex-col sm:flex-row sm:items-start gap-3">
-                                <FaClock className="mt-1 flex-shrink-0" size={20} />
-                                <div className="leading-relaxed">
-                                    <p>Working Hours</p>
-                                    <p>Sat - Thu: 9:00 AM - 5:00 PM</p>
-                                </div>
-                            </li>
+                            
                         </ul>
                     </div>
 
@@ -162,7 +156,7 @@ export default function Footer() {
                     </p>
                     <div className="flex flex-wrap gap-6">
                         <Link prefetch={false} href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
-                        <Link prefetch={false} href="/tramsAndCondition" className="hover:text-white transition">Terms</Link>
+                        <Link prefetch={false} href="/terms&conditions" className="hover:text-white transition">Terms</Link>
                         <Link prefetch={false} href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>

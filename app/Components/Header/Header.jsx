@@ -10,12 +10,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileModal from "../ProfileModal/ProfileModal";
 import logo from "../../../public/src/SiteLogo.png";
+import GoogleTranslate from "../../GoogleTranslate";
 
 const navItems = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
-  { title: "Galley", url: "/gallery" },
+  { title: "Gallery", url: "/gallery" },
 
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
@@ -160,7 +161,7 @@ export default function Header() {
                       <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
                   )}
-                     <div id="google_translate_element" className="google-translate-container"></div>
+                  
                 </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
@@ -181,7 +182,8 @@ export default function Header() {
                   <div id="google_translate_element" className="google-translate-container"></div>
                 </div>
               )}
-          
+                <GoogleTranslate />
+
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -268,10 +270,11 @@ export default function Header() {
                 )}
               </div>
             )}
-             <div id="google_translate_element" className="google-translate-container"></div>
+            
           </div>
         </div>
       </div>
+      
     </>
   );
 }

@@ -6,6 +6,7 @@ import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 export default function EditProfile() {
   const [isSaving, setIsSaving] = useState(false);
@@ -67,22 +68,22 @@ export default function EditProfile() {
     profile_image_url: "",
   });
 
-useEffect(() => {
-  if (user) {
-    setFormData({
-      name: user.name || "",
-      email: user.email || "",
-      phone: user.phone || "",
-      district: user.district || "",
-      institution: user.institution || "",
-      education_type: user.education_type || "",
-      grade_level: user.grade_level || "",
-      current_level: user.current_level || "",
-      activities_role: user.activities_role || "",
-      profile_image_url: user.profile_image_url || "",
-    });
-  }
-}, [user]);
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        district: user.district || "",
+        institution: user.institution || "",
+        education_type: user.education_type || "",
+        grade_level: user.grade_level || "",
+        current_level: user.current_level || "",
+        activities_role: user.activities_role || "",
+        profile_image_url: user.profile_image_url || "",
+      });
+    }
+  }, [user]);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -99,13 +100,13 @@ useEffect(() => {
       data.append("file", compressedFile);
       data.append(
         "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
       );
       data.append("cloud_name", process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
 
       const res = await fetch(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        { method: "POST", body: data }
+        { method: "POST", body: data },
       );
       const fileData = await res.json();
       setFormData({ ...formData, profile_image_url: fileData.secure_url });
@@ -117,13 +118,21 @@ useEffect(() => {
     }
   };
 
+  
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
     const token = localStorage.getItem("access_token");
 
     if (!token) {
-      alert("Session expired. Please login again.");
+      Swal.fire({
+        icon: "error",
+        title: "Session Expired",
+        text: "Please login again to continue.",
+        confirmButtonColor: "#2563eb",
+      });
       router.push("/login");
       return;
     }
@@ -144,24 +153,46 @@ useEffect(() => {
       const result = await response.json();
 
       if (response.ok) {
-        alert("Profile updated successfully!");
-        dispatch(fetchUserProfile(token));
-        router.push("/dashboard/profile");
+        // ✅ Success Alert
+        Swal.fire({
+          icon: "success",
+          title: "Profile Updated!",
+          text: "Your information has been saved successfully.",
+          confirmButtonColor: "#2563eb",
+        }).then(() => {
+          dispatch(fetchUserProfile(token));
+          router.push("/dashboard/profile");
+        });
       } else {
-        // সার্ভার থেকে আসা নির্দিষ্ট এরর মেসেজ দেখানো
-        alert(`Error: ${result.error || "Failed to update"}`);
+        // ❌ Error Alert (Server side error)
+        Swal.fire({
+          icon: "error",
+          title: "Update Failed",
+          text: result.error || "Failed to update profile.",
+          confirmButtonColor: "#d33",
+        });
+
         if (response.status === 401) {
-          // টোকেন ইনভ্যালিড হলে লগআউট করানো বা রিডাইরেক্ট করা ভালো
           router.push("/login");
         }
       }
     } catch (err) {
       console.error("Submit Error:", err);
-      alert("Network error. Please try again.");
+      // ❌ Network Error Alert
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Something went wrong. Please check your connection.",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setIsSaving(false);
     }
   };
+
+
+
+
   const inputStyle =
     "w-full border p-3 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 outline-none";
 
@@ -192,6 +223,7 @@ useEffect(() => {
               )}
             </div>
           </div>
+
           <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full border border-blue-200 hover:bg-blue-100 transition-all font-medium text-sm shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -376,16 +408,33 @@ useEffect(() => {
         <button
           type="submit"
           disabled={isSaving || loading}
-          className={`w-full py-4 rounded-xl font-bold shadow-lg transition-all flex items-center justify-center gap-2 ${isSaving || loading
-            ? "bg-blue-400 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700 text-white"
-            }`}
+          className={`w-full py-4 rounded-xl cursor-pointer font-bold shadow-lg transition-all flex items-center justify-center gap-2 ${
+            isSaving || loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 text-white"
+          }`}
         >
-          {(isSaving || loading) ? (
+          {isSaving || loading ? (
             <>
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75 "
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
               <span>{isSaving ? "Saving Data..." : "Uploading Image..."}</span>
             </>
