@@ -1,124 +1,126 @@
 "use client";
-
-import Image from "next/image";
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-const images = [
-  {
-    src: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=600&fit=crop",
-    alt: "Previous Event Ceremony",
-    category: "Events",
-    title: "Previous Event Ceremony",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop",
-    alt: "Award Ceremony",
-    category: "Awards",
-    title: "Award Ceremony",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&h=600&fit=crop",
-    alt: "Participants in Action",
-    category: "Competition",
-    title: "Participants in Action",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=600&fit=crop",
-    alt: "Team Celebration",
-    category: "Events",
-    title: "Team Celebration",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1559223607-a43c990c692c?w=800&h=600&fit=crop",
-    alt: "Winners with Trophies",
-    category: "Awards",
-    title: "Winners with Trophies",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=600&fit=crop",
-    alt: "Group Study Session",
-    category: "Competition",
-    title: "Group Study Session",
-  },
-];
+const Gallery = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-const categories = ["All", "Events", "Awards", "Competition"];
+  const images = [
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410937/EYE02067_qk0a8m.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411372/IMG_8997_bl8xws.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411368/IMG_8813_cp1smv.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411365/IMG_8708_ksoivs.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411364/IMG_8682_mhxnel.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411361/IMG_8594_okmn5p.jpg",
+  ];
 
-export default function EventGallery() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const openModal = (index) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+  };
 
-  const filteredImages =
-    selectedCategory === "All"
-      ? images
-      : images.filter((img) => img.category === selectedCategory);
+  const closeModal = () => setIsOpen(false);
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
-    <section className="bg-gradient-to-b from-background to-Primary/30 py-20 px-5">
-      <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-Primary/10 text-primary text-sm font-medium mb-4">
-            Memories
-          </span>
-          <h2 className="font-bold text-2xl sm:text-3xl lg:text-4xl mb-4 ">
-            Event <span className="text-amber-600">Gallery</span>
+    <section
+      className="relative py-24 px-4 min-h-screen overflow-hidden bg-cover bg-center"
+      style={{
+        backgroundImage: "url('https://i.ibb.co/99HFrKfK/speaker-bg.png')",
+      }}
+    >
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center space-y-4 pb-12">
+          <h2 className="md:text-5xl text-4xl font-bold text-gray-800">
+            Gallery <span className="text-Primary">(Season One)</span>
           </h2>
-          <p className=" max-w-2xl mx-auto text-base sm:text-lg">
-            Relive the moments from our previous events and celebrations
+          <p className="max-w-2xl mx-auto text-gray-600 font-medium italic">
+            Capturing the memorable moments of our journey.
           </p>
         </div>
 
-        {/* Category Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-lg ${
-                selectedCategory === cat
-                  ? "bg-gray-700 text-white"
-                  : "bg-primary/20 text-primary hover:bg-gray-700 hover:text-white"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredImages.map((img, idx) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {images.map((src, index) => (
             <div
-              key={idx}
-              className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer"
+              key={index}
+              onClick={() => openModal(index)}
+              className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer border-2 border-white/50 shadow-2xl transition-all duration-500 hover:scale-[1.03] "
             >
-              {/* Image */}
-              <div className="relative w-full h-full">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 640px) 100vw,
-                         (max-width: 1024px) 50vw,
-                         33vw"
-                />
-              </div>
-
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-              {/* Text Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <span className="text-xs font-medium text-amber-500">
-                  {img.category}
-                </span>
-                <h4 className="text-white font-semibold">{img.title}</h4>
+              <Image
+                src={src}
+                alt={`Gallery image ${index + 1}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div className="bg-white/20  border border-white/30"></div>
               </div>
             </div>
           ))}
         </div>
+
+        <div className="mt-16 text-center">
+          <Link prefetch={false} href={"gallery"}>
+            <button className="bg-Primary cursor-pointer hover:bg-[#d9561a] text-white font-bold py-3 px-10 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              View More
+            </button>
+          </Link>
+        </div>
       </div>
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md"
+          onClick={closeModal}
+        >
+          <button
+            className="absolute top-8 right-8 text-white text-5xl z-[110] hover:rotate-90 transition-all duration-300"
+            onClick={closeModal}
+          >
+            ×
+          </button>
+
+          <button
+            className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-[#f16522] p-4 rounded-full text-white z-[110] transition-all"
+            onClick={prevImage}
+          >
+            ❮
+          </button>
+
+          <div className="relative w-full max-w-5xl h-[70vh] md:h-[80vh] animate-in zoom-in duration-300">
+            <Image
+              src={images[currentIndex]}
+              alt="Fullscreen"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          <button
+            className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-[#f16522] p-4 rounded-full text-white z-[110] transition-all"
+            onClick={nextImage}
+          >
+            ❯
+          </button>
+
+          <div className="absolute bottom-10 text-white/70 font-mono tracking-tighter">
+            {currentIndex + 1} / {images.length}
+          </div>
+        </div>
+      )}
     </section>
   );
-}
+};
+
+export default Gallery;

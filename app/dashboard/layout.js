@@ -1,16 +1,27 @@
-import Dashboard from "../Components/Dashboard/Dashboard";
-import Sidebar from "../Components/Sidebar/Sidebar";
+
+
+"use client"
+
+import { useState } from "react";
+import DashboardHeader from "./Dashboard/Dashboard";
+import Sidebar from "./Sidebar/Sidebar";
 
 const DashboardLayout = ({ children }) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <main>
-      <Dashboard></Dashboard>
-      <section className="max-w-7xl mx-auto px-5 pt-5 pb-16 lg:flex justify-center  border-red-400">
-        <Sidebar />
-        <section className="lg:flex-1 lg:p-6 mt-5 lg:mt-0">
-          {children} {/* Dynamic content will be loaded here */}
+    <main className="min-h-screen bg-gray-50">
+      <DashboardHeader onMenuClick={() => setSidebarOpen(true)}></DashboardHeader>
+
+      <div className="flex">
+          <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}></Sidebar>
+
+         <section className="flex-1 w-full lg:ml-64 transition-all duration-300">
+          <div className="max-w-full px-4 md:px-6 pb-16 pt-5 lg:pt-8">
+            {children} 
+          </div>
         </section>
-      </section>
+      </div>
     </main>
   );
 };

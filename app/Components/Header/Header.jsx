@@ -1,210 +1,280 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import logo from "../../../public/src/SiteLogo.png";
+import { RxDashboard } from "react-icons/rx";
 import Image from "next/image";
-import { FaSignInAlt, FaUserCircle, FaUserPlus } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileModal from "../ProfileModal/ProfileModal";
+import logo from "../../../public/src/SiteLogo.png";
+import GoogleTranslate from "../../GoogleTranslate";
 
 const navItems = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/about" },
-  { title: "Leaderboard", url: "/leaderboard" },
+  { title: "Instruction", url: "/instruction" },
+  { title: "Gallery", url: "/gallery" },
+
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const authState = useSelector((state) => state.user);
-  const { user = null, isLoggedIn = false, loading = true } = authState || {};
+  const lastScrollY = useRef(0);
+  const profileAreaRef = useRef(null);
 
-  console.log("Is Authenticated:", isLoggedIn);
-  console.log("User Profile Data:", user);
-  console.log("Loading State:", loading);
-  // const user = false;
-  // console.log("user", user?.email);
+  const authState = useSelector((state) => state.auth);
+  const { user = null } = authState || {};
   const email = user?.email;
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+
+  const isStaff = user?.role === "admin" || user?.role === "manager";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      setScrolled(current > 20);
+      lastScrollY.current = current;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => setIsMobileMenuOpen(false), [pathname]);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (
+        isProfileOpen &&
+        profileAreaRef.current &&
+        !profileAreaRef.current.contains(e.target)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [isProfileOpen]);
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 w-full  bg-white backdrop-blur-md border-b border-gray-200 shadow-sm ">
-      <div className="relative container max-w-7xl mx-auto p-5  border-red-400">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo and Mobile Menu Toggle */}
-            <div className="flex items-center justify-between w-full lg:w-auto">
-              {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center gap-6 pr-10">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.title}
-                    href={item.url}
-                    className="text-md font-semibold text-gray-700 hover:text-primary transition-colors relative group"
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-              </nav>
-
-              {/* Logo */}
-              <div className="flex items-center justify-center gap-2 lg:px-8 ">
-                <Link href="/" className="flex items-center gap-2">
-                  <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
-                    <Image src={logo} alt="siteLogo" width={56} height={56} />
-                  </div>
-                  <div className="hidden sm:flex flex-col ml-2">
-                    <span className="text-lg lg:text-xl font-bold text-gray-800 tracking-tight">
-                      Zero Olympiad
-                    </span>
-                    <span className="text-[10px] lg:text-xs text-gray-500 uppercase tracking-widest">
-                      Excellence Awaits
-                    </span>
-                  </div>
-                </Link>
+    <>
+      <header
+        className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+            : "bg-white py-4"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            {/* Logo Section */}
+            <Link prefetch={false} href="/" className="flex items-center group">
+              <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
+                <Image
+                  src={logo}
+                  alt="Zero Olympiad"
+                  fill
+                  className="object-contain"
+                />
+                
               </div>
+              <div className="ml-3">
+                <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary leading-none">
+                  Zero Olympiad
+                </h1>
+               
+              </div>
+            </Link>
 
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={toggleMobileMenu}
-                className="lg:hidden p-2 text-gray-700 hover:text-primary transition-colors"
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? (
-                  <AiOutlineClose className="w-6 h-6" />
-                ) : (
-                  <AiOutlineMenu className="w-6 h-6" />
-                )}
-              </button>
-            </div>
 
-            <div>
+
+ 
+
+
+
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <Link
+                prefetch={false}
+                  key={item.title}
+                  href={item.url}
+                  className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${
+                    pathname === item.url ? "text-orange-500" : "text-gray-600"
+                  } group`}
+                >
+                  {item.title}
+                  <span
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${
+                      pathname === item.url ? "w-full" : ""
+                    }`}
+                  ></span>
+                </Link>
+                
+              ))}
+              
+            </nav>
+
+            {/* Right Action Section */}
+            <div className="flex items-center gap-4">
               {email ? (
-                <div className="mt-0 flex items-center gap-4 lg:mt-0">
-                  {!isProfileOpen && (
-                    <button
-                      onClick={() => setIsProfileOpen((prev) => !prev)}
-                      className="flex items-center focus:outline-none cursor-pointer"
+                <>
+                  {/* logic: Staff hole Admin Panel button, User hole Profile Icon */}
+                  {isStaff ? (
+                    <Link
+                    prefetch={false}
+                      href="/admin"
+                      className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-Primary rounded-lg hover:bg-opacity-90 transition-all shadow-md active:scale-95"
                     >
-                      <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
-                        {/* <Image
-                          src={user.profile_image_url || <FaUserCircle size={80}></FaUserCircle>}
-                          alt="avatar"
-                          width={200}
-                          height={200}
-                          quality={100}
-                          priority
-                          className="object-cover h-full w-full"
-                        /> */}
-                        {user.profile_image_url ? (
-                          <Image
-                            src={user.profile_image_url || "no image"}
-                            alt="Profile"
-                            width={112}
-                            height={112}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
-                            <FaUserCircle size={100}></FaUserCircle>
-                          </div>
-                        )}
-                      </div>
-                    </button>
+                      <RxDashboard size={18} />
+                      Admin Panel
+                    </Link>
+                    
+                  ) : (
+                    <div className="relative" ref={profileAreaRef}>
+                      <button
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none"
+                      >
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-Secondary">
+                          {user.profile_image_url ? (
+                            <Image
+                              src={user.profile_image_url}
+                              alt="Profile"
+                              width={48}
+                              height={48}
+                              className="object-cover w-full h-full"
+                            />
+                          ) : (
+                            <FaUserCircle className="w-full h-full text-gray-300 bg-gray-100" />
+                          )}
+                        </div>
+                      </button>
+                      <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+                    </div>
                   )}
-                  {isProfileOpen && (
-                    <button
-                      onClose={() => setIsProfileOpen(false)}
-                      className="flex items-center focus:outline-none cursor-pointer"
-                    >
-                      <div className="w-14 h-14 overflow-hidden border-2 border-purple-500 rounded-full">
-                        {user.profile_image_url ? (
-                          <Image
-                            src={user.profile_image_url}
-                            alt="Profile"
-                            width={112}
-                            height={112}
-                            className="w-full h-full rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-gray-400 font-medium">
-                            <FaUserCircle size={100}></FaUserCircle>
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  )}
-                </div>
+                  
+                </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link
-                    href={"/login"}
-                    className="px-5 py-1.5 flex justify-center items-center gap-2 text-lg text-gray-800 font-bold border border-primary rounded-sm hover:bg-primary hover:text-white transition-all"
+                  prefetch={false}
+                    href="/login"
+                    className="text-sm font-bold text-gray-600 hover:text-orange-500"
                   >
-                    <FaSignInAlt size={18} /> Login
+                    Login
                   </Link>
                   <Link
-                    href={"/registration"}
-                    className="px-5 py-1.5 text-lg flex justify-center items-center gap-2 text-white font-bold border border-primary rounded-sm bg-primary hover:bg-white hover:text-primary transition-all"
+                  prefetch={false}
+                    href="/registration"
+                    className="px-6 py-2 text-sm font-bold text-white bg-orange-500 rounded-full hover:bg-orange-600 transition-all"
                   >
-                    <FaUserPlus size={18} /> Register
+                    Register
                   </Link>
+                  <div id="google_translate_element" className="google-translate-container"></div>
                 </div>
               )}
-            </div>
-          </div>
-        </div>
+                <GoogleTranslate />
 
-        {/* Mobile Menu */}
-        <div
-          className={`lg:hidden top-0 left-0 right-0 border-t border-gray-200 shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen
-            ? "flex opacity-100 translate-y-0"
-            : "hidden opacity-0 -translate-y-4 pointer-events-none"
-            }`}
-        >
-          <div className="container mx-auto px-4 py-6">
-            <nav className="flex flex-col gap-4">
-              {navItems.map((item, index) => (
-                <Link
-                  key={item.title}
-                  href={item.url}
-                  className="text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-100 px-4 py-3 rounded-lg transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  style={{ transitionDelay: `${index * 50}ms` }}
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </nav>
-            <div className="flex flex-col gap-3 mt-6 pt-6 border-t border-gray-200">
-              <Link
-                href={"/login"}
-                className="w-full py-3 flex justify-center items-center gap-2 text-gray-800 border border-primary rounded-lg hover:bg-primary hover:text-white transition-all"
+
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="lg:hidden text-gray-600 p-2 cursor-pointer"
               >
-                <FaSignInAlt size={16} /> Login
-              </Link>
-              <Link
-                href={"/registration"}
-                className="w-full py-3 flex justify-center items-center gap-2 text-white bg-primary rounded-lg hover:bg-white hover:text-primary transition-all"
-              >
-                <FaUserPlus size={18} /> Register
-              </Link>
+                <AiOutlineMenu size={28} />
+              </button>
             </div>
           </div>
         </div>
-        <ProfileModal
-          isOpen={isProfileOpen}
-          onClose={() => setIsProfileOpen(false)}
-        />
+      </header>
+
+      {/* Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${
+          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      >
+        <div
+          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="font-bold text-Secondary">Menu</h2>
+            <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600">
+              <AiOutlineClose size={28} />
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.title}
+                href={item.url}
+                prefetch={false}
+                className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${
+                  pathname === item.url
+                    ? "bg-orange-50 text-orange-500"
+                    : "text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                {item.title}
+              </Link>
+            ))}
+
+            <hr className="border-gray-100 my-2" />
+
+            {!email ? (
+              <div className="flex flex-col gap-4">
+                <Link 
+                prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
+                  Login
+                </Link>
+                <Link
+                  href="/registration"
+                  prefetch={false}
+                  className="bg-orange-500 text-white px-4 py-2 rounded-full text-center font-bold"
+                >
+                  Register
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {/* Mobile Menu logic: Staff hole Admin link, User hole Profile/Dashboard */}
+                {isStaff ? (
+                  <Link prefetch={false} href="/admin" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                    <RxDashboard size={24} />
+                    <span className="font-bold">Admin Panel</span>
+                  </Link>
+                ) : (
+                  <>
+                    <Link prefetch={false} href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                      <RxDashboard size={24} />
+                      <span className="font-bold">Dashboard</span>
+                    </Link>
+                    <Link prefetch={false} href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
+                      <FaUserCircle size={24} />
+                      <span className="font-bold">My Account</span>
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
+            
+          </div>
+        </div>
       </div>
-    </header>
+      
+    </>
   );
 }

@@ -1,38 +1,47 @@
-"use client"
-
-import Link from "next/link"
-import { FiBell, FiUser } from "react-icons/fi"
-import { FaArrowLeft } from "react-icons/fa";
+"use client";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { logout } from "../../store/slices/authSlice";
+import { FiLogOut, FiBell, FiSearch, FiHome } from "react-icons/fi";
+import { Link } from "lucide-react";
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: "Logout?",
+      text: "Ready to leave the session?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#f43f5e",
+      confirmButtonText: "Logout"
+    });
+
+    if (result.isConfirmed) {
+      dispatch(logout());
+      router.push("/");
+    }
+  };
+
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 lg:px-8">
-      <div className="flex-1 pl-12">
-        <button className="btn btn-primary"><Link className="flex items-center gap-2" href={"/"}><FaArrowLeft />  Home</Link></button>
-      </div>
-
-     
-        
-      
-
+    <header className="h-20 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-20">
       <div className="flex items-center gap-4">
-        {/* Notifications */}
-        <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-          <FiBell size={20} />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
+        <Link prefetch={false} href="/" className="flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">
 
-        {/* User Profile */}
-        <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-          <div className="hidden sm:block text-right">
-            <p className="text-sm font-medium text-gray-800">Admin User</p>
-            <p className="text-xs text-gray-500">Administrator</p>
-          </div>
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white">
-            <FiUser size={20} />
-          </div>
-        </div>
+          <span className="hidden sm:inline"> <FiHome size={18} /> Home</span>
+        </Link>
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="h-8 w-px bg-gray-200 mx-2"></div>
+        <button onClick={handleLogout} className="flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">
+          <FiLogOut size={18} />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
       </div>
     </header>
-  )
+  );
 }

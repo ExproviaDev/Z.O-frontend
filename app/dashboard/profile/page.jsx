@@ -10,13 +10,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ProfilePage = () => {
-  // const { user, loading } = useSelector((state) => state.user);
   const authState = useSelector((state) => state.user);
   const loading = authState?.loading;
-  const user = authState?.user?.user || authState?.user;
-  console.log("user data", user);
-
-  console.log(user, loading);
+  const user = useSelector((state) => state.auth.user);
   if (loading)
     return <div className="p-10 text-center">Loading Profile...</div>;
   if (!user)
@@ -28,7 +24,7 @@ const ProfilePage = () => {
 
   return (
     <main className="p-4 lg:p-10 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="w-full mx-auto space-y-6">
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-blue-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-6">
             {user.profile_image_url ? (
@@ -51,8 +47,8 @@ const ProfilePage = () => {
               </p>
             </div>
           </div>
-          <Link href="/dashboard/profile/edit">
-            <button className="flex items-center px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold shadow-md active:scale-95">
+          <Link prefetch={false} href="/dashboard/profile/edit">
+            <button className="flex items-center cursor-pointer px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-semibold shadow-md active:scale-95">
               <FaRegEdit className="mr-2" />
               Edit Profile
             </button>

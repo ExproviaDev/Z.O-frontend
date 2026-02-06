@@ -1,417 +1,385 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+
+import {
+ 
+  FaQuoteLeft,
+  
+} from "react-icons/fa";
+
 import Image from "next/image";
-import aboutImage from "../../public/src/image.jpg";
-import faatiHaaayat from "../..//public/src/faatihaaayat.jpg";
-import HeadingDetails from "../Components/HeadingDetails/HeadingDetails";
-import PresidentAward from "../..//public/src/PresidentAward.jpg";
-import UNDP from "../..//public/src/UNDP.jpg";
-import Environmentalist from "../..//public/src/Environmentalist.jpg";
-import UrbanDebate from "../..//public/src/UrbanDebate.jpg";
-import NRBAward from "../..//public/src/NRBAward.jpg";
-import CertificateRecognition from "../..//public/src/CertificateRecognition.jpg";
-import Link from "next/link";
+import HeroSection from "./components/heroSection";
+import { IoMdArrowDropright } from "react-icons/io";
 
-const Section = () => {
+export default function ZeroOlympiad() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const sdgs = [
+    { id: 1, title: "No Poverty", color: "bg-[#E5243B]" },
+    { id: 2, title: "Zero Hunger", color: "bg-[#DDA63A]" },
+    { id: 3, title: "Good Health", color: "bg-[#4C9F38]" },
+    { id: 4, title: "Quality Education", color: "bg-[#C5192D]" },
+    { id: 5, title: "Gender Equality", color: "bg-[#FF3A21]" },
+    { id: 6, title: "Clean Water", color: "bg-[#26BDE2]" },
+    { id: 7, title: "Affordable Energy", color: "bg-[#FCC30B]" },
+    { id: 8, title: "Decent Work", color: "bg-[#A21942]" },
+    { id: 9, title: "Industry & Innovation", color: "bg-[#FD6925]" },
+    { id: 10, title: "Reduced Inequality", color: "bg-[#DD1367]" },
+    { id: 11, title: "Sustainable Cities", color: "bg-[#FD9D24]" },
+    { id: 12, title: "Responsible Consumption", color: "bg-[#BF8B2E]" },
+    { id: 13, title: "Climate Action", color: "bg-[#3F7E44]" },
+    { id: 14, title: "Life Below Water", color: "bg-[#0A97D9]" },
+    { id: 15, title: "Life On Land", color: "bg-[#56C02B]" },
+    { id: 16, title: "Peace & Justice", color: "bg-[#00689D]" },
+    { id: 17, title: "Partnerships", color: "bg-[#19486A]" },
+  ];
+
   return (
-    <main>
-      <section
-        className="relative bg-cover bg-center h-[350px] md:h-[550px]"
-        style={{ backgroundImage: `url(${aboutImage.src})` }}
-      >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="px-5 relative z-10 flex justify-center items-center h-full text-center text-white mt-">
-          <div className="mt-20 flex flex-col items-end">
-            <h1 className="text-xl md:text-4xl lg:text-5xl font-bold">{`"Reducing To Zero, Rising As Hero!"`}</h1>
-            <p className="text-lg lg:text-xl ">-- Faatiha Ayat</p>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen   text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
+      <div className="">
+        <section>
+          <HeroSection></HeroSection>
+        </section>
 
-      <section className="max-w-7xl mx-auto pt-16 px-5 lg:px-0 md:flex justify-center gap-12 space-y-5">
-        <div className="md:w-1/2  border-red-200 flex  justify-end">
-          <Image
-            src={faatiHaaayat}
-            width={500}
-            height={500}
-            alt="faatiHaaayat"
-            className="rounded-lg"
+        <section
+          id="mission"
+          className="relative py-32 bg-white overflow-hidden"
+        >
+          <div
+            className="absolute inset-0 z-0 opacity-40"
+            style={{
+              backgroundImage: `radial-gradient(#e2e8f0 1.5px, transparent 1.5px)`,
+              backgroundSize: "24px 24px",
+            }}
           />
-        </div>
-        <div className="md:w-1/2">
-          <div className="inline-flex items-center gap-2 bg-bd-green/10 text-bd-green px-4 py-2 rounded-full mb-6 border border-green-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-star w-4 h-4"
-            >
-              <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-            </svg>
 
-            <span className="text-sm md:text-lg font-semibold">
-              Project Ambassador
-            </span>
-          </div>
-          <h1 className="text-2xl md:text-4xl lg:text-7xl font-bold">
-            Faatiha Aayat
-          </h1>
-          <p className="mt-5 text-gray-600 font-semibold text-sm md:text-base lg:text-xl">
-            I am a 13-years-old Child Rights Activist and Climate Campaigner. I
-            have already spoken in the UnitedNations, Harvard University, ECOSOC
-            Chamber etc. I regularly raise my voice against Global Warming,
-            Carbon Emission and Fossil Fuel. I talk to stop Child Abuse, Gender
-            Discrimination and Lead Pollution. I am the founder and CEO of
-            CHIL&D where I work for Climate, Health, Information, Learning and
-            Development.
-          </p>
-        </div>
-      </section>
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 items-center">
+              <div className="relative">
+                <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
 
-      <section className="max-w-7xl pt-16 px-5 mx-auto">
-        <div>
-          <HeadingDetails
-            title="Speeches at the United Nations"
-            subtitle="Her United Nations speeches highlight her commitment to child rights, climate action, and global awareness, inspiring meaningful change across international platforms."
-          ></HeadingDetails>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-10">
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/xmdFQDY1hF0?si=ewQ63mn_i-Vsx8jQ"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+                <div className="mb-10 group">
+                  <div className="flex flex-col border-l-8 border-Primary pl-6 md:pl-8 py-2">
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                      Faatiha Aayat
+                    </h2>
 
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/TNWmTUQymhQ?si=ThbyvQJPx3B3C_8p"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+                    <div className="mt-4 flex items-center gap-3">
+                      <span className="h-[2px] w-12 bg-Secondary"></span>
+                      <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
+                        Founder & CEO of Zero Olympiad
+                      </span>
+                    </div>
+                  </div>
 
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/ka0G-H0TouA?si=XKIKkpUgjWc_88qq"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+                  <div className="mt-6 max-w-2xl"></div>
+                </div>
 
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/1W2sfRjBH6A?si=-rKFyBW0JXO-UG-i"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  Thirteen-year-old Child Rights Activist, Climate Campaigner,
+                  and Global Speaker.
+                </p>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  I have represented youth voices at the **United Nations,
+                  Harvard, and TEDx**, advocating against climate change and
+                  social injustices. Through my organization, **CHIL&D**, I work
+                  toward sustainable development and global learning.
+                </p>
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  A published author of four books and a recipient of the
+                  **President’s Academic Excellence Gold Certificate**, I
+                  continue to bridge the gap between human rights and climate
+                  action.
+                </p>
 
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/Ln_YVVUNmtE?si=XY95SCIL_IG-UFWp"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/18kRsnDq-mw?si=LOo7kafueuUUO4og"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/M4zZ_OTqwIM?si=oCstY85051pAKexr"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-
-            <iframe
-              className="w-full aspect-video rounded-lg"
-              src="https://www.youtube.com/embed/U0Vg6ymJDB8?si=3c8U_dr-7um6_aK3"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-7xl pt-16 px-5  mx-auto">
-        <HeadingDetails
-          title={"Honors and Awards"}
-          subtitle={
-            "A collection of the prestigious honors and awards she has received for her remarkable contributions to child rights advocacy, climate awareness, and global youth leadership."
-          }
-        ></HeadingDetails>
-
-        <div className="grid p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-10">
-          {/* Card 1 */}
-          <div className="w-full overflow-hidden bg-white rounded-lg shadow-lg">
-            <iframe
-              className="w-full aspect-video"
-              src="https://www.youtube.com/embed/h9k6q9jO5ck?si=Vh2XC5BK1c0qb9mn"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              height={320}
-            ></iframe>
-
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                Human Rights Hero Award at United Nations ECOSOC Chamber
-              </p>
-              <div className="flex justify-center mt-4 items-end ">
-                <Link
-                  href={"https://www.youtube.com/watch?v=h9k6q9jO5ck"}
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                <a
+                  href="https://www.linkedin.com/in/faatihaaayat/"
+                  className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 w-[150px] border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group"
                 >
-                  Details
-                </Link>
+                  View More
+                </a>
+              </div>
+
+              <div className="relative group">
+                <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
+                <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
+                  <Image
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219566/FAATIHA_AAYAT_1_ltnjp2.jpg"
+                    alt="Youth Change Makers"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="w-full h-full object-cover  hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+                  />
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Card 2 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={PresidentAward}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
-            />
+        <section
+          id="mission"
+          className="relative py-32 bg-white overflow-hidden"
+        >
+          <div
+            className="absolute inset-0 z-0 opacity-40"
+            style={{
+              backgroundImage: `radial-gradient(#e2e8f0 1.5px, transparent 1.5px)`,
+              backgroundSize: "24px 24px",
+            }}
+          />
 
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                <span className="font-semibold">
-                  President’s Award For Outstanding Academic Excellence – Gold
-                  Certificate
-                </span>{" "}
-                from US Department of Education
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={
-                    "https://www.facebook.com/FaatihaAayatOfficial/photos/a.1536682463171433/2100226800150327/"
-                  }
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-20 items-center">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
+                <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
+                  <Image
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219567/SYED_AFTAB_AHMED_1_mnqdha.jpg"
+                    alt="Youth Change Makers"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="w-full h-full object-cover  hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
+                  />
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
+
+                <div className="mb-10 group">
+                  <div className="flex flex-col border-l-8 border-Primary pl-6 md:pl-8 py-2">
+                    <span className="text-sm font-bold text-Primary uppercase tracking-[0.2em] mb-1 opacity-80">
+                      Barrister-at-Law
+                    </span>
+
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                      Syed Aftab Ahmed
+                    </h2>
+
+                    <div className="mt-4 flex items-center gap-3">
+                      <span className="h-[2px] w-12 bg-Secondary"></span>
+                      <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
+                        Managing Director
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 max-w-lg"></div>
+                </div>
+
+                <p className="text-lg text-slate-600 leading-relaxed mb-10">
+                  Having over 16 years of expertise in Business and Migration
+                  Consultancy under my experience belt, I would love to make
+                  more professional acquaintances. I believe in creating and
+                  fostering relationships as a cornerstone of conducting
+                  business.
+                </p>
+
+                <a
+                  href="https://www.linkedin.com/in/barristeraftab/"
+                  className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 w-[150px] border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group"
                 >
-                  Details
-                </Link>
+                  View More
+                </a>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Card 3 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={UNDP}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
-            />
-
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                Champion in{" "}
-                <span className="font-semibold">
-                  “My Goal – For A Better Future”
-                </span>{" "}
-                organized by UNDP.
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={
-                    "https://www.undp.org/bangladesh/press-releases/mygoal-campaign-winners-awarded"
-                  }
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                >
-                  Details
-                </Link>
-              </div>
-            </div>
+        <section
+          id="vision-mission"
+          className="relative py-32 overflow-hidden "
+        >
+          <div className="absolute top-0 left-0 w-full flex justify-center z-20">
+            <div className="w-1/2 h-[2px] bg-gradient-to-r from-transparent via-Primary to-transparent opacity-50"></div>
           </div>
 
-          {/* Card 4 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={Environmentalist}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://i.ibb.co.com/99HFrKfK/speaker-bg.png"
+              alt="Architecture Background"
+              className="w-full h-full object-cover"
             />
-
-            <div className="p-5">
-              <p className="block  text-sm md:text-base lg:text-lg h-22">
-                <span className="font-semibold">
-                  Environmentalist Award 2022
-                </span>{" "}
-                from Umbrella Youth Foundation
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={"https://www.facebook.com/photo/?fbid=1145624629411284"}
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                >
-                  Details
-                </Link>
-              </div>
-            </div>
+            <div className="absolute inset-0 "></div>
           </div>
 
-          {/* Card 5 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={UrbanDebate}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
-            />
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Mission",
+                  content:
+                    "To engage and empower students through competitions, learning, and action-based initiatives that build leadership, critical thinking, and social responsibility. Zero Olympiad aims to inspire youth to actively address global challenges and local problems.",
+                  bg: "bg-slate-900/90 text-white",
+                },
+                {
+                  title: "Vision",
+                  content:
+                    "To nurture a generation of informed, ethical, and courageous young leaders who think critically, act responsibly, and work collectively to build a peaceful, just, and sustainable world where every voice matters.",
+                  bg: "bg-white/90 text-slate-900",
+                },
+                {
+                  title: "Values",
+                  content:
+                    "Integrity and honesty in all actions, inclusivity and respect for diversity, excellence and curiosity in learning, collaboration and teamwork, compassion and empathy, and a strong commitment to service and positive impact in society.",
+                  bg: "bg-indigo-600/90 text-white",
+                },
+              ].map((card, i) => (
+                <div
+                  key={i}
+                  className={`${card.bg} p-12 rounded-[3rem] transition-all hover:scale-[1.05] cursor-default shadow-2xl backdrop-blur-md border border-white/10`}
+                >
+                  <h3 className="text-3xl font-black mb-8 tracking-tighter italic uppercase">
+                    {card.title}
+                  </h3>
+                  <p className="text-lg opacity-90 leading-relaxed font-medium">
+                    {card.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                Champion in the{" "}
-                <span className="font-semibold">
-                  New York City Urban Debate League 2023
+        <section
+          id="the-journey"
+          className="py-32 bg-slate-950 text-white overflow-hidden"
+        >
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+              <div className="max-w-2xl">
+                <span className="text-indigo-400 font-black tracking-[0.3em] uppercase text-sm">
+                  Path to Impact
                 </span>
+                <h2 className="text-4xl md:text-6xl font-black mt-4 tracking-tighter italic">
+                  The Participant Journey
+                </h2>
+              </div>
+              <p className="text-slate-400 max-w-sm font-light">
+                From a spark of an idea to a global stage—here is how you evolve
+                through Zero Olympiad.
               </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={
-                    "https://www.linkedin.com/posts/faatihaaayat_champion-msparlijvdivision-activity-7048638463234953216-ezzW?utm_source=share&utm_medium=member_desktop"
-                  }
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            </div>
+
+            <div className="grid lg:grid-cols-5 gap-6">
+              {[
+                {
+                  step: "01",
+                  title: "Registration",
+                  desc: "Join the global network and select your SDG focus area.",
+                },
+                {
+                  step: "02",
+                  title: "Knowledge",
+                  desc: "Comprehensive MCQ round testing global awareness.",
+                },
+                {
+                  step: "03",
+                  title: "Creation",
+                  desc: "Submit a high-impact video pitching your innovative solution.",
+                },
+                {
+                  step: "04",
+                  title: "Finale",
+                  desc: "Present live to a panel of UN experts and global leaders.",
+                },
+                {
+                  step: "05",
+                  title: "Recognition",
+                  desc: "Earn international awards and project funding support.",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="relative p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 transition-colors group"
                 >
-                  Details
-                </Link>
+                  <span className="text-4xl font-black text-indigo-500 opacity-30 mb-8 block group-hover:opacity-100 transition-opacity italic">
+                    {item.step}
+                  </span>
+                  <h4 className="text-xl font-bold mb-4">{item.title}</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed leading-relaxed font-light">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="founder" className="py-32 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
+              <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
+                <Image
+                  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033233/IMG_8818_bdrqrv.jpg"
+                  alt="Fatiha Ayat"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover "
+                />
+                <div className="absolute inset-0 bg-indigo-900/30 mix-blend-multiply" />
+              </div>
+              <div className="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center text-white">
+                <FaQuoteLeft className="text-indigo-500 text-5xl mb-8 opacity-50" />
+                <h3 className="text-3xl lg:text-5xl font-black italic tracking-tighter mb-8 leading-tight">
+                  "The youth are not just the leaders of tomorrow—we are the
+                  architects of today's solutions."
+                </h3>
+                <div className="space-y-6 mb-12">
+                  <p className="text-xl font-black italic text-indigo-400 tracking-tight">
+                    Faatiha Ayat — Founder
+                  </p>
+                  <p className="text-slate-400 font-light leading-relaxed">
+                    A child rights activist, climate campaigner, and global
+                    orator, Fatiha Ayat founded Zero Olympiad with a singular
+                    vision: to empower the youth to take ownership of the
+                    planet's destiny. Through her representation at the UN and
+                    global summits, she has mobilized thousands of students to
+                    join the movement for a "Zero Challenge" future.
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  {["UN Representative", "Author", "Activist"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-4 py-2 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Card 6 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={NRBAward}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
-            />
-
-            <div className="p-5">
-              <p className="block  text-sm md:text-base lg:text-lg h-22">
-                <span className="font-semibold">
-                  NRB Award In The Special Talent Category
-                </span>{" "}
-                from the Consul General of Bangladesh in New York
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={
-                    "https://www.prothomalo.com/world/usa/%E0%A6%8F%E0%A6%A8%E0%A6%86%E0%A6%B0%E0%A6%AC%E0%A6%BF-%E0%A6%B8%E0%A7%8D%E0%A6%AA%E0%A7%87%E0%A6%B6%E0%A6%BE%E0%A6%B2-%E0%A6%9F%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F-%E0%A6%85%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%93%E0%A7%9F%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%A1-%E0%A6%AA%E0%A7%87%E0%A6%B2-%E0%A6%AB%E0%A6%BE%E0%A6%A4%E0%A6%BF%E0%A6%B9%E0%A6%BE"
-                  }
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                >
-                  Details
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 7 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src={CertificateRecognition}
-              alt="avatar"
-              width={350}
-              height={350}
-              className="object-cover w-full h-80"
-            />
-
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                <span className="font-semibold">
-                  Certificate of Recognition
-                </span>{" "}
-                by New York State Senator John Liu and New York City Mayor Eric
-                Adams
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={"https://www.facebook.com/photo/?fbid=1915120198660989"}
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                >
-                  Details
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 8 */}
-          <div className="w-full overflow-hidden rounded-lg shadow-lg">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/I84Du2wNqHc?si=DsvuibtYlQmZkEuP"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-
-            <div className="p-5">
-              <p className="block text-sm md:text-base lg:text-lg h-22">
-                <span className="font-semibold">
-                  Multiple Prizes along with Honorable Mention
-                </span>{" "}
-                from the National Mathematics Pentathlon Academic Tournament,
-              </p>
-              <div className="flex justify-center mt-4">
-                <Link
-                  href={
-                    "https://www.youtube.com/watch?v=I84Du2wNqHc&feature=youtu.be"
-                  }
-                  target="_blank"
-                  className="px-6 py-2 lg:px-10 lg:py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-Primary rounded-lg hover:bg-Primary/80 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-                >
-                  Details
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+        <style jsx global>{`
+          @keyframes fade-in-up {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .animate-fade-in-up {
+            animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          html {
+            scroll-behavior: smooth;
+          }
+        `}</style>
+      </div>
+    </div>
   );
-};
-
-export default Section;
+}
