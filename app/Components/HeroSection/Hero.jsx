@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy } from "react-icons/fa";
+import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy, FaClock } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -86,19 +86,19 @@ export default function HeroSection() {
             {[
               {
                 icon: <FaCalendarAlt />,
-                number: "18 February 2026",
+                number: "18 February, 2026",
+                label: "Registration Opens",
+              },
+              {
+                icon: <FaClock />,
+                number: "6 May, 2026",
                 label: "Registration Deadline",
               },
               {
-                icon: <FaUsers />,
-                number: "3 Categories",
-                label: "For All Students",
-              },
-              {
                 icon: <FaTrophy />,
-                number: "17 SDGs",
-                label: "Competition Topic",
-              },
+                number: "6 June, 2026",
+                label: "Grand Finale",
+              }, 
             ].map((stat, index) => (
               <div
                 key={index}
