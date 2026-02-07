@@ -1,5 +1,3 @@
-"use client";
-
 import {
  
   FaQuoteLeft,
@@ -8,7 +6,7 @@ import {
 
 import Image from "next/image";
 import HeroSection from "./components/heroSection";
-
+export const revalidate = 86400;
 export default function ZeroOlympiad() {
   return (
     <div className="min-h-screen   text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
@@ -328,25 +326,6 @@ export default function ZeroOlympiad() {
             </div>
           </div>
         </section>
-
-        <style jsx global>{`
-          @keyframes fade-in-up {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fade-in-up {
-            animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-          html {
-            scroll-behavior: smooth;
-          }
-        `}</style>
       </div>
     </div>
   );

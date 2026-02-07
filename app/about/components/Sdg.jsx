@@ -366,16 +366,6 @@ export default function Sdg() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap");
-        html {
-          scroll-behavior: smooth;
-        }
-        .font-sans {
-          font-family: "Inter", sans-serif;
-        }
-      `}</style>
     </section>
   );
 }

@@ -1,11 +1,11 @@
 
-import React from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebook, FaYoutube, FaInstagram } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
-
+// ৩ দিনের জন্য ISR সেটআপ (২৪ ঘণ্টা * ৩ = ২৫৯২০০ সেকেন্ড)
+export const revalidate = 259200;
 export default function Page() {
   const links = [
     {
