@@ -3,7 +3,7 @@ import Home2 from './Components/Home2/Home2'
 
 export default function page() {
   return (
-    <div className=''>
+    <div>
       <Home2></Home2>
     </div>
   )

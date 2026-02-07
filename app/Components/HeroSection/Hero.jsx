@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import Image from "next/image";
 import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy, FaClock } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
@@ -25,7 +23,7 @@ export default function HeroSection() {
         <Swiper
           modules={[Autoplay, EffectFade]}
           effect="fade"
-          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
           loop={true}
           className="h-full w-full"
         >
@@ -118,23 +116,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes slowZoom {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.15);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .animate-slow-zoom {
-          animation: slowZoom 25s infinite ease-in-out;
-        }
-      `}</style>
     </section>
   );
 }

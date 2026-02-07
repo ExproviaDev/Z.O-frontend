@@ -1,17 +1,12 @@
 "use client";
 
-import React from "react";
-import Head from "next/head";
 import {
-  FaBookOpen,
-  FaChartLine,
   FaClock,
-  FaUsers,
   FaPlay,
-  FaExclamationTriangle, // নতুন ইম্পোর্ট
-  FaBan,                 // নতুন ইম্পোর্ট
-  FaShieldAlt,           // নতুন ইম্পোর্ট
-  FaFlag                 // নতুন ইম্পোর্ট
+  FaExclamationTriangle,
+  FaBan,                
+  FaShieldAlt,        
+  FaFlag                
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
@@ -23,7 +18,6 @@ const UserDashboard = () => {
   const { user = null } = authState || {};
   const userName = user?.name || "User";
 
-  // স্ট্যাটিক ইনস্ট্রাকশন ডাটা
   const examRules = [
     {
       id: 1,

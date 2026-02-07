@@ -152,3 +152,11 @@ html.lenis, html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+@keyframes slowZoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.animate-slow-zoom {
+  animation: slowZoom 25s infinite ease-in-out;
+}

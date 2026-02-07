@@ -1,12 +1,7 @@
-"use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Gallery = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   const images = [
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410937/EYE02067_qk0a8m.jpg",
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411372/IMG_8997_bl8xws.jpg",
@@ -15,21 +10,6 @@ const Gallery = () => {
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411364/IMG_8682_mhxnel.jpg",
     "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411361/IMG_8594_okmn5p.jpg",
   ];
-
-  const openModal = (index) => {
-    setCurrentIndex(index);
-    setIsOpen(true);
-  };
-
-  const closeModal = () => setIsOpen(false);
-  const nextImage = (e) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-  const prevImage = (e) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
 
   return (
     <section
@@ -48,12 +28,12 @@ const Gallery = () => {
           </p>
         </div>
 
+        {/* Static Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {images.map((src, index) => (
             <div
               key={index}
-              onClick={() => openModal(index)}
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer border-2 border-white/50 shadow-2xl transition-all duration-500 hover:scale-[1.03] "
+              className="relative aspect-[4/3] rounded-2xl overflow-hidden border-2 border-white/50 shadow-2xl transition-all duration-500 hover:scale-[1.03]"
             >
               <Image
                 src={src}
@@ -62,63 +42,18 @@ const Gallery = () => {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="bg-white/20  border border-white/30"></div>
-              </div>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <Link prefetch={false} href={"gallery"}>
+          <Link prefetch={false} href={"/gallery"}>
             <button className="bg-Primary cursor-pointer hover:bg-[#d9561a] text-white font-bold py-3 px-10 rounded-lg shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               View More
             </button>
           </Link>
         </div>
       </div>
-
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-md"
-          onClick={closeModal}
-        >
-          <button
-            className="absolute top-8 right-8 text-white text-5xl z-[110] hover:rotate-90 transition-all duration-300"
-            onClick={closeModal}
-          >
-            ×
-          </button>
-
-          <button
-            className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-[#f16522] p-4 rounded-full text-white z-[110] transition-all"
-            onClick={prevImage}
-          >
-            ❮
-          </button>
-
-          <div className="relative w-full max-w-5xl h-[70vh] md:h-[80vh] animate-in zoom-in duration-300">
-            <Image
-              src={images[currentIndex]}
-              alt="Fullscreen"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-
-          <button
-            className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-[#f16522] p-4 rounded-full text-white z-[110] transition-all"
-            onClick={nextImage}
-          >
-            ❯
-          </button>
-
-          <div className="absolute bottom-10 text-white/70 font-mono tracking-tighter">
-            {currentIndex + 1} / {images.length}
-          </div>
-        </div>
-      )}
     </section>
   );
 };

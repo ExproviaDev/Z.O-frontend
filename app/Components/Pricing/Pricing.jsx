@@ -1,8 +1,6 @@
 "use client";
-
-import React from "react";
 import { motion } from "framer-motion";
-import { FiCheckCircle, FiStar, FiAward, FiZap } from "react-icons/fi";
+import { FiStar, FiAward, FiZap } from "react-icons/fi";
 import Link from "next/link";
 
 const plans = [

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Supporters = () => {
   return (
     <section className="relative w-full py-20 px-4 flex flex-col items-center justify-center bg-gray-50">

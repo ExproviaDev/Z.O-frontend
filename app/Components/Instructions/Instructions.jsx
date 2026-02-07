@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 export default function AboutOlympiad() {

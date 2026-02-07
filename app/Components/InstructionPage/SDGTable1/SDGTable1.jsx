@@ -1,6 +1,3 @@
-"use client";
-import React from 'react';
-
 const SDGTable1 = () => {
   return (
     <section id='sdg' className="py-20 px-4 md:px-8 bg-white">
