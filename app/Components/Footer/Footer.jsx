@@ -30,8 +30,8 @@ export default function Footer() {
         { name: "Home", href: "/" },
         { name: "About Us", href: "/about" },
         { name: "Contact Us", href: "/contact-us" },
-        { name: "Privacy Policy", href: "/privacyPolicy" },
-        { name: "Terms & Conditions", href: "/terms-and-Conditions" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Terms & Conditions", href: "/terms-and-conditions" },
     ];
 
     return (
@@ -155,8 +155,8 @@ export default function Footer() {
                         © {currentYear} Zero Olympiad. All rights reserved.
                     </p>
                     <div className="flex flex-wrap gap-6">
-                        <Link prefetch={false} href="/privacyPolicy" className="hover:text-white transition">Privacy</Link>
-                        <Link prefetch={false} href="/terms&conditions" className="hover:text-white transition">Terms</Link>
+                        <Link prefetch={false} href="/privacy-policy" className="hover:text-white transition">Privacy</Link>
+                        <Link prefetch={false} href="/terms-and-conditions" className="hover:text-white transition">Terms</Link>
                         <Link prefetch={false} href="/cookie-policy" className="hover:text-white transition">Cookie Policy</Link>
                     </div>
                 </div>

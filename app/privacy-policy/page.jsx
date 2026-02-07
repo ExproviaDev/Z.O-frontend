@@ -1,3 +1,4 @@
+export const revalidate = 604800;
 export default function Page() {
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
