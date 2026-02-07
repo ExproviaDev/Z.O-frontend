@@ -12,6 +12,7 @@ import Awards from "../Awards/Award";
 
 import Supporters from "../Supporters/Supporters";
 import Pricing from "../Pricing/Pricing";
+import SDGTable1 from "../InstructionPage/SDGTable1/SDGTable1";
 
 
 
@@ -49,6 +50,8 @@ export default function HomePage() {
       <Instructions></Instructions>
     
       <WhyParticipate></WhyParticipate>
+
+      <SDGTable1></SDGTable1>
 
       <Pricing></Pricing>
 

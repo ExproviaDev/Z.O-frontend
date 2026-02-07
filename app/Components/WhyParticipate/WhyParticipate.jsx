@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function WhyParticipate() {
   const opportunities = [
-    "Seventeen (17) winners of the Zero Olympiad will be awarded the opportunity to participate in an International Bootcamp hosted by Asia Pacific University (APU), Kuala Lumpur, Malaysia.",
+    "A cash prize of ৳3,42,500 (Three hundred forty-two thousand five hundred taka) will be awarded to the winners.",
     "Scholarship opportunities from Washington University of Science and Technology, USA.",
     "International Bootcamp participation at Asia Pacific University (APU), Malaysia.",
     "Language Learning Scholarship from Sanrin Nihongono Gakkou, Japan.",

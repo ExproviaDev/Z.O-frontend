@@ -7,9 +7,9 @@ import Link from "next/link";
 
 const plans = [
   {
-    title: "SDG Defender",
+    title: "SDG Activist",
     grade: "Class 5 – 8",
-    prize: "499", // You can update price if needed
+    prize: "300",
     icon: <FiStar className="text-emerald-500" size={24} />,
     features: [
       "Bengali & Alia: Class 5 - 8",
@@ -21,9 +21,9 @@ const plans = [
     shadow: "shadow-emerald-100",
   },
   {
-    title: "SDG Leader",
+    title: "SDG Ambassador",
     grade: "Class 9 – 12",
-    prize: "499",
+    prize: "300",
     icon: <FiAward className="text-blue-500" size={24} />,
     features: [
       "SSC & HSC / Dakhil & Alim",
@@ -36,9 +36,9 @@ const plans = [
     popular: true,
   },
   {
-    title: "SDG Pioneer",
+    title: "SDG Achiever",
     grade: "University & Higher Ed",
-    prize: "499",
+    prize: "300",
     icon: <FiZap className="text-purple-500" size={24} />,
     features: [
       "Honors, Medical, Engineering",
@@ -73,15 +73,9 @@ export default function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className={`relative bg-white rounded-[2.5rem] p-8 border-2 transition-all duration-300 hover:shadow-2xl ${plan.shadow} ${
-                plan.popular ? "border-blue-500 scale-105 z-10" : "border-transparent"
-              }`}
+              className={`relative bg-white rounded-[2.5rem] p-8 border transition-all duration-300 hover:shadow-2xl `}
             >
-              {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-                  Most Popular
-                </div>
-              )}
+              
 
               <div className="mb-6 flex justify-between items-start">
                 <div className={`p-4 rounded-2xl bg-${plan.color}-50`}>
@@ -91,24 +85,14 @@ export default function PricingSection() {
               </div>
 
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.title}</h3>
-              <p className="text-gray-500 text-sm mb-6">Registration Fee</p>
+              <p className="text-gray-500 text-sm mb-6">Ramadan rewards</p>
               
               <div className="flex items-baseline gap-1 mb-8">
-                <span className={`text-4xl font-black text-gray-900`}>{plan.prize}</span>
-                <span className="text-lg font-bold text-gray-400">BDT</span>
+                <span className={`text-xl font-black text-gray-900`}>{plan.prize}</span>
+                <span className="text-xl font-bold text-gray-400">BDT</span>
+                <span class="line-through">400</span>
               </div>
 
-              {/* Added a small title for the list to explain it contains the specific classes */}
-              <p className="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider">Eligible Classes</p>
-
-              <ul className="space-y-4 mb-10">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-600 text-sm">
-                    <FiCheckCircle size={18} className={`text-${plan.color}-500 mt-0.5 shrink-0`} />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
 
              <Link prefetch={false} href={"/registration"}>
               <button
