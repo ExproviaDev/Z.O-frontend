@@ -54,7 +54,7 @@ export default function Footer() {
                             </div>
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed">
-                            Challenge your knowledge, compete with the best, and rise to the top on the ultimate quiz competition platform.
+                            Challenge your knowledge, compete with the best, and rise to the top of the global leadership.
                         </p>
                     </div>
 
@@ -82,7 +82,7 @@ export default function Footer() {
                                 <FaMapPin className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
                                    
-                                    <p>Mohakhali DOHS, Dhaka 1212</p>
+                                    <p> Office address - House #469, Level #3, Road#31, Mohakhali DOHS, Dhaka 1212</p>
                                     <p>Bangladesh</p>
                                 </div>
                             </li>
@@ -92,7 +92,7 @@ export default function Footer() {
                                 <div className="leading-relaxed">
                                     <p>
                                         <a href="tel:+8801234567890" className="hover:text-[#5B2EFF] transition">
-                                            +880 1973-570203
+                                            +880 1973570203
                                         </a>
                                     </p>
                                     <p>
@@ -113,7 +113,7 @@ export default function Footer() {
                                     </p>
                                     <p>
                                         <a href="mailto:support@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
-                                            zeroolympiad.bd@gmail.com
+                                            admin@zeroolympiad.com
                                         </a>
                                     </p>
                                 </div>
