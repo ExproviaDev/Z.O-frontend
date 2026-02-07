@@ -1,6 +1,7 @@
+export const revalidate = 604800;
 export default function Page() {
   const SITE_NAME = "Zero Olympiad";
-  const CONTACT_EMAIL = "faatiha.aayat@gmail.com";
+  const CONTACT_EMAIL = "admin@zeroolympiad.com";
   const CONTACT_PHONE = "01973570203";
   const ADDRESS = "Dhaka, Bangladesh";
 

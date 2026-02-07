@@ -20,8 +20,6 @@ function AuthWrapper({ children }) {
     const token = localStorage.getItem("access_token");
 
     if (token) {
-      // ২. যদি ইউজার স্টোরে না থাকে তবেই কেবল কল হবে
-      // রিডক্স পারসিস্ট থাকার কারণে রিফ্রেশ দিলেও ইউজার হারাবে না, তাই কল কম হবে
       if (!user) {
         dispatch(fetchUserProfile(token));
       }
@@ -29,8 +27,6 @@ function AuthWrapper({ children }) {
       dispatch(stopLoading());
     }
   }, [dispatch, user]);
-
-  // হাইড্রেশন এরর এড়াতে এবং ডাটা লোড না হওয়া পর্যন্ত স্ক্রিন হোল্ড করতে
   if (!isMounted) return null;
 
   return <>{children}</>;

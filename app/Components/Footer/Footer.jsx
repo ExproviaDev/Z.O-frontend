@@ -31,7 +31,7 @@ export default function Footer() {
         { name: "About Us", href: "/about" },
         { name: "Contact Us", href: "/contact-us" },
         { name: "Privacy Policy", href: "/privacyPolicy" },
-        { name: "Terms & Conditions", href: "/tramsAndCondition" },
+        { name: "Terms & Conditions", href: "/terms-and-Conditions" },
     ];
 
     return (
