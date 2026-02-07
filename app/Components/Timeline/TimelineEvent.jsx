@@ -27,7 +27,7 @@ const timelineData = [
   {
     title: "1st Round Exam",
     date: "8 May 2026",
-    desc: "MCQ Contest Register in your class category (as of 8 may 2026). Complete 20 MCQ questions from UN-recognized courses. Winners advance to the second round.",
+    desc: " The Round 1 exam will be worth a total of30 marks,consisting of 30 MCQ questions. The time limit is 30 minutes. You will be able to see your score on the website immediately after the exam. Only those who score 20 or above will qualify for the 2nd Round.",
     icon: <FaRegEdit />,
     align: "left",
   },
@@ -90,9 +90,8 @@ const Timeline = () => {
           {timelineData.map((item, index) => (
             <div
               key={index}
-              className={`relative flex flex-col md:flex-row items-center justify-between w-full ${
-                item.align === "right" ? "md:flex-row-reverse" : ""
-              }`}
+              className={`relative flex flex-col md:flex-row items-center justify-between w-full ${item.align === "right" ? "md:flex-row-reverse" : ""
+                }`}
             >
               <div className="md:hidden self-start mb-3 ml-8 font-semibold text-black text-sm italic">
                 {item.date}
@@ -119,9 +118,8 @@ const Timeline = () => {
                   </div>
 
                   <div
-                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${
-                      item.align === "left" ? "-right-4" : "-left-4"
-                    }`}
+                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${item.align === "left" ? "-right-4" : "-left-4"
+                      }`}
                   ></div>
 
                   <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-4 h-4 bg-inherit transform rotate-45 md:hidden"></div>
@@ -132,11 +130,10 @@ const Timeline = () => {
                 <div className="z-20 w-5 h-5 bg-white border-[3px] border-Secondary rounded-full shadow-md"></div>
 
                 <span
-                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${
-                    item.align === "left"
+                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${item.align === "left"
                       ? "md:left-14 lg:left-16"
                       : "md:right-14 lg:right-16"
-                  }`}
+                    }`}
                 >
                   {item.date}
                 </span>

@@ -12,7 +12,7 @@ export default function Registration() {
         <>
           In February 2026, register on the <b>Zero Olympiad</b> website under
           the designated category based on the class you are studying in. The
-          registration fee is <b>499 Taka.</b>
+          registration fee is <b>300 Taka.</b>
         </>
       ),
     },
