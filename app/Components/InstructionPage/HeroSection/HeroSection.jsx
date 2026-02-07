@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import Image from "next/image";
 
 
@@ -93,23 +91,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes slowZoom {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.15);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .animate-slow-zoom {
-          animation: slowZoom 25s infinite ease-in-out;
-        }
-      `}</style>
     </section>
   );
 }

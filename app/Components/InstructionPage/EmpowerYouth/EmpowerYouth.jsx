@@ -1,20 +1,12 @@
-"use client";
-import React from "react";
 import {
   GraduationCap,
   Trophy,
   CheckCircle2,
-  Lightbulb,
-  MessageSquare,
-  Presentation,
-  Briefcase,
   Globe,
   Award,
   Star,
   Plane,
-  Utensils,
   HeartPulse,
-  Dumbbell,
 } from "lucide-react";
 
 const EmpowerYouth = () => {
