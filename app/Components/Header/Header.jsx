@@ -9,7 +9,7 @@ import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileModal from "../ProfileModal/ProfileModal";
-import logo from "../../../public/src/SiteLogo.png";
+import logo from "../../../public/src/site_ZERO_logo.png";
 import GoogleTranslate from "../../GoogleTranslate";
 
 const navItems = [
@@ -76,7 +76,7 @@ export default function Header() {
           <div className=" max-w-7xl mx-auto flex items-center justify-between">
             {/* Logo Section */}
             <Link prefetch={false} href="/" className="flex items-center group">
-              <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
+              <div className="relative w-12 h-12 lg:w-20 lg:h-20 transition-transform duration-500 group-hover:rotate-[10deg]">
                 <Image
                   src={logo}
                   alt="Zero Olympiad"
@@ -84,12 +84,6 @@ export default function Header() {
                   className="object-contain"
                 />
                 
-              </div>
-              <div className="ml-3">
-                <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary leading-none">
-                  Zero Olympiad
-                </h1>
-               
               </div>
             </Link>
             {/* Desktop Navigation */}

@@ -63,7 +63,7 @@ export default function Page() {
               Head Office
             </h5>
             <div className="ml-9 mt-2 text-gray-700 leading-relaxed">
-              <p>House #469, Road #31</p>
+              <p>Office address - House #469, Level #3, Road#31</p>
               <p>Mohakhali DOHS, Dhaka 1212</p>
               <p>Bangladesh</p>
             </div>
@@ -89,7 +89,7 @@ export default function Page() {
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
               <p>faatiha.aayat@gmail.com</p>
-              <p>zeroolympiad.bd@gmail.com</p>
+              <p>admin@zeroolympiad.com</p>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default function Page() {
 
   <div className="w-full lg:h-[600px] h-[400px] rounded-2xl overflow-hidden shadow-lg border border-gray-400">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.171445778841!2d90.39167387533682!3d23.776918878652414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c76afc776077%3A0x7d06e3089d89163!2sMohakhali%20DOHS!5e0!3m2!1sen!2sbd!4v1714567890123!5m2!1sen!2sbd"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d228.19470603546696!2d90.39435794625317!3d23.778908316608195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c769c16dd5dd%3A0xc2cb19abe1b1961d!2sHouse%20469%20Rd%20No%2031%2C%20Dhaka%201206!5e0!3m2!1sen!2sbd!4v1770454642599!5m2!1sen!2sbd"
       width="100%"
       height="100%"
       style={{ border: 0 }}
