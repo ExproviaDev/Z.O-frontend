@@ -3,13 +3,13 @@ import React from "react";
 const Supporters = () => {
   return (
     <section className="relative w-full py-20 px-4 flex flex-col items-center justify-center bg-gray-50">
-      <div className="relative z-10 max-w-5xl w-full mx-auto text-center">
+      <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
         <div className="inline-block bg-gray-200 text-gray-800 text-xs font-bold px-4 py-1 rounded-full mb-4">
           Trusted By
         </div>
 
         <div className="mb-10">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-5xl font-extrabold text-gray-900 mb-4 px-5">
             Our Valued Partners & Supporters{" "}
             <span className="text-[#f16522]">(Season One)</span>
           </h2>

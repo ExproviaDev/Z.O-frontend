@@ -27,7 +27,7 @@ const timelineData = [
   {
     title: "1st Round Exam",
     date: "8 May 2026",
-    desc: " The Round 1 exam will be worth a total of30 marks,consisting of 30 MCQ questions. The time limit is 30 minutes. You will be able to see your score on the website immediately after the exam. Only those who score 20 or above will qualify for the 2nd Round.",
+    desc: " The Round 1 exam will consist of 30 MCQ questions, carrying a total of 30 marks. The time limit is 30 minutes. Participants will be able to view their scores on the website immediately after completing the exam. There will be no fixed passing mark; instead, the top 200 students from each SDG category will be selected to qualify for Round 2.",
     icon: <FaRegEdit />,
     align: "left",
   },
@@ -55,7 +55,7 @@ const timelineData = [
   {
     title: "Grand Finale",
     date: "6 June 2026",
-    desc: "51 Participants in Grand Finale A total of 51 finalists (3 for each of the 17 SDGs) will be invited to Dhaka, along with 2 accompanying guests each. 17 winners will be called on stage to present their plans for achieving their assigned SDG.",
+    desc: "51 Participants in Grand Finale . A total of 51 finalists (3 for each of the 17 SDGs) will be invited to Dhaka, along with 2 accompanying guests each. 17 winners will be called on stage to present their plans for achieving their assigned SDG.",
     icon: <FaTrophy />,
     align: "left",
   },
