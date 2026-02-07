@@ -60,7 +60,7 @@ export default function HeroSection() {
 
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
           Global Youth Initiative 2026 Empowering Youth to{" "}
-          <span className="text-Primary">Zero Global Challenges</span>
+          <span className="text-Primary">Global Challenges</span>
         </h1>
 
         <div className="flex flex-wrap justify-center gap-5 mb-16">

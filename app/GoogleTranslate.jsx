@@ -1,136 +1,137 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Script from "next/script";
 
 export default function GoogleTranslate() {
+  const [selected, setSelected] = useState("en");
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    window.googleTranslateElementInit = () => {
+    const cookies = document.cookie.split(";");
+    const langCookie = cookies.find((c) => c.trim().startsWith("googtrans="));
+    if (langCookie) {
+      const lang = langCookie.split("/").pop();
+      setSelected(lang);
+    }
+  }, []);
+
+  const handleLanguageChange = (lang) => {
+    document.cookie = `googtrans=/auto/${lang}; path=/; domain=${window.location.hostname}`;
+    document.cookie = `googtrans=/auto/${lang}; path=/;`;
+    setSelected(lang);
+    setIsOpen(false);
+    window.location.reload();
+  };
+
+  const googleTranslateInit = () => {
+    if (window.google && window.google.translate) {
       new window.google.translate.TranslateElement(
         {
           pageLanguage: "en",
           includedLanguages: "en,bn",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           autoDisplay: false,
         },
-        "google_translate_element",
+        "google_translate_element"
       );
-    };
-
-    if (!document.querySelector('script[src*="translate_a/element.js"]')) {
-      const script = document.createElement("script");
-      script.src =
-        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
     }
-
-    const removeGoogleBanner = () => {
-      const banner = document.querySelector(".goog-te-banner-frame");
-      const bannerContainer = document.querySelector(".VIpgJd-ZVi9od-ORHb");
-      const googleIframe = document.querySelector('iframe[id*=":1.container"]');
-      const googleIframe2 = document.querySelector(
-        'iframe[id*=":2.container"]',
-      );
-
-      if (banner) banner.remove();
-      if (bannerContainer) bannerContainer.remove();
-      if (googleIframe) googleIframe.remove();
-      if (googleIframe2) googleIframe2.remove();
-
-      document.body.style.top = "0px";
-      document.body.style.position = "static";
-
-      const isBengali = document.cookie.includes("/en/bn");
-
-      const googleSpan = document.querySelector(
-        ".goog-te-gadget-simple span:first-child",
-      );
-      if (googleSpan) {
-        googleSpan.innerText = isBengali ? "ভাষা বেছে নিন" : "Select Language";
-      }
-
-      const menuFrames = document.querySelectorAll(".goog-te-menu-frame");
-      menuFrames.forEach((frame) => {
-        try {
-          const frameDoc =
-            frame.contentDocument || frame.contentWindow.document;
-          if (frameDoc) {
-            const menuItems = frameDoc.querySelectorAll(
-              ".goog-te-menu2-item span.text",
-            );
-            menuItems.forEach((item) => {
-              const text = item.innerText.trim();
-              if (isBengali) {
-                if (text.toLowerCase() === "bengali") item.innerText = "বাংলা";
-                if (text.toLowerCase() === "english") item.innerText = "ইংরেজি";
-              } else {
-                if (text === "বাংলা") item.innerText = "Bengali";
-                if (text === "ইংরেজি") item.innerText = "English";
-              }
-            });
-          }
-        } catch (e) {}
-      });
-    };
-
-    const interval = setInterval(removeGoogleBanner, 500);
-    return () => clearInterval(interval);
-  }, []);
+  };
 
   return (
-    <div className="relative inline-block">
-      <div id="google_translate_element"></div>
+    <>
+      <div className="relative inline-block z-50">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-2 px-4 py-2 bg-[#111111] border border-[#333] rounded-full text-white text-sm hover:bg-black transition-all shadow-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          
+          <span className="font-medium">
+            {selected === "en" ? "English" : "বাংলা"}
+          </span>
+
+          <svg
+            className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="absolute right-0 mt-2 w-32 bg-[#111111] border border-[#333] rounded-xl shadow-xl overflow-hidden py-1 animate-in fade-in slide-in-from-top-2">
+            <button
+              onClick={() => handleLanguageChange("en")}
+              className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                selected === "en" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
+              }`}
+            >
+              English
+            </button>
+            <button
+              onClick={() => handleLanguageChange("bn")}
+              className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                selected === "bn" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
+              }`}
+            >
+              বাংলা
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        id="google_translate_element"
+        style={{
+          width: "0px",
+          height: "0px",
+          overflow: "hidden",
+          position: "absolute",
+          left: "-9999px",
+          visibility: "hidden",
+        }}
+      ></div>
+
+      <Script
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        onLoad={() => {
+          window.googleTranslateElementInit = googleTranslateInit;
+        }}
+        strategy="afterInteractive"
+      />
 
       <style jsx global>{`
-        .goog-te-menu-frame {
-          z-index: 99999999 !important;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-          border: none !important;
-          border-radius: 8px !important;
+        .goog-te-banner-frame { display: none !important; }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        
+        body { top: 0px !important; position: static !important; }
+        
+        .goog-tooltip { display: none !important; }
+        .goog-tooltip:hover { display: none !important; }
+        
+        .goog-text-highlight {
+          background-color: transparent !important;
+          box-shadow: none !important;
         }
-
-        .goog-te-banner-frame,
-        .goog-te-banner,
-        .VIpgJd-ZVi9od-ORHb,
-        #goog-gt-tt,
-        .goog-te-balloon-frame,
-        iframe.goog-te-banner-frame,
-        iframe[id*=":1.container"],
-        iframe[id*=":2.container"] {
-          display: none !important;
-          visibility: hidden !important;
-          opacity: 0 !important;
-          height: 0 !important;
-        }
-
-        body {
-          top: 0px !important;
-          position: static !important;
-        }
-
-        .goog-te-gadget-icon,
-        .goog-te-gadget-simple img,
-        .goog-te-menu-value span:nth-child(3),
-        .goog-te-menu-value span:nth-child(5) {
-          display: none !important;
-        }
-
-        .goog-te-gadget-simple {
-          background-color: #111111 !important;
-          border: 1px solid #333 !important;
-          padding: 8px 16px !important;
-          border-radius: 999px !important;
-          display: flex !important;
-          align-items: center !important;
-          color: white !important;
-          cursor: pointer !important;
-        }
-
-        .goog-te-gadget-simple span {
-          color: white !important;
-          font-family: inherit !important;
-          font-size: 14px !important;
-        }
+        
+        .goog-te-gadget-icon { display: none !important; }
+        .goog-te-gadget-simple { display: none !important; }
       `}</style>
-    </div>
+    </>
   );
 }

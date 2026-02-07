@@ -12,7 +12,7 @@ export default function Registration() {
         <>
           In February 2026, register on the <b>Zero Olympiad</b> website under
           the designated category based on the class you are studying in. The
-          registration fee is <b>499 Taka.</b>
+          registration fee is <b>300 Taka.</b>
         </>
       ),
     },
@@ -20,11 +20,11 @@ export default function Registration() {
       id: "04",
       text: (
         <>
-          The <b>Round 1 exam</b> will be worth a total of <b>30 marks,</b>{" "}
-          consisting of <b>30 MCQ questions.</b> The time limit is{" "}
-          <b>30 minutes.</b> You will be able to see your score on the website
-          immediately after the exam. Only those who score <b>20 or above</b>{" "}
+          The <b>Round 1 exam</b> will consist of <b>30 MCQ questions</b>, carrying a total of <b>30 marks.</b>{" "}
+          The time limit is <b>30 minutes.</b> You will be able to see your score on the website
+          immediately after the exam. There will be no fixed passing mark; instead, the <b>top 200 students from each SDG</b>{" "}
           will qualify for the <b>2nd Round.</b>
+
         </>
       ),
     },

@@ -48,7 +48,7 @@ const JurySection = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl text-white font-bold tracking-tight">
-            Confirmed Guest Jury{" "}
+            Respected Jury Board{" "}
             <span className="text-Primary">(Season One)</span>
           </h1>
           <p className="text-[18px] text-gray-300 py-5 max-w-2xl mx-auto font-medium">

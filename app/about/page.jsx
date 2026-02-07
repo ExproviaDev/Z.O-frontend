@@ -52,14 +52,14 @@ export default function ZeroOlympiad() {
                 </div>
 
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  Thirteen-year-old Child Rights Activist, Climate Campaigner,
+                  Fourteen-year-olds Child Rights Activist, Climate Campaigner,
                   and Global Speaker.
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
                   I have represented youth voices at the **United Nations,
                   Harvard, and TEDx**, advocating against climate change and
-                  social injustices. Through my organization, **CHIL&D**, I work
-                  toward sustainable development and global learning.
+                  social injustices. Through my organization, **Faatiha Aayat Academy**, I work
+                  towards sustainable development and global Leadership .
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
                   A published author of four books and a recipient of the
@@ -128,7 +128,7 @@ export default function ZeroOlympiad() {
                       Barrister-at-Law
                     </span>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-none">
                       Syed Aftab Ahmed
                     </h2>
 

@@ -72,8 +72,8 @@ export default function Header() {
             : "bg-white py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+        <div className=" px-4 lg:px-5">
+          <div className=" max-w-7xl mx-auto flex items-center justify-between">
             {/* Logo Section */}
             <Link prefetch={false} href="/" className="flex items-center group">
               <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
@@ -92,14 +92,6 @@ export default function Header() {
                
               </div>
             </Link>
-
-
-
- 
-
-
-
-
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (

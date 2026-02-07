@@ -11,7 +11,7 @@ const SDGTable1 = () => {
             Which SDG Will You Present?
           </h2>
           <p className="text-gray-600 max-w-5xl mx-auto text-sm md:text-base leading-relaxed">
-            Students all over the world – <span className="font-bold">inside and outside Bangladesh</span> – from <span className="font-bold">class 5 to masters</span> from <span className="font-bold">any medium or version</span> studying in a <span className="font-bold">school, college, university, or madrasha</span> are all eligible to apply for the Zero Olympiad. Students from <span className="font-bold">Qawmi and Alia Madrasas</span> are also encouraged to join. Participants who successfully pass the <span className="font-bold">first two rounds</span> will get the opportunity to present their selected <span className="font-bold">Sustainable Development Goal (SDG)</span> in the Grand Finale. Please also mention the <span className="font-bold">class you will be studying in January 2026</span> while applying.
+            Students all over the world – <span className="font-bold">inside and outside Bangladesh</span> – from <span className="font-bold">class 5 to masters</span> from <span className="font-bold">any medium or version</span> studying in a <span className="font-bold">school, college, university, or madrasha</span> are all eligible to apply for the Zero Olympiad. Students from <span className="font-bold">Qawmi and Alia Madrasas</span> are also encouraged to join. Participants who successfully pass the <span className="font-bold">first two rounds</span> will get the opportunity to present their selected <span className="font-bold">Sustainable Development Goal (SDG)</span> in the Grand Finale. Please also mention the <span className="font-bold">class you were studying in January 2026</span> while applying.
           </p>
           <div className="w-24 h-1 bg-Primary mx-auto mt-4 rounded-full"></div>
         </div>
@@ -33,7 +33,7 @@ const SDGTable1 = () => {
               
               <tr className="bg-[#f0fff4]">
                 <td rowSpan="4" className="border-r border-b font-bold p-4">
-                  <span className="text-green-600 text-lg block">SDG Defender</span>
+                  <span className="text-green-600 text-lg block">SDG Activist</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Defender<br/>Others: Activist</span>
                 </td>
                 <td className="border-r border-b p-3 font-bold">SDG 1</td>
@@ -65,8 +65,8 @@ const SDGTable1 = () => {
               </tr>
 
               <tr className="bg-[#f0f7ff]">
-                <td rowSpan="6" className="border-r border-b font-bold p-4">
-                  <span className="text-blue-600 text-lg block">SDG Leader</span>
+                <td rowSpan="7" className="border-r border-b font-bold p-4">
+                  <span className="text-blue-600 text-lg block">SDG Ambassador</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Leader<br/>Others: Ambassador</span>
                 </td>
                 <td className="border-r border-b p-3 font-bold">SDG 5</td>
@@ -104,8 +104,16 @@ const SDGTable1 = () => {
                 <td className="border-r border-b p-3 font-bold">SDG 10</td>
                 <td className="border-r border-b p-3 font-semibold text-gray-600">HSC Candidate</td>
                 <td className="border-r border-b p-3 font-semibold text-gray-600">A Level Candidate</td>
-                <td className="border-r border-b p-3 font-semibold text-gray-600">Alim Candidate</td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600 ">Alim Candidate</td>
               </tr>
+              <tr className="bg-[#f0f7ff]">
+                <td className="border-r border-b p-3 font-bold">SDG 11</td>
+                <td className="border-b p-3 font-semibold text-gray-600"></td>
+                <td className="border-b p-3 font-semibold text-gray-600">University Admission Candidate</td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600"></td>
+                <td className=" border-b p-3 font-semibold text-gray-600 bg-gray-100">Musannif</td>
+              </tr>
+              
 
               <tr className="bg-gray-50 text-[10px] font-bold uppercase text-gray-500">
                 <td colSpan="6" className="py-2 border-b">Honors, Medical, Engineering, Marine, Fisheries, Diploma, Madrasa</td>
@@ -113,35 +121,35 @@ const SDGTable1 = () => {
 
               <tr className="bg-[#f5f3ff]">
                 <td rowSpan="7" className="border-r border-b font-bold p-4">
-                  <span className="text-purple-600 text-lg block">SDG Pioneer</span>
+                  <span className="text-purple-600 text-lg block">SDG Achiever</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Pioneer<br/>Others: Achiever</span>
                 </td>
-                <td className="border-r border-b p-3 font-bold">SDG 11</td>
-                <td colSpan="2" className="border-r border-b p-3">1st Year</td>
-                <td rowSpan="4" className="border-r border-b p-3 bg-white">Fazil</td>
-                <td rowSpan="4" className="border-b p-3 bg-white">Mishkat</td>
-              </tr>
-              <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 12</td>
-                <td colSpan="2" className="border-r border-b p-3">2nd Year</td>
+                <td colSpan="2" className="border-r border-b p-3">1st Year</td>
+                <td rowSpan="3" className="border-r border-b p-3 bg-white">Fazil</td>
+                <td rowSpan="3" className="border-b p-3 bg-white">Mishkat</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 13</td>
-                <td colSpan="2" className="border-r border-b p-3">3rd Year</td>
+                <td colSpan="2" className="border-r border-b p-3">2nd Year</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 14</td>
-                <td colSpan="2" className="border-r border-b p-3">4th Year</td>
+                <td colSpan="2" className="border-r border-b p-3">3rd Year</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 15</td>
-                <td colSpan="2" className="border-r border-b p-3">5th Year & Intern</td>
-                <td rowSpan="3" className="border-r border-b p-3 bg-white">Kamil</td>
-                <td rowSpan="3" className="border-b p-3 bg-white">Dawra</td>
+                <td colSpan="2" className="border-r border-b p-3">4th Year </td>
+                <td rowSpan="4" className="border-r border-b p-3 bg-white">Kamil</td>
+                <td rowSpan="4" className="border-b p-3 bg-white">Dawra</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 16</td>
-                <td colSpan="2" className="border-r border-b p-3 font-semibold">Postgraduate (Masters)</td>
+                <td colSpan="2" className="border-r border-b p-3 font-semibold">5th Year & Intern </td>
+              </tr>
+              <tr className="bg-[#f5f3ff]">
+                <td className="border-r border-b p-3 font-bold">SDG 17</td>
+                <td colSpan="2" className="border-r border-b p-3 font-semibold"> Postgraduate (Masters)</td>
               </tr>
               
 
