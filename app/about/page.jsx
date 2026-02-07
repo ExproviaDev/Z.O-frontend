@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-
 import {
  
   FaQuoteLeft,
@@ -10,38 +8,8 @@ import {
 
 import Image from "next/image";
 import HeroSection from "./components/heroSection";
-import { IoMdArrowDropright } from "react-icons/io";
 
 export default function ZeroOlympiad() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const sdgs = [
-    { id: 1, title: "No Poverty", color: "bg-[#E5243B]" },
-    { id: 2, title: "Zero Hunger", color: "bg-[#DDA63A]" },
-    { id: 3, title: "Good Health", color: "bg-[#4C9F38]" },
-    { id: 4, title: "Quality Education", color: "bg-[#C5192D]" },
-    { id: 5, title: "Gender Equality", color: "bg-[#FF3A21]" },
-    { id: 6, title: "Clean Water", color: "bg-[#26BDE2]" },
-    { id: 7, title: "Affordable Energy", color: "bg-[#FCC30B]" },
-    { id: 8, title: "Decent Work", color: "bg-[#A21942]" },
-    { id: 9, title: "Industry & Innovation", color: "bg-[#FD6925]" },
-    { id: 10, title: "Reduced Inequality", color: "bg-[#DD1367]" },
-    { id: 11, title: "Sustainable Cities", color: "bg-[#FD9D24]" },
-    { id: 12, title: "Responsible Consumption", color: "bg-[#BF8B2E]" },
-    { id: 13, title: "Climate Action", color: "bg-[#3F7E44]" },
-    { id: 14, title: "Life Below Water", color: "bg-[#0A97D9]" },
-    { id: 15, title: "Life On Land", color: "bg-[#56C02B]" },
-    { id: 16, title: "Peace & Justice", color: "bg-[#00689D]" },
-    { id: 17, title: "Partnerships", color: "bg-[#19486A]" },
-  ];
-
   return (
     <div className="min-h-screen   text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
       <div className="">

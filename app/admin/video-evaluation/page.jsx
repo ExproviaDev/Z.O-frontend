@@ -3,10 +3,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import {
   FiVideo, FiStar, FiMessageSquare, FiFilter,
-  FiExternalLink, FiCheckCircle, FiClock, FiChevronLeft, FiChevronRight
+  FiExternalLink, FiCheckCircle, FiClock, FiChevronLeft, FiChevronRight, FiEdit
 } from 'react-icons/fi';
+
+const MySwal = withReactContent(Swal);
+
+// ১০টি ক্রাইটেরিয়া লিস্ট
+const CRITERIA_LIST = [
+  "Content Relevance",
+  "Creativity and Innovation",
+  "Clarity and Communication",
+  "Impact and Call to Action",
+  "Presentation and Visual Appeal",
+  "Technical Quality",
+  "Research and Data Usage",
+  "Engagement and Storytelling",
+  "Inclusivity and Diversity",
+  "Overall Learning and Execution"
+];
 
 const VideoEvaluation = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -14,12 +32,10 @@ const VideoEvaluation = () => {
 
   // Filters & Pagination State
   const [filterSdg, setFilterSdg] = useState('');
-  const [activeTab, setActiveTab] = useState('pending'); // 'pending' | 'evaluated'
+  const [activeTab, setActiveTab] = useState('pending');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [updatingId, setUpdatingId] = useState(null);
 
-  // ডাটা রি-ফেচ হবে যখনই কোনো ফিল্টার বা পেজ চেঞ্জ হবে
   useEffect(() => {
     fetchSubmissions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,36 +67,151 @@ const VideoEvaluation = () => {
     }
   };
 
-  const handleScoreUpdate = async (id, score, comments) => {
-    if (!score) return toast.error("অনুগ্রহ করে স্কোর দিন");
-    if (score > 100 || score < 0) return toast.error("স্কোর ০-১০০ এর মধ্যে হতে হবে");
+  // --- স্কোরিং মডাল ওপেন করার ফাংশন ---
+  const openEvaluationModal = (submission) => {
+    // যদি আগে কোনো স্কোর থাকে, সেটা পার্স করা হবে, নাহলে সব ০
+    let initialScores = {};
+    if (submission.score_details) {
+      initialScores = typeof submission.score_details === 'string' 
+        ? JSON.parse(submission.score_details) 
+        : submission.score_details;
+    } else {
+      CRITERIA_LIST.forEach(c => initialScores[c] = 0);
+    }
 
-    setUpdatingId(id);
+    let currentComment = submission.jury_comments || "";
+
+    MySwal.fire({
+      title: <h3 className="text-xl font-bold text-gray-800">Evaluate Submission</h3>,
+      html: (
+        <EvaluationForm 
+          initialScores={initialScores} 
+          initialComment={currentComment}
+          onSubmit={(scores, total, comment) => handleFinalSubmit(submission.id, scores, total, comment)}
+        />
+      ),
+      showConfirmButton: false, // আমরা ফর্মের ভেতরেই সাবমিট বাটন রাখব
+      showCloseButton: true,
+      width: '800px',
+      padding: '2em',
+      background: '#fff',
+      backdrop: `rgba(0,0,123,0.4)`
+    });
+  };
+
+  // --- মডালের ভেতরের ফর্ম কম্পোনেন্ট ---
+  const EvaluationForm = ({ initialScores, initialComment, onSubmit }) => {
+    const [scores, setScores] = useState(initialScores);
+    const [comment, setComment] = useState(initialComment);
+    const [total, setTotal] = useState(0);
+
+    // মোট স্কোর ক্যালকুলেশন
+    useEffect(() => {
+      const sum = Object.values(scores).reduce((a, b) => parseFloat(a || 0) + parseFloat(b || 0), 0);
+      setTotal(sum);
+    }, [scores]);
+
+    const handleChange = (criteria, value) => {
+      let val = parseFloat(value);
+      if (val > 10) val = 10;
+      if (val < 0) val = 0;
+      setScores({ ...scores, [criteria]: val });
+    };
+
+    return (
+      <div className="text-left mt-4">
+        <p className="mb-4 text-sm text-gray-500 bg-blue-50 p-3 rounded-lg border border-blue-100">
+          ℹ️ <strong>Instructions for Jury:</strong> Please rate each criterion out of 10. Total score (out of 100) will be calculated automatically.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          {CRITERIA_LIST.map((criteria, index) => (
+            <div key={index} className="flex flex-col gap-1 p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition">
+              <label className="text-xs font-bold text-gray-700 uppercase tracking-wide">{criteria}</label>
+              <input
+                type="number"
+                min="0" max="10"
+                value={scores[criteria] || ''}
+                onChange={(e) => handleChange(criteria, e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 ring-indigo-200 outline-none text-sm font-bold"
+                placeholder="0-10"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-gray-200">
+           <label className="block text-sm font-bold text-gray-700 mb-2">Feedback / Comments</label>
+           <textarea
+             rows="3"
+             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 ring-indigo-200 outline-none text-sm"
+             placeholder="Write constructive feedback for the participant..."
+             value={comment}
+             onChange={(e) => setComment(e.target.value)}
+           ></textarea>
+        </div>
+
+        <div className="flex items-center justify-between mt-6 bg-gray-100 p-4 rounded-xl">
+          <div>
+            <span className="text-gray-500 text-sm font-bold">Total Score</span>
+            <div className="text-3xl font-black text-indigo-600">{total} <span className="text-base text-gray-400">/ 100</span></div>
+          </div>
+          <button
+            onClick={() => onSubmit(scores, total, comment)}
+            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg transition-transform active:scale-95"
+          >
+            Confirm & Submit
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // --- ফাইনাল সাবমিট হ্যান্ডলার (API Call) ---
+  const handleFinalSubmit = async (id, scores, total, comment) => {
     try {
+      // লোডিং এলার্ট
+      MySwal.fire({
+        title: 'Submitting...',
+        didOpen: () => Swal.showLoading(),
+        allowOutsideClick: false
+      });
+
       const token = localStorage.getItem('access_token');
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
       await axios.put(`${baseUrl}/api/admin/submit-score`, {
         submission_id: id,
-        score,
-        comments
+        score_details: scores, // ১০টা সাবজেক্টের ব্রেকডাউন
+        total_score: total,    // ১০০ এর মধ্যে টোটাল
+        comments: comment
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      toast.success(activeTab === 'pending' ? "মার্ক সাবমিট হয়েছে!" : "মার্ক আপডেট হয়েছে!");
+      // সাকসেস এলার্ট
+      MySwal.fire({
+        icon: 'success',
+        title: activeTab === 'pending' ? 'Evaluation Submitted!' : 'Evaluation Updated!',
+        text: `Total Score: ${total}/100`,
+        confirmButtonColor: '#4F46E5',
+        timer: 2000
+      });
+
       fetchSubmissions(); // লিস্ট রিফ্রেশ
     } catch (err) {
-      toast.error("আপডেট করা সম্ভব হয়নি!");
-    } finally {
-      setUpdatingId(null);
+      console.error(err);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong while submitting marks.',
+      });
     }
   };
 
-  // Tab Button Component
   const TabButton = ({ id, label, icon: Icon }) => (
     <button
-      onClick={() => { setActiveTab(id); setPage(1); }} // ট্যাব চেঞ্জ হলে পেজ ১ এ যাবে
+      onClick={() => { setActiveTab(id); setPage(1); }}
       className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${activeTab === id
           ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
           : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-100'
@@ -99,7 +230,7 @@ const VideoEvaluation = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
         <div>
           <h1 className="text-3xl font-black text-gray-800 tracking-tight">Video Evaluation</h1>
-          <p className="text-gray-500 font-medium mt-1">Review round 2 submissions and assign scores.</p>
+          <p className="text-gray-500 font-medium mt-1">Review round 2 submissions and assign detailed scores.</p>
         </div>
 
         {/* SDG Filter */}
@@ -132,7 +263,7 @@ const VideoEvaluation = () => {
               <tr>
                 <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest">Participant</th>
                 <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest">Submission</th>
-                <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest w-32">Score (0-100)</th>
+                <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest w-32 text-center">Total Score</th>
                 <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest w-1/3">Feedback</th>
                 <th className="p-6 text-[11px] font-black text-gray-400 uppercase tracking-widest text-right">Action</th>
               </tr>
@@ -171,42 +302,33 @@ const VideoEvaluation = () => {
                         <FiExternalLink /> Watch Video
                       </a>
                     </td>
-                    <td className="p-6">
-                      <div className="relative flex items-center bg-white rounded-xl border border-gray-200 focus-within:border-indigo-500 focus-within:ring-2 ring-indigo-100 transition-all">
-                        <FiStar className="absolute left-3 text-amber-400" />
-                        <input
-                          type="number"
-                          defaultValue={row.jury_score || ''}
-                          // আমরা অন-চেঞ্জ হ্যান্ডলার ব্যবহার করছি না, সরাসরি সাবমিটে পাঠাবো অথবা onBlur এ টেম্প ডাটা রাখব
-                          onBlur={(e) => row.temp_score = e.target.value}
-                          className="w-full pl-9 p-2.5 bg-transparent outline-none text-sm font-bold text-gray-700 rounded-xl"
-                          placeholder="00"
-                          min="0" max="100"
-                        />
-                      </div>
+                    <td className="p-6 text-center">
+                       {row.jury_score ? (
+                         <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-sm font-black border border-amber-100">
+                           <FiStar className="fill-amber-500 text-amber-500" /> {row.jury_score}
+                         </span>
+                       ) : (
+                         <span className="text-gray-300 font-bold text-2xl">-</span>
+                       )}
                     </td>
                     <td className="p-6">
-                      <div className="relative flex items-center bg-white rounded-xl border border-gray-200 focus-within:border-indigo-500 focus-within:ring-2 ring-indigo-100 transition-all">
-                        <FiMessageSquare className="absolute left-3 text-gray-400" />
-                        <input
-                          type="text"
-                          defaultValue={row.jury_comments || ''}
-                          onBlur={(e) => row.temp_comments = e.target.value}
-                          className="w-full pl-9 p-2.5 bg-transparent outline-none text-sm text-gray-600 rounded-xl"
-                          placeholder="Write constructive feedback..."
-                        />
-                      </div>
+                      <p className="text-sm text-gray-500 line-clamp-2 italic">
+                        {row.jury_comments || "No feedback given yet..."}
+                      </p>
                     </td>
                     <td className="p-6 text-right">
                       <button
-                        onClick={() => handleScoreUpdate(row.id, row.temp_score || row.jury_score, row.temp_comments || row.jury_comments)}
-                        disabled={updatingId === row.id}
-                        className={`px-6 py-2.5 rounded-xl text-xs font-bold shadow-md transition-all active:scale-95 ${activeTab === 'pending'
+                        onClick={() => openEvaluationModal(row)}
+                        className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold shadow-md transition-all active:scale-95 ${activeTab === 'pending'
                             ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                            : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                            : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
                           }`}
                       >
-                        {updatingId === row.id ? 'Saving...' : activeTab === 'pending' ? 'Submit' : 'Update'}
+                        {activeTab === 'pending' ? (
+                            <>Evaluate <FiChevronRight /></>
+                        ) : (
+                            <><FiEdit /> Edit Score</>
+                        )}
                       </button>
                     </td>
                   </tr>

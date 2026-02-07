@@ -32,7 +32,7 @@ export default function AdminLayout({ children }) {
         }
         
         // ৩. Manager/Jury-r jonno specific route restriction
-        const adminOnlyRoutes = ["/admin/quiz-management", "/admin/user-management", "/admin/mark-controller"]
+        const adminOnlyRoutes = ["/admin/quiz-management", "/admin/user-management", "/admin/mark-controller, /admin/video-submission-setting"];
         if (role === "manager" && adminOnlyRoutes.some(path => pathname.startsWith(path))) {
           router.push("/admin")
           return

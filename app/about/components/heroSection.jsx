@@ -1,8 +1,5 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
-import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
 
 import { Swiper, SwiperSlide } from "swiper/react";

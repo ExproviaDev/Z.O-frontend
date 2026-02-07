@@ -35,6 +35,7 @@ export default function Sidebar({ isOpen, onClose }) {
       icon: <GrAnnounce />,
       href: "/dashboard/announcement",
     },
+    {name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission"},
   ];
 
   const handleLogout = () => {

@@ -1,11 +1,7 @@
-"use client";
-
-import React from "react";
 import {
   FaGraduationCap,
   FaAward,
   FaRocket,
-  FaCheckCircle,
   FaArrowRight,
   FaChalkboardTeacher,
   FaUserFriends,
