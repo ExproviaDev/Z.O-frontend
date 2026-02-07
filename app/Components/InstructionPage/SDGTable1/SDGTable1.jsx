@@ -124,32 +124,32 @@ const SDGTable1 = () => {
                   <span className="text-purple-600 text-lg block">SDG Pioneer</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Pioneer<br/>Others: Achiever</span>
                 </td>
-                <td className="border-r border-b p-3 font-bold">SDG 11</td>
-                <td colSpan="2" className="border-r border-b p-3">1st Year</td>
-                <td rowSpan="4" className="border-r border-b p-3 bg-white">Fazil</td>
-                <td rowSpan="4" className="border-b p-3 bg-white">Mishkat</td>
-              </tr>
-              <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 12</td>
-                <td colSpan="2" className="border-r border-b p-3">2nd Year</td>
+                <td colSpan="2" className="border-r border-b p-3">1st Year</td>
+                <td rowSpan="3" className="border-r border-b p-3 bg-white">Fazil</td>
+                <td rowSpan="3" className="border-b p-3 bg-white">Mishkat</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 13</td>
-                <td colSpan="2" className="border-r border-b p-3">3rd Year</td>
+                <td colSpan="2" className="border-r border-b p-3">2nd Year</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 14</td>
-                <td colSpan="2" className="border-r border-b p-3">4th Year</td>
+                <td colSpan="2" className="border-r border-b p-3">3rd Year</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 15</td>
-                <td colSpan="2" className="border-r border-b p-3">5th Year & Intern</td>
-                <td rowSpan="3" className="border-r border-b p-3 bg-white">Kamil</td>
-                <td rowSpan="3" className="border-b p-3 bg-white">Dawra</td>
+                <td colSpan="2" className="border-r border-b p-3">4th Year </td>
+                <td rowSpan="4" className="border-r border-b p-3 bg-white">Kamil</td>
+                <td rowSpan="4" className="border-b p-3 bg-white">Dawra</td>
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 16</td>
-                <td colSpan="2" className="border-r border-b p-3 font-semibold">Postgraduate (Masters)</td>
+                <td colSpan="2" className="border-r border-b p-3 font-semibold">5th Year & Intern </td>
+              </tr>
+              <tr className="bg-[#f5f3ff]">
+                <td className="border-r border-b p-3 font-bold">SDG 17</td>
+                <td colSpan="2" className="border-r border-b p-3 font-semibold"> Postgraduate (Masters)</td>
               </tr>
               
 
