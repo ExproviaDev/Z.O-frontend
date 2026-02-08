@@ -1,238 +1,154 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useMotionValue } from "framer-motion";
+import React from "react";
 import {
-  FaClock,
-  FaHourglassHalf,
-  FaSearch,
-  FaHandsHelping,
+  FaUserEdit,
+  FaFileAlt,
+  FaRegEdit,
+  FaRegCheckCircle,
+  FaVideo,
+  FaAward,
+  FaTrophy,
 } from "react-icons/fa";
 
-/* ---------------- DATA ---------------- */
-const steps = [
+const timelineData = [
   {
-    title: "Registration Deadline",
-    desc: "২০২৫ সালের জানুয়ারি মাসে তুমি কোন ক্লাসে পড় সেই অনুযায়ী নির্ধারিত ক্যাটাগরিতে রেজিস্ট্রেশন কর।",
-    side: "left",
-    icon: <FaClock />,
+    title: "Registration Opens",
+    date: "18 February 2026",
+    desc: "Start your journey today! Register online to participate in the most awaited Olympiad of the year.",
+    icon: <FaUserEdit />,
+    align: "left",
   },
   {
-    title: "1st Round MCQ Test",
-    desc: "রেজিস্ট্রেশনের পরে তুমি যেই ইমেইল পেয়েছ সেখানে জাতিসংঘ স্বীকৃত যে কোর্স এর তালিকা দেয়া আছে সেখান থেকেই প্রথম রাউন্ডের MCQ পরীক্ষা অনুষ্ঠিত হবে ১০ জানুয়ারী।",
-    side: "right",
-    icon: <FaHourglassHalf />,
+    title: "Registration Closes",
+    date: "6 May 2026",
+    desc: "Final call for entries! Complete your registration by today to secure your spot in the 1st Round Exam.",
+    icon: <FaFileAlt />,
+    align: "right",
   },
   {
-    title: "2nd Round Video Contest",
-    desc: "প্রথম রাউন্ডের MCQ পরীক্ষায় সর্বোচ্চ নম্বর প্রাপ্তির ভিত্তিতে দ্বিতীয় রাউন্ডে অংশ গ্রহণের জন্য ইমেইল করা হবে। ভিডিও জমা দেয়ার শেষ তারিখ ৩১ জানুয়ারী।",
-    side: "left",
-    icon: <FaSearch />,
+    title: "1st Round Exam",
+    date: "8 May 2026",
+    desc: "MCQ Contest Register in your class category (as of 8 may 2026). Complete 20 MCQ questions from UN-recognized courses. Winners advance to the second round.",
+    icon: <FaRegEdit />,
+    align: "left",
+  },
+  {
+    title: "1st Round Result",
+    date: "9 May 2026",
+    desc: "Results will be published!! Participants will be selected for the second round of their MCQ scores. Please check your dashboard or email for more information.",
+    icon: <FaRegCheckCircle />,
+    align: "right",
+  },
+  {
+    title: "2nd Round Exam",
+    date: "16 May 2026",
+    desc: "Three Minute Thrill: Create a compelling 3-minute video on your assigned SDG topic. Post on social media with #ZeroOlympiad. Submit your video link by 20 may 2026.",
+    icon: <FaVideo />,
+    align: "left",
+  },
+  {
+    title: "2nd Round Result",
+    date: "25 May 2026",
+    desc: "Results are live! The top performers advancing to the Grand Finale have been announced. Check the official website or your dashboard for the list of finalists and travel/accommodation details for the Dhaka event.",
+    icon: <FaAward />,
+    align: "right",
   },
   {
     title: "Grand Finale",
-    desc: "জুরি বোর্ডের সিদ্ধান্ত অনুযায়ী ৫১ জনকে ঢাকায় গ্র্যান্ড ফিনালে আমন্ত্রণ জানানো হবে।",
-    side: "right",
-    icon: <FaHandsHelping />,
+    date: "6 June 2026",
+    desc: "51 Participants in Grand Finale A total of 51 finalists (3 for each of the 17 SDGs) will be invited to Dhaka, along with 2 accompanying guests each. 17 winners will be called on stage to present their plans for achieving their assigned SDG.",
+    icon: <FaTrophy />,
+    align: "left",
   },
 ];
 
-/* ---------------- CONSTANTS ---------------- */
-const CARD_GAP = 260;
-const START_TOP = 160;
-const SECTION_HEIGHT = START_TOP + steps.length * CARD_GAP + 200;
-
-/* ---------------- COMPONENT ---------------- */
-export default function TimelineEvent() {
-  const wrapperRef = useRef(null);
-  const pathRef = useRef(null);
-
-  const rocketX = useMotionValue(0);
-  const rocketY = useMotionValue(0);
-  const rocketRotate = useMotionValue(0);
-
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: wrapperRef,
-    offset: ["start start", "end end"],
-  });
-
-  /* ---------------- ROCKET FOLLOW PATH ---------------- */
-  useEffect(() => {
-    const path = pathRef.current;
-    if (!path) return;
-
-    const length = path.getTotalLength();
-
-    return scrollYProgress.on("change", (v) => {
-      const progress = Math.min(Math.max(v * 1.5, 0), 1);
-      const point = path.getPointAtLength(length * progress);
-      const next = path.getPointAtLength(
-        length * Math.min(progress + 0.001, 1)
-      );
-
-      rocketX.set(point.x);
-      rocketY.set(point.y);
-
-      const angle =
-        Math.atan2(next.y - point.y, next.x - point.x) *
-        (180 / Math.PI);
-
-      rocketRotate.set(angle);
-      setActiveIndex(Math.floor(progress * steps.length));
-    });
-  }, [scrollYProgress]);
-
+const Timeline = () => {
   return (
-    <>
-      {/* ================= DESKTOP ================= */}
-      <section
-        ref={wrapperRef}
-        style={{ minHeight: SECTION_HEIGHT }}
-        className="relative  hidden md:block bg-white overflow-hidden py-40"
-      >
-        {/* SVG PATH */}
-        <svg
-          className="absolute left-1/2 -translate-x-1/2"
-          width="1100"
-          height="1200"
-          viewBox="0 0 1100 1200"
-        >
-          <path
-            ref={pathRef}
-            d="
-              M 380,120 L 780,120
-              Q 820,120 820,160
-              L 820,380
-              Q 820,420 780,420
-              L 320,420
-              Q 280,420 280,460
-              L 280,650
-              Q 280,690 320,690
-              L 780,690
-              Q 820,690 820,730
-              L 820,850
-            "
-            stroke="#000"
-            strokeWidth="1"
-            strokeDasharray="6 6"
-            fill="none"
-          />
-        </svg>
+    <section
+      className="relative py-24 p-2 px-4 min-h-screen overflow-hidden"
+      style={{
+        backgroundImage: `url('https://i.ibb.co/99HFrKfK/speaker-bg.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <div className="max-w-7xl mx-auto relative">
+        <div className="text-center space-y-4 pb-4 text-black">
+          <h1 className="md:text-5xl text-4xl font-medium">Time Line</h1>
+          <p className="pb-10 opacity-80">
+            Follow the path from registration to the grand finale. Each
+            milestone brings you closer to <br className="hidden md:block" />{" "}
+            achieving excellence.
+          </p>
+        </div>
 
-        {/* ROCKET */}
-        <motion.div
-          className="absolute pointer-events-none"
-          style={{
-            x: rocketX,
-            y: rocketY,
-            rotate: rocketRotate,
-            translateX: 350,
-            translateY: -20,
-          }}
-        >
-          <svg
-            viewBox="0 0 67 40"
-            width="67"
-            height="40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clipPath="url(#clip0_575_1310)">
-              <path
-                d="M16.8529 20C16.8549 19.2544 16.7081 18.5158 16.4208 17.8269C16.1335 17.1381 15.7114 16.5126 15.1791 15.9868C14.6497 15.458 14.0199 15.0388 13.3262 14.7535C12.6324 14.4682 11.8886 14.3225 11.1377 14.3247C7.24216 14.3247 1.95524 18.4438 1.36521 18.9127L0 20L1.36521 21.0864C1.95524 21.5563 7.24216 25.6753 11.1377 25.6753C11.8885 25.6774 12.6323 25.5316 13.326 25.2463C14.0197 24.961 14.6496 24.5419 15.1791 24.0132C15.7113 23.4873 16.1332 22.8618 16.4205 22.173C16.7078 21.4842 16.8547 20.7456 16.8529 20Z"
-                fill="#FDBF00"
-              />
-              <path
-                d="M1.36525 21.0865C1.95528 21.5563 7.2422 25.6753 11.1377 25.6753C11.8886 25.6774 12.6324 25.5316 13.3261 25.2463C14.0198 24.961 14.6496 24.5419 15.1791 24.0132C15.7114 23.4875 16.1333 22.8623 16.4206 22.1736C16.7079 21.4849 16.8549 20.7464 16.8529 20L0 20L1.36525 21.0865Z"
-                fill="#FF9100"
-              />
-              <path
-                d="M25.0986 9.71827L22.1999 9.71827L14.0488 11.7611L14.0488 28.2289L22.1989 30.2819L25.0977 30.2819L25.0986 9.71827Z"
-                fill="#C6DCF8"
-              />
-              <path
-                d="M14.0479 28.2335L22.1989 30.2819L25.0976 30.2819L25.0976 20.001L14.0479 20.001L14.0479 28.2335Z"
-                fill="#82BCEA"
-              />
-              <path
-                d="M66.0577 21.2769L67 20L66.0577 18.7252C65.3889 17.8201 64.6518 16.9667 63.8527 16.1726C61.801 14.1316 59.3642 12.5123 56.6817 11.4073C53.9816 10.2894 51.0848 9.71526 48.1594 9.71828L45.4346 9.71829L45.4346 30.281L48.1613 30.281C51.6465 30.2764 55.0821 29.461 58.1927 27.9002C61.2996 26.3322 63.9932 24.0632 66.0577 21.275L66.0577 21.2769Z"
-                fill="#FD4B49"
-              />
-              <path
-                d="M67 20L45.4346 20L45.4346 30.2809L48.1613 30.2809C51.6465 30.2764 55.0821 29.461 58.1927 27.9001C61.2994 26.3319 63.993 24.0629 66.0577 21.2749L67 20Z"
-                fill="#E70B69"
-              />
-              <path
-                d="M21.1797 0L21.1797 2.78566L24.5516 2.78566L24.5516 12.5038L46.1425 12.5038L35.3891 0L21.1797 0Z"
-                fill="#445EA0"
-              />
-              <path
-                d="M35.3928 40L46.1462 27.4961L24.5516 27.4961L24.5516 37.2143L21.1797 37.2143L21.1797 40L35.3928 40Z"
-                fill="#224070"
-              />
-              <path
-                d="M22.1973 9.71632L48.2316 9.71632L48.2316 30.2762L22.1973 30.2762L22.1973 9.71632Z"
-                fill="#EAF2F9"
-              />
-              <path
-                d="M22.1963 19.9971L48.2316 19.9971L48.2316 30.2761L22.1963 30.2761L22.1963 19.9971Z"
-                fill="#C6DCF8"
-              />
-              <path
-                d="M39.6828 22.6769C41.1716 21.1985 41.1716 18.8015 39.6828 17.3231C38.194 15.8447 35.7802 15.8447 34.2914 17.3231C32.8026 18.8015 32.8026 21.1985 34.2914 22.6769C35.7802 24.1553 38.194 24.1553 39.6828 22.6769Z"
-                fill="#71D5FF"
-              />
-            </g>
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] h-[calc(100%-250px)] bg-gray-200/30 hidden md:block top-48"></div>
 
-            <defs>
-              <clipPath id="clip0">
-                <rect width="65" height="40" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </motion.div>
+        <div className="absolute left-4 top-40 w-[1px] h-[calc(100%-200px)] bg-gray-200/30 md:hidden"></div>
 
-        {/* CARDS */}
-        {steps.map((s, i) => (
-          <div
-            key={i}
-            className={`absolute w-[420px] ${s.side === "left"
-              ? "left-[calc(50%-560px)]"
-              : "left-[calc(50%+120px)]"
-              }`}
-            style={{ top: START_TOP + i * CARD_GAP }}
-          >
+        <div className="space-y-12 pl-8 md:space-y-24">
+          {timelineData.map((item, index) => (
             <div
-              className={`rounded-2xl p-6 transition-all duration-500 ${activeIndex === i
-                ? "bg-indigo-600 text-white scale-105 shadow-[0_0_40px_rgba(99,102,241,0.5)]"
-                : "bg-white text-gray-800 shadow-xl"
-                }`}
+              key={index}
+              className={`relative flex flex-col md:flex-row items-center justify-between w-full ${
+                item.align === "right" ? "md:flex-row-reverse" : ""
+              }`}
             >
-              <div className="text-3xl mb-3">{s.icon}</div>
-              <h3 className="font-bold text-lg">{s.title}</h3>
-              <p className="mt-2 text-sm opacity-90">{s.desc}</p>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* ================= MOBILE ================= */}
-      <section className="md:hidden bg-gray-50 py-12 px-4">
-        <div className="space-y-8">
-          {steps.map((s, i) => (
-            <div key={i} className="bg-white rounded-2xl shadow-lg p-5">
-              <div className="text-indigo-600 text-2xl mb-2">
-                {s.icon}
+              <div className="md:hidden self-start mb-3 ml-8 font-semibold text-black text-sm italic">
+                {item.date}
               </div>
-              <h3 className="font-semibold">{s.title}</h3>
-              <p className="text-gray-600 text-sm mt-1">
-                {s.desc}
-              </p>
+
+              <div className="w-full md:w-[46%] z-10 ml-6 md:ml-0">
+                <div className="group relative bg-Primary p-8 lg:p-10 rounded-[20px] shadow-2xl transition-all duration-500 hover:bg-Secondary overflow-visible cursor-pointer">
+                  <div className="absolute bottom-6 left-6 text-white/5 text-8xl lg:text-[140px] pointer-events-none transition-transform duration-700 group-hover:scale-110">
+                    {item.icon}
+                  </div>
+
+                  <div className="relative z-10">
+                    <div className="flex justify-between items-start mb-6">
+                      <h3 className="text-white text-xl lg:text-3xl font-bold tracking-tight pr-12 leading-tight">
+                        {item.title}
+                      </h3>
+                      <div className="bg-[#78E08F] p-3 lg:p-4 rounded-full text-[#003D5B] text-xl lg:text-2xl shadow-xl shrink-0 absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 group-hover:rotate-12 transition-transform">
+                        {item.icon}
+                      </div>
+                    </div>
+                    <p className="text-white/80 text-sm lg:text-lg leading-relaxed font-medium">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${
+                      item.align === "left" ? "-right-4" : "-left-4"
+                    }`}
+                  ></div>
+
+                  <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-4 h-4 bg-inherit transform rotate-45 md:hidden"></div>
+                </div>
+              </div>
+
+              <div className="hidden md:flex relative items-center justify-center w-[8%]">
+                <div className="z-20 w-5 h-5 bg-white border-[3px] border-Secondary rounded-full shadow-md"></div>
+
+                <span
+                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${
+                    item.align === "left"
+                      ? "md:left-14 lg:left-16"
+                      : "md:right-14 lg:right-16"
+                  }`}
+                >
+                  {item.date}
+                </span>
+              </div>
+
+              <div className="hidden md:block md:w-[46%]"></div>
             </div>
           ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
-}
+};
+
+export default Timeline;

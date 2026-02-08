@@ -1,94 +1,96 @@
 export default function Page() {
   return (
-    <div className="max-w-4xl mx-auto  py-10 px-4">
-      <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <h1 className="text-4xl font-bold mb-6 text-slate-900">Privacy Policy</h1>
 
       <div className="pb-6">
-        <hr className="text-gray-400" />
+        <hr className="border-gray-300" />
       </div>
 
-      <p className="mb-4">
-        এই Privacy Policy ("নীতিশ্রেণী") বর্ণনা করে কিভাবে Zero Olympiad আপনার
-        ব্যক্তিগত তথ্য সংগ্রহ, ব্যবহার এবং রক্ষা করে। এই পলিসি ওয়েবসাইটে
-        ভিজিট এবং সাইট-এ অংশগ্রহণ করার সময় প্রযোজ্য।
+      <p className="mb-4 text-slate-700 leading-relaxed">
+        This Privacy Policy ("Policy") describes how Zero Olympiad collects, uses, 
+        and protects your personal information. This policy applies when you visit 
+        the website and participate in the site's activities.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">
-        ১. আমরা কোন ডেটা সংগ্রহ করি
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">
+        1. Information We Collect
       </h2>
-      <ul className="list-disc pl-6 mb-4">
-        <li>নাম, ইমেল, ফোন নম্বর — রেজিস্ট্রেশন বা যোগাযোগ ফর্মের মাধ্যমে।</li>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-slate-700">
+        <li>Name, email, and phone number — through registration or contact forms.</li>
         <li>
-          পেমেন্ট-সংক্রান্ত ডেটা — যদি কোন ফি থাকে (তৃতীয় পক্ষের পেমেন্ট
-          গেটওয়ে দ্বারা প্রসেস হয়)।
+          Payment-related data — if any fees apply (processed via third-party 
+          payment gateways).
         </li>
         <li>
-          টেকনিক্যাল ডেটা — IP অ্যাড্রেস, ব্রাউজার টাইপ, ডিভাইস তথ্য, লগ-ফাইল,
-          কুকি।
+          Technical data — IP address, browser type, device information, log files, 
+          and cookies.
         </li>
         <li>
-          আপনি যদি সাবমিট করেন এমন কন্টেন্ট — উদাহরণ: এসাইনমেন্ট, ভিডিও,
-          ফিডব্যাক ইত্যাদি।
-        </li>
-      </ul>
-
-      <h2 className="text-2xl font-semibold mt-6 mb-3">
-        ২. ডেটা ব্যবহার করার উদ্দেশ্য
-      </h2>
-      <ul className="list-disc pl-6 mb-4">
-        <li>সেবা প্রদান এবং অংশগ্রহণ যাচাই করা।</li>
-        <li>কমিউনিকেশন — ইমেইল, নোটিফিকেশন, রেজিস্ট্রেশন ও ইভেন্ট আপডেট।</li>
-        <li>সাইটের কার্যকারিতা উন্নত করা এবং নিরাপত্তা রক্ষা করা।</li>
-        <li>
-          আইনী বা নিরাপত্তাজনিত কারণে বাধ্যতামূলক হলে অনুরোধ অনুযায়ী তথ্য শেয়ার
-          করা।
+          Content submitted by you — for example: assignments, videos, feedback, etc.
         </li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">
-        ৩. কুকি এবং ট্র্যাকিং প্রযুক্তি
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">
+        2. Purpose of Using Data
       </h2>
-      <p className="mb-4">
-        আমরা কুকি ব্যবহার করতে পারি অ্যানালিটিকস, ফাংশনালিটি এবং ইউজার অভিজ্ঞতা
-        উন্নত করার জন্য। ব্রাউজারে কুকি নিষ্ক্রিয় করলে কিছু ফিচার কাজ নাও করতে
-        পারে।
-      </p>
-
-      <h2 className="text-2xl font-semibold mt-6 mb-3">
-        ৪. ডেটা শেয়ারিং ও তৃতীয়-পক্ষ
-      </h2>
-      <p className="mb-4">
-        আপনার তথ্য তৃতীয় পক্ষ (যেমন: পেমেন্ট গেটওয়ে, সিআরএম, মেইল-সার্ভিস)
-        এর কাছে পাঠানো হতে পারে শুধুমাত্র সেবাদান বা আইনি বাধ্যবাধকতার জন্য। আমরা
-        ব্যক্তিগত তথ্য বিক্রি করি না বা পরিবেশন করি না বাণিজ্যিক তৃতীয় পক্ষকে।
-      </p>
-
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৫. নিরাপত্তা</h2>
-      <p className="mb-4">
-        আমরা প্রযুক্তিগত ও প্রশাসনিক নিরাপত্তা ব্যবস্থা গ্রহণ করি (যেমন HTTPS,
-        ডেটাবেস এক্সেস কন্ট্রোল) যাতে আপনার তথ্য অযাচিত এক্সেস থেকে সুরক্ষিত
-        থাকে। তবে অনলাইন যোগাযোগ ১০০% নিরাপদ হয় না — তাই সংবেদনশীল তথ্য শেয়ার
-        করার সময় সতর্ক থাকুন।
-      </p>
-
-      <h2 className="text-2xl font-semibold mt-6 mb-3">৬. আপনার অধিকার</h2>
-      <ul className="list-disc pl-6 mb-4">
-        <li>অ্যাক্সেস: আপনার কাছে যে-সব ডেটা আছে তা জানতে চাওয়া।</li>
-        <li>সংস্কার: ভুল বা অসম্পূর্ণ তথ্য সংশোধন করার অনুরোধ।</li>
-        <li>মুছে ফেলা: প্রয়োজন হলে আপনার ডেটা মুছে ফেলার আবেদন।</li>
-        <li>অপ্ট-আউট: নোটিফিকেশন বা ইমেল পাওয়া বন্ধ করার অনুরোধ।</li>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-slate-700">
+        <li>To provide services and verify participation.</li>
+        <li>Communication — including emails, notifications, and event updates.</li>
+        <li>To improve site functionality and ensure security.</li>
+        <li>
+          To share information upon request if required for legal or security 
+          obligations.
+        </li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-3">
-        ৭. পলিসি পরিবর্তন
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">
+        3. Cookies and Tracking Technologies
       </h2>
-      <p className="mb-4">
-        আমরা সময় সময় এই Privacy Policy আপডেট করতে পারি। সকল আপডেট এই পেজে
-        প্রকাশ করা হবে।
+      <p className="mb-4 text-slate-700">
+        We may use cookies to improve analytics, functionality, and user experience. 
+        Disabling cookies in your browser may cause some features to not work properly.
       </p>
 
-      <p className="mt-8 text-gray-500">
-        সর্বশেষ আপডেট: {new Date().toLocaleDateString("bn-BD")}
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">
+        4. Data Sharing & Third-Party Disclosure
+      </h2>
+      <p className="mb-4 text-slate-700">
+        Your information may be shared with third parties (e.g., payment gateways, 
+        CRM, mail services) only for service provision or legal requirements. 
+        We do not sell or distribute personal information to commercial third parties.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">5. Security</h2>
+      <p className="mb-4 text-slate-700">
+        We implement technical and administrative security measures (such as HTTPS, 
+        database access control) to protect your information from unauthorized access. 
+        However, online communication is never 100% secure — please remain cautious 
+        when sharing sensitive information.
+      </p>
+
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">6. Your Rights</h2>
+      <ul className="list-disc pl-6 mb-4 space-y-2 text-slate-700">
+        <li>Access: The right to request information about the data we hold.</li>
+        <li>Correction: The right to request corrections to inaccurate or incomplete information.</li>
+        <li>Deletion: The right to apply for the deletion of your data when necessary.</li>
+        <li>Opt-out: The right to request to stop receiving notifications or emails.</li>
+      </ul>
+
+      <h2 className="text-2xl font-semibold mt-6 mb-3 text-slate-900">
+        7. Policy Changes
+      </h2>
+      <p className="mb-4 text-slate-700">
+        We may update this Privacy Policy from time to time. All updates will be 
+        published on this page.
+      </p>
+
+      <p className="mt-8 text-gray-500 font-medium">
+        Last Updated: {new Date().toLocaleDateString("en-US", {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
       </p>
     </div>
   );

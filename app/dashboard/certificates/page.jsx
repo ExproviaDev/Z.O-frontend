@@ -60,7 +60,7 @@ const MyCertificates = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-4 md:p-8">
+    <div className=" p-4 md:p-8">
       <div className="mb-10 text-center md:text-left">
         <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3 justify-center md:justify-start">
           <FaAward className="text-yellow-500" /> My Certificates

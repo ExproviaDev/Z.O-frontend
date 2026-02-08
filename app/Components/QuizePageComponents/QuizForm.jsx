@@ -17,7 +17,6 @@ const QuizForm = ({ questions, quizInfo }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { activeQuiz } = useSelector((state) => state.userQuiz);
-
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(30 * 60);
@@ -28,7 +27,7 @@ const QuizForm = ({ questions, quizInfo }) => {
   const [isBlurred, setIsBlurred] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ১. টাইম লিমিট সেট করা (কুইজের নিজস্ব সময়সীমা)
+
   useEffect(() => {
     if (quizInfo?.time_limit) {
       setTimeLeft(quizInfo.time_limit * 60);
@@ -36,16 +35,12 @@ const QuizForm = ({ questions, quizInfo }) => {
       setTimeLeft(30 * 60);
     }
   }, [quizInfo, questions]);
-
-  // ২. কুইজ চলাকালীন 'Ends At' বা ডেডলাইন চেক করার লজিক
   useEffect(() => {
     if (!isQuizStarted || isSubmitting) return;
 
     const checkDeadline = () => {
       const now = new Date().getTime();
       const deadline = new Date(quizInfo?.ends_at).getTime();
-
-      // যদি কুইজের শেষ সময় (ডেডলাইন) পার হয়ে যায়
       if (deadline && now > deadline) {
         setIsQuizStarted(false);
         Swal.fire({
@@ -56,19 +51,26 @@ const QuizForm = ({ questions, quizInfo }) => {
           showConfirmButton: false,
           allowOutsideClick: false
         }).then(() => {
-          handleSubmitAnswers(); // ডেডলাইন শেষ হলে অটো সাবমিট
+          handleSubmitAnswers();
         });
       }
     };
 
-    const deadlineTimer = setInterval(checkDeadline, 5000); // প্রতি ৫ সেকেন্ডে ডেডলাইন চেক করবে
+    const deadlineTimer = setInterval(checkDeadline, 5000);
     return () => clearInterval(deadlineTimer);
   }, [isQuizStarted, isSubmitting, quizInfo]);
+
 
   const handleSubmitAnswers = async () => {
     if (isSubmitting) return;
     const finalUserId = user?.user_id || user?.id;
     const finalQuizSetId = quizInfo?.id || questions[0]?.quiz_set_id;
+    const rawRoundType = user?.round_type || "round_1";
+    const currentRoundNumber = parseInt(rawRoundType.split("_")[1]) || 1;
+
+    // নতুন যোগ করা হয়েছে: SDG Role (লিডারবোর্ড ফিল্টারের জন্য)
+    const sdgCategory = user?.sdg_role || "SDG Activist";
+
     const totalTimeInSeconds = (quizInfo?.time_limit || 30) * 60;
     const timeSpent = totalTimeInSeconds - timeLeft;
 
@@ -85,16 +87,21 @@ const QuizForm = ({ questions, quizInfo }) => {
     setIsSubmitting(true);
     setIsQuizStarted(false);
     setIsBlurred(false);
-    
+
+    // আপনার আগের অবজেক্ট স্ট্রাকচার (user_id এবং quiz_set_id) ঠিক রাখা হয়েছে
     const submissionData = {
       user_id: finalUserId,
       quiz_set_id: finalQuizSetId,
       answers: answers,
       time_taken: Math.max(timeSpent, 1),
+      sdgCategory: sdgCategory, // ব্যাকএন্ডে লিডারবোর্ড সিঙ্ক করার জন্য
+      roundNumber: currentRoundNumber
     };
 
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+      // আপনার আগের কাজ করা রাউটটিই ব্যবহার করুন
       const response = await axios.post(`${API_URL}/api/admin/submit-quiz`, submissionData);
 
       if (response.data.success) {
@@ -112,7 +119,9 @@ const QuizForm = ({ questions, quizInfo }) => {
         });
       }
     } catch (error) {
-      console.error("Submission Error:", error.response?.data || error.message);
+      // এরর ডিবাগিং এর জন্য লগ
+      console.error("Submission Error Details:", error.response?.data);
+
       Swal.fire({
         title: "Error!",
         text: error.response?.data?.error || "Failed to submit. Please try again.",
@@ -123,6 +132,7 @@ const QuizForm = ({ questions, quizInfo }) => {
       setIsSubmitting(false);
     }
   };
+
 
   const reportViolation = (reason) => {
     if (!isQuizStarted || isSubmitting || Swal.isVisible()) return;
@@ -207,10 +217,10 @@ const QuizForm = ({ questions, quizInfo }) => {
 
           {/* ৩. StartModal এ endTime পাস করা হয়েছে */}
           {showStartModal && (
-            <StartModal 
-              onStart={handleStartQuiz} 
-              startTime={quizInfo?.start_at} 
-              endTime={quizInfo?.ends_at} 
+            <StartModal
+              onStart={handleStartQuiz}
+              startTime={quizInfo?.start_at}
+              endTime={quizInfo?.ends_at}
             />
           )}
 

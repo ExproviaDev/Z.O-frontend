@@ -19,7 +19,7 @@ export default function TimeUpModal({ show, onSubmit, onQuit }) {
           >
             <AiOutlineCheckCircle /> Submit Answers
           </button>
-          <Link href={"/"}>
+          <Link prefetch={false} href={"/"}>
             <button
               onClick={onQuit}
               className="flex items-center gap-2  justify-center border border-Primary text-Primary px-2 py-2 rounded-lg hover:bg-Primary/10 transition"
