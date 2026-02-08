@@ -64,7 +64,6 @@ export default function EditProfile() {
     current_level: "",
     sdg_role: "",
     round_type: "",
-    activities_role: "",
     profile_image_url: "",
   });
 
@@ -79,7 +78,6 @@ export default function EditProfile() {
         education_type: user.education_type || "",
         grade_level: user.grade_level || "",
         current_level: user.current_level || "",
-        activities_role: user.activities_role || "",
         profile_image_url: user.profile_image_url || "",
       });
     }
