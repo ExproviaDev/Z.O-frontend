@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-export const revalidate = 86400; 
+export const revalidate = 86400; // 1 day
 const HeroSection = dynamic(() => import("../HeroSection/Hero"), {
   loading: () => <div className="h-screen bg-gray-900 animate-pulse" />,
 });

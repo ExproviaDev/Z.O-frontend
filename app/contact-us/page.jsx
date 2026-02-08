@@ -4,8 +4,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebook, FaYoutube, FaInstagram } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
-// ৩ দিনের জন্য ISR সেটআপ (২৪ ঘণ্টা * ৩ = ২৫৯২০০ সেকেন্ড)
-export const revalidate = 259200;
+export const revalidate = 86400; // 1 day
 export default function Page() {
   const links = [
     {

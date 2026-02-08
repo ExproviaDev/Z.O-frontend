@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-export const revalidate = 259200; 
+export const revalidate = 86400; // 1 day
 const HeroSection = dynamic(() => import('../Components/InstructionPage/HeroSection/HeroSection'), {
   loading: () => <div className="h-[60vh] bg-slate-100 animate-pulse" />, 
 });
