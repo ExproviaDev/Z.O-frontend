@@ -29,6 +29,7 @@ const menuItems = [
   { id: "competition-control", label: "Competition Control", icon: FiCalendar, href: "/admin/competition-control", access: ["admin"] },
   { id: "mark-controller", label: "Mark Controller", icon: FiUserCheck, href: "/admin/mark-controller", access: ["admin"] },
   { id: "role-management", label: "User Management", icon: FiUsers, href: "/admin/user-management", access: ["admin"] },
+  { id: "video-submission-setting", label: "Video Submission Setting", icon: FiVideo, href: "/admin/video-submission-setting", access: ["admin"] },
 ];
 
 export default function Sidebar() {

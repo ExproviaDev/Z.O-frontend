@@ -1,5 +1,3 @@
-"use client";
-import React from "react";
 
 const PrizeSection = () => {
   return (
@@ -64,13 +62,6 @@ const PrizeSection = () => {
                         <div className="flex flex-col items-center justify-center h-full space-y-4">
                           <p className="text-3xl font-black text-[#0c4a6e]">
                             25,000 BDT
-                          </p>
-                          <div className="text-gray-500 text-sm font-normal leading-relaxed">
-                            Holiday Package in <br />
-                            Cox’s Bazar / St. Martin
-                          </div>
-                          <p className="text-[#f16522] font-extrabold uppercase text-sm tracking-tighter">
-                            WUST Scholarship
                           </p>
                         </div>
                       </td>
@@ -187,13 +178,7 @@ const PrizeSection = () => {
                           <p className="text-3xl font-black text-[#0c4a6e]">
                             25,000 BDT
                           </p>
-                          <div className="text-gray-500 text-sm font-normal leading-relaxed">
-                            Holiday Package in <br />
-                            Cox’s Bazar / St. Martin
-                          </div>
-                          <p className="text-[#f16522] font-extrabold uppercase text-sm tracking-tighter">
-                            WUST Scholarship
-                          </p>
+                          
                         </div>
                       </td>
                     )}
@@ -308,13 +293,7 @@ const PrizeSection = () => {
                           <p className="text-3xl font-black text-[#0c4a6e]">
                             25,000 BDT
                           </p>
-                          <div className="text-gray-500 text-sm font-normal leading-relaxed">
-                            Holiday Package in <br />
-                            Cox’s Bazar / St. Martin
-                          </div>
-                          <p className="text-[#f16522] font-extrabold uppercase text-sm tracking-tighter">
-                            WUST Scholarship
-                          </p>
+                          
                         </div>
                       </td>
                     )}
@@ -379,8 +358,8 @@ const PrizeSection = () => {
         </div>
 
         {/* Dynamic Footer Note */}
-        <div className="   ">
-          <p className="text-red-500 font-black italic text-sm md:text-base">
+        <div>
+          <p className="text-red-500 font-black italic text-xl md:text-2xl">
             N.B. "As the event gets closer, more exciting prizes will be added!"
           </p>
         </div>

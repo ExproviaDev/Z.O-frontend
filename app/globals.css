@@ -119,3 +119,44 @@
 .bg-btn:active {
   transform: scale(0.97);
 }
+
+
+
+
+
+/*  */
+/* Hide Google Translate top banner */
+
+div#google_translate_element {
+    display: none !important;
+}
+
+.skiptranslate {
+    display: none !important;
+}
+
+
+/* for the smoth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@keyframes slowZoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.animate-slow-zoom {
+  animation: slowZoom 25s infinite ease-in-out;
+}

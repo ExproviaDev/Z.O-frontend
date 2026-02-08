@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaUserEdit,
   FaFileAlt,
@@ -27,7 +26,7 @@ const timelineData = [
   {
     title: "1st Round Exam",
     date: "8 May 2026",
-    desc: "MCQ Contest Register in your class category (as of 8 may 2026). Complete 20 MCQ questions from UN-recognized courses. Winners advance to the second round.",
+    desc: " The Round 1 exam will consist of 30 MCQ questions, carrying a total of 30 marks. The time limit is 30 minutes. Participants will be able to view their scores on the website immediately after completing the exam. There will be no fixed passing mark; instead, the top 200 students from each SDG category will be selected to qualify for Round 2.",
     icon: <FaRegEdit />,
     align: "left",
   },
@@ -55,7 +54,7 @@ const timelineData = [
   {
     title: "Grand Finale",
     date: "6 June 2026",
-    desc: "51 Participants in Grand Finale A total of 51 finalists (3 for each of the 17 SDGs) will be invited to Dhaka, along with 2 accompanying guests each. 17 winners will be called on stage to present their plans for achieving their assigned SDG.",
+    desc: "51 Participants in Grand Finale . A total of 51 finalists (3 for each of the 17 SDGs) will be invited to Dhaka, along with 2 accompanying guests each. 17 winners will be called on stage to present their plans for achieving their assigned SDG.",
     icon: <FaTrophy />,
     align: "left",
   },
@@ -90,9 +89,8 @@ const Timeline = () => {
           {timelineData.map((item, index) => (
             <div
               key={index}
-              className={`relative flex flex-col md:flex-row items-center justify-between w-full ${
-                item.align === "right" ? "md:flex-row-reverse" : ""
-              }`}
+              className={`relative flex flex-col md:flex-row items-center justify-between w-full ${item.align === "right" ? "md:flex-row-reverse" : ""
+                }`}
             >
               <div className="md:hidden self-start mb-3 ml-8 font-semibold text-black text-sm italic">
                 {item.date}
@@ -119,9 +117,8 @@ const Timeline = () => {
                   </div>
 
                   <div
-                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${
-                      item.align === "left" ? "-right-4" : "-left-4"
-                    }`}
+                    className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 bg-inherit transform rotate-45 hidden md:block ${item.align === "left" ? "-right-4" : "-left-4"
+                      }`}
                   ></div>
 
                   <div className="absolute top-1/2 -translate-y-1/2 -left-2 w-4 h-4 bg-inherit transform rotate-45 md:hidden"></div>
@@ -132,11 +129,10 @@ const Timeline = () => {
                 <div className="z-20 w-5 h-5 bg-white border-[3px] border-Secondary rounded-full shadow-md"></div>
 
                 <span
-                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${
-                    item.align === "left"
+                  className={`md:absolute whitespace-nowrap font-bold text-black text-sm lg:text-lg ${item.align === "left"
                       ? "md:left-14 lg:left-16"
                       : "md:right-14 lg:right-16"
-                  }`}
+                    }`}
                 >
                   {item.date}
                 </span>

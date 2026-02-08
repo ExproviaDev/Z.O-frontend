@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 export default function AboutOlympiad() {
@@ -131,8 +128,8 @@ export default function AboutOlympiad() {
               Competition.
             </p>
 
-            <Link prefetch={false} href="/instruction">
-              <button className="flex items-center gap-2 cursor-pointer bg-Primary hover:bg-Secondary text-white px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg group">
+            <Link prefetch={false} href="/instruction" className="inline-block">
+              <button className="flex items-center gap-2  cursor-pointer bg-Primary hover:bg-Secondary text-white px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg group">
                 View More Details
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
               </button>

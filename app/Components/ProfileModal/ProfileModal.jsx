@@ -40,7 +40,7 @@ export default function ProfileModal({ isOpen, onClose }) {
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-purple-500 to-blue-500">
               <Image
-                src={user?.profile_image_url || "https://i.ibb.co.com/cSVq7Mpd/Profile-avatar-placeholder-large-1.png"}
+                src={user?.profile_image_url || "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770274774/istockphoto-2149922267-612x612_1_xlpcbg.jpg"}
                 alt="profile"
                 width={80}
                 height={80}

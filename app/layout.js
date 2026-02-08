@@ -16,6 +16,8 @@ export const metadata = {
 
 import ConditionalLayout from './ConditionalLayout';
 import SmoothScroll from "./Components/SmoothScroll";
+import Providers from "./Providers";
+
 
 export default function RootLayout({ children }) {
   return (
@@ -23,6 +25,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
+
+
+
+  
+
+        <Providers>
         <ReduxProvider>
           <ConditionalLayout>
             <SmoothScroll>
@@ -30,7 +39,12 @@ export default function RootLayout({ children }) {
             </SmoothScroll>
           </ConditionalLayout>
         </ReduxProvider>
+        </Providers>
       </body>
     </html>
   );
+
+  
 }
+
+

@@ -9,13 +9,14 @@ import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileModal from "../ProfileModal/ProfileModal";
-import logo from "../../../public/src/SiteLogo.png";
+import logo from "../../../public/src/zeroolympiad.png";
+import GoogleTranslate from "../../GoogleTranslate";
 
 const navItems = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
-  { title: "Galley", url: "/gallery" },
+  { title: "Gallery", url: "/gallery" },
 
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
@@ -71,26 +72,21 @@ export default function Header() {
             : "bg-white py-4"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+        <div className=" px-4 lg:px-5">
+          <div className=" max-w-7xl mx-auto flex items-center justify-between">
             {/* Logo Section */}
             <Link prefetch={false} href="/" className="flex items-center group">
-              <div className="relative w-12 h-12 lg:w-14 lg:h-14 transition-transform duration-500 group-hover:rotate-[10deg]">
+              <div className="relative w-44 h-16  lg:w-64 lg:h-16 transition-transform">
                 <Image
                   src={logo}
                   alt="Zero Olympiad"
                   fill
                   className="object-contain"
+                  // height={100}
                 />
-              </div>
-              <div className="ml-3">
-                <h1 className="text-xl lg:text-2xl font-extrabold text-Secondary leading-none">
-                  Zero Olympiad
-                </h1>
-               
+                
               </div>
             </Link>
-
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
@@ -109,7 +105,9 @@ export default function Header() {
                     }`}
                   ></span>
                 </Link>
+                
               ))}
+              
             </nav>
 
             {/* Right Action Section */}
@@ -126,6 +124,7 @@ export default function Header() {
                       <RxDashboard size={18} />
                       Admin Panel
                     </Link>
+                    
                   ) : (
                     <div className="relative" ref={profileAreaRef}>
                       <button
@@ -149,6 +148,7 @@ export default function Header() {
                       <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
                   )}
+                  
                 </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
@@ -166,12 +166,15 @@ export default function Header() {
                   >
                     Register
                   </Link>
+                  <div id="google_translate_element" className="google-translate-container"></div>
                 </div>
               )}
+                <GoogleTranslate />
+
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden text-gray-600 p-2"
+                className="lg:hidden text-gray-600 p-2 cursor-pointer"
               >
                 <AiOutlineMenu size={28} />
               </button>
@@ -182,13 +185,13 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r border-gray-200 p-6 transition-transform duration-300 ${
+          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -254,9 +257,11 @@ export default function Header() {
                 )}
               </div>
             )}
+            
           </div>
         </div>
       </div>
+      
     </>
   );
 }

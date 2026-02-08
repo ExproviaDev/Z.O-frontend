@@ -6,11 +6,11 @@ const GalleryHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
-    "https://i.ibb.co.com/prWJmYRc/EYE01386.jpg",
-    "https://i.ibb.co.com/4RTckv6N/EYE02010.jpg",
-    "https://i.ibb.co.com/rGNMx82R/IMG-8702.jpg",
-    "https://i.ibb.co.com/KzR3JbsL/IMG-8572.jpg",
-    "https://i.ibb.co.com/VpkCgnqZ/IMG-8409.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033233/IMG_8818_bdrqrv.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770035159/EYE01784_rungxh.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033238/IMG_9113_jqccyp.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033238/IMG_9113_jqccyp.jpg",
+    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033238/IMG_9119_nq6gnz.jpg",
   ];
 
   useEffect(() => {
@@ -69,12 +69,12 @@ const GalleryHeroSection = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 pointer-events-auto">
           <Link prefetch={false} href={"registration"}>
-          <button className="bg-Primary hover:bg-Secondary border border-Primary hover:border-Secondary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
+          <button className="bg-Primary hover:bg-Secondary  border border-Primary cursor-pointer hover:border-Secondary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Register Now <FaArrowRight className="text-sm" />
           </button>
           </Link>
           <Link prefetch={false} href={"instruction"}>
-          <button className="border border-white/80 hover:bg-Primary hover:border-Primary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
+          <button className="border border-white/80 hover:bg-Primary cursor-pointer hover:border-Primary text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105">
             Learn More <FaArrowRight className="text-sm" />
           </button>
           </Link>

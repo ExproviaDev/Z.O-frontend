@@ -1,6 +1,7 @@
+// src/components/auth/Step1_Auth.jsx
 "use client";
 import React, { useState } from "react";
-import { AiOutlineUser, AiOutlinePhone, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineUser, AiOutlinePhone, AiOutlineHome, AiOutlineTags } from "react-icons/ai"; // Tag icon for promo
 import { FaArrowRight, FaUniversity } from "react-icons/fa";
 
 export default function Step1_Auth({ formData, updateFormData, nextStep }) {
@@ -37,8 +38,8 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
     <form onSubmit={handleNext} className="space-y-4">
       {/* Full Name */}
       <div className="pb-4">
-        <label className="block text-md pb-2 font-medium text-Primary">Full Name *</label>
-        <div className="flex items-center border border-Primary rounded-lg">
+        <label className="block text-md pb-2 font-medium text-black">Full Name *</label>
+        <div className="flex items-center border border-black rounded-lg">
           <AiOutlineUser className="text-gray-600 ml-2" />
           <input
             type="text"
@@ -51,9 +52,29 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
           />
         </div>
       </div>
+
+      {/* ✅ NEW: Promo Code Field (Optional) */}
       <div className="pb-4">
-        <label className="block text-md font-medium text-Primary pb-2">Phone *</label>
-        <div className={`flex items-center border rounded-lg transition-colors ${phoneError ? 'border-red-500' : 'border-Primary'}`}>
+        <label className="block text-md pb-2 font-medium text-black">
+          Promo Code <span className="text-gray-400 text-sm font-normal">(Optional)</span>
+        </label>
+        <div className="flex items-center border border-black rounded-lg">
+          <AiOutlineTags className="text-gray-600 ml-2" />
+          <input
+            type="text"
+            name="promoCode"
+            value={formData.promoCode || ""}
+            onChange={handleChange}
+            placeholder="Enter promo code if any"
+            className="w-full p-2 text-md rounded-lg focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Phone Number */}
+      <div className="pb-4">
+        <label className="block text-md font-medium text-black pb-2">Phone *</label>
+        <div className={`flex items-center border rounded-lg transition-colors ${phoneError ? 'border-red-500' : 'border-black'}`}>
           <AiOutlinePhone className="text-gray-600 ml-2" />
           <input
             type="text"
@@ -67,9 +88,11 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
         </div>
         {phoneError && <p className="text-red-500 text-xs mt-1 ml-1 font-medium">{phoneError}</p>}
       </div>
+
+      {/* District */}
       <div className="pb-4">
-        <label className="block text-md font-medium text-Primary pb-2">District *</label>
-        <div className="flex items-center border border-Primary rounded-lg">
+        <label className="block text-md font-medium text-black pb-2">District (Bangladesh) / City (Out site Of BD) *</label>
+        <div className="flex items-center border border-black rounded-lg">
           <AiOutlineHome className="text-gray-600 ml-2" />
           <input
             type="text"
@@ -82,9 +105,11 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
           />
         </div>
       </div>
+
+      {/* Institution */}
       <div className="pb-4">
-        <label className="block text-md font-medium text-Primary pb-2">Institution *</label>
-        <div className="flex items-center border border-Primary rounded-lg">
+        <label className="block text-md font-medium text-black pb-2">Institution *</label>
+        <div className="flex items-center border border-black rounded-lg">
           <FaUniversity className="text-gray-600 ml-2" />
           <input
             type="text"
@@ -97,6 +122,7 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
           />
         </div>
       </div>
+
       <button 
         type="submit" 
         disabled={formData.phone.length !== 11}

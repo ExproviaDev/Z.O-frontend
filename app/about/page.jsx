@@ -1,7 +1,3 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
-
 import {
  
   FaQuoteLeft,
@@ -10,38 +6,8 @@ import {
 
 import Image from "next/image";
 import HeroSection from "./components/heroSection";
-import { IoMdArrowDropright } from "react-icons/io";
-
+export const revalidate = 86400;
 export default function ZeroOlympiad() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const sdgs = [
-    { id: 1, title: "No Poverty", color: "bg-[#E5243B]" },
-    { id: 2, title: "Zero Hunger", color: "bg-[#DDA63A]" },
-    { id: 3, title: "Good Health", color: "bg-[#4C9F38]" },
-    { id: 4, title: "Quality Education", color: "bg-[#C5192D]" },
-    { id: 5, title: "Gender Equality", color: "bg-[#FF3A21]" },
-    { id: 6, title: "Clean Water", color: "bg-[#26BDE2]" },
-    { id: 7, title: "Affordable Energy", color: "bg-[#FCC30B]" },
-    { id: 8, title: "Decent Work", color: "bg-[#A21942]" },
-    { id: 9, title: "Industry & Innovation", color: "bg-[#FD6925]" },
-    { id: 10, title: "Reduced Inequality", color: "bg-[#DD1367]" },
-    { id: 11, title: "Sustainable Cities", color: "bg-[#FD9D24]" },
-    { id: 12, title: "Responsible Consumption", color: "bg-[#BF8B2E]" },
-    { id: 13, title: "Climate Action", color: "bg-[#3F7E44]" },
-    { id: 14, title: "Life Below Water", color: "bg-[#0A97D9]" },
-    { id: 15, title: "Life On Land", color: "bg-[#56C02B]" },
-    { id: 16, title: "Peace & Justice", color: "bg-[#00689D]" },
-    { id: 17, title: "Partnerships", color: "bg-[#19486A]" },
-  ];
-
   return (
     <div className="min-h-screen   text-slate-900 selection:bg-indigo-100 selection:text-indigo-700 font-sans antialiased">
       <div className="">
@@ -75,7 +41,7 @@ export default function ZeroOlympiad() {
                     <div className="mt-4 flex items-center gap-3">
                       <span className="h-[2px] w-12 bg-Secondary"></span>
                       <span className="text-xl md:text-2xl font-medium text-Secondary tracking-wide">
-                        Founder of Zero Olympiad
+                        Founder & CEO of Zero Olympiad
                       </span>
                     </div>
                   </div>
@@ -84,14 +50,14 @@ export default function ZeroOlympiad() {
                 </div>
 
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
-                  Thirteen-year-old Child Rights Activist, Climate Campaigner,
+                  Fourteen-year-olds Child Rights Activist, Climate Campaigner,
                   and Global Speaker.
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
                   I have represented youth voices at the **United Nations,
                   Harvard, and TEDx**, advocating against climate change and
-                  social injustices. Through my organization, **CHIL&D**, I work
-                  toward sustainable development and global learning.
+                  social injustices. Through my organization, **Faatiha Aayat Academy**, I work
+                  towards sustainable development and global Leadership .
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed mb-10">
                   A published author of four books and a recipient of the
@@ -112,7 +78,7 @@ export default function ZeroOlympiad() {
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770098853/DSC_0931_1_vmw4ge.jpg"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219566/FAATIHA_AAYAT_1_ltnjp2.jpg"
                     alt="Youth Change Makers"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -142,7 +108,7 @@ export default function ZeroOlympiad() {
                 <div className="absolute inset-0 bg-indigo-600 rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
                 <div className="relative aspect-video lg:aspect-square bg-slate-100 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033230/IMG_8582_h5bn0q.jpg"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219567/SYED_AFTAB_AHMED_1_mnqdha.jpg"
                     alt="Youth Change Makers"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -160,7 +126,7 @@ export default function ZeroOlympiad() {
                       Barrister-at-Law
                     </span>
 
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-none">
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-none">
                       Syed Aftab Ahmed
                     </h2>
 
@@ -217,19 +183,19 @@ export default function ZeroOlympiad() {
                 {
                   title: "Mission",
                   content:
-                    "To strategically mobilize 10 million young leaders globally by the year 2030, empowering them to actively dismantle systemic barriers to sustainability and social equality while fostering a movement of impactful, youth-led change across the world.",
+                    "To engage and empower students through competitions, learning, and action-based initiatives that build leadership, critical thinking, and social responsibility. Zero Olympiad aims to inspire youth to actively address global challenges and local problems.",
                   bg: "bg-slate-900/90 text-white",
                 },
                 {
                   title: "Vision",
                   content:
-                    "We envision a future world where every single young person is fully equipped with the necessary agency, technical resources, and global support systems required to confront and solve humanity’s most complex and pressing challenges effectively.",
+                    "To nurture a generation of informed, ethical, and courageous young leaders who think critically, act responsibly, and work collectively to build a peaceful, just, and sustainable world where every voice matters.",
                   bg: "bg-white/90 text-slate-900",
                 },
                 {
                   title: "Values",
                   content:
-                    "Our foundation is built upon Radical Innovation to challenge the status quo, Unwavering Integrity in every action, Global Inclusivity to ensure no one is left behind, and an ‘Action-First’ Mindset that prioritizes tangible results in everything we build.",
+                    "Integrity and honesty in all actions, inclusivity and respect for diversity, excellence and curiosity in learning, collaboration and teamwork, compassion and empathy, and a strong commitment to service and positive impact in society.",
                   bg: "bg-indigo-600/90 text-white",
                 },
               ].map((card, i) => (
@@ -360,25 +326,6 @@ export default function ZeroOlympiad() {
             </div>
           </div>
         </section>
-
-        <style jsx global>{`
-          @keyframes fade-in-up {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fade-in-up {
-            animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-          html {
-            scroll-behavior: smooth;
-          }
-        `}</style>
       </div>
     </div>
   );

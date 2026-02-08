@@ -1,8 +1,6 @@
 "use client";
-
-import React from "react";
 import Image from "next/image";
-import { FaArrowRight, FaCalendarAlt, FaUsers, FaTrophy } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +23,7 @@ export default function HeroSection() {
         <Swiper
           modules={[Autoplay, EffectFade]}
           effect="fade"
-          autoplay={{ delay: 6000, disableOnInteraction: false }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
           loop={true}
           className="h-full w-full"
         >
@@ -63,42 +61,25 @@ export default function HeroSection() {
 
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
           Global Youth Initiative 2026 Empowering Youth to{" "}
-          <span className="text-Primary">Zero Global Challenges</span>
+          <span className="text-Primary">Global Challenges</span>
         </h1>
 
         <div className="flex flex-wrap justify-center gap-5 mb-16">
           <Link prefetch={false} href={"/registration"}>
-            <button className="flex items-center gap-3 bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
+            <button className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
               Join Zero Olympiad
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
 
           <Link prefetch={false} href="/instruction#sdg">
-            <button className="flex items-center gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+            <button className="flex items-center cursor-pointer gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
               Explore The SDG{" "}
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes slowZoom {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.15);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .animate-slow-zoom {
-          animation: slowZoom 25s infinite ease-in-out;
-        }
-      `}</style>
     </section>
   );
 }

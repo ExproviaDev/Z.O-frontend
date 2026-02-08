@@ -41,7 +41,7 @@ export default function Step3_Auth({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Email Input */}
       <div className="pb-3">
-        <label className="block text-md font-medium text-Primary pb-2">Email *</label>
+        <label className="block text-md font-medium text-black pb-2">Email *</label>
         <div className="flex items-center border border-Primary rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-Primary/50">
           <FaEnvelope className="text-gray-400 ml-3" />
           <input
@@ -58,7 +58,7 @@ export default function Step3_Auth({
 
       {/* Password Input */}
       <div className="pb-1">
-        <label className="block text-md font-medium text-Primary pb-2">Password *</label>
+        <label className="block text-md font-medium text-black pb-2">Password *</label>
         <div className="flex items-center border border-Primary rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-Primary/50">
           <FaKey className="text-gray-400 ml-3" />
           <input
@@ -73,7 +73,7 @@ export default function Step3_Auth({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="px-3 text-gray-500 hover:text-Primary transition-colors"
+            className="px-3 text-gray-500 hover:text-black transition-colors"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
