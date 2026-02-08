@@ -128,10 +128,10 @@ export default function RegistrationPage() {
     <div className="hero min-h-screen py-10">
       <div className="container card bg-white max-w-2xl shadow-2xl p-8 rounded-2xl">
         <div className="text-center gap-4 pb-12 grid">
-          <h1 className="text-4xl font-bold text-Primary flex justify-center items-center gap-4"> 
-            <FaRegClipboard className="text-Primary" size={38} /> Zero Olympiad Registration
+          <h1 className="text-4xl font-bold text-black flex justify-center items-center gap-4"> 
+            <FaRegClipboard className="text-black" size={38} /> Zero Olympiad Registration
           </h1>
-          <p className="text-md text-Primary mt-2">Please fill out the registration details to join.</p>
+          <p className="text-md text-black mt-2">Please fill out the registration details to join.</p>
         </div>
 
         <div className="space-y-6">{renderStep()}</div>
@@ -146,7 +146,7 @@ export default function RegistrationPage() {
           <p className="text-center text-sm text-gray-500 mt-2">Step {currentStep} of 3</p>
           <p className="mt-2 text-center text-sm">
             Already Have An Account?{" "}
-            <Link prefetch={false} href="/login" className="underline text-Primary font-bold">Login</Link>
+            <Link prefetch={false} href="/login" className="underline text-black font-bold">Login</Link>
           </p>
         </div>
         <div className="pt-7">

@@ -29,12 +29,12 @@ export default function Step_Payment({ amount, prevStep, formData }) {
 
   return (
     <div className="text-center space-y-6">
-      <FaMoneyCheckAlt size={50} className="mx-auto text-Primary" />
+      <FaMoneyCheckAlt size={50} className="mx-auto text-black" />
       <h2 className="text-2xl font-bold">Registration Fee: {amount} BDT</h2>
       <p>Please complete the payment to set your account password.</p>
       <div className="flex justify-between mt-8">
         <button onClick={prevStep} className="btn btn-outline">Back</button>
-        <button onClick={handlePayment} disabled={loading} className="btn bg-Primary text-white">
+        <button onClick={handlePayment} disabled={loading} className="btn bg-black text-white">
           {loading ? "Loading..." : "Pay with bKash"}
         </button>
       </div>

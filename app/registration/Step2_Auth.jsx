@@ -87,10 +87,10 @@ export default function Step2_Academic({
     <form onSubmit={handleNextSubmit} className="space-y-6">
       {/* Education Type */}
       <div className="pb-2">
-        <label className="block text-lg font-bold text-Primary pb-2">
+        <label className="block text-lg font-bold text-black pb-2">
           Education Type*
         </label>
-        <div className="flex items-center border border-Primary rounded-lg">
+        <div className="flex items-center border border-black rounded-lg">
           <FaBookOpen className="text-gray-600 ml-2" />
           <select
             name="educationType"
@@ -113,13 +113,13 @@ export default function Step2_Academic({
 
       {/* Class Level */}
       <div className="pb-2">
-        <label className="block text-lg font-bold text-Primary pb-2">
+        <label className="block text-lg font-bold text-black pb-2">
           School/Madrasha Class (January 2026)*
         </label>
-        <label className="block text-sm font-sm text-Primary pb-2 pt-2 italic">
+        <label className="block text-sm font-sm text-black pb-2 pt-2 italic">
           From 5th to 12th Grade - Choose Your Class
         </label>
-        <div className="flex items-center border border-Primary rounded-lg">
+        <div className="flex items-center border border-black rounded-lg">
           <FaListAlt className="text-gray-600 ml-2" />
           <select
             name="gradeLevel"
@@ -149,15 +149,15 @@ export default function Step2_Academic({
         }`}
       >
         <div className="min-h-0">
-          <label className="block text-lg font-bold text-Primary pb-2 pt-2">
+          <label className="block text-lg font-bold text-black pb-2 pt-2">
             Higher Education Level*
           </label>
-          <label className="block text-sm font-sm text-Primary pb-2 pt-2 italic">
+          <label className="block text-sm font-sm text-black pb-2 pt-2 italic">
             {`Degree Pass, Bachelor's Honours, Postgraduate, Medical, Engineering,
             Marine, Marine Fisheries, Diploma, Qawmi & Alia Madrasa, Other
             Students - Choose Your Class`}
           </label>
-          <div className="flex items-center border border-Primary rounded-lg">
+          <div className="flex items-center border border-black rounded-lg">
             <FaRegCalendarAlt className="text-gray-600 ml-2" />
             <select
               name="currentLevel"
