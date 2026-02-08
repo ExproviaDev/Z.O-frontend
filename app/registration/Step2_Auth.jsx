@@ -1,3 +1,4 @@
+// src/components/auth/Step2_Auth.jsx
 "use client";
 import React, { useState } from "react";
 import {
@@ -14,7 +15,7 @@ export default function Step2_Academic({
   nextStep,
   prevStep,
 }) {
-  const [stepError, setStepError] = useState("");
+  // const [stepError, setStepError] = useState(""); // Activities নেই তাই এরর স্টেটও লাগবে না
 
   const educationTypes = [
     "Bangla Medium (Bangla & English Version)",
@@ -50,11 +51,7 @@ export default function Step2_Academic({
     "None of These",
   ];
 
-  const activitiesOptions = [
-    "Being a campus ambassador, I want to collect registrations, conduct online and offline study session of the course provided by the United Nations etc. | The best campus ambassador will be awarded",
-    "I want to work in event management at the grand finale in Dhaka | The best event manager will be awarded",
-    "I want only to participate in the Zero Olympiad as a competitor, I don't want to do any such work.",
-  ];
+  // Activities অপশনগুলো মুছে ফেলা হয়েছে ❌
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,30 +69,13 @@ export default function Step2_Academic({
     } else {
       updateFormData({ [name]: value });
     }
-    
-    if (stepError) setStepError("");
   };
 
-  const handleCheckboxChange = (activity) => {
-    let selectedActivities = formData.activities || [];
-    if (selectedActivities.includes(activity)) {
-      selectedActivities = selectedActivities.filter(
-        (item) => item !== activity
-      );
-    } else {
-      selectedActivities = [...selectedActivities, activity];
-    }
-    updateFormData({ activities: selectedActivities });
-    if (stepError) setStepError("");
-  };
+  // Activities হ্যান্ডলার মুছে ফেলা হয়েছে ❌
 
   const handleNextSubmit = (e) => {
     e.preventDefault();
-    if (!formData.activities || formData.activities.length === 0) {
-      setStepError("Please select at least one activity to proceed.");
-      return;
-    }
-
+    // Activities ভ্যালিডেশন মুছে ফেলা হয়েছে ❌
     nextStep();
   };
 
@@ -105,6 +85,7 @@ export default function Step2_Academic({
 
   return (
     <form onSubmit={handleNextSubmit} className="space-y-6">
+      {/* Education Type */}
       <div className="pb-2">
         <label className="block text-lg font-bold text-Primary pb-2">
           Education Type*
@@ -129,6 +110,8 @@ export default function Step2_Academic({
           </select>
         </div>
       </div>
+
+      {/* Class Level */}
       <div className="pb-2">
         <label className="block text-lg font-bold text-Primary pb-2">
           School/Madrasha Class (January 2026)*
@@ -156,6 +139,8 @@ export default function Step2_Academic({
           </select>
         </div>
       </div>
+
+      {/* Higher Education Level (Conditional) */}
       <div
         className={`grid transition-all duration-500 ease-in-out ${
           isHigherThanClass10
@@ -193,32 +178,9 @@ export default function Step2_Academic({
           </div>
         </div>
       </div>
-      <div className="pb-4">
-        <label className="block text-lg font-bold text-Primary pb-2">
-          Activities (Multiple Select)*
-        </label>
-        <p className="text-sm text-gray-600 mb-3 italic">
-          Which of the following activities would you like to do with Faatiha
-          Aayat?
-        </p>
-        <div className={`grid grid-cols-1 gap-3 border p-4 rounded-lg bg-white transition-colors ${stepError ? 'border-red-500 shadow-sm' : 'border-Primary'}`}>
-          {activitiesOptions.map((option, index) => (
-            <label
-              key={index}
-              className="flex items-start space-x-3 cursor-pointer p-2 rounded hover:bg-blue-50 transition-colors duration-200"
-            >
-              <input
-                type="checkbox"
-                checked={formData.activities?.includes(option)}
-                onChange={() => handleCheckboxChange(option)}
-                className="w-5 h-5 mt-1 accent-Primary cursor-pointer"
-              />
-              <span className="text-md text-gray-700">{option}</span>
-            </label>
-          ))}
-        </div>
-        {stepError && <p className="text-red-500 text-sm mt-2 font-medium">{stepError}</p>}
-      </div>
+
+      {/* Activities Section Deleted ❌ */}
+
       <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
         <button
           type="button"

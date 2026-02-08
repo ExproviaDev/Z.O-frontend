@@ -1,9 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react"; // useEffect যোগ করা হয়েছে
+import React, { useState, useEffect } from "react";
 import Step1_Personal from "./Step1_Auth";
 import Step2_Academic from "./Step2_Auth";
 import Step3_Auth from "./Step3_Auth";
-import Step_Payment from "./Step_Payment"; // Step_Payment ইমপোর্ট করা হয়েছে
+import Step_Payment from "./Step_Payment";
 import { FaRegClipboard } from "react-icons/fa";
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
@@ -13,6 +13,7 @@ export default function RegistrationPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [paymentToken, setPaymentToken] = useState(null);
   const searchParams = useSearchParams();
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,11 +30,21 @@ export default function RegistrationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
+  // ✅ UPDATE 1: পেমেন্ট থেকে ফিরে আসলে ডাটা রিকভার করা
   useEffect(() => {
     const token = searchParams.get("token");
+    
+    // লোকাল স্টোরেজ থেকে ডাটা চেক করা
+    const savedData = localStorage.getItem("reg_formData");
+
     if (token) {
       setPaymentToken(token);
       setCurrentStep(3); // টোকেন থাকলে সরাসরি ফাইনাল স্টেপে
+      
+      // যদি সেভ করা ডাটা থাকে, তা স্টেটে সেট করা
+      if (savedData) {
+        setFormData(JSON.parse(savedData));
+      }
     }
   }, [searchParams]);
 
@@ -50,7 +61,6 @@ export default function RegistrationPage() {
     setIsSubmitting(true);
     setError("");
 
-    // এখানে backendData ব্যবহার করতে হবে যেন পেমেন্ট টোকেন সার্ভারে যায়
     const backendData = {
       ...formData,
       paymentToken: paymentToken 
@@ -64,13 +74,16 @@ export default function RegistrationPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(backendData), // backendData পাঠানো হয়েছে
+        body: JSON.stringify(backendData),
       });
 
       const data = await res.json();
       setIsSubmitting(false);
 
       if (res.ok) {
+        // ✅ UPDATE 2: সফল হলে লোকাল স্টোরেজ ক্লিয়ার করা
+        localStorage.removeItem("reg_formData");
+        
         alert("রেজিস্ট্রেশন সফল!");
         window.location.href = "/login";
       } else {
@@ -90,7 +103,8 @@ export default function RegistrationPage() {
         return <Step2_Academic formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />;
       case 3:
         if (!paymentToken) {
-          return <Step_Payment amount={500} prevStep={prevStep} />;
+          // ✅ UPDATE 3: Step_Payment এ formData পাস করা (যাতে সেভ করা যায়)
+          return <Step_Payment amount={300} prevStep={prevStep} formData={formData} />;
         }
         return (
           <Step3_Auth
@@ -110,6 +124,7 @@ export default function RegistrationPage() {
   };
 
   return (
+    // ... আপনার বাকি JSX কোড ঠিক আছে ...
     <div className="hero min-h-screen py-10">
       <div className="container card bg-white max-w-2xl shadow-2xl p-8 rounded-2xl">
         <div className="text-center gap-4 pb-12 grid">
