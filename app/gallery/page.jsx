@@ -12,14 +12,13 @@ import {
 import GalleryHeroSection from "../Components/GalleryHeroSection/GalleryHeroSection";
 
 const GalleryPage = () => {
-  const [allImages, setAllImages] = useState([]); // ডাটা রাখার জন্য স্টেট
+  const [allImages, setAllImages] = useState([]); 
   const [visibleCount, setVisibleCount] = useState(9);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // public/images.json থেকে ডাটা ফেচ করা
   useEffect(() => {
-    fetch("/images.json") // public ফোল্ডারের পাথ সরাসরি এভাবে লিখতে হয়
+    fetch("/images.json") 
       .then((res) => res.json())
       .then((data) => {
         setAllImages(data.galleryImages || []);
@@ -66,9 +65,9 @@ const GalleryPage = () => {
     <div className="bg-white min-h-screen font-sans relative">
       <GalleryHeroSection />
 
-      <section className="max-w-7xl mx-auto py-16 px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800">
+      <section className="max-w-7xl mx-auto py-10 md:py-20 px-5">
+        <div className="text-center mb-5 md:mb-14">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-800">
             Memorable Moments of Victory{" "}
             <span className="text-orange-500">(Season-One)</span>
           </h2>
@@ -78,7 +77,7 @@ const GalleryPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {allImages.slice(0, visibleCount).map((img, idx) => (
             <div
               key={idx}
@@ -153,19 +152,19 @@ const GalleryPage = () => {
 
       {/* Footer CTA Section */}
       <section
-        className="py-20 px-4 bg-repeat"
+        className="py-10 md:py-20 px-5 bg-repeat"
         style={{
           backgroundImage: "url('https://i.ibb.co.com/99HFrKfK/speaker-bg.png')",
         }}
       >
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-[#4a6d88] rounded-[40px] p-12 md:p-16 text-center text-white shadow-2xl">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-[#4a6d88] rounded-[40px] p-8 md:p-16 text-center text-white shadow-2xl">
+            <h2 className="text-2xl md:text-5xl font-bold mb-6">
               Be Part of Our Next Event
             </h2>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
               <Link href="/registration">
-                <button className="bg-Primary hover:bg-Secondary cursor-pointer text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all">
+                <button className="bg-Primary hover:bg-Secondary cursor-pointer text-[12px] text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 transition-all">
                   Register Now <FaArrowRight size={14} />
                 </button>
               </Link>

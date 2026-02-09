@@ -1,7 +1,7 @@
 
 const PrizeSection = () => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#f9fbff]">
+    <section className="py-12 md:py-20 px-4 md:px-8 bg-[#f9fbff]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-Secondary mb-4">

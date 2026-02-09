@@ -13,28 +13,34 @@ const FaqContent = ({ faqs }) => {
   return (
     <div className="bg-white text-black min-h-screen">
       {/* Banner Section */}
-      <div className="relative w-full h-60 sm:h-[300px] md:h-[450px] overflow-hidden">
+      {/* Responsive Height: Mobile a kom, Desktop a beshi */}
+      <div className="relative w-full h-[40vh] md:h-[60vh] lg:h-[70vh] overflow-hidden flex justify-center items-center">
         <Image
           src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033230/IMG_8691_zgkos5.jpg"
           alt="FAQ Banner"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-slate-900/40"></div>
-        <h1 className="absolute inset-0 flex justify-center items-center text-white text-3xl md:text-5xl font-extrabold tracking-wide px-4 text-center">
-          Frequently Asked <span className="text-orange-500 ml-3">Questions</span>
-        </h1>
+        <div className="absolute inset-0 bg-slate-900/70"></div>
+        
+        {/* Text Responsive Sizes */}
+        <div className="relative z-10 text-center px-4">
+          <h1 className="text-white text-3xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-xl leading-tight">
+            Frequently Asked <br className="md:hidden" />
+            <span className="text-Primary block md:inline mt-2 md:mt-0">Questions</span>
+          </h1>
+        </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800">General inquiries</h2>
-          <div className="w-20 h-1.5 bg-orange-500 mx-auto mt-4 rounded-full"></div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-20">
+        <div className="text-center mb-10 md:mb-12">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">General inquiries</h2>
+          <div className="w-16 md:w-20 h-1.5 bg-orange-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
         <div className="space-y-4">
-          {faqs.map((item, index) => {
+          {faqs && faqs.map((item, index) => {
             const isOpen = open === index;
 
             return (
@@ -48,11 +54,18 @@ const FaqContent = ({ faqs }) => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex justify-between items-center py-5 px-6 text-left"
+                  // Mobile a padding komano hoyeche, Desktop a barano hoyeche
+                  // gap-4 deya hoyeche jate text r icon lege na jay
+                  className="w-full flex justify-between items-center py-4 px-4 md:py-5 md:px-6 text-left gap-4"
                 >
-                  <p className="text-lg font-semibold text-gray-800">{item.q}</p>
+                  {/* Font size responsive kora hoyeche */}
+                  <p className="text-base md:text-lg font-semibold text-gray-800 flex-1">
+                    {item.q}
+                  </p>
+                  
+                  {/* flex-shrink-0 deya hoyeche jate icon chapa na khay */}
                   <div
-                    className={`w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${
                       isOpen ? "bg-slate-800 text-white rotate-180" : "bg-orange-500 text-white"
                     }`}
                   >
@@ -67,8 +80,11 @@ const FaqContent = ({ faqs }) => {
                   }}
                   className="overflow-hidden transition-all duration-500 ease-in-out"
                 >
-                  <div className="px-6 pb-5">
-                    <p className="text-gray-600 leading-relaxed border-t pt-4">{item.a}</p>
+                  <div className="px-4 md:px-6 pb-5">
+                    {/* Text size adjust kora hoyeche readability er jonno */}
+                    <p className="text-sm md:text-base text-gray-600 leading-relaxed border-t pt-4">
+                      {item.a}
+                    </p>
                   </div>
                 </div>
               </div>

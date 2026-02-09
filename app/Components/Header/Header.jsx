@@ -17,7 +17,6 @@ const navItems = [
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
   { title: "Gallery", url: "/gallery" },
-
   { title: "FAQ", url: "/faq" },
   { title: "Contact Us", url: "/contact-us" },
 ];
@@ -66,11 +65,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-          scrolled
-            ? "bg-white/90 backdrop-blur-md shadow-md py-2"
-            : "bg-white py-4"
-        }`}
+        className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${scrolled
+          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+          : "bg-white py-4"
+          }`}
       >
         <div className=" px-4 lg:px-5">
           <div className=" max-w-7xl mx-auto flex items-center justify-between">
@@ -82,32 +80,30 @@ export default function Header() {
                   alt="Zero Olympiad"
                   fill
                   className="object-contain"
-                  // height={100}
+                // height={100}
                 />
-                
+
               </div>
             </Link>
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
-                prefetch={false}
+                  prefetch={false}
                   key={item.title}
                   href={item.url}
-                  className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${
-                    pathname === item.url ? "text-orange-500" : "text-gray-600"
-                  } group`}
+                  className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${pathname === item.url ? "text-orange-500" : "text-gray-600"
+                    } group`}
                 >
                   {item.title}
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${
-                      pathname === item.url ? "w-full" : ""
-                    }`}
+                    className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${pathname === item.url ? "w-full" : ""
+                      }`}
                   ></span>
                 </Link>
-                
+
               ))}
-              
+
             </nav>
 
             {/* Right Action Section */}
@@ -117,14 +113,14 @@ export default function Header() {
                   {/* logic: Staff hole Admin Panel button, User hole Profile Icon */}
                   {isStaff ? (
                     <Link
-                    prefetch={false}
+                      prefetch={false}
                       href="/admin"
                       className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-Primary rounded-lg hover:bg-opacity-90 transition-all shadow-md active:scale-95"
                     >
                       <RxDashboard size={18} />
                       Admin Panel
                     </Link>
-                    
+
                   ) : (
                     <div className="relative" ref={profileAreaRef}>
                       <button
@@ -148,28 +144,29 @@ export default function Header() {
                       <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
                   )}
-                  
+
                 </>
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link
-                  prefetch={false}
+                    prefetch={false}
                     href="/login"
                     className="text-sm font-bold text-gray-600 hover:text-orange-500"
                   >
                     Login
                   </Link>
                   <Link
-                  prefetch={false}
+                    prefetch={false}
                     href="/registration"
                     className="px-6 py-2 text-sm font-bold text-white bg-orange-500 rounded-full hover:bg-orange-600 transition-all"
                   >
                     Register
                   </Link>
-                  <div id="google_translate_element" className="google-translate-container"></div>
                 </div>
               )}
+              <div className="hidden md:flex">
                 <GoogleTranslate />
+              </div>
 
 
               <button
@@ -185,15 +182,13 @@ export default function Header() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
+        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
         onClick={() => setIsMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${
-            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-8">
@@ -209,11 +204,10 @@ export default function Header() {
                 key={item.title}
                 href={item.url}
                 prefetch={false}
-                className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${
-                  pathname === item.url
-                    ? "bg-orange-50 text-orange-500"
-                    : "text-gray-600 hover:bg-gray-50"
-                }`}
+                className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${pathname === item.url
+                  ? "bg-orange-50 text-orange-500"
+                  : "text-gray-600 hover:bg-gray-50"
+                  }`}
               >
                 {item.title}
               </Link>
@@ -223,8 +217,8 @@ export default function Header() {
 
             {!email ? (
               <div className="flex flex-col gap-4">
-                <Link 
-                prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
+                <Link
+                  prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
                   Login
                 </Link>
                 <Link
@@ -257,11 +251,14 @@ export default function Header() {
                 )}
               </div>
             )}
-            
+            <hr className="border-gray-100 my-2" />
+            <div className="flex md:hidden">
+                <GoogleTranslate />
+              </div>
           </div>
         </div>
       </div>
-      
+
     </>
   );
 }

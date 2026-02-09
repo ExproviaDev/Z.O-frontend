@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import LogoutButton from "../LogoutButton";
 
-export default function ProfileModal({ isOpen, onClose }) {
+export default function nProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
   const authState = useSelector((state) => state.auth);
   const { user = null } = authState || {};
@@ -28,14 +28,14 @@ export default function ProfileModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute md:right-5 lg:right-0 top-full mt-3 z-50">
+    <div className="absolute right-4 md:right-5 lg:right-0 top-full mt-3 z-50">
 
       <div
         ref={modalRef}
         className="relative p-[1px] rounded-2xl bg-Secondary shadow-2xl"
       >
 
-        <div className="w-72 rounded-2xl bg-[#2b2e5c] p-5">
+        <div className="w-52 md:w-72 rounded-2xl bg-[#2b2e5c] p-5">
 
           <div className="flex flex-col items-center text-center">
             <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-purple-500 to-blue-500">

@@ -11,9 +11,9 @@ import {
 
 const EmpowerYouth = () => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#fcfcfc]">
+    <section className="py-10 md:py-20 px-4 md:px-8 bg-[#fcfcfc]">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
+        <div className="text-center mb-8 md:mb-16 space-y-4">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-800">
             Empowering the Youth to Lead the Future
           </h2>
@@ -25,10 +25,10 @@ const EmpowerYouth = () => {
           <div className="w-24 h-1 bg-[#f16522] mx-auto mt-4 rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2  gap-10">
           <div className="space-y-8">
             <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 ">
                 <GraduationCap className="w-10 h-10 text-[#f16522]" />
                 <h3 className="text-2xl font-bold text-gray-800">
                   UN Certificate Course
@@ -62,7 +62,7 @@ const EmpowerYouth = () => {
               </div>
             </div>
 
-            <div className="bg-white mt-20 p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="bg-white mt-10 md:mt-20 p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
               <div className="flex items-center gap-4 mb-8">
                 <Trophy className="w-8 h-8 text-[#f16522]" />
                 <h3 className="text-2xl font-bold text-gray-800">
@@ -104,7 +104,7 @@ const EmpowerYouth = () => {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-[#f8fafc] p-6 md:p-8 rounded-[2rem] border border-gray-100">
+            <div className="bg-[#dae1e7] p-6  md:p-8 rounded-[2rem] border border-gray-100">
               <h3 className="text-2xl font-bold text-gray-800 mb-6">
                 Additional Activities
               </h3>
@@ -177,13 +177,13 @@ const EmpowerYouth = () => {
               ].map((reward, i) => (
                 <div
                   key={i}
-                  className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-3"
+                  className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col gap-4"
                 >
                   <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
                     {reward.icon}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-800 text-[18]">
+                    <h4 className="font-bold text-gray-800 text-[18px]">
                       {reward.title}
                     </h4>
                     <p className="text-[14px] text-gray-500">{reward.desc}</p>
