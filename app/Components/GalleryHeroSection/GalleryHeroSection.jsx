@@ -64,7 +64,7 @@ const GalleryHeroSection = () => {
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 z-20 pointer-events-none">
         
         {/* Responsive Heading */}
-        <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-bold mb-4 drop-shadow-xl pointer-events-auto leading-tight">
+        <h1 className="text-white text-3xl md:text-5xl font-bold mb-4 drop-shadow-xl pointer-events-auto leading-tight">
           Zero Olympiad Gallery <br className="md:hidden" />
           <span className="text-Primary block md:inline mt-2 md:mt-0">(Session One)</span>
         </h1>
