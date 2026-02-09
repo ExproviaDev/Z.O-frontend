@@ -1,13 +1,13 @@
 "use client";
+
 import Image from "next/image";
-
-
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
+import { FaArrowRight } from "react-icons/fa";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
-import Link from "next/link";
 
 export default function HeroSection() {
   const bgImages = [
@@ -17,7 +17,9 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center font-sans">
+    <section className="relative min-h-[70vh] w-full overflow-hidden flex items-center justify-center font-sans">
+      
+      {/* Background Slider */}
       <div className="absolute inset-0 z-0">
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -34,13 +36,12 @@ export default function HeroSection() {
                   alt={`Background ${index}`}
                   fill
                   className="object-cover animate-slow-zoom"
-                  priority
+                  priority={index === 0} // Optimized loading
                 />
 
-                <div className="absolute inset-0  opacity-65 mix-blend-hard-light" />
-
+                {/* Overlays */}
+                <div className="absolute inset-0 opacity-65 mix-blend-hard-light" />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#266D9A]/50 via-[#266D9A]/60 to-[#266D9A]/50" />
-
                 <div className="absolute inset-0 bg-Secondary/70" />
               </div>
             </SwiperSlide>
@@ -48,47 +49,63 @@ export default function HeroSection() {
         </Swiper>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-        <div className="space-y-8 animate-in fade-in slide-in-from-left-10 duration-1000">
-          <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-            Reducing to <span className="text-white">Zero,</span> <br />
-            <span className="text-Primary">Rising as Hero</span>
-          </h1>
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-5 py-12 md:py-20 mt-16 md:mt-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          
+          {/* Left Side: Text Content */}
+          <div className="space-y-6 md:space-y-8 text-center lg:text-left animate-in fade-in slide-in-from-bottom-10 duration-1000">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
+              Reducing to <span className="text-white/90">Zero,</span> <br className="hidden md:block" />
+              <span className="text-Primary">Rising as Hero</span>
+            </h1>
 
-          <p className="text-blue-50 text-lg md:text-xl max-w-xl leading-relaxed">
-            Zero Olympiad empowers International students with SDG knowledge,
-            global awareness, and leadership skills to become future-ready
-            Global Leaders.
-          </p>
+            <p className="text-blue-50 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+              Zero Olympiad empowers International students with SDG knowledge,
+              global awareness, and leadership skills to become future-ready
+              Global Leaders.
+            </p>
 
-          <Link prefetch={false} href={"/registration"}>
-            <button className="bg-Primary max-w-[230px] inline-block  cursor-pointer hover:bg-Secondary text-white px-8 py-4 rounded-xl  font-bold text-lg flex items-center gap-2 transition-all transform hover:scale-105 shadow-lg active:scale-95">
-              Register Now <span>→</span>
-            </button>
-          </Link>
-        </div>
-
-        <div className="relative animate-in fade-in slide-in-from-right-10 duration-1000">
-          <div className="absolute -inset-1 bg-black/20 rounded-[35px] blur-xl"></div>
-
-          <div className="relative bg-black p-3 rounded-[32px] shadow-2xl overflow-hidden ">
-            <div className="relative overflow-hidden rounded-[22px] aspect-video">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/zeWD8T0RxN0"
-                title="জিরো অলিম্পিয়াডের থিম সং"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+            <div className="flex justify-center lg:justify-start">
+              <Link prefetch={false} href={"/registration"} className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-Primary hover:bg-Secondary text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl active:scale-95 group">
+                  Register Now 
+                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </Link>
             </div>
+          </div>
 
-            <div className="flex justify-between items-center px-4 py-2 bg-black">
-              <div className="flex items-center gap-2"></div>
-              <div className="text-[10px] text-gray-500 font-mono">
-                ZERO OLYMPIAD OFFICIAL
+          {/* Right Side: Video Content */}
+          <div className="relative w-full max-w-lg mx-auto lg:max-w-full animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
+            {/* Glow Effect */}
+            <div className="absolute -inset-1 bg-Primary/30 rounded-[35px] blur-2xl"></div>
+
+            {/* Video Container */}
+            <div className="relative bg-black p-2 sm:p-3 rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-white/10">
+              <div className="relative overflow-hidden rounded-[16px] sm:rounded-[22px] aspect-video">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/zeWD8T0RxN0?rel=0&modestbranding=1"
+                  title="Zero Olympiad Theme Song"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+
+              {/* Video Footer */}
+              <div className="flex justify-between items-center px-4 py-2 bg-black">
+                <div className="flex items-center gap-2">
+                   {/* Optional: Add live indicator or icon here */}
+                   <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                </div>
+                <div className="text-[10px] sm:text-xs text-gray-400 font-mono tracking-widest">
+                  OFFICIAL THEME SONG
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
