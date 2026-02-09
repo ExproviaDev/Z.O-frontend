@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import HeroSection from "./components/heroSection";
 import JourneySection from "./components/Participant-Journey/ParticipantJourney";
+import YouthSection from "./components/youthSection/youthSection";
 export const revalidate = 86400;
 export default function ZeroOlympiad() {
   return (
@@ -263,52 +264,7 @@ export default function ZeroOlympiad() {
         {/* The Participant Journey section */}
         <JourneySection></JourneySection>
         {/* The youth section */}
-        <section id="founder" className="py-32 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="bg-slate-900 rounded-4xl overflow-hidden flex flex-col lg:flex-row items-stretch shadow-3xl">
-              <div className="lg:w-1/2 relative h-[500px] lg:h-auto">
-                <Image
-                  src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770033233/IMG_8818_bdrqrv.jpg"
-                  alt="Fatiha Ayat"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover "
-                />
-                <div className="absolute inset-0 bg-indigo-900/30 mix-blend-multiply" />
-              </div>
-              <div className="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center text-white">
-                <FaQuoteLeft className="text-indigo-500 text-5xl mb-8 opacity-50" />
-                <h3 className="text-3xl lg:text-5xl font-black italic tracking-tighter mb-8 leading-tight">
-                  "The youth are not just the leaders of tomorrow—we are the
-                  architects of today's solutions."
-                </h3>
-                <div className="space-y-6 mb-12">
-                  <p className="text-xl font-black italic text-indigo-400 tracking-tight">
-                    Faatiha Ayat — Founder
-                  </p>
-                  <p className="text-slate-400 font-light leading-relaxed">
-                    A child rights activist, climate campaigner, and global
-                    orator, Fatiha Ayat founded Zero Olympiad with a singular
-                    vision: to empower the youth to take ownership of the
-                    planet's destiny. Through her representation at the UN and
-                    global summits, she has mobilized thousands of students to
-                    join the movement for a "Zero Challenge" future.
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  {["UN Representative", "Author", "Activist"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-4 py-2 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <YouthSection></YouthSection>
       </div>
     </div>
   );
