@@ -1,10 +1,8 @@
 import FaqContent from "./Components/FaqComponent";
 
-// ১ দিনের জন্য ISR সেটআপ (২৪ ঘণ্টা = ৮৬৪০০ সেকেন্ড)
 export const revalidate = 86400;
 
 export default function FAQPage() {
-  // এই ডাটাটি আপনি চাইলে fetch ব্যবহার করে API থেকেও আনতে পারেন
   const faqData = [
     {
       q: "What is the primary objective of Zero Olympiad?",
