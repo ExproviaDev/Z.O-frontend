@@ -116,8 +116,6 @@ export default function EditProfile() {
     }
   };
 
-  
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
