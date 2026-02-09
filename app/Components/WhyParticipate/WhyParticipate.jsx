@@ -13,7 +13,7 @@ export default function WhyParticipate() {
   ];
 
   return (
-    <section className="relative w-full py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <section className="relative w-full py-10 md:py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
           src="https://i.ibb.co/CKpbjfNn/EYE01386.jpg"

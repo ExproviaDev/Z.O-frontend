@@ -1,10 +1,10 @@
 const SDGTable1 = () => {
   return (
-    <section id='sdg' className="py-20 px-4 md:px-8 bg-white">
+    <section id='sdg' className="py-10 md:py-16 px-4 md:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         
-        <div className="text-center mb-12 space-y-4">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-800">
+        <div className="text-center mb-3 md:mb-12 space-y-2 md:space-y-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
             Which SDG Will You Present?
           </h2>
           <p className="text-gray-600 max-w-5xl mx-auto text-sm md:text-base leading-relaxed">

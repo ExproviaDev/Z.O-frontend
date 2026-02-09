@@ -84,7 +84,7 @@ export default function Registration() {
 
   return (
     <section
-      className="relative py-20 px-6 md:px-12 lg:px-24 bg-cover bg-center bg-no-repeat"
+      className="relative py-10 md:py-20 px-5 md:px-8 lg:px-24 bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: "url('https://i.ibb.co/99HFrKfK/speaker-bg.png')",
       }}
