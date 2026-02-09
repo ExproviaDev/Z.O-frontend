@@ -18,7 +18,9 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative h-screen w-auto overflow-hidden flex items-center justify-center font-sans">
+    <section className="relative min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden flex items-center justify-center font-sans">
+      
+      {/* Background Slider */}
       <div className="absolute inset-0 z-0">
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -35,13 +37,12 @@ export default function HeroSection() {
                   alt={`Background ${index}`}
                   fill
                   className="object-cover animate-slow-zoom"
-                  priority
+                  priority={index === 0}
                 />
 
-                <div className="absolute inset-0  opacity-65 mix-blend-hard-light" />
-
+                {/* Overlays - Kept inside slide for specific blend mode effects */}
+                <div className="absolute inset-0 opacity-65 mix-blend-hard-light" />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#266D9A]/50 via-[#266D9A]/60 to-[#266D9A]/50" />
-
                 <div className="absolute inset-0 bg-Secondary/70" />
               </div>
             </SwiperSlide>
@@ -49,35 +50,42 @@ export default function HeroSection() {
         </Swiper>
       </div>
 
-      <div className="relative z-10 max-w-6xl  mx-auto px-6 py-12 flex flex-col items-center text-center">
-        <div className="mb-8">
-          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-6 py-2 rounded-full text-sm md:text-sm font-medium flex items-center gap-2 shadow-2xl">
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center text-center">
+        
+        {/* Badge */}
+        <div className="mb-6 md:mb-8">
+          <span className="bg-white/10 backdrop-blur-xl border border-white/20 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-medium flex items-center gap-2 shadow-2xl">
             <span className="text-Primary animate-pulse">
-              <IoIosStarOutline />
+              <IoIosStarOutline size={16} />
             </span>{" "}
             A Youth-Led Global Movement
           </span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+        {/* Headline */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 md:mb-8 tracking-tight leading-tight md:leading-[1.1] max-w-4xl">
           Global Youth Initiative 2026 Empowering Youth to{" "}
           <span className="text-Primary">Global Challenges</span>
         </h1>
 
-        <div className="flex flex-wrap justify-center gap-5 mb-16">
-          <Link prefetch={false} href={"/registration"}>
-            <button className="flex items-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white order-2 border-Primary hover:border-Secondary  px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105  group">
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-10">
+          
+          <Link prefetch={false} href={"/registration"} className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white border-Primary hover:border-Secondary px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-bold text-sm md:text-base transition-all transform hover:scale-105 group shadow-lg">
               Join Zero Olympiad
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
 
-          <Link prefetch={false} href="/instruction#sdg">
-            <button className="flex items-center cursor-pointer gap-3 bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-8 py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 group">
+          <Link prefetch={false} href="/instruction#sdg" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-3 cursor-pointer bg-white/5 backdrop-blur-md border-2 border-white hover:border-Primary text-white hover:bg-Primary px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-bold text-sm md:text-base transition-all transform hover:scale-105 group shadow-lg">
               Explore The SDG{" "}
               <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
+          
         </div>
       </div>
     </section>

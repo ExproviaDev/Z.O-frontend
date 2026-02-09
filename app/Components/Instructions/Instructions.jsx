@@ -26,8 +26,8 @@ export default function AboutOlympiad() {
 
   return (
     <section className="py-12 md:py-16 bg-white font-sans text-gray-800">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        
+      <div className="max-w-7xl mx-auto px-5 ">
+
         {/* Section Heading */}
         <div className="text-center mb-10 md:mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-[#1e1b4b]">
@@ -37,7 +37,7 @@ export default function AboutOlympiad() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        
+
           <div className="space-y-5 text-sm sm:text-base md:text-[17px] leading-relaxed text-gray-700">
             <p>
               Our students rarely encounter topics like{" "}
@@ -123,11 +123,10 @@ export default function AboutOlympiad() {
                   {sdgData.map((sdg) => (
                     <tr
                       key={sdg.id}
-                      className={`${
-                        sdg.id % 2 === 0 
-                        ? "bg-white text-gray-700" 
-                        : "bg-Primary text-white"
-                      } border-b border-gray-100 last:border-0 hover:opacity-95 transition-opacity`}
+                      className={`${sdg.id % 2 === 0
+                          ? "bg-white text-gray-700"
+                          : "bg-Primary text-white"
+                        } border-b border-gray-100 last:border-0 hover:opacity-95 transition-opacity`}
                     >
                       <td className="py-2.5 px-4 text-xs md:text-sm font-bold border-r border-gray-200/20 text-center">
                         {sdg.id}
