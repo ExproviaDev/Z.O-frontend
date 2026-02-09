@@ -28,7 +28,6 @@ export default function HomePage() {
       <Awards />
       <TimelineEvent />
       <JurySection />
-
       <Supporters />
       <EventGallery />
     </main>

@@ -63,9 +63,9 @@ export default function AboutOlympiad() {
   ];
 
   return (
-    <section className="py-16 bg-white font-sans">
+    <section className="py-8 md:py-16  bg-white font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-14">
           <h2 className="text-3xl md:text-5xl font-bold text-[#1e1b4b]">
             What is the <span className="text-Primary">Zero Olympiad?</span>
           </h2>
