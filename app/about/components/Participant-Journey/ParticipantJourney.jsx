@@ -57,38 +57,28 @@ export default function JourneySection() {
           </p>
         </div>
 
-        {/* Timeline Container */}
         <div className="relative">
           
-          {/* DESKTOP Horizontal Line (Hidden on Mobile/Tablet) */}
           <div className="hidden lg:block absolute top-[2.5rem] left-0 w-full h-1 bg-gradient-to-r from-indigo-500/10 via-indigo-500/50 to-indigo-500/10 rounded-full -z-10"></div>
 
-          {/* Grid System */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-4">
             {steps.map((item, i) => (
               <div 
                 key={i} 
                 className="relative flex lg:flex-col items-start lg:items-center group"
               >
-                
-                {/* 1. Step Marker Area */}
                 <div className="relative flex flex-col items-center shrink-0 mr-6 lg:mr-0 lg:mb-8">
                   
-                  {/* Circle */}
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-900 border-4 border-indigo-500/30 group-hover:border-indigo-500 flex items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:shadow-indigo-500/50 z-10 relative">
                     <span className="text-xl md:text-2xl font-black text-white italic">
                       {item.step}
                     </span>
                   </div>
 
-                  {/* MOBILE Vertical Line (Connects dots downwards) */}
-                  {/* Only shows if it's NOT the last item */}
                   {i !== steps.length - 1 && (
                     <div className="lg:hidden absolute top-16 bottom-[-2rem] w-[2px] bg-indigo-500/20"></div>
                   )}
                 </div>
-
-                {/* 2. Content Card */}
                 <div className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl group-hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 lg:text-center lg:min-h-[160px] flex flex-col lg:justify-start">
                   <h4 className="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">
                     {item.title}
@@ -102,14 +92,6 @@ export default function JourneySection() {
             ))}
           </div>
         </div>
-
-        {/* Footer CTA */}
-        <div className="mt-16 text-center">
-            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-sm font-bold uppercase tracking-wider hover:bg-indigo-500 hover:text-white transition-all duration-300 cursor-pointer">
-                <FaCheckCircle /> Ready to start?
-            </button>
-        </div>
-
       </div>
     </section>
   );
