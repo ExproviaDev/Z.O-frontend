@@ -63,7 +63,7 @@ const timelineData = [
 const Timeline = () => {
   return (
     <section
-      className="relative py-24 p-2 px-4 min-h-screen overflow-hidden"
+      className="relative py-10 md:py-20 p-5 min-h-screen overflow-hidden"
       style={{
         backgroundImage: `url('https://i.ibb.co/99HFrKfK/speaker-bg.png')`,
         backgroundSize: "cover",
@@ -85,7 +85,7 @@ const Timeline = () => {
 
         <div className="absolute left-4 top-40 w-[1px] h-[calc(100%-200px)] bg-gray-200/30 md:hidden"></div>
 
-        <div className="space-y-12 pl-8 md:space-y-24">
+        <div className="space-y-12 px-4  md:space-y-24">
           {timelineData.map((item, index) => (
             <div
               key={index}

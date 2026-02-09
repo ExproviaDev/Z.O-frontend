@@ -1,6 +1,6 @@
 const Supporters = () => {
   return (
-    <section className="relative w-full py-20 px-4 flex flex-col items-center justify-center bg-gray-50">
+    <section className="relative w-full py-10 md:py-20 px-4 flex flex-col items-center justify-center bg-gray-50">
       <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
         <div className="inline-block bg-gray-200 text-gray-800 text-xs font-bold px-4 py-1 rounded-full mb-4">
           Trusted By

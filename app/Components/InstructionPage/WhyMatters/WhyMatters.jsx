@@ -39,10 +39,10 @@ const WhyMatters = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="py-10 md:py-20 px-5 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#333]">
+        <div className="text-center mb-8 md:mb-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#333]">
             Why Zero Olympiad Matters
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-medium">
@@ -52,11 +52,11 @@ const WhyMatters = () => {
           <div className="w-24 h-1 bg-Primary mx-auto mt-4"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"> 
           {topCards.map((card, index) => (
             <div
               key={index}
-              className="p-8 bg-[#f8fafc] rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
+              className="p-5 bg-[#f8fafc] rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
             >
               <div className="mb-6">{card.icon}</div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -69,9 +69,9 @@ const WhyMatters = () => {
           ))}
         </div>
 
-        <div className="bg-[#0a3d5a] rounded-[30px] p-8 md:p-12 text-white flex flex-col lg:flex-row gap-12 items-center">
+        <div className="bg-[#0a3d5a] rounded-[30px] p-5 md:p-12 text-white flex flex-col lg:flex-row gap-12 items-center">
           <div className="lg:w-1/2 space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
               Need for Zero Olympiad
             </h2>
             <div className="space-y-4 opacity-90 font-light text-sm md:text-base">
@@ -87,11 +87,11 @@ const WhyMatters = () => {
             </div>
           </div>
 
-          <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-5">
             {bottomGrid.map((item, index) => (
               <div
                 key={index}
-                className="bg-white/10 backdrop-blur-sm border border-white/5 p-6 rounded-xl"
+                className="bg-white/10 backdrop-blur-sm border border-white/5 p-4 rounded-xl"
               >
                 <h4 className="font-bold text-lg mb-2">{item.title}</h4>
                 <p className="text-xs opacity-80 leading-relaxed">

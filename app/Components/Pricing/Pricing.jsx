@@ -51,10 +51,10 @@ const plans = [
 
 export default function PricingSection() {
   return (
-    <section className="py-24 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+    <section className="py-10 md:py-20 bg-gray-50 ">
+      <div className="max-w-7xl mx-auto px-5 md:px-6">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-6">
             Registration <span className="text-blue-600">Categories</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -71,7 +71,7 @@ export default function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className={`relative bg-white rounded-[2.5rem] p-8 border transition-all duration-300 hover:shadow-2xl `}
+              className={`relative bg-white rounded-[2.5rem] p-5 md:p-8 border transition-all duration-300 hover:shadow-2xl `}
             >
               
 

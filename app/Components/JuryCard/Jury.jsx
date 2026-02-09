@@ -35,7 +35,7 @@ const JurySection = () => {
     );
 
   return (
-    <section className="py-20 bg-Secondary relative overflow-hidden">
+    <section className="py-10 md:py-20 bg-Secondary relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
@@ -46,7 +46,7 @@ const JurySection = () => {
       ></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-6 md:mb-12">
           <h1 className="text-4xl md:text-5xl text-white font-bold tracking-tight">
             Respected Jury Board{" "}
             <span className="text-Primary">(Season One)</span>
