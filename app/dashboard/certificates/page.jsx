@@ -14,7 +14,6 @@ const MyCertificates = () => {
       issueDate: "Dec 12, 2024",
       instructor: "Dr. Jane Doe",
       image: "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766673234/gettyimages-690545448-612x612_gfo7px.jpg",
-      // আপনার দেওয়া ডেমো ডাউনলোড লিঙ্ক (এখানে ড্রাইভ বা অন্য লিঙ্ক হবে)
       downloadUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", 
     },
     {
