@@ -146,7 +146,7 @@ const SDGTable1 = () => {
               </tr>
               <tr className="bg-[#f5f3ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 17</td>
-                <td colSpan="2" className="border-r border-b p-3 font-semibold"> Postgraduate (Masters)</td>
+                <td colSpan="2" className="border-r border-b p-3 font-semibold"> Postgraduate (Masters) and Above </td>
               </tr>
               
 

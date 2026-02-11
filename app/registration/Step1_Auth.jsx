@@ -91,7 +91,7 @@ export default function Step1_Auth({ formData, updateFormData, nextStep }) {
 
       {/* District */}
       <div className="pb-4">
-        <label className="block text-md font-medium text-black pb-2">District (Bangladesh) / City (Out site Of BD) *</label>
+        <label className="block text-md font-medium text-black pb-2">District (Bangladesh) / City (OutSide Of BD) *</label>
         <div className="flex items-center border border-black rounded-lg">
           <AiOutlineHome className="text-gray-600 ml-2" />
           <input
