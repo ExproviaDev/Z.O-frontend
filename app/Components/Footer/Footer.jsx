@@ -106,13 +106,18 @@ export default function Footer() {
                                 <FaEnvelope className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
                                     <p>
-                                        <a href="mailto:info@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
+                                        <a href="mailto:faatiha.aayat@gmail.com" className="hover:text-[#5B2EFF] transition">
                                             faatiha.aayat@gmail.com
                                         </a>
                                     </p>
                                     <p>
-                                        <a href="mailto:support@zeroolympiad.bd" className="hover:text-[#5B2EFF] transition">
+                                        <a href="mailto:admin@zeroolympiad.com" className="hover:text-[#5B2EFF] transition">
                                             admin@zeroolympiad.com
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="mailto:zeroolympiad.bd@gmail.com" className="hover:text-[#5B2EFF] transition">
+                                            zeroolympiad.bd@gmail.com
                                         </a>
                                     </p>
                                 </div>
