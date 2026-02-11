@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaMapPin } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 import {
     FaFacebookF,
     FaLinkedinIn,
@@ -24,6 +25,7 @@ export default function Footer() {
         { icon: FaInstagram, url: "https://www.instagram.com/faatiha.aayat/" },
         { icon: FaXTwitter, url: "https://x.com/faatihaaayat" },
         { icon: FaLinkedinIn, url: "https://www.linkedin.com/in/faatihaaayat/" },
+        { icon: FaTiktok, url: "https://www.tiktok.com/@zeroolympiad", }
     ];
 
     const quickLinks = [
@@ -36,13 +38,13 @@ export default function Footer() {
 
     return (
         <footer className="font-sans w-full">
-           
+
             <div className="bg-[#14142B] text-white/70 px-5 pt-20 pb-6">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     <div>
                         <Link prefetch={false} href="/" className="flex items-center gap-3 mb-4">
                             <div className="w-84 h-16 rounded-full flex items-center justify-center shadow-lg pb-8 transition-transform duration-300 ">
-                                <Image src={logo} alt="siteLogo"  />
+                                <Image src={logo} alt="siteLogo" />
                             </div>
                         </Link>
                         <p className="text-sm text-white/60 leading-relaxed">
@@ -56,7 +58,7 @@ export default function Footer() {
                             {quickLinks.map((link) => (
                                 <li key={link.name}>
                                     <Link
-                                    prefetch={false}
+                                        prefetch={false}
                                         href={link.href}
                                         className="text-white/70 text-sm hover:text-[#5B2EFF] transition"
                                     >
@@ -73,7 +75,7 @@ export default function Footer() {
                             <li className="flex flex-col sm:flex-row sm:items-start gap-3">
                                 <FaMapPin className="mt-1 flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
-                                   
+
                                     <p> Office address - House #469, Level #3, Road#31, Mohakhali DOHS, Dhaka 1212</p>
                                     <p>Bangladesh</p>
                                 </div>
@@ -89,7 +91,7 @@ export default function Footer() {
                                     </p>
                                     <p>
                                         <a href="tel:+8809876543210" className="hover:text-[#5B2EFF] transition">
-                                           +880 1886-286321
+                                            +880 1886-286321
                                         </a>
                                     </p>
                                 </div>
@@ -111,7 +113,7 @@ export default function Footer() {
                                 </div>
                             </li>
 
-                            
+
                         </ul>
                     </div>
 

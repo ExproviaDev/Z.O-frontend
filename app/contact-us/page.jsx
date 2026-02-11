@@ -1,6 +1,6 @@
 
 import { IoLocationSharp } from "react-icons/io5";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaTiktok } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebook, FaYoutube, FaInstagram } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
@@ -10,25 +10,31 @@ export default function Page() {
     {
       name: "Facebook",
       icon: <FaFacebook className="text-blue-600 text-3xl" />,
-      url: "https://www.facebook.com/FaatihaAayatOfficial",
+      url: "https://www.facebook.com/zeroolympiad/",
       handle: "@FaatihaAayat",
     },
     {
       name: "YouTube",
       icon: <FaYoutube className="text-red-600 text-3xl" />,
-      url: "https://www.youtube.com/@FaatihaAayat",
+      url: "https://www.youtube.com/@ZeroOlympiad",
       handle: "Faatiha Aayat",
     },
     {
       name: "Instagram",
       icon: <FaInstagram className="text-pink-500 text-3xl" />,
-      url: "https://www.instagram.com/faatiha.aayat",
+      url: "https://www.instagram.com/zeroolympiad.offiical/",
       handle: "@faatiha.aayat",
     },
     {
       name: "Linkedin",
       icon: <GrLinkedin className="text-[#0A66C2] text-3xl" />,
-      url: "https://www.linkedin.com/in/faatihaaayat/",
+      url: "https://www.linkedin.com/company/zeroolympiad",
+      handle: "@faatiha.aayat",
+    },
+    {
+      name: "TikTok",
+      icon: <FaTiktok className="text-[#000000] text-3xl" />,
+      url: "https://www.tiktok.com/@zeroolympiad",
       handle: "@faatiha.aayat",
     },
   ];

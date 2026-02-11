@@ -8,13 +8,14 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
+import Loading from "../../admin/components/loadign";
 
 const ProfilePage = () => {
   const authState = useSelector((state) => state.user);
   const loading = authState?.loading;
   const user = useSelector((state) => state.auth.user);
   if (loading)
-    return <div className="p-10 text-center">Loading Profile...</div>;
+    return <Loading></Loading>;
   if (!user)
     return (
       <div className="p-10 text-center text-red-500">
@@ -33,7 +34,7 @@ const ProfilePage = () => {
                 alt="Profile"
                 width={300}
                 height={300}
-                className="w-[100px] h-[100px] object-cover  rounded-full"
+                className="w-20 h-20 md:w-28 md:min-h-28 object-cover  rounded-full"
               />
             ) : (
               <div className="flex h-full items-center justify-center text-gray-400 font-medium">
@@ -41,7 +42,7 @@ const ProfilePage = () => {
               </div>
             )}
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">{user.name}</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-gray-800">{user.name}</h1>
               <p className="text-blue-600 font-medium">
                 {user.role || "Participant"}
               </p>
