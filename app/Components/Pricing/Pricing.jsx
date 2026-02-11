@@ -83,12 +83,12 @@ export default function PricingSection() {
               </div>
 
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.title}</h3>
-              <p className="text-gray-500 text-sm mb-6">Ramadan rewards</p>
+              <p className="text-gray-500 text-md mb-6">Ramadan Rewards</p>
               
               <div className="flex items-baseline gap-1 mb-8">
                 <span className={`text-xl font-black text-gray-900`}>{plan.prize}</span>
                 <span className="text-xl font-bold text-gray-400">BDT</span>
-                <span class="line-through">400</span>
+                <span class="line-through">400</span>BDT
               </div>
 
 
