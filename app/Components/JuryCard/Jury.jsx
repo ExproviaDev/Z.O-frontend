@@ -42,7 +42,7 @@ const JurySection = () => {
       id: 7,
       name: "MD MANSURUL HAQUE",
       title: "UN Disaster Risk Reduction Fellow",
-      image: "/src/image/",
+      image: "/src/image/MD-MANSURUL-HAQUE.jpeg",
     },
     {
       id: 8,
