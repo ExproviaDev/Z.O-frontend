@@ -18,9 +18,7 @@ const UserVideoSubmission = () => {
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [submissionState, setSubmissionState] = useState("loading"); // 'upcoming', 'active', 'expired', 'disabled'
-
-  // ১. ইউজার ডাটা এবং টোকেন চেক
+  const [submissionState, setSubmissionState] = useState("loading");
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -198,7 +196,7 @@ const UserVideoSubmission = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-bold text-gray-700">Video URL (YouTube/Drive)</label>
+                    <label className="block text-sm font-bold text-gray-700">Video URL (YouTube/FaceBook)</label>
                     
                     {/* Edit Button Logic */}
                     {statusData?.video_link && submissionState === "active" && !isEditing && (
