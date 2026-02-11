@@ -7,6 +7,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { HiOutlineSpeakerphone, HiOutlineCalendar } from "react-icons/hi";
 import { motion } from "framer-motion";
+import Loading from "../../admin/components/loadign";
 
 export default function AnnouncementPage() {
   const { data: announcements = [], isLoading, error } = useQuery({
@@ -23,11 +24,7 @@ export default function AnnouncementPage() {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex h-[60vh] items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-600"></div>
-      </div>
-    );
+    return <Loading></Loading>
   }
 
   if (error) {

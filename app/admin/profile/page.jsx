@@ -7,11 +7,12 @@ import {
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import Link from "next/link";
 import Image from "next/image";
+import Loading from "../components/loadign";
 
 const AdminProfilePage = () => {
   const user = useSelector((state) => state.auth.user);
 
-  if (!user) return <div className="p-10 text-center text-red-500 font-bold">Data loading...</div>;
+  if (!user) return <Loading></Loading>
 
   return (
     <main className="min-h-screen bg-[#f8fafc] py-12 px-4 lg:px-0">

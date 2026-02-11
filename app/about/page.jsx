@@ -48,27 +48,48 @@ export default function ZeroOlympiad() {
                 {/* Paragraphs with fixed Bold Text */}
                 <div className="space-y-6 text-base md:text-lg text-slate-600 leading-relaxed text-justify md:text-left">
                   <p>
-                    Fourteen-year-old Child Rights Activist, Climate Campaigner, and Global Speaker.
+                    Faatiha Aayat is a fourteen-year-old Child Rights Activist and Climate
+                    Campaigner. She has already spoken in the United Nations, Ford Foundation,
+                    TEDx, Harvard University, Columbia University, Georgia Tech etc.
                   </p>
 
                   <p>
-                    I have represented youth voices at the{" "}
-                    <strong className="font-bold text-slate-900">
-                      United Nations, Harvard, and TEDx
-                    </strong>
-                    , advocating against climate change and social injustices. Through my organization,{" "}
+                    She regularly raises her voice against Global Warming, Climate Change,
+                    Carbon Emission, Fossil Fuel etc. She talks to stop Child Abuse, Gender
+                    Discrimination and Domestic Violence. She has four published books. She runs
+                    her own organization named{" "}
                     <strong className="font-bold text-slate-900">
                       Faatiha Aayat Academy
-                    </strong>
-                    , I work towards sustainable development and global leadership.
+                    </strong>{" "}
+                    where she works for CHIL&D - Climate, Health, Information, Learning and
+                    Development.
                   </p>
 
                   <p>
-                    A published author of four books and a recipient of the{" "}
+                    She has pursued a Professional Development Program from the Department of
+                    Continuing Education of University of Harvard. She has obtained{" "}
                     <strong className="font-bold text-slate-900">
-                      President’s Academic Excellence Gold Certificate
+                      “President’s Award For Outstanding Academic Excellence – Gold
+                      Certificate''
                     </strong>
-                    , I continue to bridge the gap between human rights and climate action.
+                    . She has completed the "Gender Equality and Human Rights in Climate Action
+                    and Renewable Energy" course provided by United Nations Institute for
+                    Training and Research.
+                  </p>
+
+                  <p>
+                    She was conferred the{" "}
+                    <strong className="font-bold text-slate-900">
+                      Human Rights Hero Award 2023
+                    </strong>{" "}
+                    at the 17th International Human Rights Youth Summit held at the UN
+                    Headquarters ECOSOC Chamber. She became champion in “My Goal – For A Better
+                    Future” organized by UN Environment. Her prototype of Space Rover
+                    Perseverance and Helicopter Ingenuity has been nominated for display in the
+                    Jet Propulsion Laboratory of NASA. She received the Amazing Artist Award in
+                    the Ocean Under Threat category at the Advena World Art Competition. She
+                    became Champion in the New York City Urban Debate League 2023 in
+                    MSParliJVDivision.
                   </p>
                 </div>
 
@@ -101,83 +122,6 @@ export default function ZeroOlympiad() {
                     className="w-full h-full object-cover hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                   />
                 </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-        {/* Syed Aftab Ahmed section */}
-        <section
-          id="mission"
-          className="relative py-12 md:py-24 bg-white overflow-hidden font-sans"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-              {/* Left Side: Image */}
-              <div className="relative group w-full max-w-md lg:max-w-full mx-auto">
-                {/* Rotated Background Frame */}
-                <div className="absolute inset-0 bg-indigo-600 rounded-[2rem] md:rounded-[3rem] rotate-3 scale-105 opacity-5 group-hover:rotate-0 transition-transform duration-700" />
-
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] lg:aspect-square bg-slate-100 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
-                  <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219567/SYED_AFTAB_AHMED_1_mnqdha.jpg"
-                    alt="Syed Aftab Ahmed - Managing Director"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="w-full h-full object-cover hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-                  />
-                </div>
-              </div>
-
-              {/* Right Side: Content */}
-              <div className="relative">
-                {/* Background Blur Effect */}
-                <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-50/80 rounded-full -z-10 blur-2xl" />
-
-                <div className="mb-8 md:mb-10 group">
-                  <div className="flex flex-col border-l-4 md:border-l-8 border-Primary pl-5 md:pl-8 py-2">
-
-                    {/* Designation Tag */}
-                    <span className="text-xs md:text-sm font-bold text-Primary uppercase tracking-[0.2em] mb-2 opacity-90">
-                      Barrister-at-Law
-                    </span>
-
-                    {/* Name */}
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight">
-                      Syed Aftab Ahmed
-                    </h2>
-
-                    {/* Title */}
-                    <div className="mt-3 md:mt-4 flex items-center gap-3">
-                      <span className="h-[2px] w-8 md:w-12 bg-Secondary"></span>
-                      <span className="text-lg md:text-2xl font-medium text-Secondary tracking-wide">
-                        Managing Director
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8 md:mb-10 text-justify md:text-left">
-                  Having over 16 years of expertise in Business and Migration
-                  Consultancy under my experience belt, I would love to make
-                  more professional acquaintances. I believe in creating and
-                  fostering relationships as a cornerstone of conducting
-                  business.
-                </p>
-
-                {/* Button */}
-                <a
-                  href="https://www.linkedin.com/in/barristeraftab/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-3 cursor-pointer bg-Primary hover:bg-Secondary text-white border-Primary hover:border-Secondary px-8 py-3.5 md:px-8 md:py-4 rounded-xl font-bold text-base transition-all transform hover:scale-105 shadow-lg group"
-                >
-                  View More
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </a>
               </div>
 
             </div>
