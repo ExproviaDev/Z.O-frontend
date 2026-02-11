@@ -374,24 +374,6 @@ export default function EditProfile() {
               ))}
             </select>
           </div>
-
-          <div>
-            <label className="font-semibold text-sm">Activities Role</label>
-            <select
-              className={inputStyle}
-              value={formData.activities_role}
-              onChange={(e) =>
-                setFormData({ ...formData, activities_role: e.target.value })
-              }
-            >
-              <option value="">Select Role</option>
-              {activitiesOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt.substring(0, 50)}...
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
         {/* <button

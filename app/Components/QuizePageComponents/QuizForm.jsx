@@ -11,6 +11,7 @@ import TimeUpModal from "./TimeUpModal";
 import { AiOutlineClockCircle, AiOutlineArrowLeft } from "react-icons/ai";
 import { MdSecurity } from "react-icons/md";
 import { clearActiveQuiz } from "../../store/slices/userQuizSlice";
+import { updateParticipation } from "../../store/slices/authSlice"; // আপনার পাথ অনুযায়ী ঠিক করে নিবেন
 
 const QuizForm = ({ questions, quizInfo }) => {
   const router = useRouter();
@@ -105,6 +106,7 @@ const QuizForm = ({ questions, quizInfo }) => {
       const response = await axios.post(`${API_URL}/api/admin/submit-quiz`, submissionData);
 
       if (response.data.success) {
+        dispatch(updateParticipation());
         localStorage.removeItem("quiz_time");
         dispatch(clearActiveQuiz());
         Swal.fire({
@@ -115,7 +117,7 @@ const QuizForm = ({ questions, quizInfo }) => {
           confirmButtonColor: "#10B981",
           allowOutsideClick: false
         }).then(() => {
-          router.push("/dashboard");
+          router.push("/dashboard/certificates");
         });
       }
     } catch (error) {

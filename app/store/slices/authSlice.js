@@ -83,7 +83,23 @@ const authSlice = createSlice({
     stopLoading: (state) => {
       state.loading = false;
     },
+    // 🔥 নতুন রিডিউসার: কুইজ সাবমিশনের পর স্টেট ও ক্যাশ আপডেট করার জন্য
+    updateParticipation: (state) => {
+      if (state.user) {
+        // ১. Redux স্টেট আপডেট
+        state.user.is_participated = true;
+
+        // ২. LocalStorage আপডেট (যাতে রিফ্রেশ দিলে ডাটা না হারায়)
+        const currentSavedData = localStorage.getItem("user_data");
+        if (currentSavedData) {
+          const parsedData = JSON.parse(currentSavedData);
+          parsedData.is_participated = true;
+          localStorage.setItem("user_data", JSON.stringify(parsedData));
+        }
+      }
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserProfile.pending, (state) => {
@@ -109,5 +125,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setLogin, stopLoading } = authSlice.actions;
+export const { logout, setLogin, stopLoading, updateParticipation } = authSlice.actions;
 export default authSlice.reducer;
