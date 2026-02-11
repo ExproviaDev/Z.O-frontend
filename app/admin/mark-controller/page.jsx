@@ -2,157 +2,302 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import Swal from "sweetalert2"; // ✅ SweetAlert2 Import
 
 export default function LeaderboardPage() {
     const [round, setRound] = useState(1);
     const [category, setCategory] = useState("All");
-    const [passMark, setPassMark] = useState("");
+    
+    // Pagination States
+    const [page, setPage] = useState(1);
+    const [limit] = useState(50);
+    const [totalUsers, setTotalUsers] = useState(0);
+
+    // Admin Promotion States
+    const [promotionLimit, setPromotionLimit] = useState(200);
+    const [isPromoting, setIsPromoting] = useState(false);
+    const [progress, setProgress] = useState(0); // ✅ For Loader Counting
+    
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // 1. Data Fetch korar function
+    // 1. Fetch Leaderboard
     const fetchLeaderboard = async () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("access_token");
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/mark/view?roundNumber=${round}&category=${category}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/mark/view?roundNumber=${round}&category=${category}&page=${page}&limit=${limit}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             if (res.data.success) {
                 setLeaderboardData(res.data.data);
+                setTotalUsers(res.data.total || 0);
             }
         } catch (err) {
-            toast.error("Failed to load leaderboard");
             console.error(err);
+            toast.error("Failed to load data");
         } finally {
             setLoading(false);
         }
     };
 
-    // 2. Pass Mark set ebong Auto-Promote korar function
-    const handleSetPassMark = async () => {
-        if (!passMark || category === "All") {
-            return toast.error("Please select a specific category and enter pass mark");
-        }
+    // 2. 🔥 Auto Promote Function with SweetAlert & Loader
+    const handlePromoteUsers = async () => {
+        // ✅ Step 1: Beautiful Confirmation Dialog
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to promote Top ${promotionLimit} users from EACH of the 17 SDG categories!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4F46E5', // Indigo color
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Promote Them! 🚀',
+            background: '#fff',
+            customClass: {
+                popup: 'rounded-2xl shadow-xl'
+            }
+        });
+
+        if (!result.isConfirmed) return;
+
+        // ✅ Step 2: Start Custom Loader with Counting
+        setIsPromoting(true);
+        setProgress(0);
+        
+        // Fake counting animation (Just for UX)
+        const interval = setInterval(() => {
+            setProgress((oldProgress) => {
+                if (oldProgress >= 95) return 95; // Wait at 95% for actual response
+                const diff = Math.random() * 10;
+                return Math.min(oldProgress + diff, 95);
+            });
+        }, 500);
+
         try {
             const token = localStorage.getItem("access_token");
             const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/leaderboard/set-pass-mark`,
-                { roundNumber: round, category: category, passMark: parseInt(passMark) },
+                `${process.env.NEXT_PUBLIC_API_URL}/api/mark/promote-users`,
+                { roundNumber: parseInt(round), limit: parseInt(promotionLimit) },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
+            
+            // ✅ Step 3: Success Handling
+            clearInterval(interval);
+            setProgress(100); // Finish counting
+            
             if (res.data.success) {
-                toast.success(res.data.message);
-                fetchLeaderboard(); // List refresh korar jonno
+                // Wait a bit to show 100% then show alert
+                setTimeout(() => {
+                    setIsPromoting(false);
+                    Swal.fire({
+                        title: 'Promotion Successful! 🎉',
+                        html: `<b>${res.data.message}</b><br/><span style="font-size:12px; color:gray">All users have been moved to the next round table.</span>`,
+                        icon: 'success',
+                        confirmButtonColor: '#4F46E5',
+                        confirmButtonText: 'Awesome!'
+                    });
+                    fetchLeaderboard(); // Refresh List
+                }, 500);
             }
         } catch (err) {
-            toast.error(err.response?.data?.message || "Promotion failed");
+            clearInterval(interval);
+            setIsPromoting(false);
+            Swal.fire({
+                title: 'Error!',
+                text: err.response?.data?.error || "Promotion failed due to server error.",
+                icon: 'error',
+                confirmButtonText: 'Try Again'
+            });
         }
     };
 
-    // Filter change hole auto fetch hobe
     useEffect(() => {
-        fetchLeaderboard();
+        setPage(1);
     }, [round, category]);
 
+    useEffect(() => {
+        fetchLeaderboard();
+    }, [page, round, category]);
+
+    const totalPages = Math.ceil(totalUsers / limit);
+
     return (
-        <div className="p-8 bg-gray-50 min-h-screen">
-            <Toaster />
+        <div className="p-8 bg-gray-50 min-h-screen font-sans relative">
+            <Toaster position="top-right" />
 
-            <h1 className="text-2xl font-black text-slate-800 mb-8 uppercase tracking-tighter">
-                Competition Leaderboard
-            </h1>
+            {/* ✅ Custom Full Screen Loader Overlay */}
+            {isPromoting && (
+                <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">
+                    <div className="bg-white p-10 rounded-3xl shadow-2xl flex flex-col items-center max-w-sm w-full animate-bounce-slow">
+                        {/* Spinner */}
+                        <div className="relative w-24 h-24 mb-6">
+                            <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-100 rounded-full"></div>
+                            <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+                        </div>
+                        
+                        {/* Counting Text */}
+                        <h2 className="text-4xl font-black text-indigo-600 mb-2 font-mono">
+                            {Math.round(progress)}%
+                        </h2>
+                        
+                        <h3 className="text-xl font-bold text-slate-700 animate-pulse">Processing Data...</h3>
+                        <p className="text-slate-400 text-xs mt-2 text-center px-4">
+                            Analyzing scores, ranking participants, and migrating to Round {parseInt(round) + 1}...
+                        </p>
+                    </div>
+                </div>
+            )}
 
-            {/* Filter Section */}
+            {/* Header */}
+            <div className="flex justify-between items-center mb-8">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">
+                        Competition Leaderboard
+                    </h1>
+                    <p className="text-slate-500 text-sm font-bold mt-1">
+                        Showing {leaderboardData.length} of {totalUsers} Participants
+                    </p>
+                </div>
+                
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+                    <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
+                    <span className="text-sm font-bold text-slate-600">
+                        Live View: Round <span className="text-indigo-600 text-lg">{round}</span>
+                    </span>
+                </div>
+            </div>
+
+            {/* Controls Section */}
             <div className="flex flex-wrap items-end gap-6 mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-
                 <div className="form-control w-full md:w-48">
-                    <label className="label font-bold text-gray-500 text-[10px] uppercase">Select Round</label>
-                    <select value={round} onChange={(e) => setRound(e.target.value)} className="select select-bordered font-bold">
+                    <label className="label font-bold text-gray-400 text-[10px] uppercase tracking-wider mb-1">Select Round</label>
+                    <select value={round} onChange={(e) => setRound(e.target.value)} className="select select-bordered font-bold bg-gray-50">
                         <option value={1}>Round 1: Quiz</option>
                         <option value={2}>Round 2: Video</option>
                         <option value={3}>Grand Finale</option>
                     </select>
                 </div>
 
-                <div className="form-control w-full md:w-56">
-                    <label className="label font-bold text-gray-500 text-[10px] uppercase">SDG Category</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered font-bold text-indigo-600">
-                        <option value="All">All Categories</option>
-                        <option value="SDG Activist">SDG Activist</option>
-                        <option value="SDG Achiever">SDG Achiever</option>
-                        <option value="SDG Ambassador">SDG Ambassador</option>
+                <div className="form-control w-full md:w-64">
+                    <label className="label font-bold text-gray-400 text-[10px] uppercase tracking-wider mb-1">Filter by SDG</label>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered font-bold text-indigo-600 bg-indigo-50 border-indigo-100">
+                        <option value="All">All 17 Categories</option>
+                        <option value="No Poverty">1. No Poverty</option>
+                        <option value="Zero Hunger">2. Zero Hunger</option>
+                        {/* Add others */}
                     </select>
                 </div>
 
-                {/* Admin Only: Pass Mark Section */}
-                <div className="form-control w-full md:w-64">
-                    <label className="label font-bold text-gray-500 text-[10px] uppercase">Set Pass Mark & Promote</label>
-                    <div className="flex gap-2">
-                        <input
-                            type="number"
-                            value={passMark}
-                            onChange={(e) => setPassMark(e.target.value)}
-                            className="input input-bordered w-full font-bold"
-                            placeholder="Mark"
-                        />
-                        <button onClick={handleSetPassMark} className="bg-Secondary text-white rounded-xl font-bold px-8 py-2 cursor-pointer hover:bg-Primary transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95">Apply</button>
+                {/* Admin Promotion Button */}
+                <div className="form-control w-full md:w-auto ml-auto pl-6 border-l border-dashed border-gray-200">
+                    <label className="label font-bold text-rose-500 text-[10px] uppercase tracking-wider mb-1">
+                        🚀 Admin Action
+                    </label>
+                    <div className="flex gap-3 items-center bg-rose-50 p-2 rounded-xl border border-rose-100">
+                        <div className="flex flex-col">
+                            <span className="text-[9px] font-bold text-rose-400 uppercase">Limit/SDG</span>
+                            <input
+                                type="number"
+                                value={promotionLimit}
+                                onChange={(e) => setPromotionLimit(e.target.value)}
+                                className="input input-xs w-16 font-bold text-center bg-white border-rose-200 text-rose-600 focus:outline-none"
+                            />
+                        </div>
+                        
+                        <button 
+                            onClick={handlePromoteUsers} 
+                            className="h-9 px-6 rounded-lg font-bold text-white text-xs shadow-md transition-all flex items-center gap-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:shadow-lg hover:scale-105 active:scale-95"
+                        >
+                            Promote All SDGs
+                        </button>
                     </div>
                 </div>
             </div>
 
             {/* Leaderboard Table */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-6">
                 <table className="table w-full border-collapse">
                     <thead>
-                        <tr className="bg-gray-50 border-b border-gray-100 text-slate-500 text-[11px] uppercase tracking-widest">
-                            <th className="py-5 text-center">Rank</th>
-                            <th className="py-5 text-left">Participant</th>
-                            <th className="py-5 text-center">Total Score</th>
+                        <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 text-[11px] uppercase tracking-widest">
+                            <th className="py-5 text-center w-20">Rank</th>
+                            <th className="py-5 text-left pl-6">Participant Info</th>
+                            <th className="py-5 text-center">Score</th>
                             <th className="py-5 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50">
-                        {leaderboardData.length > 0 ? (
+                        {loading ? (
+                            <tr><td colSpan="4" className="text-center py-20 font-bold text-slate-400 animate-pulse">Loading data...</td></tr>
+                        ) : leaderboardData.length > 0 ? (
                             leaderboardData.map((user, index) => (
-                                <tr key={user.id} className="hover:bg-slate-50 transition-all">
-                                    <td className="text-center font-black text-slate-300">#{index + 1}</td>
-                                    <td className="py-4">
-                                        <div className="flex items-center gap-3">
+                                <tr key={index} className="hover:bg-indigo-50/30 transition-all group duration-300">
+                                    <td className="text-center font-black text-slate-300 group-hover:text-indigo-500 text-lg">
+                                        #{ (page - 1) * limit + index + 1 }
+                                    </td>
+                                    <td className="py-4 pl-6">
+                                        <div className="flex items-center gap-4">
                                             <div className="avatar">
-                                                <div className="w-10 h-10 rounded-xl ring-2 ring-slate-100">
-                                                    <img src={user.user_profiles?.profile_image_url || `https://ui-avatars.com/api/?name=${user.user_profiles?.name}`} alt="avatar" />
+                                                <div className="w-12 h-12 rounded-2xl ring-4 ring-slate-50 group-hover:ring-indigo-100 overflow-hidden">
+                                                    <img src={user.user_profiles?.profile_image_url || `https://ui-avatars.com/api/?name=${user.user_profiles?.name}&background=random`} alt="avatar" />
                                                 </div>
                                             </div>
                                             <div>
-                                                <p className="font-bold text-slate-700 leading-none mb-1">{user.user_profiles?.name}</p>
-                                                <p className="text-[9px] font-bold text-indigo-400 uppercase">{user.sdg_category}</p>
+                                                <p className="font-bold text-slate-700 leading-tight mb-1 text-base group-hover:text-indigo-700">{user.user_profiles?.name}</p>
+                                                <span className="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md uppercase tracking-wider border border-indigo-100">
+                                                    {user.sdg_category || `SDG ${user.user_profiles?.assigned_sdg_number}`}
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="text-center">
-                                        <span className="text-lg font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">
-                                            {user.total_calculated_score}
-                                        </span>
+                                        <div className="flex flex-col items-center">
+                                            <span className="text-xl font-black text-slate-700">
+                                                {parseInt(round) === 1 ? user.quiz_score : user.total_calculated_score}
+                                            </span>
+                                            {parseInt(round) === 1 && (
+                                                <span className="text-[10px] text-slate-400 font-bold bg-slate-100 px-2 rounded-full mt-1">⏱️ {user.time_taken}s</span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="text-center">
                                         {user.is_promoted ? (
-                                            <span className="badge badge-success text-white font-bold py-3 px-4">QUALIFIED</span>
+                                            <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-600 border border-emerald-200">✅ QUALIFIED</span>
                                         ) : (
-                                            <span className="badge badge-ghost opacity-40 font-bold">PENDING</span>
+                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-400 border border-slate-200">PENDING</span>
                                         )}
                                     </td>
                                 </tr>
                             ))
                         ) : (
-                            <tr>
-                                <td colSpan="4" className="text-center py-20 text-slate-400 italic">No data found for this selection.</td>
-                            </tr>
+                            <tr><td colSpan="4" className="text-center py-20 text-slate-400 italic">No participants found.</td></tr>
                         )}
                     </tbody>
                 </table>
             </div>
+
+            {/* Pagination */}
+            {totalUsers > 0 && (
+                <div className="flex justify-center items-center gap-4 py-8">
+                    <button 
+                        onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={page === 1}
+                        className="btn btn-sm bg-white border-gray-200 hover:bg-gray-100 disabled:opacity-50"
+                    >
+                        « Prev
+                    </button>
+                    <span className="font-bold text-slate-600 text-sm">
+                        Page <span className="text-indigo-600">{page}</span> of {totalPages}
+                    </span>
+                    <button 
+                        onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={page === totalPages}
+                        className="btn btn-sm bg-white border-gray-200 hover:bg-gray-100 disabled:opacity-50"
+                    >
+                        Next »
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

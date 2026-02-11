@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GrAnnounce } from "react-icons/gr";
 import Swal from "sweetalert2";
 import LogoutButton from "../../Components/LogoutButton";
+import { MdLeaderboard } from "react-icons/md";
 
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
@@ -36,6 +37,7 @@ export default function Sidebar({ isOpen, onClose }) {
       href: "/dashboard/announcement",
     },
     {name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission"},
+    {name:"leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard"}
   ];
 
   const handleLogout = () => {
