@@ -85,13 +85,18 @@ export default function Footer() {
                                 <FaPhone className="mt-1  flex-shrink-0" size={20} />
                                 <div className="leading-relaxed">
                                     <p>
-                                        <a href="tel:+8801234567890" className="hover:text-[#5B2EFF] transition">
+                                        <a href="tel:+8801973570203" className="hover:text-[#5B2EFF] transition">
                                             +880 1973570203
                                         </a>
                                     </p>
                                     <p>
-                                        <a href="tel:+8809876543210" className="hover:text-[#5B2EFF] transition">
+                                        <a href="tel:+8801886-286321" className="hover:text-[#5B2EFF] transition">
                                             +880 1886-286321
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="tel:+8801805726666" className="hover:text-[#5B2EFF] transition">
+                                            +880 1805726666
                                         </a>
                                     </p>
                                 </div>
