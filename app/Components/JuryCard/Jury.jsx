@@ -12,7 +12,7 @@ const JurySection = () => {
       id: 2,
       name: "RATHINDRA NATH DAS",
       title: "ED, Daffodil International Professional Training Institute",
-      image: "/src/image/RATHINDRA-NATH-DAS.jfif",
+      image: "/src/image/ED-Sir-Updated_drogq8.webp",
     },
     {
       id: 3,
