@@ -1,38 +1,48 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { FaChartLine } from "react-icons/fa";
 import StatsSection from "../components/ChartStatTable/StatCard";
 import SDGChart from "../components/ChartStatTable/Chart";
 import DistributionPieChart from "../components/ChartStatTable/PieChart";
 
+// ডাটা ফেচিং ফাংশন
+const fetchDashboardStats = async () => {
+  const token = localStorage.getItem("access_token");
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const res = await axios.get(`${API_URL}/api/admin/dashboard-stats`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+};
+
 export default function DashboardHome() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // TanStack Query এর মাধ্যমে ডাটা লোড এবং ৩০ মিনিটের ক্যাশিং
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["admin-dashboard-stats"],
+    queryFn: fetchDashboardStats,
+    staleTime: 30 * 60 * 1000, // ৩০ মিনিট পর্যন্ত ডাটা ফ্রেশ থাকবে
+    gcTime: 35 * 60 * 1000,    // ৩০ মিনিটের একটু বেশি সময় মেমোরিতে ডাটা ক্যাশ থাকবে
+    refetchOnWindowFocus: false, // উইন্ডো ফোকাস করলে বারবার লোড হওয়া বন্ধ করবে
+  });
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem("access_token");
-        // আপনার ব্যাকএন্ড এন্ডপয়েন্ট এখানে 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard-stats`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const result = await res.json();
-        setData(result);
-      } catch (err) {
-        console.error("Error loading dashboard data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStats();
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="flex h-[80vh] items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
-  if (loading) return (
-    <div className="flex h-[80vh] items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-600"></div>
-    </div>
-  );
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-500 font-bold">
+        Error loading dashboard data. Please try again.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">

@@ -52,7 +52,7 @@ export default function CertificatePage() {
                 Complete your quiz to unlock this achievement certificate! 🚀
             </p>
 
-            <Link href="/dashboard/quiz">
+            <Link href="/dashboard/quizzes">
                 <button className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-4 rounded-xl font-bold hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-200">
                     Go to Quiz Arena <FiArrowRight />
                 </button>

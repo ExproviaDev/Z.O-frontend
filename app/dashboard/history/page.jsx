@@ -1,108 +1,98 @@
-"use client"
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { pdf } from "@react-pdf/renderer"; // 🔥 Import pdf function
+import { FiPrinter, FiAlertCircle } from "react-icons/fi";
+import InvoiceDocument from "./Components/InvoiceDocument"; // 🔥 Import the document we made
 
-import React, { useState } from 'react';
-import { FaHistory, FaDownload, FaSearch } from 'react-icons/fa';
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable"; // সরাসরি autoTable ইম্পোর্ট করা হয়েছে
+// ডাটা ফেচিং ফাংশন
+const fetchUserInvoice = async () => {
+  const token = localStorage.getItem("access_token");
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  if (!token) throw new Error("No access token found.");
+  const res = await axios.get(`${API_URL}/api/invoice/my-invoice`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data.data;
+};
 
-const PaymentHistory = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function InvoicePage() {
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const transactions = [
-    { id: "#TRX-98421", courseName: "Mastering TypeScript & Node.js", date: "Dec 12, 2024", amount: "1200", method: "bKash", status: "Success" },
-    { id: "#TRX-87510", courseName: "Full Stack Web Development", date: "Nov 28, 2024", amount: "2500", method: "Nagad", status: "Success" },
-  ];
+  // ১. ডাটা ফেচ করা
+  const { data: invoice, isLoading, isError, error } = useQuery({
+    queryKey: ["my-invoice"],
+    queryFn: fetchUserInvoice,
+    staleTime: Infinity,
+  });
 
-  // PDF জেনারেট করার ফিক্সড ফাংশন
-  const downloadInvoice = (trx) => {
-    const doc = new jsPDF();
-
-    // Header Design
-    doc.setFontSize(20);
-    doc.setTextColor(40);
-    doc.text("Zero Olympiad", 14, 22);
-    
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text("Official Payment Receipt", 14, 28);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 34);
-
-    // Transaction Details Table (doc.autoTable এর বদলে autoTable(doc, ...) ব্যবহার করা হয়েছে)
-    autoTable(doc, {
-      startY: 45,
-      head: [['Description', 'Details']],
-      body: [
-        ['Transaction ID', trx.id],
-        ['Course Name', trx.courseName],
-        ['Payment Method', trx.method],
-        ['Date', trx.date],
-        ['Status', trx.status],
-        ['Total Amount', `BDT ${trx.amount}`],
-      ],
-      theme: 'striped',
-      headStyles: { fillColor: [37, 99, 235] }, 
-    });
-
-    // Footer (doc.lastAutoTable এর বদলে autoTable এর পর ডাইনামিক পজিশন নেওয়া হয়েছে)
-    const finalY = (doc).lastAutoTable.finalY || 150;
-    doc.setFontSize(10);
-    doc.text("Thank you for your payment!", 14, finalY + 10);
-    doc.text("This is a computer-generated receipt.", 14, finalY + 16);
-
-    // Save PDF
-    doc.save(`Invoice-${trx.id}.pdf`);
+  // ২. নতুন ট্যাবে PDF ওপেন করার ফাংশন 🔥
+  const handleOpenPDF = async () => {
+    setIsGenerating(true);
+    try {
+      // PDF Blob তৈরি করা
+      const blob = await pdf(<InvoiceDocument invoice={invoice} />).toBlob();
+      // Blob URL তৈরি করা
+      const url = URL.createObjectURL(blob);
+      // নতুন ট্যাবে ওপেন করা
+      window.open(url, '_blank');
+    } catch (err) {
+      console.error("PDF Generation Error:", err);
+      alert("Failed to open PDF.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const filteredTransactions = transactions.filter(item =>
-    item.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.id.toLowerCase().includes(searchTerm.toLowerCase())
+  if (isLoading) return <div className="text-center p-10">Loading invoice data...</div>;
+  
+  if (isError) return (
+    <div className="flex flex-col items-center justify-center h-[60vh] text-red-500">
+        <FiAlertCircle size={40} className="mb-2"/>
+        <p>Failed to load invoice information.</p>
+    </div>
   );
 
   return (
-    <div className=" p-4 md:p-8">
-      <div className="mb-10">
-        <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3">
-          <FaHistory className="text-blue-600" /> Payment History
-        </h1>
-        <p className="text-gray-500 mt-2 font-medium">Download your payment slips for official records.</p>
+    <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-6">
+      
+      {/* অ্যাকশন এরিয়া */}
+      <div className="flex flex-col items-center justify-center bg-white p-10 rounded-2xl shadow-lg border border-gray-100 text-center space-y-4">
+        <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl font-bold">
+            Z
+        </div>
+        <h1 className="text-2xl font-bold text-gray-800">Your Invoice is Ready!</h1>
+        <p className="text-gray-500 max-w-md">
+            Click the button below to open your official invoice PDF in a new tab. You can download or print it from there.
+        </p>
+        
+        <button 
+          onClick={handleOpenPDF}
+          disabled={isGenerating}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl shadow-lg font-bold transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isGenerating ? (
+            <>Generating PDF...</>
+          ) : (
+            <>
+                <FiPrinter className="text-xl" /> Open PDF Invoice
+            </>
+          )}
+        </button>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50 border-b border-gray-100">
-              <tr>
-                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Trx ID</th>
-                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Course</th>
-                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest">Amount</th>
-                <th className="px-8 py-5 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Slip</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {filteredTransactions.map((trx) => (
-                <tr key={trx.id} className="hover:bg-blue-50/20 transition-all">
-                  <td className="px-8 py-5 font-mono text-sm font-bold text-blue-600">{trx.id}</td>
-                  <td className="px-8 py-5">
-                    <div className="font-bold text-gray-800">{trx.courseName}</div>
-                    <div className="text-xs text-gray-400 italic">via {trx.method}</div>
-                  </td>
-                  <td className="px-8 py-5 font-black text-gray-900">BDT {trx.amount}</td>
-                  <td className="px-8 py-5 text-right">
-                    <button 
-                      onClick={() => downloadInvoice(trx)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl transition-all font-bold text-sm shadow-lg shadow-blue-100 active:scale-95"
-                    >
-                      <FaDownload size={12} /> Download Slip
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* প্রিভিউ সেকশন (যদি চান ইউজার পেজেই একটু দেখুক) */}
+      <div className="opacity-50 pointer-events-none blur-[1px] select-none" aria-hidden="true">
+          {/* এখানে আপনার আগের HTML ডিজাইনটা রাখতে পারেন শুধু ভিজ্যুয়াল ফিল দেওয়ার জন্য, 
+              অথবা এটি বাদ দিলেও সমস্যা নেই। ইউজার তো বাটনে ক্লিক করেই আসলটা দেখবে। */}
+          <div className="bg-white p-8 rounded border">
+             <h2 className="text-xl font-bold text-gray-400">Invoice Preview</h2>
+             <p>Invoice #{invoice.invoice_id}</p>
+             {/* ... */}
+          </div>
       </div>
+
     </div>
   );
-};
-
-export default PaymentHistory;
+}

@@ -1,15 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  FaUser,
-  FaHome,
-  FaBook,
-  FaRegBookmark,
-  FaStar,
-  FaSignOutAlt,
+  FaUser, FaHome, FaBook, FaRegBookmark, FaStar,
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { GrAnnounce } from "react-icons/gr";
@@ -20,24 +15,39 @@ import { MdLeaderboard } from "react-icons/md";
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [userRole, setUserRole] = useState(null);
 
+  // ১. পেজ লোড হলে লোকাল স্টোরেজ থেকে রোল চেক করা
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedData = localStorage.getItem("user_data");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        setUserRole(parsedData?.role || "user");
+      } else {
+        setUserRole("user"); // ডাটা না থাকলে ডিফল্ট ইউজার রোল
+      }
+    }
+  }, []);
+
+  // ২. মেনু আইটেমগুলোতে 'allowedRoles' যোগ করা হলো
   const menuItems = [
-    { name: "Dashboard", icon: <FaHome />, href: "/dashboard" },
-    { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile" },
-    { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes" },
+    { name: "Dashboard", icon: <FaHome />, href: "/dashboard", allowedRoles: ["user", "ambassador", "admin"] },
+    { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile", allowedRoles: ["user", "ambassador", "admin"] },
+    { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes", allowedRoles: ["user", "ambassador"] },
+    { name: "My Certificates", icon: <FaRegBookmark />, href: "/dashboard/certificates", allowedRoles: ["user", "ambassador"] },
+    { name: "Payment History", icon: <FaStar />, href: "/dashboard/history", allowedRoles: ["user", "ambassador"] },
+    { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement", allowedRoles: ["user", "ambassador"] },
+    { name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission", allowedRoles: ["user", "ambassador"] },
+    { name: "Leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador"] },
+
+    // 🔥 শুধুমাত্র অ্যাম্বাসেডর হলে এই মেনু রেন্ডার হবে
     {
-      name: "My Certificates",
-      icon: <FaRegBookmark />,
-      href: "/dashboard/certificates",
+      name: "Ambassador Panel",
+      icon: <FaUser />,
+      href: "/dashboard/ambassador",
+      allowedRoles: ["ambassador"]
     },
-    { name: "Payment History", icon: <FaStar />, href: "/dashboard/history" },
-    {
-      name: "Announcement",
-      icon: <GrAnnounce />,
-      href: "/dashboard/announcement",
-    },
-    {name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission"},
-    {name:"leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard"}
   ];
 
   const handleLogout = () => {
@@ -54,7 +64,7 @@ export default function Sidebar({ isOpen, onClose }) {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "লগআউট হয়েছে!",
+          title: "লগআউট হয়েছে!",
           text: "আপনাকে হোম পেজে পাঠানো হচ্ছে।",
           icon: "success",
           timer: 1500,
@@ -85,6 +95,12 @@ export default function Sidebar({ isOpen, onClose }) {
 
           <nav className="flex-1 space-y-1 mt-2 overflow-y-auto no-scrollbar">
             {menuItems.map((item) => {
+              // ৩. রোল চেক করে মেনু ফিল্টার করা হচ্ছে
+              // যদি allowedRoles থাকে এবং ইউজারের রোল সেই লিস্টে না থাকে, তাহলে এটি রেন্ডার হবে না
+              if (item.allowedRoles && userRole && !item.allowedRoles.includes(userRole)) {
+                return null;
+              }
+
               const isActive = pathname === item.href;
 
               return (
@@ -93,11 +109,10 @@ export default function Sidebar({ isOpen, onClose }) {
                   href={item.href}
                   onClick={onClose}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium 
-                  ${
-                    isActive
+                  ${isActive
                       ? "text-white bg-Primary border-r-4 border-white "
                       : "text-white hover:bg-gray-500 hover:text-white"
-                  }
+                    }
                 `}
                 >
                   <span className="text-xl">{item.icon}</span>

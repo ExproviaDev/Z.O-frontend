@@ -8,13 +8,11 @@ import {
   FiUsers,
   FiUserCheck,
   FiFileText,
-  FiCalendar,
   FiVideo,
   FiMenu,
   FiX,
 
 } from "react-icons/fi";
-import { IoMdHome } from "react-icons/io";
 import { MdLeaderboard, MdCampaign  } from "react-icons/md";
 
 // ১. Access Level onujayi Menu Items
@@ -22,11 +20,12 @@ const menuItems = [
   { id: "dashboard", label: "Dashboard", icon: FiHome, href: "/admin", access: ["admin", "manager"] },
   { id: "video-evaluation", label: "Video Evaluation", icon: FiVideo, href: "/admin/video-evaluation", access: ["admin", "manager"] },
   { id: "leaderboard", label: "Leaderboard", icon: MdLeaderboard, href: "/admin/leaderboard", access: ["admin", "manager"] },
-  { id: "Announcement", label: "Announcement", icon: MdCampaign , href: "/admin/announcement", access: ["admin", "manager"] },
+  { id: "Announcement", label: "Announcement", icon: MdCampaign , href: "/admin/announcement", access: ["admin"] },
 
   // Admin Only Access
   { id: "quiz-management", label: "Quiz Management", icon: FiFileText, href: "/admin/quiz-management", access: ["admin"] },
-  { id: "competition-control", label: "Competition Control", icon: FiCalendar, href: "/admin/competition-control", access: ["admin"] },
+  { id: "ambassadors", label: "Ambassadors", icon: FiUsers, href: "/admin/ambassadors-list", access: ["admin"] },
+  // { id: "competition-control", label: "Competition Control", icon: FiCalendar, href: "/admin/competition-control", access: ["admin"] },
   { id: "mark-controller", label: "Mark Controller", icon: FiUserCheck, href: "/admin/mark-controller", access: ["admin"] },
   { id: "role-management", label: "User Management", icon: FiUsers, href: "/admin/user-management", access: ["admin"] },
   { id: "video-submission-setting", label: "Video Submission Setting", icon: FiVideo, href: "/admin/video-submission-setting", access: ["admin"] },
@@ -67,7 +66,7 @@ export default function Sidebar() {
 
       {isMobileMenuOpen && <div onClick={() => setIsMobileMenuOpen(false)} className="xl:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm" />}
 
-      <aside className={`fixed xl:static inset-y-0 left-0 z-40 w-64 bg-[#0f172a] text-gray-400 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}>
+      <aside className={`fixed xl:static h-screen overflow-auto inset-y-0 left-0 z-40 w-64 bg-[#0f172a] text-gray-400 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"}`}>
         <div className="h-full flex flex-col p-4">
           {/* Brand Logo */}
          <Link prefetch={false} href={"/"}>
@@ -94,7 +93,7 @@ export default function Sidebar() {
           </nav>
 
           {/* Footer User Profile (Shiptrack Style) */}
-          <div className="mt-auto border-t border-white/5 pt-4 px-2">
+          <Link prefetch={false} href="/admin/profile" className="mt-auto border-t border-white/5 pt-4 px-2">
             <div className="flex items-center gap-3 p-2 bg-white/5 rounded-2xl border border-white/5">
               <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold">
                 {user?.name?.[0] || 'A'}
@@ -104,7 +103,7 @@ export default function Sidebar() {
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider">{userRole}</p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </aside>
     </>
