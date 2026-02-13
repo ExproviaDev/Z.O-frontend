@@ -23,7 +23,6 @@ export default function QuizPage() {
     }
   }, [dispatch, user]);
 
-  // ২. এটেম্পট চেক লজিক
   useEffect(() => {
     const checkUserAttempt = async () => {
       const userId = user?.id || user?.user_id;
@@ -35,30 +34,13 @@ export default function QuizPage() {
           const response = await axios.get(`${API_URL}/api/admin/check-attempt/${userId}/${quizId}`);
 
           if (response.data.hasAttempted) {
-            setHasAttempted(true);
-
-            // ইউজারকে কুইজ পেজে রেখেই অ্যালার্ট দিন
-            Swal.fire({
-              title: "Already Participated!",
-              text: "You have already completed this quiz. Multiple attempts are not allowed.",
-              icon: "warning",
-              confirmButtonText: "Go to Dashboard", // বাটন টেক্সট পরিবর্তন
-              confirmButtonColor: "#3B82F6",
-              allowOutsideClick: false,
-              allowEscapeKey: false
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // বাটন ক্লিক করার পর ড্যাশবোর্ডে পাঠাবে
-                router.replace("/dashboard");
-              }
-            });
+            setHasAttempted(true); // শুধু স্টেট আপডেট হবে, কোনো পপআপ আসবে না
           } else {
             setHasAttempted(false);
           }
         } catch (error) {
           console.error("Attempt check failed", error);
         } finally {
-          // এপিআই কল সফল হোক বা ব্যর্থ, চেক শেষ
           setCheckingAttempt(false);
         }
       } else if (!loading && availableQuizzes.length === 0) {
@@ -70,7 +52,6 @@ export default function QuizPage() {
       checkUserAttempt();
     }
   }, [user, availableQuizzes, loading]);
-
   // ৩. রেন্ডারিং কন্ডিশন (সবচেয়ে গুরুত্বপূর্ণ অংশ)
 
   // যতক্ষণ ডেটা লোড হচ্ছে বা এটেম্পট চেক হচ্ছে, ততক্ষণ কুইজ ফর্ম হাইড থাকবে
@@ -86,7 +67,26 @@ export default function QuizPage() {
   const currentQuiz = availableQuizzes[0];
 
   // যদি অলরেডি পরীক্ষা দিয়ে থাকে, তবে কুইজ ফর্ম দেখাবে না
-  if (hasAttempted) return null;
+  // যদি অলরেডি পরীক্ষা দিয়ে থাকে, তবে কুইজ ফর্মের বদলে এই মেসেজটি দেখাবে
+  if (hasAttempted) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6">
+        <div className="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 max-w-lg">
+          <div className="text-6xl mb-6">✅</div>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Already Participated!</h2>
+          <p className="text-gray-600 mb-8 text-lg">
+            আপনি এই কুইজটি সফলভাবে সম্পন্ন করেছেন। আমরা আপনার উত্তর গ্রহণ করেছি।
+          </p>
+          <button
+            onClick={() => router.replace("/dashboard")}
+            className="w-full py-4 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-16 overflow-hidden">
