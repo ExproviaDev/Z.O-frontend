@@ -19,13 +19,12 @@ const fetchDashboardStats = async () => {
 };
 
 export default function DashboardHome() {
-  // TanStack Query এর মাধ্যমে ডাটা লোড এবং ৩০ মিনিটের ক্যাশিং
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-dashboard-stats"],
     queryFn: fetchDashboardStats,
-    staleTime: 30 * 60 * 1000, // ৩০ মিনিট পর্যন্ত ডাটা ফ্রেশ থাকবে
-    gcTime: 35 * 60 * 1000,    // ৩০ মিনিটের একটু বেশি সময় মেমোরিতে ডাটা ক্যাশ থাকবে
-    refetchOnWindowFocus: false, // উইন্ডো ফোকাস করলে বারবার লোড হওয়া বন্ধ করবে
+    staleTime: 30 * 60 * 1000, 
+    gcTime: 35 * 60 * 1000,    
+    refetchOnWindowFocus: false, 
   });
 
   if (isLoading) {
