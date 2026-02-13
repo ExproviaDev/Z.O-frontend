@@ -25,7 +25,7 @@ export default function Sidebar({ isOpen, onClose }) {
         const parsedData = JSON.parse(storedData);
         setUserRole(parsedData?.role || "user");
       } else {
-        setUserRole("user"); // ডাটা না থাকলে ডিফল্ট ইউজার রোল
+        setUserRole("user"); 
       }
     }
   }, []);
@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, onClose }) {
     { name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "Leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador", "contestor"] },
 
-    // 🔥 শুধুমাত্র অ্যাম্বাসেডর হলে এই মেনু রেন্ডার হবে
+    
     {
       name: "Ambassador Panel",
       icon: <FaUser />,
@@ -95,8 +95,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
           <nav className="flex-1 space-y-1 mt-2 overflow-y-auto no-scrollbar">
             {menuItems.map((item) => {
-              // ৩. রোল চেক করে মেনু ফিল্টার করা হচ্ছে
-              // যদি allowedRoles থাকে এবং ইউজারের রোল সেই লিস্টে না থাকে, তাহলে এটি রেন্ডার হবে না
+              
               if (item.allowedRoles && userRole && !item.allowedRoles.includes(userRole)) {
                 return null;
               }

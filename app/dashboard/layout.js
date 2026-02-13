@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }) => {
           <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)}></Sidebar>
 
          <section className="flex-1 w-full lg:ml-64 transition-all duration-300">
-          <div className="max-w-full px-4 md:px-6 pb-16 pt-5 lg:pt-8">
+          <div className="max-w-full px-5 md:px-5 pb-16 pt-5 lg:pt-8">
             {children} 
           </div>
         </section>
