@@ -32,14 +32,14 @@ export default function Sidebar({ isOpen, onClose }) {
 
   // ২. মেনু আইটেমগুলোতে 'allowedRoles' যোগ করা হলো
   const menuItems = [
-    { name: "Dashboard", icon: <FaHome />, href: "/dashboard", allowedRoles: ["user", "ambassador", "admin"] },
-    { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile", allowedRoles: ["user", "ambassador", "admin"] },
-    { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes", allowedRoles: ["user", "ambassador"] },
-    { name: "My Certificates", icon: <FaRegBookmark />, href: "/dashboard/certificates", allowedRoles: ["user", "ambassador"] },
-    { name: "Payment History", icon: <FaStar />, href: "/dashboard/history", allowedRoles: ["user", "ambassador"] },
-    { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement", allowedRoles: ["user", "ambassador"] },
-    { name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission", allowedRoles: ["user", "ambassador"] },
-    { name: "Leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador"] },
+    { name: "Dashboard", icon: <FaHome />, href: "/dashboard", allowedRoles: ["user", "ambassador", "admin", "contestor"] },
+    { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile", allowedRoles: ["user", "ambassador", "admin", "contestor"] },
+    { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "My Certificates", icon: <FaRegBookmark />, href: "/dashboard/certificates", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "Payment History", icon: <FaStar />, href: "/dashboard/history", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "Leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador", "contestor"] },
 
     
     {
