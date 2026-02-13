@@ -20,8 +20,7 @@ const DashboardHeader = ({ onMenuClick }) => {
 
   return (
     <header className="bg-Secondary border-b border-gray-100 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
-      <Link prefetch={false} href={"/dashboard"}>
-        <div className="flex items-center gap-4">
+        <div prefetch={false} className="flex items-center gap-4">
           <button
             onClick={onMenuClick}
             className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
@@ -29,15 +28,16 @@ const DashboardHeader = ({ onMenuClick }) => {
             <FaBars size={20} />
           </button>
 
+          <Link href={"/dashboard"}>
           <div className="bg-secondary p-2 rounded-lg text-white">
             <RxDashboard size={22} />
           </div>
+          </Link>
 
           <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-secondary hidden sm:block">
             Dashboard
           </h3>
         </div>
-      </Link>
 
       <div className="flex items-center gap-2 md:gap-5">
         <div className="h-8 w-[1px] bg-gray-200 mx-1"></div>
