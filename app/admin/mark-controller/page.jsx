@@ -2,26 +2,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
-import Swal from "sweetalert2"; // ✅ SweetAlert2 Import
+import Swal from "sweetalert2";
 
 export default function LeaderboardPage() {
     const [round, setRound] = useState(1);
     const [category, setCategory] = useState("All");
-    
-    // Pagination States
+
+
     const [page, setPage] = useState(1);
     const [limit] = useState(50);
     const [totalUsers, setTotalUsers] = useState(0);
 
-    // Admin Promotion States
+
     const [promotionLimit, setPromotionLimit] = useState(200);
     const [isPromoting, setIsPromoting] = useState(false);
-    const [progress, setProgress] = useState(0); // ✅ For Loader Counting
-    
+    const [progress, setProgress] = useState(0);
+
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // 1. Fetch Leaderboard
+
     const fetchLeaderboard = async () => {
         setLoading(true);
         try {
@@ -42,15 +42,14 @@ export default function LeaderboardPage() {
         }
     };
 
-    // 2. 🔥 Auto Promote Function with SweetAlert & Loader
+
     const handlePromoteUsers = async () => {
-        // ✅ Step 1: Beautiful Confirmation Dialog
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: `You are about to promote Top ${promotionLimit} users from EACH of the 17 SDG categories!`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#4F46E5', // Indigo color
+            confirmButtonColor: '#4F46E5',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Promote Them! 🚀',
             background: '#fff',
@@ -61,14 +60,13 @@ export default function LeaderboardPage() {
 
         if (!result.isConfirmed) return;
 
-        // ✅ Step 2: Start Custom Loader with Counting
+
         setIsPromoting(true);
         setProgress(0);
-        
-        // Fake counting animation (Just for UX)
+
         const interval = setInterval(() => {
             setProgress((oldProgress) => {
-                if (oldProgress >= 95) return 95; // Wait at 95% for actual response
+                if (oldProgress >= 95) return 95;
                 const diff = Math.random() * 10;
                 return Math.min(oldProgress + diff, 95);
             });
@@ -81,13 +79,11 @@ export default function LeaderboardPage() {
                 { roundNumber: parseInt(round), limit: parseInt(promotionLimit) },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            
-            // ✅ Step 3: Success Handling
+
             clearInterval(interval);
-            setProgress(100); // Finish counting
-            
+            setProgress(100);
+
             if (res.data.success) {
-                // Wait a bit to show 100% then show alert
                 setTimeout(() => {
                     setIsPromoting(false);
                     Swal.fire({
@@ -97,7 +93,7 @@ export default function LeaderboardPage() {
                         confirmButtonColor: '#4F46E5',
                         confirmButtonText: 'Awesome!'
                     });
-                    fetchLeaderboard(); // Refresh List
+                    fetchLeaderboard();
                 }, 500);
             }
         } catch (err) {
@@ -123,7 +119,7 @@ export default function LeaderboardPage() {
     const totalPages = Math.ceil(totalUsers / limit);
 
     return (
-        <div className="p-8 bg-gray-50 min-h-screen font-sans relative">
+        <div className="p-4 bg-gray-50 min-h-screen font-sans relative">
             <Toaster position="top-right" />
 
             {/* ✅ Custom Full Screen Loader Overlay */}
@@ -135,12 +131,12 @@ export default function LeaderboardPage() {
                             <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-100 rounded-full"></div>
                             <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
                         </div>
-                        
+
                         {/* Counting Text */}
                         <h2 className="text-4xl font-black text-indigo-600 mb-2 font-mono">
                             {Math.round(progress)}%
                         </h2>
-                        
+
                         <h3 className="text-xl font-bold text-slate-700 animate-pulse">Processing Data...</h3>
                         <p className="text-slate-400 text-xs mt-2 text-center px-4">
                             Analyzing scores, ranking participants, and migrating to Round {parseInt(round) + 1}...
@@ -150,16 +146,16 @@ export default function LeaderboardPage() {
             )}
 
             {/* Header */}
-            <div className="flex justify-between items-center mb-8">
-                <div>
-                    <h1 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">
+            <div className="flex flex-col justify-center items-center gap-10 mb-8">
+                <div className="flex flex-col gap-5 justify-center items-center">
+                    <h1 className="text-3xl font-black text-center text-slate-800 uppercase tracking-tighter">
                         Competition Leaderboard
                     </h1>
                     <p className="text-slate-500 text-sm font-bold mt-1">
                         Showing {leaderboardData.length} of {totalUsers} Participants
                     </p>
                 </div>
-                
+
                 <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100">
                     <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
                     <span className="text-sm font-bold text-slate-600">
@@ -204,9 +200,9 @@ export default function LeaderboardPage() {
                                 className="input input-xs w-16 font-bold text-center bg-white border-rose-200 text-rose-600 focus:outline-none"
                             />
                         </div>
-                        
-                        <button 
-                            onClick={handlePromoteUsers} 
+
+                        <button
+                            onClick={handlePromoteUsers}
                             className="h-9 px-6 rounded-lg font-bold text-white text-xs shadow-md transition-all flex items-center gap-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:shadow-lg hover:scale-105 active:scale-95"
                         >
                             Promote All SDGs
@@ -216,70 +212,115 @@ export default function LeaderboardPage() {
             </div>
 
             {/* Leaderboard Table */}
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-6">
-                <table className="table w-full border-collapse">
-                    <thead>
-                        <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 text-[11px] uppercase tracking-widest">
-                            <th className="py-5 text-center w-20">Rank</th>
-                            <th className="py-5 text-left pl-6">Participant Info</th>
-                            <th className="py-5 text-center">Score</th>
-                            <th className="py-5 text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-50">
-                        {loading ? (
-                            <tr><td colSpan="4" className="text-center py-20 font-bold text-slate-400 animate-pulse">Loading data...</td></tr>
-                        ) : leaderboardData.length > 0 ? (
-                            leaderboardData.map((user, index) => (
-                                <tr key={index} className="hover:bg-indigo-50/30 transition-all group duration-300">
-                                    <td className="text-center font-black text-slate-300 group-hover:text-indigo-500 text-lg">
-                                        #{ (page - 1) * limit + index + 1 }
-                                    </td>
-                                    <td className="py-4 pl-6">
-                                        <div className="flex items-center gap-4">
-                                            <div className="avatar">
-                                                <div className="w-12 h-12 rounded-2xl ring-4 ring-slate-50 group-hover:ring-indigo-100 overflow-hidden">
-                                                    <img src={user.user_profiles?.profile_image_url || `https://ui-avatars.com/api/?name=${user.user_profiles?.name}&background=random`} alt="avatar" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className="font-bold text-slate-700 leading-tight mb-1 text-base group-hover:text-indigo-700">{user.user_profiles?.name}</p>
-                                                <span className="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md uppercase tracking-wider border border-indigo-100">
-                                                    {user.sdg_category || `SDG ${user.user_profiles?.assigned_sdg_number}`}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="text-center">
-                                        <div className="flex flex-col items-center">
-                                            <span className="text-xl font-black text-slate-700">
-                                                {parseInt(round) === 1 ? user.quiz_score : user.total_calculated_score}
-                                            </span>
-                                            {parseInt(round) === 1 && (
-                                                <span className="text-[10px] text-slate-400 font-bold bg-slate-100 px-2 rounded-full mt-1">⏱️ {user.time_taken}s</span>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td className="text-center">
-                                        {user.is_promoted ? (
-                                            <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-600 border border-emerald-200">✅ QUALIFIED</span>
-                                        ) : (
-                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-400 border border-slate-200">PENDING</span>
-                                        )}
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 mb-6">
+                {/* wrapper for horizontal scroll */}
+                <div className="w-full overflow-x-auto">
+                    <table className="min-w-[600px] w-full border-collapse">
+
+                        {/* Header */}
+                        <thead>
+                            <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-widest">
+                                <th className="py-3 sm:py-5 px-2 text-center w-16 sm:w-20">Rank</th>
+                                <th className="py-3 sm:py-5 text-left pl-3 sm:pl-6">Participant Info</th>
+                                <th className="py-3 sm:py-5 text-center">Score</th>
+                                <th className="py-3 sm:py-5 text-center pr-2">Status</th>
+                            </tr>
+                        </thead>
+
+                        {/* Body */}
+                        <tbody className="divide-y divide-slate-50 text-sm sm:text-base">
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="4" className="text-center py-16 font-bold text-slate-400 animate-pulse">
+                                        Loading data...
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr><td colSpan="4" className="text-center py-20 text-slate-400 italic">No participants found.</td></tr>
-                        )}
-                    </tbody>
-                </table>
+                            ) : leaderboardData.length > 0 ? (
+                                leaderboardData.map((user, index) => (
+                                    <tr
+                                        key={index}
+                                        className="hover:bg-indigo-50/30 transition-all group duration-300"
+                                    >
+                                        {/* Rank */}
+                                        <td className="text-center font-black text-slate-300 group-hover:text-indigo-500 text-base sm:text-lg">
+                                            #{(page - 1) * limit + index + 1}
+                                        </td>
+
+                                        {/* User */}
+                                        <td className="py-3 sm:py-4 pl-3 sm:pl-6">
+                                            <div className="flex items-center gap-3 sm:gap-4">
+                                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl ring-4 ring-slate-50 group-hover:ring-indigo-100 overflow-hidden flex-shrink-0">
+                                                    <img
+                                                        src={
+                                                            user.user_profiles?.profile_image_url ||
+                                                            `https://ui-avatars.com/api/?name=${user.user_profiles?.name}&background=random`
+                                                        }
+                                                        alt="avatar"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+
+                                                <div className="min-w-0">
+                                                    <p className="font-bold text-slate-700 text-sm sm:text-base truncate group-hover:text-indigo-700">
+                                                        {user.user_profiles?.name}
+                                                    </p>
+
+                                                    <span className="text-[9px] sm:text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md uppercase tracking-wider border border-indigo-100">
+                                                        {user.sdg_category ||
+                                                            `SDG ${user.user_profiles?.assigned_sdg_number}`}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        {/* Score */}
+                                        <td className="text-center">
+                                            <div className="flex flex-col items-center">
+                                                <span className="text-lg sm:text-xl font-black text-slate-700">
+                                                    {parseInt(round) === 1
+                                                        ? user.quiz_score
+                                                        : user.total_calculated_score}
+                                                </span>
+
+                                                {parseInt(round) === 1 && (
+                                                    <span className="text-[9px] sm:text-[10px] text-slate-400 font-bold bg-slate-100 px-2 rounded-full mt-1">
+                                                        ⏱️ {user.time_taken}s
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </td>
+
+                                        {/* Status */}
+                                        <td className="text-center pr-2">
+                                            {user.is_promoted ? (
+                                                <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-emerald-100 text-emerald-600 border border-emerald-200 whitespace-nowrap">
+                                                    ✅ QUALIFIED
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-slate-100 text-slate-400 border border-slate-200 whitespace-nowrap">
+                                                    PENDING
+                                                </span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" className="text-center py-16 text-slate-400 italic">
+                                        No participants found.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
 
             {/* Pagination */}
             {totalUsers > 0 && (
                 <div className="flex justify-center items-center gap-4 py-8">
-                    <button 
+                    <button
                         onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                         disabled={page === 1}
                         className="btn btn-sm bg-white border-gray-200 hover:bg-gray-100 disabled:opacity-50"
@@ -289,7 +330,7 @@ export default function LeaderboardPage() {
                     <span className="font-bold text-slate-600 text-sm">
                         Page <span className="text-indigo-600">{page}</span> of {totalPages}
                     </span>
-                    <button 
+                    <button
                         onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
                         disabled={page === totalPages}
                         className="btn btn-sm bg-white border-gray-200 hover:bg-gray-100 disabled:opacity-50"

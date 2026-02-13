@@ -9,11 +9,11 @@ export default function StatsSection({ stats }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
       {cards.map((card, index) => (
-        <div key={index} className="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+        <div key={index} className="bg-white p-4 md:p-6 rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-all group">
           <div className="flex items-center justify-between">
-            <div className={`p-4 rounded-2xl ${card.bg} ${card.color}`}>
+            <div className={`p-3 rounded-2xl ${card.bg} ${card.color}`}>
               <card.icon size={24} />
             </div>
           </div>

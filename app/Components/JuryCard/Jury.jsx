@@ -6,7 +6,7 @@ const JurySection = () => {
       id: 1,
       name: "SHAMSA ARA DOLLY",
       title: "Chairperson, S@ifur's Pvt. Ltd.",
-      image: "/src/image/SHAMSA-ARA-DOLLY.jfif",
+      image: "/src/image/SHAMSA-ARA-DOLLY.png",
     },
     {
       id: 2,
@@ -24,13 +24,13 @@ const JurySection = () => {
       id: 4,
       name: "SADAT RAHMAN",
       title: "Int'l Children Peace Prize Winner",
-      image: "/src/image/SADAT-RAHMAN.jfif",
+      image: "/src/image/SADAT-RAHMAN.png",
     },
     {
       id: 5,
       name: "SYED FARHAD AHMED",
       title: "Honorary Consul of Estonia",
-      image: "/src/image/SYED-FARHAD-AHMED.jfif",
+      image: "/src/image/SYED-FARHAD-AHMED.png",
     },
     {
       id: 6,
@@ -48,7 +48,7 @@ const JurySection = () => {
       id: 8,
       name: "AMAAN SULAIMAN",
       title: "CEO, English Olympiad",
-      image: "/src/image/AMAAN-SULAIMAN.jfif",
+      image: "/src/image/AMAAN-SULAIMAN.png",
     },
     {
       id: 9,

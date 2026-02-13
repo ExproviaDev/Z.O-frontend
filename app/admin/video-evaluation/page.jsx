@@ -12,7 +12,6 @@ import {
 
 const MySwal = withReactContent(Swal);
 
-// ১০টি ক্রাইটেরিয়া লিস্ট
 const CRITERIA_LIST = [
   "Content Relevance",
   "Creativity and Innovation",
@@ -38,7 +37,7 @@ const VideoEvaluation = () => {
 
   useEffect(() => {
     fetchSubmissions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [filterSdg, activeTab, page]);
 
   const fetchSubmissions = async () => {
@@ -67,9 +66,7 @@ const VideoEvaluation = () => {
     }
   };
 
-  // --- স্কোরিং মডাল ওপেন করার ফাংশন ---
   const openEvaluationModal = (submission) => {
-    // যদি আগে কোনো স্কোর থাকে, সেটা পার্স করা হবে, নাহলে সব ০
     let initialScores = {};
     if (submission.score_details) {
       initialScores = typeof submission.score_details === 'string' 
@@ -90,7 +87,7 @@ const VideoEvaluation = () => {
           onSubmit={(scores, total, comment) => handleFinalSubmit(submission.id, scores, total, comment)}
         />
       ),
-      showConfirmButton: false, // আমরা ফর্মের ভেতরেই সাবমিট বাটন রাখব
+      showConfirmButton: false, 
       showCloseButton: true,
       width: '800px',
       padding: '2em',
@@ -99,13 +96,11 @@ const VideoEvaluation = () => {
     });
   };
 
-  // --- মডালের ভেতরের ফর্ম কম্পোনেন্ট ---
   const EvaluationForm = ({ initialScores, initialComment, onSubmit }) => {
     const [scores, setScores] = useState(initialScores);
     const [comment, setComment] = useState(initialComment);
     const [total, setTotal] = useState(0);
 
-    // মোট স্কোর ক্যালকুলেশন
     useEffect(() => {
       const sum = Object.values(scores).reduce((a, b) => parseFloat(a || 0) + parseFloat(b || 0), 0);
       setTotal(sum);
@@ -182,8 +177,8 @@ const VideoEvaluation = () => {
 
       await axios.put(`${baseUrl}/api/admin/submit-score`, {
         submission_id: id,
-        score_details: scores, // ১০টা সাবজেক্টের ব্রেকডাউন
-        total_score: total,    // ১০০ এর মধ্যে টোটাল
+        score_details: scores, 
+        total_score: total,     
         comments: comment
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -198,7 +193,7 @@ const VideoEvaluation = () => {
         timer: 2000
       });
 
-      fetchSubmissions(); // লিস্ট রিফ্রেশ
+      fetchSubmissions(); 
     } catch (err) {
       console.error(err);
       MySwal.fire({
@@ -217,13 +212,13 @@ const VideoEvaluation = () => {
           : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-100'
         }`}
     >
-      <Icon size={18} />
+      <Icon size={26} />
       {label}
     </button>
   );
 
   return (
-    <div className="p-4 md:p-8 bg-[#f8f9fa] min-h-screen">
+    <div className="p-4 bg-[#f8f9fa] min-h-screen">
       <Toaster position="top-right" />
 
       {/* Header */}
@@ -250,8 +245,8 @@ const VideoEvaluation = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-4 mb-6">
-        <TabButton id="pending" label="Pending Review" icon={FiClock} />
+      <div className="flex flex-col items-start gap-4 mb-6 text-xs">
+        <TabButton id="pending" label="Pending Review" icon={FiClock}  />
         <TabButton id="evaluated" label="Marked & Completed" icon={FiCheckCircle} />
       </div>
 
