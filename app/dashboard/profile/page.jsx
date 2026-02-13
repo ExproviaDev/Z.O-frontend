@@ -88,14 +88,6 @@ const ProfilePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
               <ProfileItem label="SDG Role" value={user.sdg_role} />
               <ProfileItem label="Round Type" value={user.round_type} />
-              <div className="md:col-span-2 py-2">
-                <h3 className="text-sm font-semibold text-gray-500 mb-1">
-                  Activities Role/Interest:
-                </h3>
-                <p className="text-gray-800 bg-gray-50 p-3 rounded-lg italic border-l-4 border-purple-200">
-                  {user.activities_role || "No activities specified"}
-                </p>
-              </div>
             </div>
           </section>
         </div>
