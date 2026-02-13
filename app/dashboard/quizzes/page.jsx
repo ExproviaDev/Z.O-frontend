@@ -34,7 +34,7 @@ const MyQuizzes = () => {
         if (storedUser.round_type === "round_2") {
           categoryToFetch = "SDG Ambassador";
         } else if (storedUser.round_type === "round_3") {
-          categoryToFetch = "SDG Changemaker";
+          categoryToFetch = "SDG Achiever";
         }
 
         // অথবা যদি সরাসরি প্রোফাইলে role থাকে
@@ -60,7 +60,7 @@ const MyQuizzes = () => {
           fetchedQuizzes.map(async (quiz) => {
             try {
               const attemptRes = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-attempt/${storedUser.id}/${quiz.id}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-attempt/${storedUser.user_id}/${quiz.id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
               );
               return { ...quiz, hasAttempted: attemptRes.data.hasAttempted };
