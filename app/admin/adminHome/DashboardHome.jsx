@@ -67,8 +67,8 @@ export default function DashboardHome() {
       {/* Main Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* SDG Bar Chart (Left) */}
-        <div className="lg:col-span-8 bg-white p-8 rounded-[32px] shadow-sm border border-gray-50">
-          <div className="flex justify-between items-center mb-4">
+        <div className="lg:col-span-8 bg-white p-4 md:p-8 rounded-[30px] shadow-sm border border-gray-50">
+          <div className="flex justify-between items-center ">
             <h3 className="font-bold text-gray-800 text-lg">SDG Participation (Total 17)</h3>
             <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-tighter">Real-time Data</span>
           </div>
@@ -76,7 +76,7 @@ export default function DashboardHome() {
         </div>
 
         {/* Distribution Pie Chart (Right) */}
-        <div className="lg:col-span-4 bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
+        <div className="lg:col-span-4 bg-white p-4 md:p-8 rounded-[32px] shadow-sm border border-gray-100">
           <h3 className="font-bold text-gray-800 text-lg mb-4 text-center">Enrolment Split</h3>
           <DistributionPieChart 
             pieData={[
