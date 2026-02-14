@@ -7,18 +7,7 @@ import { GrLinkedin } from "react-icons/gr";
 export const revalidate = 86400; // 1 day
 export default function Page() {
   const links = [
-    {
-      name: "Facebook Page",
-      icon: <FaFacebook className="text-blue-600 text-3xl" />,
-      url: "https://www.facebook.com/zeroolympiad/",
-      handle: "@FaatihaAayat",
-    },
-    {
-      name: "Facebook Group-1",
-      icon: <FaFacebook className="text-blue-600 text-3xl" />,
-      url: "https://www.facebook.com/groups/faatiha.aayat",
-      handle: "@FaatihaAayat",
-    },
+    
     {
       name: "Facebook Group-2",
       icon: <FaFacebook className="text-blue-600 text-3xl" />,
@@ -55,6 +44,18 @@ export default function Page() {
       url: "https://www.tiktok.com/@zeroolympiad",
       handle: "@Zeroolympiad",
     },
+    {
+      name: "Facebook Page",
+      icon: <FaFacebook className="text-blue-600 text-3xl" />,
+      url: "https://www.facebook.com/zeroolympiad/",
+      handle: "@FaatihaAayat",
+    },
+    {
+      name: "Facebook Group-1",
+      icon: <FaFacebook className="text-blue-600 text-3xl" />,
+      url: "https://www.facebook.com/groups/faatiha.aayat",
+      handle: "@FaatihaAayat",
+    }
   ];
 
   return (
