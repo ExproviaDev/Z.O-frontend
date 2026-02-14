@@ -38,7 +38,7 @@ const GalleryHeroSection = () => {
 
   return (
     <section className="relative w-full overflow-hidden bg-black
-      h-[65svh] sm:h-[70svh] md:h-[80vh] lg:h-screen">
+      h-[70vh] ">
 
       {/* Slider */}
       <div
@@ -77,7 +77,7 @@ const GalleryHeroSection = () => {
             text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
           Zero Olympiad Gallery
           <span className="text-Primary block md:inline md:ml-2">
-            (Session One)
+            (Season One)
           </span>
         </h1>
 
