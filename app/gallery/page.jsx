@@ -10,6 +10,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import GalleryHeroSection from "../Components/GalleryHeroSection/GalleryHeroSection";
+import Loading from "../admin/components/loadign";
 
 const GalleryPage = () => {
   const [allImages, setAllImages] = useState([]); 
@@ -59,7 +60,7 @@ const GalleryPage = () => {
     setVisibleCount((prev) => prev + 9);
   };
 
-  if (loading) return <div className="text-center py-20">Loading Gallery...</div>;
+  if (loading) return <Loading></Loading>
 
   return (
     <div className="bg-white min-h-screen font-sans relative">
