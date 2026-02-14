@@ -1,27 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { AiOutlineUser, AiOutlinePhone, AiOutlineHome, AiOutlineTags } from "react-icons/ai";
-import { FaArrowRight, FaUniversity, FaArrowLeft, FaMagic } from "react-icons/fa";
+import { FaArrowRight, FaUniversity, FaArrowLeft } from "react-icons/fa";
+import Link from "next/link";
 
-export default function Step1_Auth({ formData, updateFormData, nextStep, prevStep }) {
+export default function Step1_Auth({ formData, updateFormData, nextStep }) {
   const [phoneError, setPhoneError] = useState("");
-  const [promoInputName, setPromoInputName] = useState(""); // প্রোমো কোডের জন্য ইউজারের দেওয়া নাম
-
-  // প্রোমো কোড জেনারেট করার ফাংশন
-  const handleGenerateCode = (e) => {
-    e.preventDefault();
-    if (!promoInputName) {
-      alert("Please enter a name to generate the code.");
-      return;
-    }
-    // নামকে বড় হাতের করা এবং মাঝের স্পেস বা স্পেশাল ক্যারেক্টার বাদ দেওয়া
-    const cleanName = promoInputName.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
-    const randomNumber = Math.floor(1000 + Math.random() * 9000);
-    const finalCode = `${cleanName}${randomNumber}`;
-    
-    // formData তে myPromoCode হিসেবে সেভ করা
-    updateFormData({ myPromoCode: finalCode });
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,12 +24,6 @@ export default function Step1_Auth({ formData, updateFormData, nextStep, prevSte
   const handleNext = (e) => {
     e.preventDefault();
     if (formData.phone.length !== 11) return;
-    
-    // অ্যাম্বাসেডর হলে কোড জেনারেট করা বাধ্যতামূলক
-    if (formData.role === "ambassador" && !formData.myPromoCode) {
-      alert("Please generate your promo code first.");
-      return;
-    }
     nextStep();
   };
 
@@ -68,65 +46,24 @@ export default function Step1_Auth({ formData, updateFormData, nextStep, prevSte
         </div>
       </div>
 
-      {/* --- AMBASSADOR SPECIFIC SECTION --- */}
-      {formData.role === "ambassador" && (
-        <div className="p-4 bg-gray-50 rounded-2xl border border-gray-200 space-y-4">
-          <label className="block text-sm font-bold text-black italic">
-            Create Your Custom Promo Code
-          </label>
-          <div className="flex gap-2">
-            <div className="flex-1 flex items-center border border-black rounded-lg bg-white">
-              <AiOutlineTags className="text-gray-600 ml-2" />
-              <input
-                type="text"
-                value={promoInputName}
-                onChange={(e) => setPromoInputName(e.target.value)}
-                placeholder="Ex: RAKIB or RU_ZO"
-                className="w-full p-2 text-sm rounded-lg focus:outline-none"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleGenerateCode}
-              className="px-4 py-2 bg-black text-white rounded-lg font-bold flex items-center gap-2 hover:bg-gray-800 transition-all active:scale-95"
-            >
-              <FaMagic /> Generate
-            </button>
-          </div>
-
-          {/* জেনারেটেড কোড ডিসপ্লে */}
-          {formData.myPromoCode && (
-            <div className="mt-3 flex items-center justify-between p-3 bg-white border-2 border-dashed border-Primary rounded-xl">
-              <span className="text-xs font-medium text-gray-500">Your Code:</span>
-              <span className="text-xl font-black text-Primary tracking-widest uppercase">
-                {formData.myPromoCode}
-              </span>
-            </div>
-          )}
+      {/* Referral Code (সবার জন্য এখন একই অপশন) */}
+      <div className="pb-4">
+        <label className="block text-md pb-2 font-bold text-black">
+          Enter Referral Promo Code <span className="text-gray-400 text-xs">(Optional)</span>
+        </label>
+        <div className="flex items-center border border-black rounded-lg">
+          <AiOutlineTags className="text-gray-600 ml-2" />
+          <input
+            type="text"
+            name="promoCode"
+            value={formData.promoCode || ""}
+            onChange={handleChange}
+            placeholder="e.g. ZEROU123"
+            className="w-full p-2 text-md rounded-lg focus:outline-none"
+          />
         </div>
-      )}
+      </div>
 
-      {/* --- CONTESTOR SPECIFIC SECTION --- */}
-      {formData.role === "contestor" && (
-        <div className="pb-4">
-          <label className="block text-md pb-2 font-bold text-black">
-            Enter Referral Promo Code <span className="text-gray-400 text-xs">(If you have any)</span>
-          </label>
-          <div className="flex items-center border border-black rounded-lg">
-            <AiOutlineTags className="text-gray-600 ml-2" />
-            <input
-              type="text"
-              name="promoCode" // contestor অন্য কারো কোড ব্যবহার করবে
-              value={formData.promoCode || ""}
-              onChange={handleChange}
-              placeholder="e.g. ZEROU123"
-              className="w-full p-2 text-md rounded-lg focus:outline-none"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Phone, District, Institution (As Usual) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="pb-2">
           <label className="block text-sm font-bold text-black pb-1">Phone *</label>
@@ -177,13 +114,14 @@ export default function Step1_Auth({ formData, updateFormData, nextStep, prevSte
 
       {/* Navigation Buttons */}
       <div className="flex justify-between gap-4 pt-4">
-        <button
-          type="button"
-          onClick={prevStep}
-          className="flex-1 py-3 rounded-xl border-2 border-gray-200 font-bold hover:bg-gray-50 flex items-center justify-center gap-2"
-        >
-          <FaArrowLeft /> Role Selection
-        </button>
+        <Link href="/" className="flex-1">
+          <button
+            type="button"
+            className="w-full py-3 rounded-xl border-2 border-gray-200 font-bold hover:bg-gray-50 flex items-center justify-center gap-2"
+          >
+            <FaArrowLeft /> Cancel
+          </button>
+        </Link>
         <button
           type="submit"
           disabled={formData.phone.length !== 11}

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Step0_RoleSelection from "./Step0_RoleSelection"; // Step 0 ইমপোর্ট করুন
 import Step1_Personal from "./Step1_Auth";
 import Step2_Academic from "./Step2_Auth";
 import Step3_Auth from "./Step3_Auth";
@@ -11,14 +10,13 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useSearchParams } from "next/navigation";
 
 export default function RegistrationPage() {
-  const [currentStep, setCurrentStep] = useState(0); // ০ থেকে শুরু হবে
+  const [currentStep, setCurrentStep] = useState(1); // ১ থেকে শুরু হচ্ছে
   const [paymentToken, setPaymentToken] = useState(null);
   const searchParams = useSearchParams();
-  
+
   const [formData, setFormData] = useState({
-    role: "contestor",     // ডিফল্ট রোল
-    myPromoCode: "",       // অ্যাম্বাসেডররা নিজের জন্য যেটা বানাবে
-    promoCode: "",     // প্রতিযোগীরা অন্যের যেটা ব্যবহার করবে
+    role: "contestor",     // ডিফল্ট রোল ফিক্সড
+    promoCode: "",         // রেফারেল কোড অপশন
     email: "",
     password: "",
     name: "",
@@ -34,15 +32,14 @@ export default function RegistrationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  // ✅ পেমেন্ট থেকে ফিরে আসলে ডাটা রিকভার করার অরিজিনাল লজিক
   useEffect(() => {
     const token = searchParams.get("token");
     const savedData = localStorage.getItem("reg_formData");
 
     if (token) {
       setPaymentToken(token);
-      setCurrentStep(4); // পেমেন্ট শেষে সরাসরি ফাইনাল স্টেপে
-      
+      setCurrentStep(4);
+
       if (savedData) {
         setFormData(JSON.parse(savedData));
       }
@@ -64,7 +61,7 @@ export default function RegistrationPage() {
 
     const backendData = {
       ...formData,
-      paymentToken: paymentToken 
+      paymentToken: paymentToken
     };
 
     const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/user/register`;
@@ -80,7 +77,7 @@ export default function RegistrationPage() {
       setIsSubmitting(false);
 
       if (res.ok) {
-        localStorage.removeItem("reg_formData"); // সফল হলে লোকাল স্টোরেজ ক্লিয়ার
+        localStorage.removeItem("reg_formData");
         alert("রেজিস্ট্রেশন সফল!");
         window.location.href = "/login";
       } else {
@@ -94,8 +91,6 @@ export default function RegistrationPage() {
 
   const renderStep = () => {
     switch (currentStep) {
-      case 0:
-        return <Step0_RoleSelection formData={formData} updateFormData={updateFormData} nextStep={nextStep} />;
       case 1:
         return <Step1_Personal formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />;
       case 2:
@@ -104,7 +99,7 @@ export default function RegistrationPage() {
         if (!paymentToken) {
           return <Step_Payment amount={300} prevStep={prevStep} formData={formData} />;
         }
-        return nextStep(); 
+        return nextStep();
       case 4:
         return (
           <Step3_Auth
@@ -127,12 +122,23 @@ export default function RegistrationPage() {
     <div className="hero min-h-screen py-10">
       <div className="container card bg-white max-w-2xl shadow-2xl p-8 rounded-2xl">
         <div className="text-center gap-4 pb-12 grid">
-          <h1 className="text-4xl font-bold text-black flex justify-center items-center gap-4"> 
+          <div className="text-center flex items-center justify-center">
+            <Link href={'/'}>
+              <button className="flex items-center underline">
+                <MdOutlineArrowBackIos /> Back to Home
+              </button>
+            </Link>
+          </div>
+          <h1 className="text-4xl font-bold text-black flex justify-center items-center gap-4">
+
             <FaRegClipboard className="text-black" size={38} /> Zero Olympiad Registration
           </h1>
-          <p className="text-md text-black mt-2">
-            Joining as: <span className="font-bold text-Primary uppercase">{formData.role}</span>
-          </p>
+          <div className="">
+            <p className="text-md text-black mt-2">
+              Joining as: <span className="font-bold text-Primary uppercase">Participant</span>
+            </p>
+          </div>
+
         </div>
 
         <div className="space-y-6">{renderStep()}</div>
@@ -149,13 +155,6 @@ export default function RegistrationPage() {
             Already Have An Account?{" "}
             <Link prefetch={false} href="/login" className="underline text-black font-bold">Login</Link>
           </p>
-        </div>
-        <div className="pt-7">
-          <Link href={'/'}>
-            <button className="flex items-center btn btn-primary">
-              <MdOutlineArrowBackIos /> back
-            </button>
-          </Link>
         </div>
       </div>
     </div>
