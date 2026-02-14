@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { FiUsers, FiCopy, FiCheckCircle } from "react-icons/fi";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { FiUsers, FiCopy, FiCheckCircle, FiPlusCircle, FiAlertCircle } from "react-icons/fi";
 import { toast, Toaster } from "react-hot-toast";
 
 // ১. ডাটা ফেচিং ফাংশন (Query Function)
@@ -10,7 +10,6 @@ const fetchAmbassadorStats = async () => {
   const token = localStorage.getItem("access_token");
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  // টোকেন না থাকলে এরর থ্রো করবে, যাতে কুয়েরি রান না হয় বা এরর হ্যান্ডেল হয়
   if (!token) throw new Error("No access token found");
 
   const res = await axios.get(`${API_URL}/api/ambassadors/my-stats`, {
@@ -21,16 +20,44 @@ const fetchAmbassadorStats = async () => {
 };
 
 export default function AmbassadorDashboard() {
+  const queryClient = useQueryClient();
+  const [newPromoInput, setNewPromoInput] = useState("");
   
-  // ২. useQuery হুক ব্যবহার করে ডাটা ফেচ এবং ক্যাশিং
+  // ২. useQuery হুক ব্যবহার করে ডাটা ফেচ
   const { data: stats, isLoading, isError, error } = useQuery({
-    queryKey: ["ambassador-stats"], // ইউনিক কি (Unique Key)
+    queryKey: ["ambassador-stats"],
     queryFn: fetchAmbassadorStats,
-    staleTime: 5 * 60 * 1000, // 🔥 ৫ মিনিট পর্যন্ত ডাটা ফ্রেশ থাকবে (সার্ভার কল হবে না)
-    gcTime: 10 * 60 * 1000,   // ১০ মিনিট পর্যন্ত মেমোরিতে ক্যাশ ধরে রাখবে
-    refetchOnWindowFocus: false, // ট্যাব পাল্টালে অটো রিফ্রেশ বন্ধ রাখা হয়েছে
-    retry: 1, // ফেইল করলে ১ বার রিট্রাই করবে
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
+
+  // ৩. প্রোমো কোড আপডেট করার মিউটেশন (Mutation)
+  const updateMutation = useMutation({
+    mutationFn: async (code) => {
+      const token = localStorage.getItem("access_token");
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      return axios.put(`${API_URL}/api/ambassadors/update-code`, { newPromoCode: code }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    },
+    onSuccess: () => {
+      // ডাটা রিফ্রেশ করা
+      queryClient.invalidateQueries(["ambassador-stats"]);
+      toast.success("Promo code set successfully!");
+      setNewPromoInput("");
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Failed to set promo code");
+    }
+  });
+
+  const handleSetCode = () => {
+    if (!newPromoInput.trim()) return toast.error("Please enter a code");
+    if (newPromoInput.length < 4) return toast.error("Code must be at least 4 characters");
+    updateMutation.mutate(newPromoInput);
+  };
 
   const copyCode = () => {
     if (stats?.myPromoCode) {
@@ -39,12 +66,10 @@ export default function AmbassadorDashboard() {
     }
   };
 
-  // ৩. লোডিং স্টেট
   if (isLoading) {
     return <div className="p-10 text-center animate-pulse text-gray-500">Loading your stats...</div>;
   }
 
-  // ৪. এরর স্টেট (যদি টোকেন না থাকে বা সার্ভার এরর দেয়)
   if (isError) {
     return (
       <div className="p-10 text-center text-red-500">
@@ -59,19 +84,56 @@ export default function AmbassadorDashboard() {
       <Toaster />
       
       {/* Promo Code Section */}
-      <div className="bg-[#0f172a] rounded-[2.5rem] p-8 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-        <div className="relative z-10">
-          <h1 className="text-3xl font-black">Ambassador Panel</h1>
-          <p className="text-gray-400 mt-2">Grow your network and track your influence.</p>
-        </div>
-        
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl text-center w-full md:w-auto z-10">
-          <p className="text-[10px] uppercase font-bold tracking-widest text-blue-300 mb-2">Your Unique Code</p>
-          <div className="flex items-center justify-center gap-4">
-            <span className="text-3xl font-black tracking-tighter uppercase">{stats?.myPromoCode || "N/A"}</span>
-            <button onClick={copyCode} className="p-2 hover:bg-white/20 rounded-xl transition-all">
-              <FiCopy size={20} />
-            </button>
+      <div className="bg-[#0f172a] rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+          <div>
+            <h1 className="text-3xl font-black text-white">Ambassador Panel</h1>
+            <p className="text-gray-400 mt-2">Grow your network and track your influence.</p>
+          </div>
+          
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-3xl text-center w-full md:w-auto min-w-[300px]">
+            {stats?.myPromoCode ? (
+              // যদি প্রোমো কোড অলরেডি থাকে
+              <>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-blue-300 mb-2">Your Unique Code</p>
+                <div className="flex items-center justify-center gap-4">
+                  <span className="text-3xl font-black tracking-tighter uppercase">{stats.myPromoCode}</span>
+                  <button onClick={copyCode} className="p-2 hover:bg-white/20 rounded-xl transition-all">
+                    <FiCopy size={20} />
+                  </button>
+                </div>
+              </>
+            ) : (
+              // যদি প্রোমো কোড না থাকে (NULL থাকে)
+              <div className="space-y-3 text-center">
+                <p className="text-[10px] uppercase font-bold tracking-widest text-orange-400 mb-1 flex items-center justify-center gap-1">
+                  <FiAlertCircle size={12} /> Set Your Custom Code
+                </p>
+                <div className="flex gap-2">
+                  <input 
+                    type="text"
+                    value={newPromoInput}
+                    onChange={(e) => setNewPromoInput(e.target.value.toUpperCase().replace(/\s/g, ""))}
+                    placeholder="Ex: ZO_RAKIB"
+                    className="bg-white/20 border border-white/30 rounded-xl px-4 py-2 text-sm focus:outline-none w-full uppercase placeholder:text-gray-500"
+                  />
+                  <button 
+                    onClick={handleSetCode}
+                    disabled={updateMutation.isPending}
+                    className="bg-blue-600 hover:bg-blue-700 p-2.5 rounded-xl transition-all disabled:opacity-50"
+                  >
+                    {updateMutation.isPending ? (
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <FiPlusCircle size={22} />
+                    )}
+                  </button>
+                </div>
+                <p className="text-[9px] text-gray-400 italic">
+                  * একবার সেট করলে আর পরিবর্তন করা যাবে না।
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
