@@ -32,7 +32,7 @@ export default function Footer() {
         { name: "About Us", href: "/about" },
         { name: "Contact Us", href: "/contact-us" },
         { name: "Privacy Policy", href: "/privacy-policy" },
-        { name: "Terms & Conditions", href: "/terms-and-conditions" },
+        { name: "Terms & Conditions", href: "/terms-and-Conditions" },
     ];
 
     return (
