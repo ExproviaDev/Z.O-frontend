@@ -13,6 +13,7 @@ const nextConfig = {
       { protocol: "https", hostname: "via.placeholder.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "ibb.co.com" }, 
+      { protocol: "https", hostname: "i.ibb.co.com" },
     ],
   },
 };

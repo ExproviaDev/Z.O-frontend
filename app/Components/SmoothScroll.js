@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 function SmoothScroll({ children }) {
   const pathname = usePathname();
 
-  const isAdminPath = pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard');
+  const isAdminPath = pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || 
+    pathname === '/gallery';
 
   if (isAdminPath) {
     return <>{children}</>;
