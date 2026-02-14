@@ -20,11 +20,10 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     const socialLinks = [
-        { icon: FaFacebookF, url: "https://www.facebook.com/FaatihaAayatOfficial/" },
-        { icon: FaYoutube, url: "https://www.youtube.com/@FaatihaAayat" },
-        { icon: FaInstagram, url: "https://www.instagram.com/faatiha.aayat/" },
-        { icon: FaXTwitter, url: "https://x.com/faatihaaayat" },
-        { icon: FaLinkedinIn, url: "https://www.linkedin.com/in/faatihaaayat/" },
+        { icon: FaFacebookF, url: "https://www.facebook.com/zeroolympiad" },
+        { icon: FaYoutube, url: "https://www.youtube.com/@zeroolympiad" },
+        { icon: FaInstagram, url: "https://www.instagram.com/zeroolympiad.offiical" },
+        { icon: FaLinkedinIn, url: "https://www.linkedin.com/company/zeroolympiad" },
         { icon: FaTiktok, url: "https://www.tiktok.com/@zeroolympiad", }
     ];
 
@@ -33,7 +32,7 @@ export default function Footer() {
         { name: "About Us", href: "/about" },
         { name: "Contact Us", href: "/contact-us" },
         { name: "Privacy Policy", href: "/privacy-policy" },
-        { name: "Terms & Conditions", href: "/terms-and-conditions" },
+        { name: "Terms & Conditions", href: "/terms-and-Conditions" },
     ];
 
     return (

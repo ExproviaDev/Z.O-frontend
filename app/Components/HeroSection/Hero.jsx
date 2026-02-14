@@ -82,7 +82,7 @@ export default function HeroSection() {
 
         {/* Hero Title */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight md:leading-[1.1] max-w-4xl">
-          Reducing to Zero, <br className="md:hidden" />
+          Reducing to Zero, <br  />
           <span className="text-Primary">Rising as Hero</span>
         </h1>
 

@@ -8,34 +8,52 @@ export const revalidate = 86400; // 1 day
 export default function Page() {
   const links = [
     {
-      name: "Facebook",
+      name: "Facebook Page",
       icon: <FaFacebook className="text-blue-600 text-3xl" />,
       url: "https://www.facebook.com/zeroolympiad/",
       handle: "@FaatihaAayat",
     },
     {
+      name: "Facebook Group-1",
+      icon: <FaFacebook className="text-blue-600 text-3xl" />,
+      url: "https://www.facebook.com/groups/faatiha.aayat",
+      handle: "@FaatihaAayat",
+    },
+    {
+      name: "Facebook Group-2",
+      icon: <FaFacebook className="text-blue-600 text-3xl" />,
+      url: "https://www.facebook.com/groups/Zeroolympiad",
+      handle: "@Zeroolympiad",
+    },
+    {
+      name: "Facebook Event",
+      icon: <FaFacebook className="text-blue-600 text-3xl" />,
+      url: "https://www.facebook.com/events/1946905882570366",
+      handle: "@Zeroolympiad",
+    },
+    {
       name: "YouTube",
       icon: <FaYoutube className="text-red-600 text-3xl" />,
       url: "https://www.youtube.com/@ZeroOlympiad",
-      handle: "Faatiha Aayat",
+      handle: "Zeroolympiad",
     },
     {
       name: "Instagram",
       icon: <FaInstagram className="text-pink-500 text-3xl" />,
       url: "https://www.instagram.com/zeroolympiad.offiical/",
-      handle: "@faatiha.aayat",
+      handle: "@Zeroolympiad",
     },
     {
       name: "Linkedin",
       icon: <GrLinkedin className="text-[#0A66C2] text-3xl" />,
       url: "https://www.linkedin.com/company/zeroolympiad",
-      handle: "@faatiha.aayat",
+      handle: "@Zeroolympiad",
     },
     {
       name: "TikTok",
       icon: <FaTiktok className="text-[#000000] text-3xl" />,
       url: "https://www.tiktok.com/@zeroolympiad",
-      handle: "@faatiha.aayat",
+      handle: "@Zeroolympiad",
     },
   ];
 
@@ -83,6 +101,7 @@ export default function Page() {
             <div className="ml-9 mt-2 text-gray-700">
               <p>+880 1973-570203</p>
               <p>+880 1886-286321</p>
+              <p>+880 1805726666</p>
             </div>
           </div>
 
@@ -95,6 +114,7 @@ export default function Page() {
             <div className="ml-9 mt-2 text-gray-700">
               <p>faatiha.aayat@gmail.com</p>
               <p>admin@zeroolympiad.com</p>
+              <p>zeroolympiad.bd@gmail.com</p>
             </div>
           </div>
 
