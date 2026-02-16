@@ -10,8 +10,64 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 export const metadata = {
-  title: "Zero Olympiad",
-  description: "Zero Olympiad by Faatiha Ayat",
+  title: {
+    default: "Zero Olympiad | Cultivating Global Leaders from Bangladesh",
+    template: "%s | Zero Olympiad"
+  },
+  publisher: "Zero Olympiad",
+  description: "Zero Olympiad empowers students to become Global Citizens by mastering the UN's 17 SDGs. From Zero Poverty to Zero Hunger, we prepare future leaders to navigate World Affairs, Global Policies, and Diplomacy by 2030.",
+  keywords: [
+    "Zero Olympiad",
+    "faatiha aayat",
+    "Sustainable Development Goals",
+    "SDGs 2030",
+    "Zero Poverty",
+    "Zero Hunger",
+    "Global Leadership Bangladesh",
+    "World Affairs for Students",
+    "United Nations SDGs",
+    "Global Citizenship",
+    "International Personalities",
+  ],
+  authors: [{ name: "Faatiha Aayat", url: "https://www.zeroolympiad.com" }],
+  metadataBase: new URL("https://www.zeroolympiad.com"),
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: "https://www.zeroolympiad.com",
+  },
+  openGraph: {
+    title: "Zero Olympiad | Creating the Next Generation of Global Leaders",
+    description: "Move beyond the traditional curriculum. Explore World Affairs, Diplomacy, and the 17 UN SDGs rebranded as 'Zero-' goals. Join the movement to represent Bangladesh on the global stage.",
+    url: "https://www.zeroolympiad.com",
+    siteName: "Zero Olympiad",
+    images: [
+      {
+        url: "/SiteLogo.png", // নিশ্চিত করুন এটি public ফোল্ডারে আছে
+        width: 600,
+        height: 630,
+        alt: "Zero Olympiad - Cultivating Global Leaders",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zero Olympiad | The Path to Becoming a Global Citizen",
+    description: "Rebranding the 17 UN SDGs to create a world of Zero- challenges. Empowering students for the 2030 global agenda.",
+    images: ["/SiteLogo.png"],
+  },
 };
 
 import ConditionalLayout from './ConditionalLayout';
@@ -26,25 +82,20 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-
-
-
-  
-
         <Providers>
-        <ReduxProvider>
-          <ConditionalLayout>
-            <SmoothScroll>
-              {children}
-            </SmoothScroll>
-          </ConditionalLayout>
-        </ReduxProvider>
+          <ReduxProvider>
+            <ConditionalLayout>
+              <SmoothScroll>
+                {children}
+              </SmoothScroll>
+            </ConditionalLayout>
+          </ReduxProvider>
         </Providers>
       </body>
     </html>
   );
 
-  
+
 }
 
 
