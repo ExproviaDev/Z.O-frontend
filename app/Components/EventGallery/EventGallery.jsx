@@ -3,12 +3,12 @@ import Link from "next/link";
 
 const Gallery = () => {
   const images = [
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766410937/EYE02067_qk0a8m.jpg",
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411372/IMG_8997_bl8xws.jpg",
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411368/IMG_8813_cp1smv.jpg",
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411365/IMG_8708_ksoivs.jpg",
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411364/IMG_8682_mhxnel.jpg",
-    "https://res.cloudinary.com/dsga4gyw9/image/upload/v1766411361/IMG_8594_okmn5p.jpg",
+    "https://i.ibb.co/sdvWdXSs/IMG-9129.jpg",
+    "https://i.ibb.co/Q3kMchp6/IMG-9067.jpg",
+    "https://i.ibb.co/mV1pf4pM/IMG-9048.jpg",
+    "https://i.ibb.co/tphqNcJm/IMG-9036.jpg",
+    "https://i.ibb.co/bj5JhYxB/IMG-8998.jpg",
+    "https://i.ibb.co/9mpTFNPq/IMG-8990.jpg",
   ];
 
   return (

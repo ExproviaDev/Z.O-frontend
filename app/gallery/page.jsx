@@ -175,9 +175,8 @@ const GalleryPage = () => {
                 src={img}
                 alt={`Victory ${idx}`}
                 fill
-                unoptimized={true}
-                quality={100}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -230,6 +229,7 @@ const GalleryPage = () => {
               alt="Selected Large"
               fill
               priority
+              unoptimized
               className="object-contain animate-in zoom-in duration-300"
               onClick={(e) => e.stopPropagation()}
             />
