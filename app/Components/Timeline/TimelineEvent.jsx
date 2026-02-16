@@ -73,7 +73,7 @@ const Timeline = () => {
     >
       <div className="max-w-7xl mx-auto relative">
         <div className="text-center space-y-4 pb-4 text-black">
-          <h1 className="md:text-5xl text-4xl font-medium">Time Line</h1>
+          <h2 className="md:text-5xl text-4xl font-medium">Time Line</h2>
           <p className="pb-10 opacity-80">
             Follow the path from registration to the grand finale. Each
             milestone brings you closer to <br className="hidden md:block" />{" "}
