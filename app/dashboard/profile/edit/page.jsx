@@ -10,44 +10,37 @@ import Swal from "sweetalert2";
 
 export default function EditProfile() {
   const [isSaving, setIsSaving] = useState(false);
+  
+  // --- নতুন লিস্ট (রেজিস্ট্রেশন পেজের মতো) ---
   const educationTypes = [
     "Bangla Medium (Bangla & English Version)",
     "English Medium (IGCSE & IB)",
     "Madrasha (Alia & Qawmi)",
     "Higher Education (University and Equivalent)",
     "Vocational, Diploma & Other Technical Education",
-    "None of These",
-  ];
-  const gradeLevels = [
-    "Class 5, Grade 5, PYP 5, Taysir, Equivalent",
-    "Class 6, Grade 6, MYP 1, Mizan, Equivalent",
-    "Class 7, Grade 7, MYP 2, Nahbameer",
-    "Class 8, Grade 8, MYP 3, Hedayatun Nahu",
-    "Class 9, Grade 9, MYP 4, Kafiya and Bekaya, Equivalent",
-    "Class 10, Grade 10, MYP 5, Kafiya and Bekaya, Equivalent",
-    "SSC Candidate, O Level Candidate, Kafiya and Bekaya Equivalent",
-    "Class 11 (HSC), Grade 11, DP 1, Jalalayn, Equivalent",
-    "Class 12 (HSC), Grade 12, DP 2, Jalalayn, Equivalent",
-    "HSC Candidate, A Level Candidate, Jalalayn Equivalent",
-    "None of These",
-  ];
-  const currentLevels = [
-    "1st Year, Fazil, Mishkat",
-    "2nd Year, Fazil, Mishkat",
-    "3rd Year, Fazil, Mishkat",
-    "4th Year, Fazil, Mishkat",
-    "5th Year, Internship, Fazil, Mishkat",
-    "Postgraduate (Masters), Kamil, Dawrah",
-    "Diploma",
-    "None of These",
-  ];
-  const activitiesOptions = [
-    "Being a campus ambassador...",
-    "I want to work in event management...",
-    "I want only to participate in the Zero Olympiad...",
   ];
 
-  // const { user } = useSelector((state) => state.auth);
+  const allLevels = [
+    "Class 5 / PYP 5 / Taisir",
+    "Class 6 / MYP 1 / Mizan",
+    "Class 7 / MYP 2 / Nahbemir",
+    "Class 8 / MYP 3 / Hidayatunnah",
+    "Class 9 / MYP 4 / Kafiya & Bekaya",
+    "Class 10 / MYP 5",
+    "SSC / O Level / Dakhil Candidate",
+    "Class 11 / DP 1 / Jalalayn",
+    "Class 12 / DP 2",
+    "HSC / A Level / Alim Candidate",
+    "University Admission Candidate / Musannif",
+    "University 1st Year / Diploma 1st Year / Fazil / Mishkat",
+    "University 2nd Year / Diploma 2nd Year",
+    "University 3rd Year / Diploma 3rd Year",
+    "University 4th Year / Diploma 4th Year",
+    "University 5th Year & Intern / Kamil / Dawrah",
+    "Postgraduate (Masters) and Above"
+  ];
+  // -------------------------------------------
+
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -60,10 +53,8 @@ export default function EditProfile() {
     district: "",
     institution: "",
     education_type: "",
-    grade_level: "",
-    current_level: "",
-    sdg_role: "",
-    round_type: "",
+    grade_level: "", // এটিই Unified Level হিসেবে কাজ করবে
+    current_level: "", // এটিও সিঙ্ক থাকবে
     profile_image_url: "",
   });
 
@@ -76,8 +67,8 @@ export default function EditProfile() {
         district: user.district || "",
         institution: user.institution || "",
         education_type: user.education_type || "",
-        grade_level: user.grade_level || "",
-        current_level: user.current_level || "",
+        grade_level: user.grade_level || "", 
+        current_level: user.grade_level || "", // grade_level দিয়েই ইনিশিয়েট করা হলো
         profile_image_url: user.profile_image_url || "",
       });
     }
@@ -92,7 +83,7 @@ export default function EditProfile() {
         maxSizeMB: 0.1,
         maxWidthOrHeight: 800,
         useWebWorker: true,
-      }; // ১০০ কেবি টার্গেট
+      }; 
       const compressedFile = await imageCompression(file, options);
       const data = new FormData();
       data.append("file", compressedFile);
@@ -149,7 +140,6 @@ export default function EditProfile() {
       const result = await response.json();
 
       if (response.ok) {
-        // ✅ Success Alert
         Swal.fire({
           icon: "success",
           title: "Profile Updated!",
@@ -157,10 +147,9 @@ export default function EditProfile() {
           confirmButtonColor: "#2563eb",
         }).then(() => {
           dispatch(fetchUserProfile(token));
-          router.push("/dashboard/profile");
+          router.push("/dashboard/profile"); // চাইলে রিডাইরেক্ট করতে পারেন
         });
       } else {
-        // ❌ Error Alert (Server side error)
         Swal.fire({
           icon: "error",
           title: "Update Failed",
@@ -174,7 +163,6 @@ export default function EditProfile() {
       }
     } catch (err) {
       console.error("Submit Error:", err);
-      // ❌ Network Error Alert
       Swal.fire({
         icon: "error",
         title: "Network Error",
@@ -185,9 +173,6 @@ export default function EditProfile() {
       setIsSaving(false);
     }
   };
-
-
-
 
   const inputStyle =
     "w-full border p-3 rounded-lg bg-white focus:ring-2 focus:ring-blue-400 outline-none";
@@ -201,6 +186,8 @@ export default function EditProfile() {
         <h2 className="text-2xl font-bold border-b pb-4">
           Update Personal Information
         </h2>
+        
+        {/* --- Image Upload Section --- */}
         <div className="flex flex-col items-center gap-4 mb-6">
           <div className="relative group">
             <div className="w-28 h-28 rounded-full border-4 border-blue-100 overflow-hidden bg-gray-50 shadow-sm transition-transform group-hover:scale-105">
@@ -221,20 +208,6 @@ export default function EditProfile() {
           </div>
 
           <label className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full border border-blue-200 hover:bg-blue-100 transition-all font-medium text-sm shadow-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-              />
-            </svg>
             <span>Change Photo</span>
             <input
               type="file"
@@ -243,7 +216,6 @@ export default function EditProfile() {
               className="hidden"
             />
           </label>
-
           {loading && (
             <p className="text-blue-600 animate-pulse text-xs font-semibold">
               Processing & Compressing...
@@ -319,6 +291,7 @@ export default function EditProfile() {
             />
           </div>
 
+          {/* --- Education Type Dropdown --- */}
           <div>
             <label className="font-semibold text-sm">Education Type</label>
             <select
@@ -337,52 +310,26 @@ export default function EditProfile() {
             </select>
           </div>
 
+          {/* --- Unified Current Level Dropdown --- */}
           <div>
-            <label className="font-semibold text-sm">Grade Level</label>
+            <label className="font-semibold text-sm">Current Level / Class</label>
             <select
               className={inputStyle}
               value={formData.grade_level}
               onChange={(e) =>
-                setFormData({ ...formData, grade_level: e.target.value })
+                setFormData({ ...formData, grade_level: e.target.value, current_level: e.target.value })
               }
             >
               <option value="">Select Level</option>
-              {gradeLevels.map((level) => (
+              {allLevels.map((level) => (
                 <option key={level} value={level}>
                   {level}
                 </option>
               ))}
             </select>
           </div>
-
-          <div>
-            <label className="font-semibold text-sm">
-              Current Level (Higher Ed)
-            </label>
-            <select
-              className={inputStyle}
-              value={formData.current_level}
-              onChange={(e) =>
-                setFormData({ ...formData, current_level: e.target.value })
-              }
-            >
-              <option value="">Select Year</option>
-              {currentLevels.map((lvl) => (
-                <option key={lvl} value={lvl}>
-                  {lvl}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
-        {/* <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-all"
-        >
-          {loading ? "Processing..." : "Save All Information"}
-        </button> */}
         <button
           type="submit"
           disabled={isSaving || loading}
@@ -392,33 +339,7 @@ export default function EditProfile() {
               : "bg-blue-600 hover:bg-blue-700 text-white"
           }`}
         >
-          {isSaving || loading ? (
-            <>
-              <svg
-                className="animate-spin h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75 "
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <span>{isSaving ? "Saving Data..." : "Uploading Image..."}</span>
-            </>
-          ) : (
-            "Save All Information"
-          )}
+          {isSaving || loading ? "Saving Data..." : "Save All Information"}
         </button>
       </form>
     </main>
