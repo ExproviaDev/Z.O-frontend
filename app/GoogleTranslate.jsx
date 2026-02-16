@@ -16,11 +16,21 @@ export default function GoogleTranslate() {
   }, []);
 
   const handleLanguageChange = (lang) => {
-    document.cookie = `googtrans=/auto/${lang}; path=/; domain=${window.location.hostname}`;
-    document.cookie = `googtrans=/auto/${lang}; path=/;`;
+    const hostname = window.location.hostname;
+
+    document.cookie = `googtrans=/auto/${lang}; path=/`;
+
+    if (hostname !== "localhost") {
+      document.cookie = `googtrans=/auto/${lang}; path=/; domain=zeroolympiad.faatihaaayat.com`;
+      document.cookie = `googtrans=/auto/${lang}; path=/; domain=.faatihaaayat.com`;
+    }
+
     setSelected(lang);
     setIsOpen(false);
-    window.location.reload();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   const googleTranslateInit = () => {
@@ -58,7 +68,7 @@ export default function GoogleTranslate() {
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          
+
           <span className="font-medium">
             {selected === "en" ? "English" : "বাংলা"}
           </span>
@@ -77,17 +87,15 @@ export default function GoogleTranslate() {
           <div className="absolute right-0 mt-2 w-32 bg-[#111111] border border-[#333] rounded-xl shadow-xl overflow-hidden py-1 animate-in fade-in slide-in-from-top-2">
             <button
               onClick={() => handleLanguageChange("en")}
-              className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                selected === "en" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
-              }`}
+              className={`w-full text-left px-4 py-2 text-sm transition-colors ${selected === "en" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
+                }`}
             >
               English
             </button>
             <button
               onClick={() => handleLanguageChange("bn")}
-              className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                selected === "bn" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
-              }`}
+              className={`w-full text-left px-4 py-2 text-sm transition-colors ${selected === "bn" ? "bg-[#222] text-white font-bold" : "text-gray-300 hover:bg-[#222]"
+                }`}
             >
               বাংলা
             </button>

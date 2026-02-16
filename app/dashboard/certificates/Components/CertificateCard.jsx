@@ -54,11 +54,11 @@ const CertificateCard = ({ userName, date, validationId }) => {
       // ==========================================
       const nameYPosition = 300; 
       const nameFontSize = 32;
-      const dateXPosition = 190;
-      const dateYPosition = 100;
+      const dateXPosition = 110;
+      const dateYPosition = 65;
       
       // 🔥 নতুন: আইডির পজিশন (একদম নিচে মাঝখানে)
-      const idYPosition = 530; 
+      const idYPosition = 550; 
       const idFontSize = 11;
       // ==========================================
 
@@ -77,7 +77,7 @@ const CertificateCard = ({ userName, date, validationId }) => {
       firstPage.drawText(date, {
         x: dateXPosition,
         y: dateYPosition,
-        size: 15,
+        size: 14,
         font: font,
         color: rgb(0, 0, 0),
       });
