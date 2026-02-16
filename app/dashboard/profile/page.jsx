@@ -77,7 +77,6 @@ const ProfilePage = () => {
               <ProfileItem label="Institution" value={user.institution} />
               <ProfileItem label="Education Type" value={user.education_type} />
               <ProfileItem label="Grade Level" value={user.grade_level} />
-              <ProfileItem label="Current Year" value={user.current_level} />
             </div>
           </section>
           <section className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 md:col-span-2">
