@@ -21,8 +21,8 @@ export default function GoogleTranslate() {
     document.cookie = `googtrans=/auto/${lang}; path=/`;
 
     if (hostname !== "localhost") {
-      document.cookie = `googtrans=/auto/${lang}; path=/; domain=zeroolympiad.faatihaaayat.com`;
-      document.cookie = `googtrans=/auto/${lang}; path=/; domain=.faatihaaayat.com`;
+      document.cookie = `googtrans=/auto/${lang}; path=/; domain=zeroolympiad.com`;
+      document.cookie = `googtrans=/auto/${lang}; path=/; domain=zeroolympiad.com; secure`;
     }
 
     setSelected(lang);
