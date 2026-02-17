@@ -18,7 +18,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[70vh] w-full overflow-hidden flex items-center justify-center font-sans">
-      
+
       {/* Background Slider */}
       <div className="absolute inset-0 z-0">
         <Swiper
@@ -52,7 +52,7 @@ export default function HeroSection() {
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 py-12 md:py-20 mt-16 md:mt-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          
+
           {/* Left Side: Text Content */}
           <div className="space-y-6 md:space-y-8 text-center lg:text-left animate-in fade-in slide-in-from-bottom-10 duration-1000">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
@@ -69,7 +69,7 @@ export default function HeroSection() {
             <div className="flex justify-center lg:justify-start">
               <Link prefetch={false} href={"/registration"} className="w-full sm:w-auto">
                 <button className="w-full sm:w-auto bg-Primary hover:bg-Secondary text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl active:scale-95 group">
-                  Register Now 
+                  Register Now
                   <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
@@ -84,24 +84,7 @@ export default function HeroSection() {
             {/* Video Container */}
             <div className="relative bg-black p-2 sm:p-3 rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-white/10">
               <div className="relative overflow-hidden rounded-[16px] sm:rounded-[22px] aspect-video">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/zeWD8T0RxN0?rel=0&modestbranding=1"
-                  title="Zero Olympiad Theme Song"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-
-              {/* Video Footer */}
-              <div className="flex justify-between items-center px-4 py-2 bg-black">
-                <div className="flex items-center gap-2">
-                   {/* Optional: Add live indicator or icon here */}
-                   <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                </div>
-                <div className="text-[10px] sm:text-xs text-gray-400 font-mono tracking-widest">
-                  OFFICIAL THEME SONG
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Gvvq9Ehsjig?si=nxs-4nFw-BWxEkgO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
             </div>
           </div>
