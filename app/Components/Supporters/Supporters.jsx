@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Supporters = () => {
   return (
     <section className="relative w-full py-10 md:py-20 px-4 flex flex-col items-center justify-center bg-gray-50">
@@ -17,11 +19,13 @@ const Supporters = () => {
           </p>
         </div>
 
-        <div className="bg-white p-2 rounded-3xl shadow-xl overflow-hidden transition-all duration-500  border border-gray-100">
-          <img
-            src="https://zeroolympiad.pronizam.com/wp-content/uploads/2026/01/sponsors-1024x489.png"
+        <div className="w-full overflow-hidden rounded-xl">
+          <Image
+            src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1771327887/WhatsApp_Image_2026-02-17_at_5.27.25_PM_1_dpvpf3.webp"
             alt="Our Valued Partners & Supporters"
-            className="w-full h-auto rounded-xl"
+            width={1024}
+            height={489}
+            className="w-full h-auto object-contain"
           />
         </div>
       </div>

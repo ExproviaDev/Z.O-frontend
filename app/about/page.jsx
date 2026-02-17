@@ -1,7 +1,6 @@
 import {
 
   FaArrowRight,
-  FaQuoteLeft,
 
 } from "react-icons/fa";
 
@@ -115,7 +114,7 @@ export default function ZeroOlympiad() {
                 {/* Image Container */}
                 <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-slate-100 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770219566/FAATIHA_AAYAT_1_ltnjp2.jpg"
+                    src="https://i.ibb.co.com/99HFrKfK/speaker-bg.png"
                     alt="Faatiha Aayat - Founder & CEO"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -139,10 +138,13 @@ export default function ZeroOlympiad() {
 
           {/* Background Image & Overlay */}
           <div className="absolute inset-0 z-0">
-            <img
+            <Image
               src="https://i.ibb.co.com/99HFrKfK/speaker-bg.png"
               alt="Background"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority={false} // এটি যদি একদম উপরে না থাকে তবে false রাখুন
             />
             {/* Optional: Dark overlay to make cards pop more if needed */}
             <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>

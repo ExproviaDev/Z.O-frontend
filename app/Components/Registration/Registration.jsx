@@ -14,18 +14,6 @@ export default function Registration() {
       ),
     },
     {
-      id: "04",
-      text: (
-        <>
-          The <b>Round 1 exam</b> will consist of <b>30 MCQ questions</b>, carrying a total of <b>30 marks.</b>{" "}
-          The time limit is <b>30 minutes.</b> You will be able to see your score on the website
-          immediately after the exam. There will be no fixed passing mark; instead, the <b>top 200 students from each SDG</b>{" "}
-          will qualify for the <b>2nd Round.</b>
-
-        </>
-      ),
-    },
-    {
       id: "02",
       text: (
         <>
@@ -36,20 +24,6 @@ export default function Registration() {
           The courses can be completed <b>online for free</b> at your own
           convenience. Upon completion of each course, a <b>certificate</b> will
           be issued directly by the UN institution.
-        </>
-      ),
-    },
-    {
-      id: "05",
-      text: (
-        <>
-          Those who qualify for the <b>2nd Round</b> must create a{" "}
-          <b>three-minute video</b> based on a specific{" "}
-          <b>SDG (Sustainable Development Goal)</b> assigned to their class.
-          This video should be uploaded to your own, a family member's, or a
-          friend's social media account using the hashtag <b>#ZeroOlympiad.</b>{" "}
-          Finally, you must submit the video link through your personal{" "}
-          <b>dashboard.</b>
         </>
       ),
     },
@@ -67,6 +41,34 @@ export default function Registration() {
         </>
       ),
     },
+    {
+      id: "04",
+      text: (
+        <>
+          The <b>Round 1 exam</b> will consist of <b>30 MCQ questions</b>, carrying a total of <b>30 marks.</b>{" "}
+          The time limit is <b>30 minutes.</b> You will be able to see your score on the website
+          immediately after the exam. There will be no fixed passing mark; instead, the <b>top 200 students from each SDG</b>{" "}
+          will qualify for the <b>2nd Round.</b>
+
+        </>
+      ),
+    },
+
+    {
+      id: "05",
+      text: (
+        <>
+          Those who qualify for the <b>2nd Round</b> must create a{" "}
+          <b>three-minute video</b> based on a specific{" "}
+          <b>SDG (Sustainable Development Goal)</b> assigned to their class.
+          This video should be uploaded to your own, a family member's, or a
+          friend's social media account using the hashtag <b>#ZeroOlympiad.</b>{" "}
+          Finally, you must submit the video link through your personal{" "}
+          <b>dashboard.</b>
+        </>
+      ),
+    },
+
     {
       id: "06",
       text: (

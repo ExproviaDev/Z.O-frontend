@@ -5,49 +5,47 @@ export const revalidate = 86400;
 export default function FAQPage() {
   const faqData = [
     {
-      q: "⁠What is this Zero Olympiad?",
-      a: "Zero Olympiad হলো একটি শিক্ষামূলক ও প্রতিযোগিতামূলক প্ল্যাটফর্ম, যেখানে শিক্ষার্থীরা বৈশ্বিক সমস্যা, উদ্ভাবন, নেতৃত্ব ও টেকসই উন্নয়ন নিয়ে শেখার ও প্রতিযোগিতা করার সুযোগ পায়। এখানে বিভিন্ন রাউন্ড, প্রশিক্ষণ, মেন্টরশিপ ও চ্যালেঞ্জের মাধ্যমে অংশগ্রহণকারীরা নিজেদের দক্ষতা উন্নত করতে পারে এবং সমাজের জন্য ইতিবাচক পরিবর্তনে ভূমিকা রাখতে অনুপ্রাণিত হয়। আপনি চাইলে আমি রেজিস্ট্রেশন, ক্যাটাগরি বা প্রতিযোগিতার ধাপগুলো সম্পর্কে বিস্তারিত জানাতে পারি।",
+      q: "What is Zero Olympiad?",
+      a: "Zero Olympiad is an educational and competitive platform where students have the opportunity to learn and compete on global issues, innovation, leadership, and sustainable development. Through various rounds, training, mentorship, and challenges, participants can enhance their skills and are inspired to contribute to positive social change. I can provide further details about registration, categories, or competition stages if you're interested.",
     },
     {
       q: "How to register?",
-      a: "জিরো অলিম্পিয়াডের ওয়েবসাইট zeroolympiad.com এ গেলেই আপনি রেজিস্ট্রেশন লিংক ও অন্যান্য আনুষাঙ্গিক তথ্য পেয়ে যাবেন। আপনি চাইলে আমি ওয়েবসাইট লিংক আপনার এই নাম্বারে হোয়াটসঅ্যাপ করতে পারি।",
+      a: "You can find the registration link and all other relevant information by visiting the Zero Olympiad website at zeroolympiad.com. If you'd like, I can also WhatsApp the website link to your number.",
     },
     {
-      q: "রেজিস্ট্রেশন এর পরের ধাপ কি? ",
-      a: "রেজিস্ট্রেশন এর সাথে সাথেই আপনি একটি অটোমেটিক ইমেইল পাবেন। সেই ইমেইলেই জাতিসংঘের কোর্স করার লিংক ও অন্যান্য বিস্তারিত তথ্য থাকবে। ",
+      q: "What is the next step after registration?",
+      a: "Immediately after registration, you will receive an automatic email containing a link to the UN course and other detailed information.",
     },
     {
-      q: "What is the Registration fee?",
-      a: "রেজিস্ট্রেশন ফি ৪০০ টাকা। কিন্তু পবিত্র রমজান উপলক্ষ্যে আমাদের তরফ থেকে Ramadan Reward হিসেবে আপনি ৩০০ টাকা দিয়ে রেজিস্ট্রেশন করতে পারবেন। রমজানের পরে আবার রেজিস্ট্রেশন ফি যথারীতি ৪০০ টাকা পরিশোধ করতে হবে।",
+      q: "What is the registration fee?",
+      a: "The regular registration fee is 400 BDT. However, as a 'Ramadan Reward' for the holy month of Ramadan, you can register for only 300 BDT. After Ramadan, the fee will revert to the standard 400 BDT.",
     },
     {
-      q: "Since UN Course is free, why is this Registration Fee?",
-      a: "জিরো অলিম্পিয়াডের তরফ থেকে আপনাদের জন্য যেহেতু অনেক অনেক পুরস্কার যেমন বিদেশে বুটক্যাম্প, নগদ অর্থ পুরস্কার, ক্রেস্ট, ট্রফি, সার্টিফিকেট ইত্যাদি রাখা হয়েছে, তাই এসবের খরচ বাবদ এই ফি রাখা হয়েছে। এছাড়াও ৬ জুন যে গ্র্যান্ড ফাইনাল অনুষ্ঠিত হবে সেখানে লজিস্টিকস, আপ্যায়ন, বিদেশী অতিথিদের ট্রাভেল এবং একোমোডেশন এর খরচও রয়েছে।",
+      q: "Since the UN Course is free, why is there a registration fee?",
+      a: "The fee is used to cover the costs of numerous rewards provided by Zero Olympiad, such as international boot camps, cash prizes, crests, trophies, and certificates. Additionally, it contributes to the logistics, hospitality, and travel and accommodation expenses for international guests attending the Grand Final on June 6th.",
     },
     {
       q: "What will I learn from these courses?",
-      a: `আপনার ক্যাটাগরি অনুযায়ী জাতিসংঘ থেকে আপনাকে ভিন্ন ভিন্ন কোর্স করানো হবে।
-        Class 5 – Class 8 SDG 1 – SDG 4: Sport For Climate Action https://unccelearn.org/course/view.php?id=215&page=overview
-
-        Class 9 – University Admission Candidate SDG 5 – SDG 10: Becoming A Climate Champion https://unccelearn.org/course/view.php?id=201&page=overview
-
-        Bachelor – Masters and above SDG 11 – SDG 17: Scaling Climate Finance https://unccelearn.org/course/view.php?id=205&page=overview`,
+      a: `You will be assigned different courses from the UN based on your category:
+         Class 5 – Class 8 (SDG 1 – SDG 4): Sport For Climate Action
+         Class 9 – University Admission Candidates (SDG 5 – SDG 10): Becoming A Climate Champion
+         Bachelor – Masters and above (SDG 11 – SDG 17): Scaling Climate Finance`,
     },
     {
-      q: "I am a Bangla Medium student is it possible for me to complete the course?",
-      a: "যদিও জাতিসংঘ থেকে এই কোর্স ইংরেজিতে করানো হয়, আমরা বাংলা ও ইংরেজি দুই ভাষাতেই আমাদের পরীক্ষায় অংশগ্রহণের সুযোগ রাখছি। জাতিসংঘ কোর্স ইংরেজিতে করতে অসুবিধা হলে",
+      q: "I am a Bangla Medium student; is it possible for me to complete the course?",
+      a: "Although the UN courses are conducted in English, we provide the opportunity to participate in our exams in both Bengali and English. If you face any difficulty with the English course materials, our support team is available to assist you.",
     },
     {
-      q: "What will be the Question pattern?",
-      a: "১ম রাউন্ডে ৩০টি এমসিকিউ প্রশ্ন থাকবে। জাতিসংঘ থেকে যেই কোর্স আপনারা করবেন, সেখান থেকেই প্রশ্ন থাকবে। ২য় রাউন্ডে যার যার ক্লাস/গ্রেড অনুযায়ী নির্ধারিত এসডিজি’র উপরে ৩ মিনিটের ভিডিও তৈরী করবেন।",
+      q: "What will be the question pattern?",
+      a: "The 1st round will consist of 30 MCQ questions based on the UN course you have completed. In the 2nd round, participants will create a 3-minute video on an assigned SDG based on their respective class or grade.",
     },
     {
-      q: "Finished my masters degree can I join?",
-      a: "জ্বী পারবেন, আপনার এসডিজি হবে SDG17.",
+      q: "I have finished my Master's degree; can I join?",
+      a: "Yes, you can participate. Your assigned category will focus on SDG 17.",
     },
     {
       q: "I live outside Bangladesh. Can I participate?",
-      a: "জ্বী পারবেন, পৃথিবীর যে কোন দেশ থেকেই পারবেন। গতবার আমাদের গ্র্যান্ড ফাইনালেতে চায়না, মালয়েশিয়া, কাতার, ইংল্যান্ড ও অস্ট্রেলিয়ার পার্টিসিপেন্ট ছিল।",
+      a: "Yes, participants from any country in the world can join. In our previous Grand Final, we had participants from China, Malaysia, Qatar, England, and Australia.",
     },
   ];
 

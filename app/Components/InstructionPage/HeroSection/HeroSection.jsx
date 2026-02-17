@@ -75,8 +75,6 @@ export default function HeroSection() {
               </Link>
             </div>
           </div>
-
-          {/* Right Side: Video Content */}
           <div className="relative w-full max-w-lg mx-auto lg:max-w-full animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
             {/* Glow Effect */}
             <div className="absolute -inset-1 bg-Primary/30 rounded-[35px] blur-2xl"></div>
@@ -84,7 +82,15 @@ export default function HeroSection() {
             {/* Video Container */}
             <div className="relative bg-black p-2 sm:p-3 rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-white/10">
               <div className="relative overflow-hidden rounded-[16px] sm:rounded-[22px] aspect-video">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/Gvvq9Ehsjig?si=nxs-4nFw-BWxEkgO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full" // এখানে w-full h-full যোগ করা হয়েছে
+                  src="https://www.youtube.com/embed/Gvvq9Ehsjig?si=nxs-4nFw-BWxEkgO"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           </div>

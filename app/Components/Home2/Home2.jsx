@@ -7,7 +7,6 @@ const HeroSection = dynamic(() => import("../HeroSection/Hero"), {
 
 const Pricing = dynamic(() => import("../Pricing/Pricing"));
 const JurySection = dynamic(() => import("../JuryCard/Jury"));
-const EventGallery = dynamic(() => import("../EventGallery/EventGallery"));
 const Registration = dynamic(() => import("../Registration/Registration"));
 import Instructions from "../Instructions/Instructions";
 import WhyParticipate from "../WhyParticipate/WhyParticipate";
@@ -29,7 +28,6 @@ export default function HomePage() {
       <TimelineEvent />
       <JurySection />
       <Supporters />
-      <EventGallery />
     </main>
   );
 }
