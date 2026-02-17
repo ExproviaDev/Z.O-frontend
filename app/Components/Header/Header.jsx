@@ -125,7 +125,7 @@ export default function Header() {
                     <div className="relative" ref={profileAreaRef}>
                       <button
                         onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none flex flex-col gap-1"
+                        className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none flex items-center flex-col gap-1"
                       >
                         <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-Secondary ">
                           {user.profile_image_url ? (
@@ -141,7 +141,7 @@ export default function Header() {
                           )}
                           
                         </div>
-                        <p className="text-blue-950 font-medium">Profile</p>
+                        <p className="text-blue-950 font-bold">Profile</p>
                       </button>
                       <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
                     </div>
