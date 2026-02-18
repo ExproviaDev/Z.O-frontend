@@ -37,6 +37,14 @@ export const metadata = {
   ],
   authors: [{ name: "Faatiha Aayat", url: "https://www.zeroolympiad.com" }],
   metadataBase: new URL("https://www.zeroolympiad.com"),
+
+  // ✅ নতুন ভেরিফিকেশন কোড এখানে অ্যাড করা হলো
+  verification: {
+    other: {
+      "facebook-domain-verification": "4s0xfda5xnjoupb00g4liq2f92x8te",
+    },
+  },
+
   robots: {
     index: true,
     follow: true,
@@ -59,7 +67,7 @@ export const metadata = {
     siteName: "Zero Olympiad",
     images: [
       {
-        url: "/SiteLogo.png", // নিশ্চিত করুন এটি public ফোল্ডারে আছে
+        url: "/SiteLogo.png",
         width: 600,
         height: 630,
         alt: "Zero Olympiad - Cultivating Global Leaders",
@@ -103,5 +111,3 @@ export default function RootLayout({ children }) {
 
 
 }
-
-
