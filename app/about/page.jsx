@@ -114,7 +114,7 @@ export default function ZeroOlympiad() {
                 {/* Image Container */}
                 <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-slate-100 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100">
                   <Image
-                    src="https://i.ibb.co.com/99HFrKfK/speaker-bg.png"
+                    src="https://res.cloudinary.com/dsga4gyw9/image/upload/v1770097663/466841916_1591761551464254_549539917158943319_n_1_a5gmyl.jpg"
                     alt="Faatiha Aayat - Founder & CEO"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
