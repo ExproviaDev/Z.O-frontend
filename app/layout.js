@@ -25,6 +25,10 @@ export const metadata = {
   keywords: [
     "Zero Olympiad",
     "faatiha aayat",
+    "Quiz Olympiad",
+    "SDG Olympiad",
+    "quiz",
+    "olympiad",
     "Sustainable Development Goals",
     "SDGs 2030",
     "Zero Poverty",

@@ -35,6 +35,7 @@ export default function Sidebar({ isOpen, onClose }) {
     { name: "Dashboard", icon: <FaHome />, href: "/dashboard", allowedRoles: ["user", "ambassador", "admin", "contestor"] },
     { name: "My Profile", icon: <FaUser />, href: "/dashboard/profile", allowedRoles: ["user", "ambassador", "admin", "contestor"] },
     { name: "My Quizzes", icon: <FaBook />, href: "/dashboard/quizzes", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "My Courses", icon: <FaBook />, href: "/dashboard/mycourses", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "My Certificates", icon: <FaRegBookmark />, href: "/dashboard/certificates", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "Payment History", icon: <FaStar />, href: "/dashboard/history", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement", allowedRoles: ["user", "ambassador", "contestor"] },
