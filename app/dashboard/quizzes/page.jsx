@@ -3,15 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan } from 'react-icons/fa';
+import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const MyQuizzes = () => {
   const router = useRouter();
 
-
   const [userCategory, setUserCategory] = useState("");
-
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,25 +25,20 @@ const MyQuizzes = () => {
           return;
         }
 
-        // ✅ 2. Category Mapping Logic (নাম্বার থেকে স্ট্রিং-এ কনভার্ট)
+        // ✅ 2. Category Mapping Logic
         let categoryToFetch = "SDG Activist"; // Default (Round 1)
 
-        // যদি রাউন্ড ২ বা ৩ হয়, তবে ক্যাটাগরি চেঞ্জ হবে
         if (storedUser.round_type === "round_2") {
           categoryToFetch = "SDG Ambassador";
         } else if (storedUser.round_type === "round_3") {
           categoryToFetch = "SDG Achiever";
         }
 
-        // অথবা যদি সরাসরি প্রোফাইলে role থাকে
         if (storedUser.sdg_role) {
           categoryToFetch = storedUser.sdg_role;
         }
 
-        // স্টেট আপডেট করা (এখন আর এরর দিবে না)
         setUserCategory(categoryToFetch);
-
-        console.log("Fetching quizzes for category:", categoryToFetch);
 
         // ✅ 3. API Call
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/public-quizzes`, {
@@ -104,13 +97,21 @@ const MyQuizzes = () => {
       return;
     }
 
-    // কুইজ পেজে যাওয়া
+    // কুইজ পেজে যাওয়া
     router.push(`/quiz`);
   };
 
   const filteredQuizzes = quizzes.filter((quiz) =>
     quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // 🔥 ইউজারের ক্যাটাগরি অনুযায়ী ডাইনামিক ডেট বের করার ফাংশন
+  const getExamDate = (category) => {
+    if (category === "SDG Activist") return "May 7th";
+    if (category === "SDG Ambassador") return "May 8th";
+    if (category === "SDG Achiever") return "May 9th";
+    return "the scheduled date";
+  };
 
   return (
     <div className="p-4 md:p-6 min-h-screen bg-gray-50">
@@ -188,9 +189,14 @@ const MyQuizzes = () => {
             </div>
           ))
         ) : (
-          <div className="col-span-full py-20 text-center bg-white rounded-2xl border border-dashed">
-            <p className="text-gray-400 text-lg">
-              No quizzes available right now. Mark your calendar: <b>{userCategory}</b> exam begins <b>May 8th</b>.
+          // 🔥 সুন্দর নো-কুইজ মেসেজ ডিজাইন
+          <div className="col-span-full py-16 px-6 text-center bg-indigo-50/40 rounded-3xl border border-indigo-100 shadow-sm flex flex-col items-center justify-center">
+            <div className="w-20 h-20 bg-indigo-100 text-indigo-500 rounded-full flex items-center justify-center mb-5">
+              <FaCalendarDay size={36} />
+            </div>
+            <h3 className="text-2xl font-extrabold text-gray-800 mb-3">No Quizzes Available Yet!</h3>
+            <p className="text-gray-600 text-md max-w-lg mx-auto leading-relaxed">
+              Mark your calendar! The <span className="font-bold text-indigo-600 px-1">{userCategory}</span> exam is scheduled to begin on <span className="font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md text-lg">{getExamDate(userCategory)}</span>. Please check back later.
             </p>
           </div>
         )}

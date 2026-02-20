@@ -22,7 +22,7 @@ export default function RoleManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // ডিটেইল মডালের জন্য
   const [selectedUser, setSelectedUser] = useState(null); // সিলেক্টেড ইউজার
-  const [newMember, setNewMember] = useState({ email: '', role: 'manager', name: '', phone: '' });
+  const [newMember, setNewMember] = useState({ email: '', role: 'Participant', name: '', phone: '' });
 
   const usersPerPage = 10;
   const isAdmin = currentUser?.role === 'admin' || (typeof window !== "undefined" && JSON.parse(localStorage.getItem("user_data"))?.role === 'admin');
@@ -75,7 +75,7 @@ export default function RoleManagement() {
 
       if (response.data.success) {
         setIsModalOpen(false);
-        setNewMember({ email: '', role: 'manager', name: '', phone: '' });
+        setNewMember({ email: '', role: 'Participant', name: '', phone: '' });
         dispatch(fetchAllUsers());
         Swal.fire({ icon: 'success', title: 'Access Granted!', text: `Email sent to ${newMember.email}` });
       }
@@ -352,6 +352,7 @@ export default function RoleManagement() {
                   onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
                 >
                   <option value="manager">Jury (Manager)</option>
+                  <option value="user">Participant (User)</option>
                   <option value="ambassador">AMBASSADOR</option>
                   <option value="admin">Admin</option>
                 </select>
