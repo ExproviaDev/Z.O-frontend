@@ -19,41 +19,52 @@ const UserVideoSubmission = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [submissionState, setSubmissionState] = useState("loading");
+  
+  // 🔥 ১. ইউজারের রাউন্ড চেক করার জন্য নতুন স্টেট
+  const [isRound2, setIsRound2] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (!token) {
         router.push('/login');
         return;
     }
-    // ইউজার আইডি পাওয়ার পর ডাটা ফেচ
-    const userId = user?.id || user?.user_id;
+
+    // 🔥 ২. লোকাল স্টোরেজ থেকে ডাটা নিয়ে রাউন্ড ২ চেক করা
+    const storedUser = JSON.parse(localStorage.getItem("user_data") || "{}");
+    if (storedUser?.round_type === "round_2" || user?.round_type === "round_2") {
+        setIsRound2(true);
+    }
+
+    // ইউজার আইডি পাওয়ার পর ডাটা ফেচ
+    const userId = user?.id || user?.user_id || storedUser?.user_id;
     if (userId) {
       fetchData(userId, token);
     }
   }, [user, router]);
 
-  // ২. ডাটা ফেচিং ফাংশন
+  // ২. ডাটা ফেচিং ফাংশন (🔥 Promise.all এর বদলে আলাদা কল করা হয়েছে যাতে একটি ফেইল করলে অন্যটি ক্র্যাশ না করে)
   const fetchData = async (userId, token) => {
     try {
       const API = process.env.NEXT_PUBLIC_API_URL;
       
-      // প্যারালাল API কল (সেটিংস এবং স্ট্যাটাস)
-      const [settingsRes, statusRes] = await Promise.all([
-        axios.get(`${API}/api/video/settings`, { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get(`${API}/api/video/status/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
-      ]);
-
+      // প্রথমে সেটিংস ফেচ
+      const settingsRes = await axios.get(`${API}/api/video/settings`, { headers: { Authorization: `Bearer ${token}` } });
       const settings = settingsRes.data.data;
       setRoundSettings(settings);
-      setStatusData(statusRes.data);
+      checkTimeStatus(settings);
 
-      // যদি আগে সাবমিট করা থাকে, লিঙ্ক সেট করো
-      if (statusRes.data?.video_link) {
-        setVideoLink(statusRes.data.video_link);
+      // এরপর স্ট্যাটাস ফেচ
+      try {
+        const statusRes = await axios.get(`${API}/api/video/status/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+        setStatusData(statusRes.data);
+        if (statusRes.data?.video_link) {
+          setVideoLink(statusRes.data.video_link);
+        }
+      } catch (err) {
+        console.log("No previous submission found."); // 404 আসলে ক্র্যাশ করবে না
       }
 
-      // সময়ের স্ট্যাটাস চেক
-      checkTimeStatus(settings);
       setLoading(false);
 
     } catch (error) {
@@ -62,14 +73,14 @@ const UserVideoSubmission = () => {
     }
   };
 
-  // ৩. সময় চেক করার লজিক
+  // ৩. সময় চেক করার লজিক
   const checkTimeStatus = (settings) => {
     if (!settings || !settings.is_enabled) {
         setSubmissionState("disabled");
         return;
     }
 
-    const now = new Date(); // ক্লায়েন্ট টাইম
+    const now = new Date(); // ক্লায়েন্ট টাইম
     const start = new Date(settings.start_time);
     const end = new Date(settings.end_time);
 
@@ -88,7 +99,7 @@ const UserVideoSubmission = () => {
     if (!videoLink) return Swal.fire("Error", "Please enter a valid video link", "warning");
 
     setIsSubmitting(true);
-    const userId = user?.id || user?.user_id;
+    const userId = user?.id || user?.user_id || JSON.parse(localStorage.getItem("user_data"))?.user_id;
 
     try {
       const token = localStorage.getItem("access_token");
@@ -125,7 +136,6 @@ const UserVideoSubmission = () => {
   };
 
   // ইনপুট কি এনাবল থাকবে? 
-  // উত্তর: যদি স্ট্যাটাস 'active' হয় AND (আগে সাবমিট না করা থাকে OR এডিট মোড অন থাকে)
   const isInputEnabled = submissionState === "active" && (!statusData?.video_link || isEditing);
 
   if (loading) return (
@@ -182,32 +192,49 @@ const UserVideoSubmission = () => {
              </div>
           )}
 
-          {/* Result View or Form */}
-          {statusData?.jury_score ? (
-            <div className="text-center py-10">
-               <div className="inline-block p-4 bg-indigo-50 rounded-full mb-4">
-                 <FaCheckCircle size={40} className="text-indigo-600" />
-               </div>
-               <h3 className="text-2xl font-bold text-gray-800">Evaluation Completed!</h3>
-               <p className="text-gray-500 mt-2">Score: <span className="font-bold text-indigo-600 text-xl">{statusData.jury_score}/100</span></p>
-               <p className="text-gray-600 mt-4 italic bg-gray-50 p-4 rounded-xl border border-gray-200 inline-block">"{statusData.jury_comments}"</p>
+          {/* 🔥 ৩. Main Logic Block - রাউন্ড ২ না হলে ওয়ার্নিং, নাহলে ফর্ম */}
+          {!isRound2 ? (
+            
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 md:p-6 flex flex-col items-center text-center shadow-sm mt-4">
+              <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4">
+                <FaLock size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-amber-800 mb-2">
+                Submission Not Available
+              </h3>
+              <p className="text-sm text-amber-700 leading-relaxed max-w-lg font-medium">
+                আপনার জন্য ভিডিও সাবমিশন এখনো এভেইলেবল না। দয়া করে আগে নির্দিষ্ট সময়ে কুইজ দিন এবং ২য় রাউন্ডের জন্য ভিডিও সাবমিট করার তারিখ আসা পর্যন্ত অপেক্ষা করুন।
+              </p>
+              <p className="text-xs text-amber-600 mt-3 max-w-lg">
+                (Your video submission is not yet available. Please take the quiz first and wait until the video submission date arrives.)
+              </p>
             </div>
+
+          ) : statusData?.jury_score ? (
+            
+            <div className="text-center py-10">
+              <div className="inline-block p-4 bg-indigo-50 rounded-full mb-4">
+                <FaCheckCircle size={40} className="text-indigo-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Evaluation Completed!</h3>
+              <p className="text-gray-500 mt-2">Score: <span className="font-bold text-indigo-600 text-xl">{statusData.jury_score}/100</span></p>
+              <p className="text-gray-600 mt-4 italic bg-gray-50 p-4 rounded-xl border border-gray-200 inline-block">"{statusData.jury_comments}"</p>
+            </div>
+
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-bold text-gray-700">Video URL (YouTube/FaceBook)</label>
-                    
-                    {/* Edit Button Logic */}
-                    {statusData?.video_link && submissionState === "active" && !isEditing && (
-                        <button 
-                            type="button"
-                            onClick={() => setIsEditing(true)}
-                            className="text-xs flex items-center gap-1 font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-3 py-1 rounded-full transition border border-indigo-100"
-                        >
-                            <FaEdit /> Edit Link
-                        </button>
-                    )}
+                  <label className="block text-sm font-bold text-gray-700">Video URL (YouTube/FaceBook)</label>
+                  {statusData?.video_link && submissionState === "active" && !isEditing && (
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(true)}
+                      className="text-xs flex items-center gap-1 font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-3 py-1 rounded-full transition border border-indigo-100"
+                    >
+                      <FaEdit /> Edit Link
+                    </button>
+                  )}
                 </div>
 
                 <div className="relative group">
@@ -219,36 +246,31 @@ const UserVideoSubmission = () => {
                     disabled={!isInputEnabled}
                     value={videoLink}
                     onChange={(e) => setVideoLink(e.target.value)}
-                    className={`w-full pl-12 pr-4 py-3.5 border rounded-xl outline-none transition-all font-medium 
-                        ${isInputEnabled 
-                            ? 'bg-gray-50 border-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 text-gray-700' 
-                            : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed select-none'
-                        }`}
+                    className={`w-full pl-12 pr-4 py-3.5 border rounded-xl outline-none transition-all font-medium ${isInputEnabled ? 'bg-gray-50 border-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 text-gray-700' : 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed select-none'}`}
                   />
                 </div>
-                
+
                 {submissionState === "active" && (
-                    <p className="text-xs text-gray-400 mt-2 ml-1 flex items-center gap-1">
+                  <p className="text-xs text-gray-400 mt-2 ml-1 flex items-center gap-1">
                     <FaExclamationTriangle /> Ensure the link is publicly accessible.
-                    </p>
+                  </p>
                 )}
               </div>
 
-              {/* Action Buttons */}
               {(submissionState === "active" && (!statusData?.video_link || isEditing)) ? (
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? "Processing..." : statusData?.video_link ? "Update Submission" : "Submit Video"}
-                  </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? "Processing..." : statusData?.video_link ? "Update Submission" : "Submit Video"}
+                </button>
               ) : (
-                  statusData?.video_link && (
-                      <div className="w-full py-4 bg-emerald-50 text-emerald-600 font-bold rounded-xl border border-emerald-100 flex items-center justify-center gap-2">
-                          <FaCheckCircle /> Submitted Successfully
-                      </div>
-                  )
+                statusData?.video_link && (
+                  <div className="w-full py-4 bg-emerald-50 text-emerald-600 font-bold rounded-xl border border-emerald-100 flex items-center justify-center gap-2">
+                    <FaCheckCircle /> Submitted Successfully
+                  </div>
+                )
               )}
             </form>
           )}
