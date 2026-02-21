@@ -37,7 +37,7 @@ export default function Step_Payment({ amount, prevStep, formData }) {
       {/* ⚠️ গাইডলাইন বক্স (বাংলায় - স্পষ্ট এবং হাইলাইট করা) */}
       <div className="bg-orange-50 border-2 border-orange-300 text-left p-4 sm:p-5 rounded-xl text-gray-800 shadow-md mt-3">
         <h3 className="text-base sm:text-lg font-bold text-orange-700 flex items-center gap-2 mb-3 pb-2 border-b border-orange-200">
-          <FaExclamationTriangle /> পেমেন্ট করার আগে অবশ্যই পড়ুন:
+          <FaExclamationTriangle /> পেমেন্ট করার আগে অবশ্যই পড়ুন এবং এটার একটি স্ক্রিনশট রেখে দিন।
         </h3>
 
         <ul className="space-y-3 text-xs sm:text-sm font-medium leading-relaxed">
@@ -59,7 +59,7 @@ export default function Step_Payment({ amount, prevStep, formData }) {
           </li>
           <li className="flex gap-2">
             <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0 text-sm sm:text-base" />
-            <span>ভেরিফাই করার পর ওয়েবসাইটে এসে আপনার ইমেইল ও পাসওয়ার্ড দিয়ে <span className="font-bold">লগইন (Login)</span> করবেন।</span>
+            <span>ভেরিফাই করার পর আপনি আমাদের হোমপেজে পৌঁছে যাবেন। উপরের মেনুতে থাকা তিন লাইনের  ☰ আইকনে ক্লিক করলে একটি লগইন বাটন দেখতে পাবেন। সেখানে ক্লিক করে আপনার ইমেইল এবং পাসওয়ার্ড দিয়ে লগইন করে নিন।</span>
           </li>
         </ul>
 
@@ -89,8 +89,8 @@ export default function Step_Payment({ amount, prevStep, formData }) {
           onClick={handlePayment}
           disabled={loading || !agreed}
           className={`flex items-center gap-2 px-6 py-2 rounded-lg font-bold transition ${loading || !agreed
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-Primary text-white hover:bg-blue-800 shadow-md hover:shadow-lg scale-105'
+            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            : 'bg-Primary text-white hover:bg-blue-800 shadow-md hover:shadow-lg scale-105'
             }`}
         >
           {loading ? "Processing..." : "Pay with bKash"} <FaArrowRight />
