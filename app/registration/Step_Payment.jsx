@@ -22,7 +22,12 @@ export default function Step_Payment({ amount, prevStep, formData }) {
         window.location.href = res.data.bkashURL;
       }
     } catch (err) {
-      alert("Payment initiation failed!");
+      Swal.fire({
+        title: "দুঃখিত!",
+        text: "Payment initiation failed! Please try again.",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setLoading(false);
     }

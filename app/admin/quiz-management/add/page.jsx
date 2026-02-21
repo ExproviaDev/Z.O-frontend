@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { createQuizAction, resetQuizStatus } from "../../../store/slices/quizSlice";
 import { FaTrash, FaPlus, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const categories = ["SDG Activist", "SDG Ambassador", "SDG Achiever"];
 
@@ -29,7 +30,7 @@ export default function AddQuiz() {
 
   const onSubmit = async (data) => {
     setErrorMessage("");
-    
+
     // ডুপ্লিকেট প্রশ্ন চেক
     const questionTexts = data.questions.map(q => q.question_text.trim().toLowerCase());
     if (new Set(questionTexts).size !== questionTexts.length) {
@@ -54,13 +55,35 @@ export default function AddQuiz() {
       const resultAction = await dispatch(createQuizAction(formattedData)).unwrap();
 
       if (resultAction.success) {
-        alert("Quiz set published successfully!");
-        reset();
-        dispatch(resetQuizStatus());
-        router.push("/admin/quiz-management");
+        // 🔥 সাকসেস মেসেজ
+        Swal.fire({
+          title: "Success!",
+          text: "Quiz set published successfully!",
+          icon: "success",
+          confirmButtonColor: "#4F46E5",
+          confirmButtonText: "OK",
+          allowOutsideClick: false // বাইরে ক্লিক করলে যেন বন্ধ না হয়
+        }).then((result) => {
+          if (result.isConfirmed) {
+            reset();
+            dispatch(resetQuizStatus());
+            router.push("/admin/quiz-management"); // ওকে ক্লিক করলে রিডাইরেক্ট হবে
+          }
+        });
       }
     } catch (err) {
-      setErrorMessage(err || "Failed to publish quiz. Please try again.");
+      const errorText = err || "Failed to publish quiz. Please try again.";
+
+      // আপনার আগের স্টেট আপডেট (যদি UI তে কোথাও টেক্সট দেখাতে চান)
+      setErrorMessage(errorText);
+
+      // 🔥 এরর মেসেজ
+      Swal.fire({
+        title: "Error!",
+        text: errorText,
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
     }
   };
 
@@ -101,7 +124,7 @@ export default function AddQuiz() {
               <label className={labelStyle}>Quiz Title*</label>
               <input {...register("title", { required: true })} placeholder="e.g. SDG Global Challenge" className={inputStyle} />
             </div>
-            
+
             <div className="space-y-1">
               <label className={labelStyle}>Category</label>
               <select {...register("category", { required: true })} className={inputStyle}>

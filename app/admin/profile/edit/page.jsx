@@ -6,7 +6,7 @@ import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUserCircle, FaCloudUploadAlt, FaSave, FaArrowLeft } from "react-icons/fa";
-
+import Swal from "sweetalert2";
 export default function AdminEditProfile() {
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,14 +70,37 @@ export default function AdminEditProfile() {
       });
 
       if (response.ok) {
-        alert("Profile updated successfully!");
-        dispatch(fetchUserProfile(token));
-        router.push("/admin/profile");
+        // 🔥 সাকসেস মেসেজ
+        Swal.fire({
+          title: "Success!",
+          text: "Profile updated successfully!",
+          icon: "success",
+          confirmButtonColor: "#4F46E5",
+          confirmButtonText: "OK",
+          allowOutsideClick: false // বাইরে ক্লিক করলে যেন বন্ধ না হয়
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(fetchUserProfile(token));
+            router.push("/admin/profile"); // ওকে ক্লিক করলে রিডাইরেক্ট হবে
+          }
+        });
       } else {
-        alert("Failed to update profile");
+        // 🔥 ফেইলড মেসেজ
+        Swal.fire({
+          title: "Failed!",
+          text: "Failed to update profile. Please try again.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+        });
       }
     } catch (err) {
-      alert("Network error. Please try again.");
+      // 🔥 নেটওয়ার্ক এরর মেসেজ
+      Swal.fire({
+        title: "Network Error!",
+        text: "Please check your internet connection and try again.",
+        icon: "warning",
+        confirmButtonColor: "#f59e0b",
+      });
     } finally {
       setIsSaving(false);
     }
@@ -135,9 +158,8 @@ export default function AdminEditProfile() {
         <button
           type="submit"
           disabled={isSaving || loading}
-          className={`w-full py-4 rounded-2xl font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 ${
-            isSaving || loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 active:scale-[0.98]"
-          }`}
+          className={`w-full py-4 rounded-2xl font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 ${isSaving || loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 active:scale-[0.98]"
+            }`}
         >
           <FaSave />
           {isSaving ? "Saving Changes..." : "Update Profile"}

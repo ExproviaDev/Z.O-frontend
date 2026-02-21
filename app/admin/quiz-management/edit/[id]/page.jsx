@@ -6,6 +6,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { fetchSingleQuiz } from "../../../../store/slices/quizSlice";
 import axios from "axios";
 import { FaTrash, FaPlus, FaSave, FaArrowLeft } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const categories = ["SDG Activist", "SDG Ambassador", "SDG Achiever"];
 
@@ -54,7 +55,7 @@ export default function EditQuizPage() {
             setValue("title", currentQuiz.title);
             setValue("category", currentQuiz.category);
             setValue("time_limit", currentQuiz.time_limit);
-            
+
             // টাইম ফরম্যাট করে ইনপুটে সেট করা
             setValue("start_at", formatDateTimeLocal(currentQuiz.start_at));
             setValue("ends_at", formatDateTimeLocal(currentQuiz.ends_at));
@@ -73,14 +74,13 @@ export default function EditQuizPage() {
 
     const onSubmit = async (data) => {
         setIsUpdating(true);
-        
+
         // সাবমিট করার আগে টাইমকে পুনরায় ISO/UTC ফরম্যাটে রূপান্তর
         const formattedData = {
             ...data,
             start_at: new Date(data.start_at).toISOString(),
             ends_at: new Date(data.ends_at).toISOString(),
         };
-
         try {
             const token = localStorage.getItem("access_token");
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/update-quiz/${id}`, formattedData, {
@@ -88,11 +88,29 @@ export default function EditQuizPage() {
             });
 
             if (response.data.success) {
-                alert("Quiz updated successfully!");
-                router.push("/admin/quiz-management");
+                // 🔥 সাকসেস মেসেজ
+                Swal.fire({
+                    title: "Success!",
+                    text: "Quiz updated successfully!",
+                    icon: "success",
+                    confirmButtonColor: "#4F46E5",
+                    confirmButtonText: "OK",
+                    allowOutsideClick: false // বাইরে ক্লিক করলে যেন পপআপ বন্ধ না হয়
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        router.push("/admin/quiz-management"); // ওকে ক্লিক করলে রিডাইরেক্ট হবে
+                    }
+                });
             }
         } catch (err) {
-            alert(err.response?.data?.error || "Update failed");
+            // 🔥 এরর মেসেজ
+            const errorMessage = err.response?.data?.error || "Update failed. Please try again.";
+            Swal.fire({
+                title: "Error!",
+                text: errorMessage,
+                icon: "error",
+                confirmButtonColor: "#d33",
+            });
         } finally {
             setIsUpdating(false);
         }
