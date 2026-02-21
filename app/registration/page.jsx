@@ -79,7 +79,7 @@ export default function RegistrationPage() {
       if (res.ok) {
         localStorage.removeItem("reg_formData");
         alert("রেজিস্ট্রেশন সফল!");
-        window.location.href = "/login";
+        window.location.href = "/successful-registration";
       } else {
         setError(data.message || "Registration failed.");
       }
