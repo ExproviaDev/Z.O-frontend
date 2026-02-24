@@ -84,13 +84,14 @@ export default function HeroSection() {
               <div className="relative overflow-hidden rounded-[16px] sm:rounded-[22px] aspect-video">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full" // এখানে w-full h-full যোগ করা হয়েছে
-                  src="https://www.youtube.com/embed/Gvvq9Ehsjig?si=nxs-4nFw-BWxEkgO"
+                  src="https://www.youtube.com/embed/w6duhN4sgMU?si=PbkpIT2wOQM_ZFho"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                 ></iframe>
+                
               </div>
             </div>
           </div>
