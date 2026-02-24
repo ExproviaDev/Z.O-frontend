@@ -69,9 +69,9 @@ export default function nProfileModal({ isOpen, onClose }) {
 
           <ul className="space-y-1 text-sm">
             {[
-              { label: "My Quizzes", path: "/dashboard/quizzes" },
+              { label: "My Courses", path: "/dashboard/mycourses" },
               { label: "My Certificates", path: "/dashboard/certificates" },
-              { label: "Payment History", path: "/dashboard/history" },
+              { label: "Announcements", path: "/dashboard/announcement" },
             ].map((item) => (
               <li key={item.label}>
                 <Link
