@@ -10,7 +10,7 @@ import {
   FiFileText,
   FiVideo,
   FiMenu,
-  FiX,
+  FiX,FiPieChart
 
 } from "react-icons/fi";
 import { MdLeaderboard, MdCampaign  } from "react-icons/md";
@@ -25,6 +25,7 @@ const menuItems = [
   // Admin Only Access
   { id: "quiz-management", label: "Quiz Management", icon: FiFileText, href: "/admin/quiz-management", access: ["admin"] },
   { id: "ambassadors", label: "Ambassadors", icon: FiUsers, href: "/admin/ambassadors-list", access: ["admin"] },
+  {id: "Traffic Sources", label: "Traffic Sources", icon: FiPieChart, href: "/admin/traffic-sources", access: ["admin"] },
   // { id: "competition-control", label: "Competition Control", icon: FiCalendar, href: "/admin/competition-control", access: ["admin"] },
   { id: "mark-controller", label: "Mark Controller", icon: FiUserCheck, href: "/admin/mark-controller", access: ["admin"] },
   { id: "role-management", label: "User Management", icon: FiUsers, href: "/admin/user-management", access: ["admin"] },

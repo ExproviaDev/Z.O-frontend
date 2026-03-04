@@ -27,6 +27,26 @@ function AuthWrapper({ children }) {
       dispatch(stopLoading());
     }
   }, [dispatch, user]);
+  // 🔥 নতুন যোগ করা অংশ: UTM Tracking Logic (First Touch)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const source = urlParams.get('utm_source');
+      
+      if (source) {
+        // ১. আগে চেক করবে লোকাল স্টোরেজে অলরেডি কিছু আছে কি না
+        const existingSource = localStorage.getItem('lead_source');
+        
+        // ২. যদি না থাকে (খালি হয়), শুধুমাত্র তখনই নতুনটা সেভ করবে
+        if (!existingSource) {
+          localStorage.setItem('lead_source', source);
+          console.log("✅ First time UTM saved:", source);
+        } else {
+          console.log("ℹ️ UTM already exists. Keeping the old one:", existingSource);
+        }
+      }
+    }
+  }, []);
   if (!isMounted) return null;
 
   return <>{children}</>;

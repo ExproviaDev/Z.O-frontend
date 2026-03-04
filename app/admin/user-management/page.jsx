@@ -24,7 +24,7 @@ export default function RoleManagement() {
   const [selectedUser, setSelectedUser] = useState(null); // সিলেক্টেড ইউজার
   const [newMember, setNewMember] = useState({ email: '', role: 'Participant', name: '', phone: '' });
 
-  const usersPerPage = 10;
+  const usersPerPage = 20;
   const isAdmin = currentUser?.role === 'admin' || (typeof window !== "undefined" && JSON.parse(localStorage.getItem("user_data"))?.role === 'admin');
 
   useEffect(() => {
