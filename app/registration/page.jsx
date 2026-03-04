@@ -61,9 +61,12 @@ export default function RegistrationPage() {
     setIsSubmitting(true);
     setError("");
 
+    const source = typeof window !== "undefined" ? localStorage.getItem("lead_source") || "organic" : "organic";
+
     const backendData = {
       ...formData,
-      paymentToken: paymentToken
+      paymentToken: paymentToken,
+      signup_source: source
     };
 
     const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/user/register`;
@@ -80,7 +83,7 @@ export default function RegistrationPage() {
 
       if (res.ok) {
         localStorage.removeItem("reg_formData");
-        
+        localStorage.removeItem("lead_source"); 
         Swal.fire({
           title: "অভিনন্দন!",
           text: "আপনার রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে।",

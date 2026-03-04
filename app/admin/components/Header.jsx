@@ -30,10 +30,9 @@ export default function Header() {
   return (
     <header className="h-20 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-20">
       <div className="flex items-center gap-4">
-        <Link prefetch={false} href="/" className="flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">
-
+        {/* <Link prefetch={false} href="/" className="flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-red-600 transition-colors">
           <span className="hidden sm:inline"> <FiHome size={18} /> Home</span>
-        </Link>
+        </Link> */}
       </div>
       <div className="flex items-center gap-4">
         <div className="h-8 w-px bg-gray-200 mx-2"></div>
