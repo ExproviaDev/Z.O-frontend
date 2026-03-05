@@ -103,8 +103,6 @@ export default function Page() {
               <p>+880 1805726666</p>
             </div>
           </div>
-
-          {/* Email */}
           <div className="mb-8">
             <h5 className="flex items-center gap-3 text-lg font-semibold text-red-700">
               <AiOutlineMail className="text-2xl" />
@@ -116,12 +114,8 @@ export default function Page() {
               <p>zeroolympiad.bd@gmail.com</p>
             </div>
           </div>
-
-          {/* Working Hours */}
           
         </div>
-
-        {/* follow us  */}
         <div>
           <div className="bg-gray-50 border border-gray-200 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.08)] rounded-xl p-7 
                 transition-all duration-300 h-fit">
