@@ -100,7 +100,7 @@ export default function Page() {
               Phone
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
-              <p>+880 1805726666</p>
+              <p>+8801805726666</p>
             </div>
           </div>
           <div className="mb-8">
