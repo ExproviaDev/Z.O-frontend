@@ -100,8 +100,6 @@ export default function Page() {
               Phone
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
-              <p>+880 1973-570203</p>
-              <p>+880 1886-286321</p>
               <p>+880 1805726666</p>
             </div>
           </div>
