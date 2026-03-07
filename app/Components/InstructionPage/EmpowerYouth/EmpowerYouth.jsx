@@ -87,12 +87,12 @@ const EmpowerYouth = () => {
                   </h4>
                   <p className="text-xs text-gray-600">
                     Submit a 3-minute video on an SDG topic mentioned in your
-                    email. Use #ZeroOlympiad and submit link by Jan 31.
+                    email. Use #ZeroOlympiad and submit link by May 16.
                   </p>
                 </div>
                 <div className="bg-[#f9f9f9] p-5 rounded-xl border border-gray-200">
                   <h4 className="font-bold text-gray-800 mb-1">
-                    Grand Finale | The 71 Finalists
+                    Grand Finale | The 17 Finalists
                   </h4>
                   <p className="text-xs text-gray-600">
                     51 finalists invited to Dhaka. 17 winners will present
