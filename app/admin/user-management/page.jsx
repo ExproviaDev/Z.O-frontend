@@ -22,7 +22,7 @@ export default function RoleManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // ডিটেইল মডালের জন্য
   const [selectedUser, setSelectedUser] = useState(null); // সিলেক্টেড ইউজার
-  const [newMember, setNewMember] = useState({ email: '', role: 'Participant', name: '', phone: '' });
+  const [newMember, setNewMember] = useState({ email: '', role: 'user', name: '', phone: '', promoCode: '' });
 
   const usersPerPage = 20;
   const isAdmin = currentUser?.role === 'admin' || (typeof window !== "undefined" && JSON.parse(localStorage.getItem("user_data"))?.role === 'admin');
@@ -75,7 +75,7 @@ export default function RoleManagement() {
 
       if (response.data.success) {
         setIsModalOpen(false);
-        setNewMember({ email: '', role: 'Participant', name: '', phone: '' });
+        setNewMember({ email: '', role: 'user', name: '', phone: '', promoCode: '' });
         dispatch(fetchAllUsers());
         Swal.fire({ icon: 'success', title: 'Access Granted!', text: `Email sent to ${newMember.email}` });
       }
@@ -318,7 +318,7 @@ export default function RoleManagement() {
             </div>
             <form onSubmit={handleAddMember} className="p-6 space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">Full Name</label>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">Full Name*</label>
                 <input
                   type="text" required
                   className="w-full p-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-all"
@@ -327,7 +327,7 @@ export default function RoleManagement() {
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">Email Address</label>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">Email Address*</label>
                 <input
                   type="email" required
                   className="w-full p-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-all"
@@ -351,11 +351,21 @@ export default function RoleManagement() {
                   value={newMember.role}
                   onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
                 >
-                  <option value="manager">Jury (Manager)</option>
                   <option value="user">Participant (User)</option>
+                  <option value="manager">Jury (Manager)</option>
                   <option value="ambassador">AMBASSADOR</option>
                   <option value="admin">Admin</option>
                 </select>
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">Promo Code (Optional)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. ZERO2023"
+                  className="w-full p-3 border border-gray-200 rounded-xl text-sm outline-none focus:border-blue-500 transition-all"
+                  value={newMember.promoCode}
+                  onChange={(e) => setNewMember({ ...newMember, promoCode: e.target.value })}
+                />
               </div>
               <div className="pt-4 flex gap-3">
                 <button type="submit" className="flex-1 py-3 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Grant Access</button>

@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FiSearch, FiUser, FiCode, FiUsers, FiMail, FiCalendar } from "react-icons/fi";
+import { FiSearch, FiUser, FiCode, FiUsers, FiMail, FiCalendar, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-// ক্যাশ কি (Key) এবং সময় (৫ মিনিট = ৩০০,০০০ মিলি-সেকেন্ড)
+// ক্যাশ কি (Key) এবং সময় (৫ মিনিট = ৩০০,০০০ মিলি-সেকেন্ড)
 const CACHE_KEY = "ambassadors_data_cache";
 const CACHE_DURATION = 5 * 60 * 1000;
 
@@ -11,8 +11,12 @@ export default function AdminAmbassadorPage() {
   const [ambassadors, setAmbassadors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // পেজিনেশন স্টেট
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
-useEffect(() => {
+  useEffect(() => {
     const fetchAmbassadors = async () => {
       const now = new Date().getTime();
       
@@ -21,7 +25,7 @@ useEffect(() => {
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         
-        // যদি ৫ মিনিট পার না হয়, তবে ক্যাশ থেকে ডাটা নেবে
+        // যদি ৫ মিনিট পার না হয়, তবে ক্যাশ থেকে ডাটা নেবে
         if (now - timestamp < CACHE_DURATION) {
           console.log("Serving from cache...");
           setAmbassadors(data);
@@ -30,7 +34,7 @@ useEffect(() => {
         }
       }
 
-      // ২. ক্যাশ না থাকলে বা সময় শেষ হলে এপিআই কল করা
+      // ২. ক্যাশ না থাকলে বা সময় শেষ হলে এপিআই কল করা
       try {
         console.log("Fetching new data from server...");
         const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -59,10 +63,23 @@ useEffect(() => {
 
     fetchAmbassadors();
   }, []);
+
+  // সার্চ বা ফিল্টার হলে কারেন্ট পেজ ১ এ রিসেট করা
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
   
+  // ফিল্টার লজিক
   const filteredData = ambassadors.filter(amb => 
     amb.user_profiles?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     amb.promo_code?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // পেজিনেশন লজিক
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const currentItems = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   return (
@@ -71,7 +88,7 @@ useEffect(() => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-black text-slate-800">Ambassadors</h1>
-            <p className="text-slate-500">Track affiliate performance and promo usage.</p>
+            <p className="text-slate-500">Track affiliate performance and promo usage. ({filteredData.length} found)</p>
           </div>
           <div className="relative w-full md:w-96">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -79,13 +96,14 @@ useEffect(() => {
               type="text" 
               placeholder="Search Name or Code..." 
               className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-indigo-50 outline-none transition-all"
+              value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="bg-white rounded-[2rem] shadow-xl border border-slate-100 overflow-hidden">
-          <div className="overflow-x-auto">
+        <div className="bg-white rounded-[2rem] shadow-xl border border-slate-100 overflow-hidden flex flex-col min-h-[60vh]">
+          <div className="overflow-x-auto flex-1">
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100 text-slate-600 text-sm">
@@ -97,26 +115,30 @@ useEffect(() => {
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {loading ? (
-                  <tr><td colSpan="4" className="p-10 text-center animate-pulse">Loading...</td></tr>
-                ) : filteredData.map((amb) => (
+                  <tr><td colSpan="4" className="p-10 text-center text-slate-500 animate-pulse">Loading data...</td></tr>
+                ) : currentItems.length === 0 ? (
+                  <tr><td colSpan="4" className="p-10 text-center text-slate-500">No ambassadors found.</td></tr>
+                ) : currentItems.map((amb) => (
                   <tr key={amb.id} className="hover:bg-indigo-50/30 transition-colors">
                     <td className="p-5">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600"><FiUser size={20}/></div>
+                        <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 font-bold uppercase">
+                          {amb.user_profiles?.name?.charAt(0) || <FiUser size={20}/>}
+                        </div>
                         <div>
-                          <p className="font-bold text-slate-700">{amb.user_profiles?.name}</p>
-                          <p className="text-xs text-slate-400 flex items-center gap-1"><FiMail size={12}/> {amb.user_profiles?.email}</p>
+                          <p className="font-bold text-slate-700">{amb.user_profiles?.name || 'Unknown'}</p>
+                          <p className="text-xs text-slate-400 flex items-center gap-1"><FiMail size={12}/> {amb.user_profiles?.email || 'N/A'}</p>
                         </div>
                       </div>
                     </td>
                     <td className="p-5">
                       <span className="bg-slate-100 px-3 py-1 rounded-lg font-mono font-bold text-indigo-600 uppercase border border-slate-200">
-                        <FiCode className="inline mr-1" /> {amb.promo_code}
+                        <FiCode className="inline mr-1" /> {amb.promo_code || 'N/A'}
                       </span>
                     </td>
                     <td className="p-5 text-center">
                       <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-1 rounded-full font-black text-sm">
-                        <FiUsers size={14}/> {amb.total_referrals}
+                        <FiUsers size={14}/> {amb.total_referrals || 0}
                       </div>
                     </td>
                     <td className="p-5 text-slate-400 text-sm">
@@ -127,6 +149,65 @@ useEffect(() => {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          {!loading && totalPages > 1 && (
+            <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center">
+              <span className="text-sm text-slate-500 font-medium">
+                Page <b className="text-slate-800">{currentPage}</b> of <b className="text-slate-800">{totalPages}</b>
+              </span>
+              
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  <FiChevronLeft size={18} />
+                </button>
+                
+                <div className="flex gap-1">
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNumber = index + 1;
+                    // Show current page, and one page before/after (to avoid long lists)
+                    if (
+                      pageNumber === 1 ||
+                      pageNumber === totalPages ||
+                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={pageNumber}
+                          onClick={() => setCurrentPage(pageNumber)}
+                          className={`w-9 h-9 rounded-lg text-sm font-bold transition-all ${
+                            currentPage === pageNumber
+                              ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
+                              : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                          }`}
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    } else if (
+                      pageNumber === currentPage - 2 ||
+                      pageNumber === currentPage + 2
+                    ) {
+                      return <span key={pageNumber} className="px-1 py-1 text-slate-400">...</span>;
+                    }
+                    return null;
+                  })}
+                </div>
+
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  <FiChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
