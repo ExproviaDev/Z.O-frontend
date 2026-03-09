@@ -11,7 +11,7 @@ export default function AdminAmbassadorPage() {
   const [ambassadors, setAmbassadors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // পেজিনেশন স্টেট
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
@@ -19,12 +19,12 @@ export default function AdminAmbassadorPage() {
   useEffect(() => {
     const fetchAmbassadors = async () => {
       const now = new Date().getTime();
-      
+
       // ১. ক্যাশ চেক করা
       const cachedData = localStorage.getItem(CACHE_KEY);
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
-        
+
         // যদি ৫ মিনিট পার না হয়, তবে ক্যাশ থেকে ডাটা নেবে
         if (now - timestamp < CACHE_DURATION) {
           console.log("Serving from cache...");
@@ -46,7 +46,7 @@ export default function AdminAmbassadorPage() {
 
         if (res.data.success) {
           setAmbassadors(res.data.data);
-          
+
           // ৩. ডাটা ক্যাশে সেভ করা
           const cachePayload = {
             data: res.data.data,
@@ -68,12 +68,21 @@ export default function AdminAmbassadorPage() {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm]);
-  
+
   // ফিল্টার লজিক
-  const filteredData = ambassadors.filter(amb => 
-    amb.user_profiles?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    amb.promo_code?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // ফিল্টার লজিক (সংশোধিত)
+  const filteredData = ambassadors.filter(amb => {
+    const search = searchTerm.toLowerCase().trim(); // বাড়তি স্পেস রিমুভ করবে
+
+    const name = amb.user_profiles?.name?.toLowerCase() || "";
+    const email = amb.user_profiles?.email?.toLowerCase() || "";
+    const promoCode = amb.promo_code?.toLowerCase() || "";
+
+    // নাম, ইমেইল অথবা প্রোমো কোড - যেকোনো একটার সাথে মিললেই হবে
+    return name.includes(search) ||
+      email.includes(search) ||
+      promoCode.includes(search);
+  });
 
   // পেজিনেশন লজিক
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -92,9 +101,9 @@ export default function AdminAmbassadorPage() {
           </div>
           <div className="relative w-full md:w-96">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="Search Name or Code..." 
+            <input
+              type="text"
+              placeholder="Search Name or Code..."
               className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-indigo-50 outline-none transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -123,11 +132,11 @@ export default function AdminAmbassadorPage() {
                     <td className="p-5">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 font-bold uppercase">
-                          {amb.user_profiles?.name?.charAt(0) || <FiUser size={20}/>}
+                          {amb.user_profiles?.name?.charAt(0) || <FiUser size={20} />}
                         </div>
                         <div>
                           <p className="font-bold text-slate-700">{amb.user_profiles?.name || 'Unknown'}</p>
-                          <p className="text-xs text-slate-400 flex items-center gap-1"><FiMail size={12}/> {amb.user_profiles?.email || 'N/A'}</p>
+                          <p className="text-xs text-slate-400 flex items-center gap-1"><FiMail size={12} /> {amb.user_profiles?.email || 'N/A'}</p>
                         </div>
                       </div>
                     </td>
@@ -138,7 +147,7 @@ export default function AdminAmbassadorPage() {
                     </td>
                     <td className="p-5 text-center">
                       <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-1 rounded-full font-black text-sm">
-                        <FiUsers size={14}/> {amb.total_referrals || 0}
+                        <FiUsers size={14} /> {amb.total_referrals || 0}
                       </div>
                     </td>
                     <td className="p-5 text-slate-400 text-sm">
@@ -156,16 +165,16 @@ export default function AdminAmbassadorPage() {
               <span className="text-sm text-slate-500 font-medium">
                 Page <b className="text-slate-800">{currentPage}</b> of <b className="text-slate-800">{totalPages}</b>
               </span>
-              
+
               <div className="flex gap-2">
-                <button 
+                <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
                   className="p-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
                   <FiChevronLeft size={18} />
                 </button>
-                
+
                 <div className="flex gap-1">
                   {[...Array(totalPages)].map((_, index) => {
                     const pageNumber = index + 1;
@@ -179,11 +188,10 @@ export default function AdminAmbassadorPage() {
                         <button
                           key={pageNumber}
                           onClick={() => setCurrentPage(pageNumber)}
-                          className={`w-9 h-9 rounded-lg text-sm font-bold transition-all ${
-                            currentPage === pageNumber
+                          className={`w-9 h-9 rounded-lg text-sm font-bold transition-all ${currentPage === pageNumber
                               ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
                               : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
-                          }`}
+                            }`}
                         >
                           {pageNumber}
                         </button>
@@ -198,7 +206,7 @@ export default function AdminAmbassadorPage() {
                   })}
                 </div>
 
-                <button 
+                <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
                   className="p-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
