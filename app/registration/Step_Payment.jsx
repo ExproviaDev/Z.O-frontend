@@ -60,7 +60,7 @@ export default function Step_Payment({ amount, prevStep, formData }) {
           </li>
           <li className="flex gap-2">
             <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0 text-sm sm:text-base" />
-            <span>রেজিস্ট্রেশন শেষে আপনার ইমেইলে দুটি মেইল যাবে। <span className="font-bold text-Primary">Confirm Email</span> লেখা মেইলের লিংকে ক্লিক করে অ্যাকাউন্ট ভেরিফাই করুন।</span>
+            <span>রেজিস্ট্রেশন শেষে আপনার ইমেইলে মেইল যাবে। <span className="font-bold text-Primary">Confirm Email</span> লেখা মেইলের লিংকে ক্লিক করে অ্যাকাউন্ট ভেরিফাই করুন।</span>
           </li>
           <li className="flex gap-2">
             <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0 text-sm sm:text-base" />
