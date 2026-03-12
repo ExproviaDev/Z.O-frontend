@@ -101,6 +101,7 @@ export default function Page() {
             </h5>
             <div className="ml-9 mt-2 text-gray-700">
               <p>+8801805726666</p>
+              <p>+8801952064887</p>
             </div>
           </div>
           <div className="mb-8">
