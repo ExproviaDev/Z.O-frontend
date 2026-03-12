@@ -93,7 +93,7 @@ export default function RegistrationPage() {
           allowOutsideClick: false 
         }).then((result) => {
           if (result.isConfirmed) {
-            router.push("/successful-registration"); 
+            router.push(`/successful-registration?email=${formData.email}`); 
           }
         });
 
