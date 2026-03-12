@@ -60,11 +60,11 @@ export default function Step_Payment({ amount, prevStep, formData }) {
           </li>
           <li className="flex gap-2">
             <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0 text-sm sm:text-base" />
-            <span>রেজিস্ট্রেশন শেষে আপনার ইমেইলে মেইল যাবে। <span className="font-bold text-Primary">Confirm Email</span> লেখা মেইলের লিংকে ক্লিক করে অ্যাকাউন্ট ভেরিফাই করুন।</span>
+            <span>রেজিস্ট্রেশন সম্পন্ন হলে আপনার ইমেইলে একটি <span className="font-bold text-Primary">8-Digits ভেরিফিকেশন কোড (OTP)</span> পাঠানো হবে। স্ক্রিনে থাকা ফর্মে কোডটি বসিয়ে আপনার অ্যাকাউন্ট ভেরিফাই করুন।</span>
           </li>
           <li className="flex gap-2">
             <FaCheckCircle className="text-orange-500 mt-1 flex-shrink-0 text-sm sm:text-base" />
-            <span>ভেরিফাই করার পর আপনি আমাদের হোমপেজে পৌঁছে যাবেন। উপরের মেনুতে থাকা তিন লাইনের  ☰ আইকনে ক্লিক করলে একটি লগইন বাটন দেখতে পাবেন। সেখানে ক্লিক করে আপনার ইমেইল এবং পাসওয়ার্ড দিয়ে লগইন করে নিন।</span>
+            <span>ভেরিফাই সফল হওয়ার পর আপনাকে সরাসরি লগইন পেজে নিয়ে যাওয়া হবে। সেখানে আপনার ইমেইল এবং পাসওয়ার্ড দিয়ে লগইন করে আপনার ড্যাশবোর্ডে প্রবেশ করতে পারবেন।</span>
           </li>
         </ul>
 
