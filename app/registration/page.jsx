@@ -8,17 +8,17 @@ import { FaRegClipboard } from "react-icons/fa";
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { useSearchParams, useRouter } from "next/navigation";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 
 export default function RegistrationPage() {
-  const [currentStep, setCurrentStep] = useState(1); 
+  const [currentStep, setCurrentStep] = useState(1);
   const [paymentToken, setPaymentToken] = useState(null);
   const searchParams = useSearchParams();
-  const router = useRouter(); 
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     role: "contestor",
-    promoCode: "", 
+    promoCode: "",
     email: "",
     password: "",
     name: "",
@@ -55,6 +55,70 @@ export default function RegistrationPage() {
   const nextStep = () => setCurrentStep((prev) => prev + 1);
   const prevStep = () => setCurrentStep((prev) => prev - 1);
 
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  //   if (isSubmitting) return;
+  //   setIsSubmitting(true);
+  //   setError("");
+
+  //   const source = typeof window !== "undefined" ? localStorage.getItem("lead_source") || "organic" : "organic";
+
+  //   const backendData = {
+  //     ...formData,
+  //     paymentToken: paymentToken,
+  //     signup_source: source
+  //   };
+
+  //   const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/user/register`;
+
+  //   try {
+  //     const res = await fetch(backendUrl, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(backendData),
+  //     });
+
+  //     const data = await res.json();
+  //     setIsSubmitting(false);
+
+  //     if (res.ok) {
+  //       localStorage.removeItem("reg_formData");
+  //       localStorage.removeItem("lead_source"); 
+  //       Swal.fire({
+  //         title: "অভিনন্দন!",
+  //         text: "আপনার রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে।",
+  //         icon: "success",
+  //         confirmButtonColor: "#4F46E5",
+  //         confirmButtonText: "ওকে",
+  //         allowOutsideClick: false 
+  //       }).then((result) => {
+  //         if (result.isConfirmed) {
+  //           router.push(`/successful-registration?email=${formData.email}`); 
+  //         }
+  //       });
+
+  //     } else {
+  //       setError(data.message || "Registration failed.");
+  //       Swal.fire({
+  //         title: "দুঃখিত!",
+  //         text: data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।",
+  //         icon: "error",
+  //         confirmButtonColor: "#d33",
+  //       });
+  //     }
+  //   } catch (err) {
+  //     setIsSubmitting(false);
+  //     setError("Network error.");
+  //     Swal.fire({
+  //       title: "নেটওয়ার্ক এরর!",
+  //       text: "দয়া করে আপনার ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।",
+  //       icon: "warning",
+  //       confirmButtonColor: "#f59e0b",
+  //     });
+  //   }
+  // };
+
+
   const handleSignup = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -82,20 +146,10 @@ export default function RegistrationPage() {
       setIsSubmitting(false);
 
       if (res.ok) {
+        // Data clear korar por kono popup charai direct OTP step e jabe
         localStorage.removeItem("reg_formData");
-        localStorage.removeItem("lead_source"); 
-        Swal.fire({
-          title: "অভিনন্দন!",
-          text: "আপনার রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে।",
-          icon: "success",
-          confirmButtonColor: "#4F46E5",
-          confirmButtonText: "ওকে",
-          allowOutsideClick: false 
-        }).then((result) => {
-          if (result.isConfirmed) {
-            router.push(`/successful-registration?email=${formData.email}`); 
-          }
-        });
+        localStorage.removeItem("lead_source");
+        setCurrentStep(5);
 
       } else {
         setError(data.message || "Registration failed.");
@@ -117,7 +171,6 @@ export default function RegistrationPage() {
       });
     }
   };
-
   const renderStep = () => {
     switch (currentStep) {
       case 1:

@@ -121,7 +121,7 @@ export default function MyCourses() {
               <div className="relative w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-lg border border-gray-200 aspect-video bg-black">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/zOmotLWToLY?si=nxs-4nFw-BWxEkgO"
+                  src="https://www.youtube.com/embed/ZGc8l4_QQnE?si=QCZ3ppxuxRhiBtJD"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
