@@ -237,7 +237,7 @@ export default function EditProfile() {
 
           <div>
             <label className="font-semibold text-sm">
-              Email (Verification Required)
+              Email
             </label>
             <div className="flex gap-2">
               <input
@@ -245,12 +245,6 @@ export default function EditProfile() {
                 value={formData.email}
                 disabled
               />
-              <button
-                type="button"
-                className="bg-orange-500 text-white px-3 rounded-lg text-xs"
-              >
-                Verify
-              </button>
             </div>
           </div>
 
