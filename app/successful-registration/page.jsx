@@ -8,18 +8,13 @@ import Swal from 'sweetalert2';
 const RegistrationSuccess = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    
-    // আগের পেজ থেকে ইমেইলটা URL প্যারামিটার হিসেবে নিয়ে আসা হচ্ছে
     const email = searchParams.get('email') || ''; 
 
     const [otp, setOtp] = useState('');
     const [loading, setLoading] = useState(false);
-    
-    // Resend OTP এর জন্য নতুন স্টেট
-    const [resendLoading, setResendLoading] = useState(false);
-    const [countdown, setCountdown] = useState(60); // 60 সেকেন্ডের টাইমার
 
-    // Timer Logic: যদি কাউন্টডাউন 0 এর বেশি হয়, তবে প্রতি সেকেন্ডে 1 করে কমবে
+    const [resendLoading, setResendLoading] = useState(false);
+    const [countdown, setCountdown] = useState(60); 
     useEffect(() => {
         let timer;
         if (countdown > 0) {
@@ -27,8 +22,6 @@ const RegistrationSuccess = () => {
         }
         return () => clearTimeout(timer);
     }, [countdown]);
-
-    // OTP Verify Function
     const handleVerifyOTP = async (e) => {
         e.preventDefault();
         
@@ -73,8 +66,6 @@ const RegistrationSuccess = () => {
             setLoading(false);
         }
     };
-
-    // Resend OTP Function
     const handleResendOTP = async () => {
         if (!email) return;
         setResendLoading(true);
@@ -82,29 +73,23 @@ const RegistrationSuccess = () => {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
             await axios.post(`${API_URL}/api/user/resend-otp`, { email });
             Swal.fire("Success", "A new 6-digit verification code has been sent to your email.", "success");
-            setCountdown(60); // কোড পাঠানোর পর টাইমার আবার ৬০ সেকেন্ড থেকে শুরু হবে
+            setCountdown(60);
         } catch (error) {
             Swal.fire("Error", "Failed to resend code. Please try again later.", "error");
         } finally {
             setResendLoading(false);
         }
     };
-
-    // যদি ইমেইল না থাকে, তবে কিছুই দেখাবে না (বা চাইলে রিডাইরেক্ট করে দিতে পারেন)
     if (!email) return null;
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center p-4">
             <div className="max-w-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden text-center p-8 md:p-12 animate-in fade-in zoom-in duration-500">
-
-                {/* Success Icon */}
                 <div className="flex justify-center mb-6">
                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
                         <FaCheckCircle className="text-green-500 text-5xl" />
                     </div>
                 </div>
-
-                {/* Headline */}
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
                     রেজিস্ট্রেশন প্রায় সম্পন্ন!
                 </h1>
@@ -112,8 +97,6 @@ const RegistrationSuccess = () => {
                 <p className="text-gray-600 text-[15px] mb-8">
                     আপনার অ্যাকাউন্টটি পুরোপুরি চালু করতে <strong>{email}</strong> ঠিকানায় একটি <strong>৬-ডিজিটের ভেরিফিকেশন কোড</strong> পাঠানো হয়েছে। অনুগ্রহ করে কোডটি নিচে প্রবেশ করান।
                 </p>
-
-                {/* OTP Form Box */}
                 <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-4">
                     <form onSubmit={handleVerifyOTP} className="space-y-4">
                         <div className="text-left">
@@ -122,7 +105,7 @@ const RegistrationSuccess = () => {
                             </label>
                             <input
                                 type="text"
-                                maxLength={6} // 🔥 ৬ ডিজিট করে দেওয়া হয়েছে
+                                maxLength={6}
                                 value={otp}
                                 onChange={(e) => setOtp(e.target.value.replace(/[^a-zA-Z0-9]/g, ''))} 
                                 placeholder="Enter 6-digit code"
