@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./store/ReduxProvider";
+import { GoogleAnalytics } from '@next/third-parties/google';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -111,6 +112,7 @@ export default function RootLayout({ children }) {
           </ReduxProvider>
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-ET3CDDF61W" />
     </html>
   );
 
