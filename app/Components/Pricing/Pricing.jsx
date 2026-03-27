@@ -92,7 +92,7 @@ export default function PricingSection() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                   </span>
-                  Eid Special Offer
+                  Season2 Special Offer
                 </p>
 
                 <div className="bg-slate-50 rounded-2xl p-4 md:p-5 mb-8">
