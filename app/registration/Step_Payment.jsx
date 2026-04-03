@@ -4,7 +4,7 @@ import axios from "axios";
 import { FaMoneyCheckAlt, FaExclamationTriangle, FaArrowRight, FaCheckCircle } from "react-icons/fa";
 
 // ✅ props এ formData রিসিভ করুন
-export default function Step_Payment({ amount, prevStep, formData }) {
+export default function Step_Payment({prevStep, formData }) {
   const [loading, setLoading] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
@@ -17,7 +17,7 @@ export default function Step_Payment({ amount, prevStep, formData }) {
     }
 
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/bkash/create`, { amount });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/bkash/create`);
       if (res.data.bkashURL) {
         window.location.href = res.data.bkashURL;
       }
@@ -37,7 +37,7 @@ export default function Step_Payment({ amount, prevStep, formData }) {
     <div className="text-center space-y-4 sm:space-y-5 animate-in fade-in duration-500">
       {/* উপরের টাইটেল মোবাইলে ছোট করা */}
       <FaMoneyCheckAlt className="mx-auto text-Primary w-8 h-8 sm:w-11 sm:h-11" />
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Registration Fee: {amount} BDT</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Registration Fee: 300 BDT</h2>
 
       {/* ⚠️ গাইডলাইন বক্স (বাংলায় - স্পষ্ট এবং হাইলাইট করা) */}
       <div className="bg-orange-50 border-2 border-orange-300 text-left p-4 sm:p-5 rounded-xl text-gray-800 shadow-md mt-3">
