@@ -14,20 +14,25 @@ import {
   FaTicketAlt,
   FaBriefcase,
   FaAward,
+  FaCertificate,
+  FaLaptopCode,
+  FaAtom,
+  FaSuitcaseRolling,
+  FaUserGraduate,
 } from "react-icons/fa";
 import Link from "next/link";
 
 export default function AwardsSection() {
   const awards = [
     {
-      title: "SDG Fellowship Support",
+      title: "Scholarship Fellowships and mentorship",
       icon: <FaGlobe />,
       desc: "Comprehensive support in applying for SDG Fellowship during admission to Overseas Universities.",
     },
     {
-      title: "UN SDG Summit Recommendation",
-      icon: <FaUserCheck />,
-      desc: "Recommendation for participation in the SDG Summit held at the United Nations every year.",
+      title: "Young SDG Fellow Recognition",
+      icon: <FaCertificate />, 
+      desc: "All participants will be honored with the prestigious 'Young SDG Fellow' certificate, officially recognized by the Commonwealth Students’ Association.",
     },
     {
       title: "Zero Olympiad National Envoy",
@@ -51,32 +56,32 @@ export default function AwardsSection() {
     },
   ];
 
-  const scholarships = [
-    {
-      title: "Daffodil Institute Scholarship",
-      icon: <FaGraduationCap />,
-      desc: "Full scholarship for 'Empowering Future Leaders' program - 8 modules, 24 sessions.",
-    },
-    {
-      title: "S@ifur's IELTS Course",
-      icon: <FaComments />,
-      desc: "Full scholarship for online IELTS course - 27 classes and 39 comprehensive lessons.",
-    },
-    {
-      title: "10 Minute School",
-      icon: <FaChalkboardTeacher />,
-      desc: "Customized course scholarship from Bangladesh's leading e-learning platform.",
-    },
-    {
-      title: "Mana Bay Water Park",
-      icon: <FaTicketAlt />,
-      desc: "Day Long Pass for unlimited aquatic adventure on 17 thrilling rides across 60,000 sq ft.",
-    },
-    {
-      title: "Ad Din Foundation Medical",
-      icon: <FaHeartbeat />,
-      desc: "Zero Fee Medical vouchers for healthcare services.",
-    },
+ const scholarships = [
+  {
+    title: "10 Minute School",
+    icon: <FaChalkboardTeacher />,
+    desc: "Full scholarship for the 'English For Professionals' course, focusing on career-ready communication.",
+  },
+  {
+    title: "Creative IT Institute",
+    icon: <FaLaptopCode />,
+    desc: "Customized scholarships for specialized courses in IT, Graphics, Video Editing, and AI technology.",
+  },
+  {
+    title: "English Olympiad",
+    icon: <FaAward />,
+    desc: "Exclusive opportunity providing direct access to national round participation for all selected students.",
+  },
+  {
+    title: "MFH Science Club",
+    icon: <FaAtom />,
+    desc: "Scholarship for International Math Olympiad Preparation Classes to build advanced analytical skills.",
+  },
+  {
+    title: "Neel Hawa",
+    icon: <FaSuitcaseRolling />,
+    desc: "A premium Holiday Package for a refreshing travel experience and a well-deserved getaway.",
+  },
     {
       title: "Sports Development",
       icon: <FaTrophy />,
