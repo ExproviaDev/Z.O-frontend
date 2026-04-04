@@ -1,16 +1,20 @@
 import Image from "next/image";
 
 export default function WhyParticipate() {
-  const opportunities = [
-    "A cash prize of ৳3,42,500 (Three hundred forty-two thousand five hundred taka) will be awarded to the winners.",
-    "Scholarship opportunities from Washington University of Science and Technology, USA.",
-    "International Bootcamp participation at Asia Pacific University (APU), Malaysia.",
-    "Language Learning Scholarship from Sanrin Nihongono Gakkou, Japan.",
-    "Youth Peace Fellow Award from the Australian Institute of Peace & Dialogue.",
-    "Comprehensive support and guidance in applying for SDG Fellowships during admission processes at overseas universities.",
-    "Recommendations and nomination support to participate in the SDG Summit, held annually at the United Nations.",
-    "Year-long engagement opportunities through Zero Olympiad Clubs established across educational institutions nationwide—featuring case study competitions, debates, public speaking sessions, workshops, seminars, and funding support for implementing innovative projects. Selected participants will be inducted as Zero Olympiad National Envoys.",
-  ];
+const opportunities = [
+  "All participants will be honored with the prestigious *“Young SDG Fellow” Certificate*, recognized by the **Commonwealth Students’ Association**.",
+  "A grand cash prize of *৳3,42,500* (Three hundred forty-two thousand five hundred taka) for the top winners.",
+  "GLTS - Global Leadership Training and Skills : Subsidized Course, Book, Exam, Certificate",
+  "Exclusive *Scholarship opportunities* from Washington University of Science and Technology, USA and Murdoch University, Australia.",
+  "Participation in an **International Bootcamp** at Asia Pacific University (APU), Malaysia.",
+  "Language Learning Scholarship from **Sanrin Nihongono Gakkou, Japan**.",
+  "Access to globally recognized digital skilling and professional certification through the **UNICEF ‘Passport to Earning’ (P2E)** initiative, empowering all participants with future-ready career skills.",
+  "An exclusive Overseas Education Trip to participate in a high-impact International Bootcamp at a prestigious global campus, fostering international networking and leadership skills.",
+ 
+  "Comprehensive support and guidance for *Scholarship Fellowships and Mentorship* during overseas university admissions.",
+  "Nomination support to participate in the **annual SDG Summit at the United Nations**.",
+  "Year-long engagement with **Zero Olympiad Clubs**, featuring workshops, funding for projects, and induction as a **National Envoy**."
+];
 
   return (
     <section className="relative w-full py-10 md:py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
@@ -107,23 +111,42 @@ export default function WhyParticipate() {
           </div>
         </div>
 
-        <div className="text-white mt-12 ">
-          <h3 className="text-xl md:text-2xl font-bold mb-6">
-            In addition, all Zero Olympiad participants will receive the
-            following opportunities and benefits:
-          </h3>
-          <ul className="grid grid-cols-1 gap-4 text-sm md:text-base opacity-90">
-            {opportunities.map((item, index) => (
-              <li key={index} className="flex gap-3 items-start">
-                <span className="bg-Primary text-white font-bold px-2 py-0.5 rounded text-xs mt-1 shrink-0">
-                  {index + 1}
-                </span>
-                <p>{item}</p>
-              </li>
-            ))}
-          </ul>
+        <div className="text-white mt-12 flex flex-col md:flex-row items-center gap-10">
+          {/* Left Side */}
+          <div className="w-full md:w-3/5">
+            <h3 className="text-xl md:text-2xl font-bold mb-6">
+              In addition, all Zero Olympiad participants will receive the
+              following opportunities and benefits:
+            </h3>
+            <ul className="grid grid-cols-1 gap-4 text-sm md:text-base opacity-90">
+              {opportunities.map((item, index) => (
+                <li key={index} className="flex gap-3 items-start">
+                  <span className="bg-Primary text-white font-bold px-2 py-0.5 rounded text-xs mt-1 shrink-0">
+                    {index + 1}
+                  </span>
+                  <p>{item}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right Side */}
+          <div className="w-full md:w-2/5 flex justify-center">
+            <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+              <Image
+                src="https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775279836/images_1_bsemxb.jpg"
+                alt="Zero Olympiad Certificate"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+
+

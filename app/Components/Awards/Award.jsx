@@ -14,20 +14,21 @@ import {
   FaTicketAlt,
   FaBriefcase,
   FaAward,
+  FaCertificate,
 } from "react-icons/fa";
 import Link from "next/link";
 
 export default function AwardsSection() {
   const awards = [
     {
-      title: "SDG Fellowship Support",
+      title: "Scholarship Fellowships and mentorship",
       icon: <FaGlobe />,
       desc: "Comprehensive support in applying for SDG Fellowship during admission to Overseas Universities.",
     },
     {
-      title: "UN SDG Summit Recommendation",
-      icon: <FaUserCheck />,
-      desc: "Recommendation for participation in the SDG Summit held at the United Nations every year.",
+      title: "Young SDG Fellow Recognition",
+      icon: <FaCertificate />, 
+      desc: "All participants will be honored with the prestigious 'Young SDG Fellow' certificate, officially recognized by the Commonwealth Students’ Association.",
     },
     {
       title: "Zero Olympiad National Envoy",
