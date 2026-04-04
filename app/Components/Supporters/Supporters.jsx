@@ -33,7 +33,7 @@ const Supporters = () => {
         {/* Header */}
         <div className="mb-10">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
-            Our Valued Partners & Supporters <span className="text-[#f16522]">(Season One)</span>
+            Our Valued Partners & Supporters <span className="text-[#f16522]">(Season Two)</span>
           </h2>
           <p className="text-gray-500 text-sm md:text-base max-w-2xl mx-auto">
             Supported by leading organizations globally.
