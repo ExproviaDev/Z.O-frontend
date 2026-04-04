@@ -26,7 +26,10 @@ const EmpowerYouth = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-10">
+          
+          {/* Left Column */}
           <div className="space-y-8">
+            {/* UN Certificate Course Card */}
             <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
               <div className="flex items-center gap-4 ">
                 <GraduationCap className="w-10 h-10 text-[#f16522]" />
@@ -62,6 +65,7 @@ const EmpowerYouth = () => {
               </div>
             </div>
 
+            {/* Competition Rounds Card */}
             <div className="bg-white mt-10 md:mt-20 p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
               <div className="flex items-center gap-4 mb-8">
                 <Trophy className="w-8 h-8 text-[#f16522]" />
@@ -103,7 +107,44 @@ const EmpowerYouth = () => {
             </div>
           </div>
 
+          {/* Right Column */}
           <div className="space-y-8">
+            
+            {/* NEW: Commonwealth Certificate Card (Exactly beside UN Card on Desktop) */}
+            <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
+              <div className="flex items-center gap-4 ">
+                <Globe className="w-10 h-10 text-[#f16522]" />
+                <h3 className="text-2xl font-bold text-gray-800">
+                  Commonwealth Recognition
+                </h3>
+              </div>
+              <p className="text-gray-600 mb-6 text-sm">
+                Earn the prestigious "Young SDG Fellow" certification, officially 
+                endorsed by the Commonwealth Students' Association.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Recognized globally across 56 member nations.",
+                  "Official 'Young SDG Fellow' designation.",
+                  "Directly boosts international networking profiles.",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 text-sm font-medium text-gray-700"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-gray-300">
+                <p className="text-xs md:text-sm text-gray-600 italic">
+                  <span className="font-bold">Pro Tip:</span> This global recognition from the Commonwealth highlights your leadership commitment for future international scholarships.
+                </p>
+              </div>
+            </div>
+
+            {/* Additional Activities Card */}
             <div className="bg-[#dae1e7] p-6  md:p-8 rounded-[2rem] border border-gray-100">
               <h3 className="text-2xl font-bold text-gray-800 mb-6">
                 Additional Activities
@@ -142,6 +183,7 @@ const EmpowerYouth = () => {
               </div>
             </div>
 
+            {/* Filtered Rewards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
@@ -150,29 +192,9 @@ const EmpowerYouth = () => {
                   desc: "Admission support to overseas universities.",
                 },
                 {
-                  icon: <Star className="text-orange-500" />,
-                  title: "SDG Summit",
-                  desc: "Rec for annual UN SDG Summit.",
-                },
-                {
                   icon: <GraduationCap className="text-orange-500" />,
                   title: "Full Scholarship",
                   desc: "Entrepreneurship programs & IELTS.",
-                },
-                {
-                  icon: <Plane className="text-orange-500" />,
-                  title: "Water Park Pass",
-                  desc: "Mana Bay Adventure passes.",
-                },
-                {
-                  icon: <HeartPulse className="text-orange-500" />,
-                  title: "Medical Voucher",
-                  desc: "Zero Fee medical from Ad Din.",
-                },
-                {
-                  icon: <Globe className="text-orange-500" />,
-                  title: "Sports Training",
-                  desc: "Professional coaching scholarship.",
                 },
               ].map((reward, i) => (
                 <div
@@ -191,8 +213,10 @@ const EmpowerYouth = () => {
                 </div>
               ))}
             </div>
+
           </div>
         </div>
+
       </div>
     </section>
   );
