@@ -9,9 +9,9 @@ export default function WhyParticipate() {
     "Scholarship opportunities from Washington University of Science and Technology, USA.",
     "International Bootcamp participation at Asia Pacific University (APU), Malaysia.",
     "Language Learning Scholarship from Sanrin Nihongono Gakkou, Japan.",
-    "Youth Peace Fellow Award from the Australian Institute of Peace & Dialogue.",
-    "Comprehensive support and guidance in applying for SDG Fellowships during admission processes at overseas universities.",
-    "Recommendations and nomination support to participate in the SDG Summit, held annually at the United Nations.",
+    
+    "Comprehensive support and guidance in applying for Scholarship Fellowships and Mentorship during admission processes at overseas universities.",
+   
     "Year-long engagement opportunities through Zero Olympiad Clubs established across educational institutions nationwide—featuring case study competitions, debates, public speaking sessions, workshops, seminars, and funding support for implementing innovative projects. Selected participants will be inducted as Zero Olympiad National Envoys.",
   ];
 
