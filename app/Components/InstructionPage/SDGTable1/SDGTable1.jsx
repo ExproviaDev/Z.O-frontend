@@ -62,9 +62,9 @@ const SDGTable1 = () => {
               </tr>
 
               <tr className="bg-[#f0f7ff]">
-                <td rowSpan="7" className="border-r border-b font-bold p-4">
-                  <span className="text-blue-600 text-lg block">SDG Ambassador</span>
-                  <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Pioneer <br/>Others: Ambassador</span>
+                <td rowSpan="6" className="border-r border-b font-bold p-4">
+                  <span className="text-blue-600 text-lg block">SDG Leader</span>
+                  <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Leader<br/>Others: Ambassador</span>
                 </td>
                 <td className="border-r border-b p-3 font-bold">SDG 5</td>
                 <td className="border-r border-b p-3">Class 9</td>
@@ -118,8 +118,8 @@ const SDGTable1 = () => {
 
               <tr className="bg-[#f5f3ff]">
                 <td rowSpan="7" className="border-r border-b font-bold p-4">
-                  <span className="text-purple-600 text-lg block">SDG Achiever</span>
-                  <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Leader<br/>Others: Achiever</span>
+                  <span className="text-purple-600 text-lg block">SDG Pioneer</span>
+                  <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Pioneer<br/>Others: Achiever</span>
                 </td>
                 <td className="border-r border-b p-3 font-bold">SDG 12</td>
                 <td colSpan="2" className="border-r border-b p-3">1st Year</td>

@@ -1,20 +1,16 @@
 import Image from "next/image";
 
 export default function WhyParticipate() {
-const opportunities = [
-  "All participants will be honored with the prestigious *“Young SDG Fellow” Certificate*, recognized by the **Commonwealth Students’ Association**.",
-  "A grand cash prize of *৳3,42,500* (Three hundred forty-two thousand five hundred taka) for the top winners.",
-  "GLTS - Global Leadership Training and Skills : Subsidized Course, Book, Exam, Certificate",
-  "Exclusive *Scholarship opportunities* from Washington University of Science and Technology, USA and Murdoch University, Australia.",
-  "Participation in an **International Bootcamp** at Asia Pacific University (APU), Malaysia.",
-  "Language Learning Scholarship from **Sanrin Nihongono Gakkou, Japan**.",
-  "Access to globally recognized digital skilling and professional certification through the **UNICEF ‘Passport to Earning’ (P2E)** initiative, empowering all participants with future-ready career skills.",
-  "An exclusive Overseas Education Trip to participate in a high-impact International Bootcamp at a prestigious global campus, fostering international networking and leadership skills.",
- 
-  "Comprehensive support and guidance for *Scholarship Fellowships and Mentorship* during overseas university admissions.",
-  "Nomination support to participate in the **annual SDG Summit at the United Nations**.",
-  "Year-long engagement with **Zero Olympiad Clubs**, featuring workshops, funding for projects, and induction as a **National Envoy**."
-];
+  const opportunities = [
+    "Seventeen (17) winners of the Zero Olympiad will be awarded the opportunity to participate in an International Bootcamp hosted by Asia Pacific University (APU), Kuala Lumpur, Malaysia.",
+    "Scholarship opportunities from Washington University of Science and Technology, USA.",
+    "International Bootcamp participation at Asia Pacific University (APU), Malaysia.",
+    "Language Learning Scholarship from Sanrin Nihongono Gakkou, Japan.",
+    "Youth Peace Fellow Award from the Australian Institute of Peace & Dialogue.",
+    "Comprehensive support and guidance in applying for SDG Fellowships during admission processes at overseas universities.",
+    "Recommendations and nomination support to participate in the SDG Summit, held annually at the United Nations.",
+    "Year-long engagement opportunities through Zero Olympiad Clubs established across educational institutions nationwide—featuring case study competitions, debates, public speaking sessions, workshops, seminars, and funding support for implementing innovative projects. Selected participants will be inducted as Zero Olympiad National Envoys.",
+  ];
 
   return (
     <section className="relative w-full py-10 md:py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
