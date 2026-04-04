@@ -15,56 +15,53 @@ const partners = [
   { name: "Creative IT Institute", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/Copy_of_CIT_Logo_gotdoi.png" },
   { name: "Frame Box", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/Frame_BOx_yqm4vz.jpg" },
   { name: "IAAS Bangladesh", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/IAAS_Bangladesh_SAU-Dhaka_logo_jyzfnx.png" },
-  { name: "Innovation Hub", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294134/IMG_6539.JPG_gfckc0.jpg" },
   { name: "IMSEN Bangladesh", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/IMSEN_gu1vus.jpg" },
   { name: "Chorcha", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/Chorcha_eb4nvt.png" },
+  { name: "Zero Olympiad", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294134/IMG_6539.JPG_gfckc0.jpg" },
 ];
 
 const Supporters = () => {
   return (
-    <section className="relative w-full py-10 md:py-20 px-4 flex flex-col items-center justify-center bg-gray-50">
-      <div className="relative z-10 max-w-7xl w-full mx-auto text-center">
+    <section className="relative w-full py-10 md:py-16 px-4  bg-gray-50">
+      <div className="max-w-6xl mx-auto text-center px-5">
         
         {/* Badge */}
-        <div className="inline-block bg-[#f1652210] text-[#f16522] text-xs font-bold px-4 py-1 rounded-full mb-4 border border-[#f1652230]">
+        <div className="inline-block bg-[#f1652210] text-[#f16522] text-[10px] font-bold px-3 py-1 rounded-full mb-4 border border-[#f1652220] uppercase tracking-wider">
           Trusted By
         </div>
 
-        {/* Header Text */}
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 px-5 leading-tight">
-            Our Valued Partners & Supporters{" "}
-            <span className="text-[#f16522]">(Season One)</span>
+        {/* Header */}
+        <div className="mb-10">
+          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
+            Our Valued Partners & Supporters <span className="text-[#f16522]">(Season One)</span>
           </h2>
-          <p className="text-gray-600 font-medium text-sm md:text-lg max-w-3xl mx-auto leading-relaxed opacity-90">
-            Proudly supported by leading organizations who believe in youth
-            leadership, innovation, and global impact.
+          <p className="text-gray-500 text-sm md:text-base max-w-2xl mx-auto">
+            Supported by leading organizations globally.
           </p>
         </div>
 
-        {/* Circular Logo Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-6 gap-y-10 items-center justify-center px-4">
+        {/* 3-Row Logo Grid (on Desktop) */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-8 justify-items-center">
           {partners.map((partner, index) => (
             <div 
               key={index} 
-              className="group relative flex items-center justify-center p-3 rounded-full aspect-square bg-white border border-gray-100 shadow-sm hover:border-[#f1652230] hover:shadow-lg transition-all duration-500 ease-out"
+              className="group relative flex items-center justify-center w-20 h-20 md:w-28 md:h-28 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              {/* Logo Container with Safe Padding */}
-              <div className="relative w-4/5 h-4/5 flex items-center justify-center transition-all duration-500 grayscale group-hover:grayscale-0">
+              {/* Initial: Color | Hover: B&W */}
+              <div className="relative  w-3/4 h-3/4 grayscale-0 group-hover:grayscale transition-all duration-500">
                 <Image
                   src={partner.logo}
                   alt={partner.name}
                   fill
-                  className="object-contain p-1" // subtle padding to avoid edge touch
+                  className="object-contain p-2"
                 />
               </div>
               
-              {/* Smooth Animated Tooltip */}
-              <div className="absolute -bottom-2 translate-y-full opacity-0 group-hover:opacity-100 group-hover:-translate-y-4 transition-all duration-500 ease-in-out pointer-events-none z-20">
-                <div className="bg-gray-900 text-white text-[10px] md:text-[11px] px-3 py-1.5 rounded-lg shadow-xl whitespace-nowrap">
+              {/* Tooltip */}
+              <div className="absolute -bottom-1 translate-y-full opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 pointer-events-none z-20">
+                <div className="bg-gray-900 text-white text-[9px] px-2 py-1 rounded whitespace-nowrap">
                   {partner.name}
                 </div>
-                <div className="w-2.5 h-2.5 bg-gray-900 rotate-45 absolute left-1/2 -translate-x-1/2 -top-1.5 z-10 rounded-sm" />
               </div>
             </div>
           ))}
