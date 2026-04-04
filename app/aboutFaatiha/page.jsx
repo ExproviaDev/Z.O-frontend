@@ -26,7 +26,7 @@ export default function AboutFaatihaPage() {
   return (
     <div className="min-h-screen pt-20 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white overflow-x-hidden">
       
-      {/* 1️⃣ CINEMATIC HERO SECTION */}
+    
       <section className="relative h-screen w-full overflow-hidden">
   <Swiper
     modules={[Autoplay, EffectFade]}
@@ -82,7 +82,7 @@ export default function AboutFaatihaPage() {
     </SwiperSlide>
   </Swiper>
 
-{/* 🔥 Centered Heading on Slider */}
+
 <div className="absolute inset-0 z-20 flex items-center justify-center text-center px-6">
   <div className="relative max-w-4xl">
     <motion.h2
@@ -189,28 +189,28 @@ export default function AboutFaatihaPage() {
 </section>
 
 
-      {/* 2️⃣ VISIONARY BIOGRAPHY */}
+    
       <BiographySection />
 
-      {/* 3️⃣ ADVOCACY FOCUS */}
+     
       <AdvocacySection />
 
-      {/* 4️⃣ GLOBAL IMPACT TIMELINE */}
+   
       <TimelineSection />
 
-      {/* 5️⃣ GLOBAL LEADERSHIP SECTION */}
+
       <LeadershipSection />
 
-      {/* 6️⃣ MEDIA GALLERY */}
+ 
       <MediaGallerySection selectedMedia={selectedMedia} setSelectedMedia={setSelectedMedia} />
 
-      {/* 7️⃣ GRID OF HONOR */}
+
       <GridOfHonorSection />
 
-      {/* 8️⃣ VISIONARY CTA */}
+  
       {/* <CTASection /> */}
 
-      {/* Media Modal */}
+   
       {selectedMedia && <MediaModal media={selectedMedia} onClose={() => setSelectedMedia(null)} />}
     </div>
   )
@@ -328,7 +328,7 @@ function AdvocacySection() {
       icon: FaGlobeAmericas,
       title: "Sustainable Development",
       description:
-        "Working with international bodies to implement the UN Sustainable Development Goals across communities.",
+        "Working with international bodies to implement the UN Sustainable Developments Goals across communities.",
       gradient: "from-cyan-500 to-blue-500",
     },
   ]
