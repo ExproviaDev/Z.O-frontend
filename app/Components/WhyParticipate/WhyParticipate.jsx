@@ -6,7 +6,7 @@ export default function WhyParticipate() {
   "Access to globally recognized digital skilling and professional certification through the **UNICEF ‘Passport to Earning’ (P2E)** initiative, empowering all participants with future-ready career skills.",
   "Exclusive **Overseas Education Trip** to participate in a high-impact **International Bootcamp** at a prestigious global campus, fostering international networking.",
   "A grand cash prize of **৳3,42,500** (Three hundred forty-two thousand five hundred taka) will be awarded to the top-performing winners.",
-  "High-value **Scholarship opportunities** from **Washington University of Science and Technology, USA**.",
+  "High-value **Scholarship opportunities** from **Washington University of Science and Technology, USA and Murdoch University, Australia**.",
   "Specialized **Language Learning Scholarship** from **Sanrin Nihongono Gakkou, Japan**.",
   "Prestigious **Youth Peace Fellow Award** from the Australian Institute of Peace & Dialogue.",
   "Comprehensive support and guidance in applying for **SDG Fellowships** during admission processes at overseas universities.",
@@ -130,13 +130,14 @@ export default function WhyParticipate() {
 
           {/* Right Side */}
           <div className="w-full md:w-2/5 flex justify-center">
-            <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+            <div className="relative max-w-sm md:max-w-md   rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+             
               <Image
                 src="https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775292325/WhatsApp_Image_2026-04-04_at_2.27.47_PM_plosad.jpg"
-                alt="Zero Olympiad Certificate"
-                fill
-                className="object-contain"
-                priority
+                alt=" Certificate"
+                width={500}
+                height={350}
+                className="rounded border border-gray-200"
               />
             </div>
           </div>

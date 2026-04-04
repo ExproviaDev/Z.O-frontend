@@ -73,7 +73,7 @@ const JurySection = () => {
         
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl text-white font-bold tracking-tight mb-4">
-            Respected Jury Board <span className="text-[#F97316]">(Season One)</span>
+            Respected Jury Board <span className="text-[#F97316]">(Season Two)</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto font-medium">
             Distinguished academics and professionals who guide and evaluate our participants
