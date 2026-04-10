@@ -82,17 +82,16 @@ export default function HeroSection() {
             {/* Video Container */}
             <div className="relative bg-black p-2 sm:p-3 rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-white/10">
               <div className="relative overflow-hidden rounded-[16px] sm:rounded-[22px] aspect-video">
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full" // এখানে w-full h-full যোগ করা হয়েছে
-                  src="https://www.youtube.com/embed/w6duhN4sgMU?si=PbkpIT2wOQM_ZFho"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                ></iframe>
-                
-              </div>
+  <iframe
+    className="absolute top-0 left-0 w-full h-full"
+    src="https://www.youtube.com/embed/BZDVxLcmmOs" 
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
             </div>
           </div>
 
