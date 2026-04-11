@@ -4,14 +4,35 @@ import {
   FaClock,
   FaPlay,
   FaExclamationTriangle,
-  FaBan,                
-  FaShieldAlt,        
-  FaFlag                
+  FaBan,
+  FaShieldAlt,
+  FaFlag,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+
+// ✅ SDG Data Mapping
+const sdgData = {
+  1: { title: "No Poverty", desc: "Zero Poverty" },
+  2: { title: "Zero Hunger", desc: "Zero Hunger" },
+  3: { title: "Good Health and Well-being", desc: "Zero Illness" },
+  4: { title: "Quality Education", desc: "Zero Illiteracy" },
+  5: { title: "Gender Equality", desc: "Zero Gender Inequality" },
+  6: { title: "Clean Water and Sanitation", desc: "Zero Water Scarcity" },
+  7: { title: "Affordable and Clean Energy", desc: "Zero Energy Inaccessibility" },
+  8: { title: "Decent Work and Economic Growth", desc: "Zero Economic Inequality" },
+  9: { title: "Industry, Innovation and Infrastructure", desc: "Zero Unfair Industrial Practices" },
+  10: { title: "Reduced Inequality", desc: "Zero Inequality" },
+  11: { title: "Sustainable Cities and Communities", desc: "Zero Unsafe Cities" },
+  12: { title: "Responsible Consumption and Production", desc: "Zero Unaccountable Consumption" },
+  13: { title: "Climate Action", desc: "Zero Environmental Degradation" },
+  14: { title: "Life Below Water", desc: "Zero Ocean Pollution" },
+  15: { title: "Life on Land", desc: "Zero Land Contamination" },
+  16: { title: "Peace and Justice Strong Institutions", desc: "Zero Injustice" },
+  17: { title: "Partnerships to achieve the Goal", desc: "Zero Partnership Gaps" },
+};
 
 const UserDashboard = () => {
   const authState = useSelector((state) => state.auth);
@@ -25,7 +46,7 @@ const UserDashboard = () => {
       desc: "You have strictly 30 minutes. The quiz will auto-submit when the time is up.",
       icon: <FaClock size={24} className="text-blue-600" />,
       bg: "bg-blue-50",
-      border: "border-blue-100"
+      border: "border-blue-100",
     },
     {
       id: 2,
@@ -33,7 +54,7 @@ const UserDashboard = () => {
       desc: "Do not refresh the page or use the back button. It will terminate your session.",
       icon: <FaBan size={24} className="text-red-600" />,
       bg: "bg-red-50",
-      border: "border-red-100"
+      border: "border-red-100",
     },
     {
       id: 3,
@@ -41,7 +62,7 @@ const UserDashboard = () => {
       desc: "Switching tabs or minimizing the window will trigger a security warning.",
       icon: <FaShieldAlt size={24} className="text-indigo-600" />,
       bg: "bg-indigo-50",
-      border: "border-indigo-100"
+      border: "border-indigo-100",
     },
     {
       id: 4,
@@ -49,8 +70,8 @@ const UserDashboard = () => {
       desc: "After 3 security warnings, you will be automatically disqualified from the quiz.",
       icon: <FaFlag size={24} className="text-orange-600" />,
       bg: "bg-orange-50",
-      border: "border-orange-100"
-    }
+      border: "border-orange-100",
+    },
   ];
 
   return (
@@ -60,7 +81,7 @@ const UserDashboard = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-Secondary p-8 text-white shadow-xl mb-10"
+        className="relative overflow-hidden rounded-3xl bg-Secondary p-8 text-white shadow-xl mb-6" // Margin bottom কমানো হয়েছে
       >
         <div className="relative z-10">
           <h1 className="text-3xl md:text-4xl font-bold">
@@ -68,7 +89,7 @@ const UserDashboard = () => {
           </h1>
           <p className="mt-2 text-blue-100 max-w-md">
             This is your space to practice, learn from mistakes, and grow
-            smarter every day.{" "}
+            smarter every day.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
             <Link prefetch={false} href={"/dashboard/mycourses"}>
@@ -80,6 +101,33 @@ const UserDashboard = () => {
         </div>
         <div className="absolute -right-10 -top-10 h-64 w-64 rounded-full bg-white opacity-10" />
       </motion.div>
+
+      {/* ✅ কন্ডিশনাল SDG ইনফরমেশন কার্ড (Welcome Banner এর ঠিক নিচে) */}
+      {user?.assigned_sdg_number && sdgData[user.assigned_sdg_number] && (
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-10 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-6 md:p-8 rounded-[2rem] relative overflow-hidden shadow-sm"
+        >
+          <div className="absolute top-0 right-0 opacity-10 transform translate-x-4 -translate-y-4">
+            <span className="text-9xl font-black text-emerald-600">
+              {user.assigned_sdg_number}
+            </span>
+          </div>
+          <div className="relative z-10">
+            <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
+              Your Assigned Topic (SDG Goal)
+            </h3>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-800 mb-2">
+              SDG {user.assigned_sdg_number}: {sdgData[user.assigned_sdg_number].title}
+            </h2>
+            <p className="text-slate-600 font-medium leading-relaxed max-w-3xl">
+              Focus Area: {sdgData[user.assigned_sdg_number].desc}
+            </p>
+          </div>
+        </motion.div>
+      )}
 
       {/* --- Static Instructions Section --- */}
       <div className="max-w-full mx-auto">
