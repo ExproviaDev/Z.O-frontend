@@ -145,8 +145,8 @@ export default function AmbassadorDashboard() {
             <FiUsers size={32} />
           </div>
           <div>
-            {/* <p className="text-4xl font-black text-gray-800">{stats?.totalReferrals || 0}</p> */}
-            <p className="text-4xl font-black text-gray-800">{stats?.referralList?.length || 0}</p>
+            <p className="text-4xl font-black text-gray-800">{stats?.totalReferrals || 0}</p>
+            {/* <p className="text-4xl font-black text-gray-800">{stats?.referralList?.length || 0}</p> */}
             <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Referrals</p>
           </div>
         </div>
