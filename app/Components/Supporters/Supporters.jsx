@@ -17,7 +17,12 @@ const partners = [
   { name: "IAAS Bangladesh", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/IAAS_Bangladesh_SAU-Dhaka_logo_jyzfnx.png" },
   { name: "IMSEN Bangladesh", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/IMSEN_gu1vus.jpg" },
   { name: "Chorcha", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/Chorcha_eb4nvt.png" },
-  { name: "Zero Olympiad", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294134/IMG_6539.JPG_gfckc0.jpg" },
+
+  
+  { name: "Voluntary Service Overseas", logo: "https://res.cloudinary.com/dxgcax7lv/image/upload/v1776486127/VSO_Logo_ON_WHITE_mpnqmx.jpg" },
+  { name: "Zen English Institute", logo: "https://res.cloudinary.com/dxgcax7lv/image/upload/v1776486127/Zen_English_Institute_lsuajk.png" },
+  { name: "Washington University of Science and Technology", logo: "https://res.cloudinary.com/dxgcax7lv/image/upload/v1776486127/WUST_vjfbl4.jpg" },
+  { name: "International Olympiads", logo: "https://res.cloudinary.com/dxgcax7lv/image/upload/v1776486128/International_Olympiads_zuciaw.png" },
 ];
 
 const Supporters = () => {
