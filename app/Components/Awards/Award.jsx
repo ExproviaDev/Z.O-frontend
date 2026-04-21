@@ -19,6 +19,7 @@ import {
   FaAtom,
   FaSuitcaseRolling,
   FaUserGraduate,
+  FaMedal
 } from "react-icons/fa";
 import Link from "next/link";
 
@@ -68,7 +69,7 @@ export default function AwardsSection() {
     desc: "Customized scholarships for specialized courses in IT, Graphics, Video Editing, and AI technology.",
   },
   {
-    title: "English Olympiad",
+    title: "English World Cup",
     icon: <FaAward />,
     desc: "Exclusive opportunity providing direct access to national round participation for all selected students.",
   },
@@ -78,15 +79,15 @@ export default function AwardsSection() {
     desc: "Scholarship for International Math Olympiad Preparation Classes to build advanced analytical skills.",
   },
   {
-    title: "Neel Hawa",
+    title: "Neel Hawa Beach resort",
     icon: <FaSuitcaseRolling />,
     desc: "A premium Holiday Package for a refreshing travel experience and a well-deserved getaway.",
   },
     {
-      title: "Sports Development",
-      icon: <FaTrophy />,
-      desc: "Full scholarship from Bangladesh Sports Development Foundation to learn from Professional Coaches.",
-    },
+  title: "International Olympiad",
+  icon: <FaMedal />,
+  desc: "Participate in prestigious international olympiads, compete globally, and showcase your talent through world-class academic challenges.",
+},
   ];
 
   const activities = [
