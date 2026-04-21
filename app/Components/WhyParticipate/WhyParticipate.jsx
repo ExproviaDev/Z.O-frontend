@@ -8,9 +8,7 @@ export default function WhyParticipate() {
   "A grand cash prize of **৳3,42,500** (Three hundred forty-two thousand five hundred taka) will be awarded to the top-performing winners.",
   "High-value **Scholarship opportunities** from **Washington University of Science and Technology, USA and Murdoch University, Australia**.",
   "Specialized **Language Learning Scholarship** from **Sanrin Nihongono Gakkou, Japan**.",
-  "Prestigious **Youth Peace Fellow Award** from the Australian Institute of Peace & Dialogue.",
-  "Comprehensive support and guidance in applying for **SDG Fellowships** during admission processes at overseas universities.",
-  "Official recommendations and nomination support to participate in the **annual SDG Summit held at the United Nations**.",
+  
   "Year-long engagement with **Zero Olympiad Clubs** nationwide and induction as a **Zero Olympiad National Envoy** for selected participants."
 ];
 
