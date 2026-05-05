@@ -42,7 +42,15 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      let data = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        data = { message: text || "Unexpected server response." };
+      }
+
       if (res.ok && data.token) {
         localStorage.setItem("access_token", data.token);
         localStorage.setItem("user_data", JSON.stringify(data.user));
