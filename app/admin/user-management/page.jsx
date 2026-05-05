@@ -167,55 +167,64 @@ export default function RoleManagement() {
 
         {/* Table Section */}
         <div className="flex-1 overflow-auto">
-          <table className="w-full text-left text-sm relative">
-            <thead className="sticky top-0 bg-white z-10 border-b shadow-sm">
-              <tr className="text-gray-600 font-semibold uppercase text-[10px] tracking-wider">
-                <th className="px-6 py-4">Profile</th>
-                <th className="px-6 py-4">Role</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {currentUsers.map((user) => (
-                <tr key={user.user_id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
-                        {user.name?.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">{user.name}</p>
-                        <p className="text-xs text-gray-400">{user.email}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <select
-                      value={user.role}
-                      onChange={(e) => handleRoleUpdate(user.user_id, e.target.value)}
-                      className="bg-transparent border-none font-bold text-xs text-blue-600 cursor-pointer focus:ring-0"
-                    >
-                      <option value="user">USER</option>
-                      <option value="manager">JURY</option>
-                      <option value="ambassador">AMBASSADOR</option>
-                      <option value="admin">ADMIN</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 text-[10px] font-bold uppercase">
-                    <span className={user.is_blocked ? 'text-red-500' : 'text-green-600'}>
-                      {user.is_blocked ? "Blocked" : "Active"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right flex justify-end gap-3">
-                    <button onClick={() => handleViewDetails(user)} className="text-gray-400 hover:text-blue-600 transition-colors"><FaEye /></button>
-                    <button onClick={() => handleDelete(user.user_id)} className="text-gray-400 hover:text-red-600 transition-colors"><FaTrashAlt /></button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {sortedUsers.length === 0 && <div className="p-20 text-center text-gray-400">No users found.</div>}
+          {loading ? (
+            <div className="h-full min-h-[360px] flex flex-col items-center justify-center gap-4 text-gray-500">
+              <div className="h-10 w-10 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin" />
+              <p className="text-sm font-semibold">Loading users...</p>
+            </div>
+          ) : (
+            <>
+              <table className="w-full text-left text-sm relative">
+                <thead className="sticky top-0 bg-white z-10 border-b shadow-sm">
+                  <tr className="text-gray-600 font-semibold uppercase text-[10px] tracking-wider">
+                    <th className="px-6 py-4">Profile</th>
+                    <th className="px-6 py-4">Role</th>
+                    <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {currentUsers.map((user) => (
+                    <tr key={user.user_id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-md bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
+                            {user.name?.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-800">{user.name}</p>
+                            <p className="text-xs text-gray-400">{user.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <select
+                          value={user.role}
+                          onChange={(e) => handleRoleUpdate(user.user_id, e.target.value)}
+                          className="bg-transparent border-none font-bold text-xs text-blue-600 cursor-pointer focus:ring-0"
+                        >
+                          <option value="user">USER</option>
+                          <option value="manager">JURY</option>
+                          <option value="ambassador">AMBASSADOR</option>
+                          <option value="admin">ADMIN</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 text-[10px] font-bold uppercase">
+                        <span className={user.is_blocked ? 'text-red-500' : 'text-green-600'}>
+                          {user.is_blocked ? "Blocked" : "Active"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right flex justify-end gap-3">
+                        <button onClick={() => handleViewDetails(user)} className="text-gray-400 hover:text-blue-600 transition-colors"><FaEye /></button>
+                        <button onClick={() => handleDelete(user.user_id)} className="text-gray-400 hover:text-red-600 transition-colors"><FaTrashAlt /></button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {sortedUsers.length === 0 && <div className="p-20 text-center text-gray-400">No users found.</div>}
+            </>
+          )}
         </div>
 
         {/* --- Pagination Footer --- */}
