@@ -169,19 +169,6 @@ const ProfilePage = () => {
                   </div>
                 </div>
               )}
-
-              {/* Round Type Badge */}
-              {/* <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-2xl text-center hover:shadow-md transition-shadow">
-                <div className="text-orange-500 mb-2">
-                  <FaTrophy size={28} />
-                </div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Current Round</span>
-                <span className="text-lg font-black text-orange-900 uppercase">
-                  {user.round_type || "Round 1"}
-                
-                </span>
-              </div> */}
-              {/* Round Type Badge */}
               <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-2xl text-center hover:shadow-md transition-shadow">
                 <div className="text-orange-500 mb-2">
                   <FaTrophy size={28} />
