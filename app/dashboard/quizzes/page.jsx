@@ -48,21 +48,17 @@ const MyQuizzes = () => {
 
         let fetchedQuizzes = res.data.data || [];
 
-        // ✅ 4. Attempt Check
-        const quizzesWithStatus = await Promise.all(
-          fetchedQuizzes.map(async (quiz) => {
-            try {
-              const attemptRes = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/admin/check-attempt/${storedUser.user_id}/${quiz.id}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-              );
-              return { ...quiz, hasAttempted: attemptRes.data.hasAttempted };
-            } catch (err) {
-              console.error("Attempt check error for quiz:", quiz.id);
-              return { ...quiz, hasAttempted: false };
-            }
-          })
+        // ✅ 4. Attempt Check - Single API call
+        const attemptRes = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/user-attempts/${storedUser.user_id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
+        const attemptedQuizIds = new Set(attemptRes.data.attempts);
+
+        const quizzesWithStatus = fetchedQuizzes.map(quiz => ({
+          ...quiz,
+          hasAttempted: attemptedQuizIds.has(quiz.id)
+        }));
 
         setQuizzes(quizzesWithStatus);
 

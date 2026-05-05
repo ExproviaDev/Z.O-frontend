@@ -4,7 +4,8 @@ import { startCountdown } from "../CountdownTimer/startCountdown"; // এই ফ
 
 const CountdownTimer = () => {
   useEffect(() => {
-    startCountdown(); // কাউন্টডাউন স্টার্ট করতে ব্যবহার করুন
+    const cleanup = startCountdown(); // কাউন্টডাউন স্টার্ট করতে ব্যবহার করুন
+    return cleanup;
   }, []);
 
   return (

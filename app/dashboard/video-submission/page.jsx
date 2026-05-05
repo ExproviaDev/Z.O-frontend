@@ -39,37 +39,49 @@ const UserVideoSubmission = () => {
     // ইউজার আইডি পাওয়ার পর ডাটা ফেচ
     const userId = user?.id || user?.user_id || storedUser?.user_id;
     if (userId) {
-      fetchData(userId, token);
+      const controller = new AbortController();
+      fetchData(userId, token, controller.signal);
+      return () => controller.abort();
     }
   }, [user, router]);
 
   // ২. ডাটা ফেচিং ফাংশন (🔥 Promise.all এর বদলে আলাদা কল করা হয়েছে যাতে একটি ফেইল করলে অন্যটি ক্র্যাশ না করে)
-  const fetchData = async (userId, token) => {
+  const fetchData = async (userId, token, signal) => {
     try {
       const API = process.env.NEXT_PUBLIC_API_URL;
       
       // প্রথমে সেটিংস ফেচ
-      const settingsRes = await axios.get(`${API}/api/video/settings`, { headers: { Authorization: `Bearer ${token}` } });
+      const settingsRes = await axios.get(`${API}/api/video/settings`, { 
+        headers: { Authorization: `Bearer ${token}` },
+        signal
+      });
       const settings = settingsRes.data.data;
       setRoundSettings(settings);
       checkTimeStatus(settings);
 
       // এরপর স্ট্যাটাস ফেচ
       try {
-        const statusRes = await axios.get(`${API}/api/video/status/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+        const statusRes = await axios.get(`${API}/api/video/status/${userId}`, { 
+          headers: { Authorization: `Bearer ${token}` },
+          signal
+        });
         setStatusData(statusRes.data);
         if (statusRes.data?.video_link) {
           setVideoLink(statusRes.data.video_link);
         }
       } catch (err) {
-        console.log("No previous submission found."); // 404 আসলে ক্র্যাশ করবে না
+        if (err.name !== 'CanceledError') {
+          console.log("No previous submission found."); // 404 আসলে ক্র্যাশ করবে না
+        }
       }
 
       setLoading(false);
 
     } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
+      if (error.name !== 'CanceledError') {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
     }
   };
 
