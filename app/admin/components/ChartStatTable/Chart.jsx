@@ -10,8 +10,8 @@ export default function SDGChart({ graphData }) {
   });
 
   return (
-    <div className="h-[350px] w-full mt-4">
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="h-[350px] w-full mt-4 min-w-0">
+      <ResponsiveContainer width="100%" height={350} minWidth={280} minHeight={280}>
         <BarChart data={normalizedData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
           <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
