@@ -13,6 +13,15 @@ import Link from "next/link";
 import Image from "next/image";
 import Loading from "../../admin/components/loadign"; // আপনার বানান ঠিক থাকলে এটাই রাখুন
 
+/** Human-readable round label (e.g. Round_1 → Round 1, initial_round_2 → Round 2) */
+function formatRoundType(raw) {
+  if (!raw || typeof raw !== "string") return "Preliminary";
+  let s = raw.trim().replace(/initial\s+/gi, "");
+  s = s.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  if (!s) return "Preliminary";
+  return s.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 const ProfilePage = () => {
   const authState = useSelector((state) => state.user);
   const loading = authState?.loading;
@@ -178,11 +187,14 @@ const ProfilePage = () => {
                   <FaTrophy size={28} />
                 </div>
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Current Round</span>
-                <span className="text-lg font-black text-orange-900 capitalize">
-                  {user.round_type
-                    ? user.round_type.replace(/initial\s+/i, "")
-                    : "Preliminary"}
+                <span className="text-lg font-black text-orange-900">
+                  {formatRoundType(user.round_type)}
                 </span>
+                {user.round_type && /round_?2/i.test(String(user.round_type).replace(/\s+/g, "_")) && (
+                  <p className="mt-3 text-center text-xs font-semibold leading-relaxed text-amber-800/90">
+                    Congratulations on advancing — complete your video submission and follow announcements for Round 2.
+                  </p>
+                )}
               </div>
             </div>
           </section>
