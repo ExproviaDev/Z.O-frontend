@@ -32,7 +32,7 @@ function FailureContent() {
         </div>
 
         <p className="text-gray-500 mb-8 text-sm">
-          We couldn't process your payment. Please try again or contact support if the issue persists.
+          We couldn't process your payment. Please try again later or contact support if the issue persists.
         </p>
 
         {/* Actions */}

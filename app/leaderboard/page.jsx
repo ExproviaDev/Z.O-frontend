@@ -7,8 +7,6 @@ import { useState, useEffect, useMemo } from "react"
 import { Card } from "./ui/card"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
-// import { FaCrown, FaMedal } from "react-icons/fa"
-// import { FaCrown, FaMedal, FaLeaf } from "react-icons/fa"
 import { FaCrown, FaMedal } from "react-icons/fa"
 
 
