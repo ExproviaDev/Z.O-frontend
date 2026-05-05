@@ -9,7 +9,6 @@ import {
   FaFlag,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 
@@ -34,10 +33,28 @@ const sdgData = {
   17: { title: "Partnerships to achieve the Goal", desc: "Zero Partnership Gaps" },
 };
 
+/** Normalize API values like "initial round_1", "round_2", "Round_3" */
+function getCompetitionRoundKey(roundType) {
+  if (!roundType || typeof roundType !== "string") return "round_1";
+  const n = roundType.toLowerCase().replace(/\s+/g, "_");
+  if (n.includes("round_3")) return "round_3";
+  if (n.includes("round_2")) return "round_2";
+  return "round_1";
+}
+
+function formatCompetitionRoundTitle(roundType) {
+  const key = getCompetitionRoundKey(roundType);
+  if (key === "round_3") return "Round 3 — Grand Finale";
+  if (key === "round_2") return "Round 2 — Selection";
+  return "Round 1 — Preliminary";
+}
+
 const UserDashboard = () => {
   const authState = useSelector((state) => state.auth);
   const { user = null } = authState || {};
   const userName = user?.name || "User";
+  const roundKey = getCompetitionRoundKey(user?.round_type);
+  const roundTitle = formatCompetitionRoundTitle(user?.round_type);
 
   const examRules = [
     {
@@ -77,29 +94,149 @@ const UserDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
       
-      {/* Welcome Banner */}
+      {/* Welcome Banner — large hero for dashboard */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-Secondary p-8 text-white shadow-xl mb-6" // Margin bottom কমানো হয়েছে
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/15 bg-Secondary text-white shadow-2xl shadow-slate-900/20 md:rounded-[2.5rem]"
       >
-        <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-bold">
-            Welcome back, {userName}
-          </h1>
-          <p className="mt-2 text-blue-100 max-w-md">
-            This is your space to practice, learn from mistakes, and grow
-            smarter every day.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-4">
-            <Link prefetch={false} href={"/dashboard/mycourses"}>
-              <button className="flex items-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-blue-600 transition hover:bg-opacity-90 active:scale-95 shadow-lg">
-                <FaPlay className="text-xs" /> Continue Courses
-              </button>
-            </Link>
+        {/* layered glow / depth */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.12] via-transparent to-black/20"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl sm:h-96 sm:w-96"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-white/5 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute right-[12%] top-1/2 hidden h-px w-32 -translate-y-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/25 to-transparent lg:block"
+          aria-hidden
+        />
+
+        <div className="relative z-10 flex min-h-[260px] flex-col gap-10 px-6 py-10 sm:px-10 sm:py-12 md:min-h-[300px] md:px-12 md:py-14 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-14 lg:py-16">
+          <div className="max-w-2xl flex-1">
+            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.28em] text-white/65 md:text-xs">
+              Your learning hub
+            </p>
+            <h1 className="text-4xl font-black leading-[1.08] tracking-tight text-white sm:text-5xl md:text-5xl lg:text-6xl">
+              Welcome back,
+              <span className="mt-1 block bg-gradient-to-r from-white via-blue-50 to-white/90 bg-clip-text text-transparent md:mt-2">
+                {userName}
+              </span>
+            </h1>
+            <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-blue-100/95 md:text-lg">
+              This is your space to practice, learn from mistakes, and grow
+              smarter every day.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Link
+                prefetch={false}
+                href="/dashboard/mycourses"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-lg shadow-black/15 transition hover:bg-blue-50 hover:shadow-xl active:scale-[0.98] sm:px-8 sm:py-4 sm:text-base"
+              >
+                <FaPlay className="text-sm opacity-90" />
+                Continue Courses
+              </Link>
+              <Link
+                prefetch={false}
+                href="/dashboard/quizzes"
+                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-[0.98] sm:px-8 sm:py-4 sm:text-base"
+              >
+                View quizzes
+              </Link>
+            </div>
+          </div>
+
+          {/* Current competition round + conditional copy */}
+          <div className="relative flex w-full max-w-sm shrink-0 flex-col items-stretch lg:items-end">
+            <div className="relative w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-md">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">
+                Your current round
+              </p>
+              <p className="mt-2 text-xl font-black text-white md:text-2xl">
+                {roundTitle}
+              </p>
+              {roundKey === "round_2" && (
+                <>
+                  <p className="mt-3 rounded-xl border border-amber-300/40 bg-amber-400/15 px-3 py-2 text-xs font-bold text-amber-100">
+                    Congratulations — you&apos;ve advanced to Round 2!
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-blue-100/90">
+                    Submit your video presentation from the Video Submission page and watch for updates after jury evaluation. You can also take Round 2 quizzes from My Quizzes when they are available.
+                  </p>
+                  <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                    <Link
+                      prefetch={false}
+                      href="/dashboard/video-submission"
+                      className="inline-flex items-center justify-center rounded-lg bg-white/95 px-4 py-2.5 text-xs font-bold text-blue-800 shadow-md transition hover:bg-white"
+                    >
+                      Video submission
+                    </Link>
+                    <Link
+                      prefetch={false}
+                      href="/dashboard/quizzes"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/10 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-white/20"
+                    >
+                      My quizzes
+                    </Link>
+                  </div>
+                </>
+              )}
+              {roundKey === "round_3" && (
+                <>
+                  <p className="mt-3 rounded-xl border border-emerald-300/40 bg-emerald-400/15 px-3 py-2 text-xs font-bold text-emerald-50">
+                    Congratulations — you&apos;re in the Grand Finale!
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-blue-100/90">
+                    Follow official announcements for final presentation guidelines and schedules. Keep an eye on your dashboard for any last updates.
+                  </p>
+                </>
+              )}
+              {roundKey === "round_1" && (
+                <p className="mt-3 text-sm leading-relaxed text-blue-100/85">
+                  You&apos;re in Round 1. Use courses to prepare, then complete your qualifying quiz when you&apos;re ready.
+                </p>
+              )}
+              <div className="mt-4 flex flex-wrap gap-2">
+                {roundKey === "round_2" ? (
+                  <>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Round 2
+                    </span>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Video
+                    </span>
+                  </>
+                ) : roundKey === "round_3" ? (
+                  <>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Finale
+                    </span>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Grand stage
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Learn
+                    </span>
+                    <span className="rounded-lg bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white/90">
+                      Quiz
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="absolute -right-4 -top-4 hidden h-24 w-24 rounded-2xl border border-white/10 bg-white/5 sm:block" aria-hidden />
           </div>
         </div>
-        <div className="absolute -right-10 -top-10 h-64 w-64 rounded-full bg-white opacity-10" />
       </motion.div>
 
       {/* ✅ কন্ডিশনাল SDG ইনফরমেশন কার্ড (Welcome Banner এর ঠিক নিচে) */}

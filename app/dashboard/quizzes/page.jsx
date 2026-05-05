@@ -14,46 +14,78 @@ const MyQuizzes = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const resolveCategoryFromUser = (user) => {
+    const normalizedRound = String(user?.round_type || "").toLowerCase().replace(/\s+/g, "_");
+    let category = "SDG Activist";
+    if (normalizedRound.includes("round_3")) category = "SDG Achiever";
+    else if (normalizedRound.includes("round_2")) category = "SDG Ambassador";
+    if (user?.sdg_role) category = user.sdg_role;
+    return category;
+  };
+
+  const fetchQuizzesWithFallback = async (apiBase, token, category) => {
+    const endpoints = [
+      `${apiBase}/api/admin/public-quizzes`,
+      `${apiBase}/api/quiz/public-quizzes`,
+    ];
+    let lastError = null;
+    for (const url of endpoints) {
+      try {
+        return await axios.get(url, {
+          params: { category },
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } catch (err) {
+        lastError = err;
+        if (err?.response?.status !== 404) throw err;
+      }
+    }
+    throw lastError;
+  };
+
+  const fetchAttemptsWithFallback = async (apiBase, token, userId) => {
+    const endpoints = [
+      `${apiBase}/api/admin/user-attempts/${userId}`,
+      `${apiBase}/api/quiz/user-attempts/${userId}`,
+    ];
+    for (const url of endpoints) {
+      try {
+        const response = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        return response?.data?.attempts || [];
+      } catch (err) {
+        if (err?.response?.status !== 404) throw err;
+      }
+    }
+    return [];
+  };
+
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        const storedUser = JSON.parse(localStorage.getItem('user_data'));
+        const storedUser = JSON.parse(localStorage.getItem('user_data') || '{}');
         const token = localStorage.getItem('access_token');
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
         if (!storedUser || !token) {
           router.push('/login');
           return;
         }
 
-        // ✅ 2. Category Mapping Logic
-        let categoryToFetch = "SDG Activist"; // Default (Round 1)
-
-        if (storedUser.round_type === "round_2") {
-          categoryToFetch = "SDG Ambassador";
-        } else if (storedUser.round_type === "round_3") {
-          categoryToFetch = "SDG Achiever";
-        }
-
-        if (storedUser.sdg_role) {
-          categoryToFetch = storedUser.sdg_role;
-        }
+        const categoryToFetch = resolveCategoryFromUser(storedUser);
 
         setUserCategory(categoryToFetch);
 
-        // ✅ 3. API Call
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/public-quizzes`, {
-          params: { category: categoryToFetch },
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // ✅ 3. API Call with endpoint fallback
+        const res = await fetchQuizzesWithFallback(API_BASE, token, categoryToFetch);
 
         let fetchedQuizzes = res.data.data || [];
 
-        // ✅ 4. Attempt Check - Single API call
-        const attemptRes = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/user-attempts/${storedUser.user_id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        const attemptedQuizIds = new Set(attemptRes.data.attempts);
+        // ✅ 4. Attempt check (fallback + safe user id)
+        const userId = storedUser?.user_id || storedUser?.id;
+        const attempts = userId ? await fetchAttemptsWithFallback(API_BASE, token, userId) : [];
+        const attemptedQuizIds = new Set(attempts);
 
         const quizzesWithStatus = fetchedQuizzes.map(quiz => ({
           ...quiz,
@@ -63,7 +95,7 @@ const MyQuizzes = () => {
         setQuizzes(quizzesWithStatus);
 
       } catch (error) {
-        console.error("Error fetching quizzes:", error);
+        console.error("Error fetching quizzes:", error?.response?.status, error?.response?.data || error?.message);
       } finally {
         setLoading(false);
       }

@@ -62,7 +62,7 @@ const SDGTable1 = () => {
               </tr>
 
               <tr className="bg-[#f0f7ff]">
-                <td rowSpan="6" className="border-r border-b font-bold p-4">
+                <td rowSpan="7" className="border-r border-b font-bold p-4">
                   <span className="text-blue-600 text-lg block">SDG Leader</span>
                   <span className="text-[10px] text-gray-400 font-normal uppercase">Winners: Pioneer <br/>Others: Ambassador</span>
                 </td>
@@ -105,8 +105,8 @@ const SDGTable1 = () => {
               </tr>
               <tr className="bg-[#f0f7ff]">
                 <td className="border-r border-b p-3 font-bold">SDG 11</td>
-                <td className="border-b p-3 font-semibold text-gray-600"></td>
-                <td className="border-b p-3 font-semibold text-gray-600">University Admission Candidate</td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600"></td>
+                <td className="border-r border-b p-3 font-semibold text-gray-600">University Admission Candidate</td>
                 <td className="border-r border-b p-3 font-semibold text-gray-600"></td>
                 <td className=" border-b p-3 font-semibold text-gray-600 bg-gray-100">Musannif</td>
               </tr>
