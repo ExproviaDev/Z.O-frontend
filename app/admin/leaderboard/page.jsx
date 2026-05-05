@@ -87,11 +87,15 @@ export default function LeaderboardPage() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => fetchLeaderboard(1), 500);
-    return () => clearTimeout(timer);
+    const controller = new AbortController();
+    const timer = setTimeout(() => fetchLeaderboard(1, controller.signal), 500);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
   }, [search, filterSdg, activeRound]);
 
-  const fetchLeaderboard = async (page = 1) => {
+  const fetchLeaderboard = async (page = 1, signal) => {
     try {
       setLoading(true);
       const token = localStorage.getItem('access_token');
@@ -106,7 +110,8 @@ export default function LeaderboardPage() {
           sdg: filterSdg,
           round: activeRound
         },
-        headers: token ? { Authorization: `Bearer ${token}` } : {}
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        signal
       });
 
       if (res.data.success) {
@@ -118,8 +123,10 @@ export default function LeaderboardPage() {
         });
       }
     } catch (error) {
-      console.error(error);
-      toast.error("ডাটা লোড করা সম্ভব হয়নি");
+      if (error.name !== 'CanceledError') {
+        console.error(error);
+        toast.error("ডাটা লোড করা সম্ভব হয়নি");
+      }
     } finally {
       setLoading(false);
     }
@@ -128,7 +135,8 @@ export default function LeaderboardPage() {
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= Math.ceil(stats.total / stats.limit)) {
-      fetchLeaderboard(newPage);
+      const controller = new AbortController();
+      fetchLeaderboard(newPage, controller.signal);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }

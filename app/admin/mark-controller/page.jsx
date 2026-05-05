@@ -22,21 +22,26 @@ export default function LeaderboardPage() {
     const [loading, setLoading] = useState(false);
 
 
-    const fetchLeaderboard = async () => {
+    const fetchLeaderboard = async (signal) => {
         setLoading(true);
         try {
             const token = localStorage.getItem("access_token");
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/mark/view?roundNumber=${round}&category=${category}&page=${page}&limit=${limit}`,
-                { headers: { Authorization: `Bearer ${token}` } }
+                { 
+                    headers: { Authorization: `Bearer ${token}` },
+                    signal
+                }
             );
             if (res.data.success) {
                 setLeaderboardData(res.data.data);
                 setTotalUsers(res.data.total || 0);
             }
         } catch (err) {
-            console.error(err);
-            toast.error("Failed to load data");
+            if (err.name !== 'CanceledError') {
+                console.error(err);
+                toast.error("Failed to load data");
+            }
         } finally {
             setLoading(false);
         }
@@ -113,7 +118,9 @@ export default function LeaderboardPage() {
     }, [round, category]);
 
     useEffect(() => {
-        fetchLeaderboard();
+        const controller = new AbortController();
+        fetchLeaderboard(controller.signal);
+        return () => controller.abort();
     }, [page, round, category]);
 
     const totalPages = Math.ceil(totalUsers / limit);
