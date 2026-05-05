@@ -17,8 +17,8 @@ const navItems = [
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
   { title: "Gallery", url: "/gallery" },
-  { title: "FAQ", url: "/faq" },
-  { title: "Contact Us", url: "/contact-us" },
+  { title: "GLTS", url: "https://glts.faatihaaayat.com/", external: true },
+  { title: "Malaysia Bootcamp", url: "https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE", external: true },
 ];
 
 export default function Header() {
@@ -88,19 +88,32 @@ export default function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link
-                  prefetch={false}
-                  key={item.title}
-                  href={item.url}
-                  className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${pathname === item.url ? "text-orange-500" : "text-gray-600"
-                    } group`}
-                >
-                  {item.title}
-                  <span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${pathname === item.url ? "w-full" : ""
-                      }`}
-                  ></span>
-                </Link>
+                item.external ? (
+                  <a
+                    key={item.title}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative text-sm font-bold text-gray-600 transition-colors duration-300 hover:text-orange-500 group"
+                  >
+                    {item.title}
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                ) : (
+                  <Link
+                    prefetch={false}
+                    key={item.title}
+                    href={item.url}
+                    className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${pathname === item.url ? "text-orange-500" : "text-gray-600"
+                      } group`}
+                  >
+                    {item.title}
+                    <span
+                      className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${pathname === item.url ? "w-full" : ""
+                        }`}
+                    ></span>
+                  </Link>
+                )
 
               ))}
 
@@ -202,17 +215,29 @@ export default function Header() {
 
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
-              <Link
-                key={item.title}
-                href={item.url}
-                prefetch={false}
-                className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${pathname === item.url
-                  ? "bg-orange-50 text-orange-500"
-                  : "text-gray-600 hover:bg-gray-50"
-                  }`}
-              >
-                {item.title}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.title}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-base font-bold py-3 px-4 rounded-lg transition-colors text-gray-600 hover:bg-gray-50"
+                >
+                  {item.title}
+                </a>
+              ) : (
+                <Link
+                  key={item.title}
+                  href={item.url}
+                  prefetch={false}
+                  className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${pathname === item.url
+                    ? "bg-orange-50 text-orange-500"
+                    : "text-gray-600 hover:bg-gray-50"
+                    }`}
+                >
+                  {item.title}
+                </Link>
+              )
             ))}
 
             <hr className="border-gray-100 my-2" />

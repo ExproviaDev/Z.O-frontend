@@ -99,7 +99,7 @@ const UserDashboard = () => {
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/15 bg-Secondary text-white shadow-2xl shadow-slate-900/20 md:rounded-[2.5rem]"
+        className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/10 bg-[#0f172a] text-white shadow-2xl shadow-slate-900/25 md:rounded-[2.5rem]"
       >
         {/* layered glow / depth */}
         <div

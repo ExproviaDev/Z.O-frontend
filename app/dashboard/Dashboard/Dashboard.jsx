@@ -19,34 +19,34 @@ const DashboardHeader = ({ onMenuClick }) => {
   const userImg = user?.profile_image_url;
 
   return (
-    <header className="bg-Secondary border-b border-gray-100 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
+    <header className="bg-[#0f172a] border-b border-white/10 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
         <div prefetch={false} className="flex items-center gap-4">
           <button
             onClick={onMenuClick}
-            className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
+            className="lg:hidden p-2 text-gray-200 hover:bg-white/10 rounded-md"
           >
             <FaBars size={20} />
           </button>
 
           <Link href={"/dashboard"}>
-          <div className="bg-secondary p-2 rounded-lg text-white">
+          <div className="bg-white/10 p-2 rounded-lg text-emerald-400">
             <RxDashboard size={22} />
           </div>
           </Link>
 
-          <h3 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-secondary hidden sm:block">
+          <h3 className="text-xl md:text-2xl font-bold text-white hidden sm:block">
             Dashboard
           </h3>
         </div>
 
       <div className="flex items-center gap-2 md:gap-5">
-        <div className="h-8 w-[1px] bg-gray-200 mx-1"></div>
+        <div className="h-8 w-[1px] bg-white/15 mx-1"></div>
 
         {/* User Profile Dropdown */}
         <div className="relative">
           <button
             onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center gap-2 p-2 md:pr-3 hover:bg-gray-500 rounded-full md:rounded-xl transition-all border border-transparent hover:border-gray-500"
+            className="flex items-center gap-2 p-2 md:pr-3 hover:bg-white/10 rounded-full md:rounded-xl transition-all border border-transparent hover:border-white/20"
           >
             <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md overflow-hidden">
               {userImg ? (
@@ -63,15 +63,15 @@ const DashboardHeader = ({ onMenuClick }) => {
             </div>
 
             <div className="hidden md:block text-left">
-              <p className="text-sm font-bold text-secondary leading-none">
+              <p className="text-sm font-bold text-white leading-none">
                 {userName}
               </p>
-              <p className="text-[10px] text-white font-semibold mt-1 uppercase tracking-wider">
+              <p className="text-[10px] text-gray-300 font-semibold mt-1 uppercase tracking-wider">
                 {user?.role || "Member"}
               </p>
             </div>
             <FaChevronDown
-              className={`text-Primary text-[10px] hidden md:block transition-transform duration-300 ${isProfileOpen ? "rotate-180" : ""}`}
+              className={`text-gray-300 text-[10px] hidden md:block transition-transform duration-300 ${isProfileOpen ? "rotate-180" : ""}`}
             />
           </button>
 

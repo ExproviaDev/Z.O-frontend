@@ -2,11 +2,9 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import CertificateCard from './Components/CertificateCard'; 
 import Link from 'next/link';
-// 🔥 Next.js এর Image কম্পোনেন্ট ইমপোর্ট করা হলো
-import Image from 'next/image'; 
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 
 export default function CertificatePage() {
@@ -35,6 +33,8 @@ export default function CertificatePage() {
   }
 
   const hasParticipated = user.is_participated;
+  const normalizedRoundType = String(user?.round_type || "").toLowerCase().replace(/\s+/g, "_");
+  const isRound2OrAbove = normalizedRoundType.includes("round_2") || normalizedRoundType.includes("round_3");
 
   if (!hasParticipated) {
     return (
@@ -63,82 +63,132 @@ export default function CertificatePage() {
 
   const userId = user.user_id || "0000";
   const shortId = userId.toString().length > 8 ? userId.toString().slice(-6).toUpperCase() : userId.toString().padStart(4, '0');
-  const certificateId = `ZO-26-R1-${shortId}`;
+  const round1CertificateId = `ZO-26-R1-${shortId}`;
+  const fellowshipCertificateId = `ZO-26-FEL-${shortId}`;
+  const promotionCertificateId = `ZO-26-R2P-${shortId}`;
+  const gltsPromoCode = "ZOPART";
+
+  const copyPromoCode = async () => {
+    try {
+      await navigator.clipboard.writeText(gltsPromoCode);
+      toast.success("Promo code copied!");
+    } catch (error) {
+      toast.error("Could not copy promo code.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-6 md:p-10 font-sans">
       <Toaster position="top-right" />
       
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-10">
             <h1 className="text-3xl font-black text-slate-800 mb-2">My Certificates</h1>
-            <p className="text-slate-500">You've successfully completed the challenge. Well done!</p>
+            <p className="text-slate-500">
+              You've successfully completed the challenge. You can collect your participation certificates here.
+            </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Top Banner: Malaysia Bootcamp */}
+        <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
+          <div className="relative grid grid-cols-1 items-stretch md:grid-cols-[1.2fr_1fr]">
+            <div className="h-full min-h-[220px]">
+              <img
+                src="https://res.cloudinary.com/dxgcax7lv/image/upload/v1776503605/WhatsApp_Image_2026-04-18_at_10.53.48_AM_qbfhxf.jpg"
+                alt="Malaysia Bootcamp"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="flex flex-col justify-center p-5 md:p-7">
+              <div className="mb-3 inline-block w-max rounded-full bg-red-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-red-600">
+                Malaysia Bootcamp
+              </div>
+              <h2 className="text-2xl font-black leading-tight text-slate-800 md:text-[28px]">
+                APU International Experience
+              </h2>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
+                Exclusive for Zero Olympiad participants. Apply to join poster presentation, panel discussion,
+                workshop, seminar, and debate events in Malaysia.
+              </p>
+
+              <a
+                href="https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
+              >
+                Apply for Bootcamp <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
             <CertificateCard 
                 userName={user.name || "Participant"} 
                 date={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} 
-                validationId={certificateId} 
+                validationId={round1CertificateId}
+                title="Participation Certificate"
+                subtitle="Round 1: Quiz Olympiad"
+                templatePath="/certificates_round_1.pdf"
+                accentClass="bg-indigo-600"
+                description="Awarded for successfully participating in the Zero Olympiad Round 1 quiz."
+            />
+            <CertificateCard 
+                userName={user.name || "Participant"} 
+                date={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} 
+                validationId={fellowshipCertificateId}
+                title="Fellowship Certificate"
+                subtitle="Zero Olympiad Fellowship"
+                templatePath="/fellowship_certificates.pdf"
+                accentClass="bg-emerald-600"
+                description="Awarded for joining the fellowship participation track of Zero Olympiad."
             />
         </div>
 
-        {/* --- 🔥 Malaysia Bootcamp Promo Section --- */}
-        <div className="mt-16 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-200 flex flex-col md:flex-row gap-8 items-center overflow-hidden relative">
-            
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        {isRound2OrAbove && (
+          <div className="mt-6">
+            <CertificateCard
+              userName={user.name || "Participant"}
+              date={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              validationId={promotionCertificateId}
+              title="Promotion Certificate"
+              subtitle="Qualified for Round 2"
+              templatePath="/certificates_round_2.pdf"
+              accentClass="bg-amber-600"
+              description="This certifies that you successfully completed the Round 1 quiz and were promoted to Round 2."
+            />
+          </div>
+        )}
 
-            {/* Left Side: Next.js Optimized Image */}
-            <div className="w-full md:w-1/2 relative z-10">
-                {/* 🔥 Next.js Image Component ব্যবহার করা হয়েছে */}
-                <Image 
-                    src="/bootcamp-poster.jpg" 
-                    alt="Bootcamp in Malaysia" 
-                    width={800} 
-                    height={500} 
-                    quality={90}
-                    className="w-full h-auto rounded-2xl shadow-md object-cover border border-slate-100"
-                />
+        {/* GLTS Participant Voucher Card */}
+        <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-lg">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="space-y-3">
+              <span className="inline-block rounded-full bg-indigo-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-indigo-600">
+                Participant Voucher
+              </span>
+              <h3 className="text-2xl font-black text-slate-800">GLTS Promo Benefit</h3>
+              <p className="max-w-2xl text-slate-600">
+                As a Zero Olympiad participant, you are eligible for an exclusive GLTS discount voucher.
+                Use the promo code below while enrolling in GLTS.
+              </p>
             </div>
 
-            {/* Right Side: Details & Button */}
-            <div className="w-full md:w-1/2 flex flex-col justify-center relative z-10">
-                <div className="inline-block bg-red-100 text-red-600 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4 w-max">
-                    Special Opportunity
-                </div>
-                
-                <h2 className="text-3xl font-black text-slate-800 mb-2 leading-tight">
-                    Bootcamp in Malaysia 🇲🇾
-                </h2>
-                
-                <p className="text-slate-600 text-[15px] mb-5 font-medium leading-relaxed">
-                    Join us at <span className="text-indigo-600 font-bold">Asia Pacific University (APU)</span> on 10-12 July. Only participants are eligible to apply!
-                </p>
-
-                <div className="flex flex-col gap-2 mb-8 text-sm text-slate-700 font-medium">
-                    <div className="flex items-center gap-3">
-                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs">✓</span> 
-                        Poster Presentation & Panel Discussion
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs">✓</span> 
-                        Workshop, Seminar & Debate Competition
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs">✓</span> 
-                        City Tour & Excursion
-                    </div>
-                </div>
-
-                <a 
-                    href="https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-indigo-600 transition-colors active:scale-95 shadow-lg text-lg group"
-                >
-                    Apply Now <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </a>
+            <div className="flex flex-col items-start gap-3 md:items-end">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Your Promo Code</p>
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 px-6 py-4">
+                <p className="text-3xl font-black tracking-[0.2em] text-indigo-700">{gltsPromoCode}</p>
+              </div>
+              <button
+                onClick={copyPromoCode}
+                className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
+              >
+                Copy Code
+              </button>
             </div>
+          </div>
         </div>
 
       </div>

@@ -84,7 +84,7 @@ export default function Sidebar({ isOpen, onClose }) {
     <>
       <aside
         className={`
-          fixed inset-y-0 left-0 z-[40] w-64 bg-Secondary border-r border-gray-100
+          fixed inset-y-0 left-0 z-[40] w-64 bg-[#0f172a] border-r border-white/10
           transform transition-transform duration-300 ease-in-out
           lg:translate-x-0 lg:fixed lg:top-16 lg:h-[calc(100vh-64px)]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
@@ -110,23 +110,23 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium 
                   ${isActive
-                      ? "text-white bg-Primary border-r-4 border-white "
-                      : "text-white hover:bg-gray-500 hover:text-white"
+                      ? "text-white bg-white/10 border-r-4 border-emerald-400 "
+                      : "text-gray-200 hover:bg-white/5 hover:text-white"
                     }
                 `}
                 >
-                  <span className="text-xl">{item.icon}</span>
+                  <span className={`text-xl ${isActive ? "text-emerald-400" : ""}`}>{item.icon}</span>
                   <span className="text-sm">{item.name}</span>
                 </Link>
               );
             })}
           </nav>
 
-          <div className="pt-4 border-t border-gray-100 space-y-2">
+          <div className="pt-4 border-t border-white/10 space-y-2">
             <Link prefetch={false}
               href="/"
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-white font-medium text-sm hover:bg-gray-500 transition-all"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-200 font-medium text-sm hover:bg-white/5 hover:text-white transition-all"
             >
               <FaHome className="text-xl" />
               <span>Back to Home</span>
