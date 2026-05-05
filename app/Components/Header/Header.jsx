@@ -17,8 +17,10 @@ const navItems = [
   { title: "About Us", url: "/about" },
   { title: "Instruction", url: "/instruction" },
   { title: "Gallery", url: "/gallery" },
-  { title: "FAQ", url: "/faq" },
-  { title: "Contact Us", url: "/contact-us" },
+  
+  { title: "Malaysia Bootcamp", url: "/malaysia-bootcamp" },
+
+  { title: "GLTS", url: "https://glts.faatihaaayat.com/" },
 ];
 
 export default function Header() {
