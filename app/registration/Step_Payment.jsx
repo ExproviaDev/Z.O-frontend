@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { FaMoneyCheckAlt, FaExclamationTriangle, FaArrowRight, FaCheckCircle } from "react-icons/fa";
 
 // ✅ props এ formData রিসিভ করুন
@@ -17,14 +18,42 @@ export default function Step_Payment({prevStep, formData }) {
     }
 
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/bkash/create`);
-      if (res.data.bkashURL) {
+      // ✅ FIX: Backend timeout is 30s, so increase frontend timeout to 35s to avoid mismatch
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/bkash/create`,
+        {},
+        { timeout: 35000 } // Changed from 20000 to 35000ms (35 seconds)
+      );
+
+      if (res?.status === 200 && res?.data?.bkashURL) {
         window.location.href = res.data.bkashURL;
+        return;
       }
-    } catch (err) {
-      Swal.fire({
+
+      // ✅ FIX: Handle missing bkashURL but valid response
+      console.error("bKash create response missing bkashURL", res?.data);
+      const errorMessage = res?.data?.error || "Bkash server response late, Please try again later.";
+      await Swal.fire({
         title: "দুঃখিত!",
-        text: "Payment initiation failed! Please try again.",
+        text: errorMessage + " অনুগ্রহ করে ইন্টারনেট কানেকশন চেক করুন এবং পরে আবার চেষ্টা করুন।",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
+    } catch (err) {
+      console.error("bKash payment initiation failed", err);
+      
+      // ✅ FIX: Provide specific error messages based on error type
+      let errorText = "Payment initialization failed. অনুগ্রহ করে ইন্টারনেট কানেকশন চেক করুন এবং পরে আবার চেষ্টা করুন।";
+      
+      if (err.code === 'ECONNABORTED') {
+        errorText = "Request timeout - Server is slow. Please try again in a moment.";
+      } else if (err.response?.data?.error) {
+        errorText = err.response.data.error;
+      }
+      
+      await Swal.fire({
+        title: "দুঃখিত!",
+        text: errorText,
         icon: "error",
         confirmButtonColor: "#d33",
       });
