@@ -1,20 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import { api } from "../../lib/apiClient";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiUsers, FiCopy, FiCheckCircle, FiPlusCircle, FiAlertCircle } from "react-icons/fi";
 import { toast, Toaster } from "react-hot-toast";
 
 // ১. ডাটা ফেচিং ফাংশন (Query Function)
 const fetchAmbassadorStats = async () => {
-  const token = localStorage.getItem("access_token");
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!token) throw new Error("No access token found");
-
-  const res = await axios.get(`${API_URL}/api/ambassadors/my-stats`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
+  const res = await api.get(`${API_URL}/api/ambassadors/my-stats`);
 
   return res.data;
 };
@@ -36,11 +30,8 @@ export default function AmbassadorDashboard() {
   // ৩. প্রোমো কোড আপডেট করার মিউটেশন (Mutation)
   const updateMutation = useMutation({
     mutationFn: async (code) => {
-      const token = localStorage.getItem("access_token");
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      return axios.put(`${API_URL}/api/ambassadors/update-code`, { newPromoCode: code }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      return api.put(`${API_URL}/api/ambassadors/update-code`, { newPromoCode: code });
     },
     onSuccess: () => {
       // ডাটা রিফ্রেশ করা

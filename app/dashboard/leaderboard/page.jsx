@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import axios from 'axios';
+import { api } from "../../lib/apiClient";
 import Image from 'next/image';
 import { toast, Toaster } from 'react-hot-toast';
 import { useQuery, keepPreviousData } from '@tanstack/react-query'; 
@@ -25,15 +25,13 @@ const SDG_NAMES = [
 const fetchAllLeaderboardData = async ({ queryKey }) => {
   const [_, round] = queryKey;
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-  const token = localStorage.getItem('access_token');
   
-  const res = await axios.get(`${baseUrl}/api/leaderboard`, {
+  const res = await api.get(`${baseUrl}/api/leaderboard`, {
     params: { 
         page: 1, 
         limit: 4000, 
         round 
     },
-    headers: token ? { Authorization: `Bearer ${token}` } : {}
   });
   return res.data.data || [];
 };
@@ -41,11 +39,8 @@ const fetchAllLeaderboardData = async ({ queryKey }) => {
 // ২. স্ট্যাটাস ফেচিং ফাংশন
 const fetchLeaderboardStatus = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-    const token = localStorage.getItem('access_token');
     
-    const res = await axios.get(`${baseUrl}/api/leaderboard/status`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {}
-    });
+    const res = await api.get(`${baseUrl}/api/leaderboard/status`);
     return res.data; 
 };
 
