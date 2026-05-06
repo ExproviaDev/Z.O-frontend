@@ -7,12 +7,15 @@ export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (token, { rejectWithValue }) => {
     try {
+      const sessionId =
+        typeof window !== "undefined" ? localStorage.getItem("session_id") : null;
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,
         {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
+            ...(sessionId ? { "X-Session-Id": sessionId } : {}),
             "Content-Type": "application/json"
           },
         }
