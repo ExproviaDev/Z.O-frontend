@@ -18,7 +18,8 @@ function AuthWrapper({ children }) {
     const token = localStorage.getItem("access_token");
 
     if (token) {
-      if (!user) {
+      // Login response may contain only basic user fields; fetch full profile when missing.
+      if (!user || !user.user_id) {
         dispatch(fetchUserProfile(token));
       }
     } else {
