@@ -32,6 +32,7 @@ export default function ForgotPasswordModal({ onClose }) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: resetEmail }),
+                signal: AbortSignal.timeout(35000),
             });
 
             const data = await res.json();

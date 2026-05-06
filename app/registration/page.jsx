@@ -76,10 +76,10 @@ export default function RegistrationPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(backendData),
+        signal: AbortSignal.timeout(45000),
       });
 
       const data = await res.json();
-      setIsSubmitting(false);
 
       if (res.ok) {
         localStorage.removeItem("reg_formData");
@@ -98,14 +98,22 @@ export default function RegistrationPage() {
         });
       }
     } catch (err) {
-      setIsSubmitting(false);
-      setError("Network error.");
+      const timedOut =
+        err?.name === "AbortError" ||
+        err?.name === "TimeoutError" ||
+        (typeof err?.message === "string" &&
+          err.message.toLowerCase().includes("abort"));
+      setError(timedOut ? "Request timed out." : "Network error.");
       Swal.fire({
-        title: "নেটওয়ার্ক এরর!",
-        text: "দয়া করে আপনার ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।",
+        title: timedOut ? "সার্ভার ব্যস্ত / দেরি হচ্ছে" : "নেটওয়ার্ক এরর!",
+        text: timedOut
+          ? "অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন। খুব বেশি মানুষ একসাথে রেজিস্টার করলে আগের মতই দেখাতে পারে।"
+          : "দয়া করে আপনার ইন্টারনেট কানেকশন চেক করে আবার চেষ্টা করুন।",
         icon: "warning",
         confirmButtonColor: "#f59e0b",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

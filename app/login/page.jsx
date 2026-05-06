@@ -1,7 +1,7 @@
 
 
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FiUser, FiLock, FiEye, FiEyeOff } from "react-icons/fi"; 
 import { MdOutlineArrowBackIos } from "react-icons/md"; 
 import Link from "next/link";
@@ -22,6 +22,34 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+  const progressIntervalRef = useRef(null);
+  const finishLoginRef = useRef(null);
+
+  useEffect(() => {
+    if (!loading) return;
+    setLoadProgress(1);
+    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+    progressIntervalRef.current = setInterval(() => {
+      setLoadProgress((p) => {
+        if (p >= 93) return p;
+        const step = p < 28 ? 4 : p < 55 ? 3 : p < 75 ? 2 : 1;
+        return Math.min(93, p + step);
+      });
+    }, 95);
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+    };
+  }, [loading]);
+
+  useEffect(() => {
+    return () => {
+      if (finishLoginRef.current) clearTimeout(finishLoginRef.current);
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,12 +62,14 @@ export default function LoginPage() {
     setError("");
 
     const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`;
+    let loginSucceeded = false;
 
     try {
       const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        signal: AbortSignal.timeout(35000),
       });
 
       let data = null;
@@ -52,6 +82,7 @@ export default function LoginPage() {
       }
 
       if (res.ok && data.token) {
+        loginSucceeded = true;
         localStorage.setItem("access_token", data.token);
         localStorage.setItem("user_data", JSON.stringify(data.user));
         Cookies.set("access_token", data.token, { expires: 1 });
@@ -62,9 +93,30 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.error("Login Error:", err);
-      setError("Something went wrong. Please try again.");
+      const aborted =
+        err?.name === "AbortError" ||
+        err?.name === "TimeoutError" ||
+        (typeof err?.message === "string" &&
+          err.message.toLowerCase().includes("abort"));
+      if (aborted) {
+        setError(
+          "সার্ভার থেকে খুব দেরিতে সাড়া আসছে (ব্যস্ত থাকতে পারে)। একটু পরে আবার চেষ্টা করুন।"
+        );
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     } finally {
-      setLoading(false);
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+      setLoadProgress(100);
+      if (finishLoginRef.current) clearTimeout(finishLoginRef.current);
+      finishLoginRef.current = setTimeout(() => {
+        setLoading(false);
+        setLoadProgress(0);
+        finishLoginRef.current = null;
+      }, loginSucceeded ? 160 : 450);
     }
   };
 
@@ -161,7 +213,27 @@ export default function LoginPage() {
                 >
                   {loading ? "Signing in..." : "Sign in"}
                 </button>
-                
+
+                {loading && (
+                  <div
+                    className="rounded-xl border border-slate-200 bg-slate-50/90 px-4 py-3 shadow-inner"
+                    aria-busy="true"
+                    aria-live="polite"
+                  >
+                    <div className="mb-2 flex items-center justify-between gap-3 text-xs font-semibold text-slate-600">
+                      <span className="tabular-nums text-[#0F4C8A]">{Math.round(loadProgress)}%</span>
+                      <span className="text-right font-normal text-slate-500">
+                        সংযোগ হচ্ছে—সার্ভার থেকে সাড়া আসা পর্যন্ত একটু অপেক্ষা করুন।
+                      </span>
+                    </div>
+                    <div className="h-2.5 overflow-hidden rounded-full bg-slate-200/90">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-[#0F4C8A] to-[#2672B8] transition-[width] duration-150 ease-out"
+                        style={{ width: `${Math.min(100, loadProgress)}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="text-center text-sm text-gray-500 mt-4 font-medium">
