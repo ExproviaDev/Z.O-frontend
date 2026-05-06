@@ -34,10 +34,11 @@ export default function Step4_VerifyOTP({ email }) {
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
-            const response = await axios.post(`${API_URL}/api/user/verify-otp`, {
-                email: email,
-                token: otp
-            });
+            const response = await axios.post(
+                `${API_URL}/api/user/verify-otp`,
+                { email: email, token: otp },
+                { timeout: 35000 }
+            );
 
             if (response.status === 200) {
                 Swal.fire({
@@ -53,11 +54,12 @@ export default function Step4_VerifyOTP({ email }) {
                 });
             }
         } catch (error) {
-            Swal.fire(
-                "Verification Failed", 
-                error.response?.data?.message || "Invalid or expired OTP. Please try again.", 
-                "error"
-            );
+            const msg =
+                error.code === "ECONNABORTED"
+                    ? "সার্ভার থেকে দেরি হচ্ছে। একটু পরে আবার চেষ্টা করুন।"
+                    : error.response?.data?.message ||
+                      "Invalid or expired OTP. Please try again.";
+            Swal.fire("Verification Failed", msg, "error");
         } finally {
             setLoading(false);
         }
@@ -69,11 +71,19 @@ export default function Step4_VerifyOTP({ email }) {
         setResendLoading(true);
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
-            await axios.post(`${API_URL}/api/user/resend-otp`, { email });
+            await axios.post(
+                `${API_URL}/api/user/resend-otp`,
+                { email },
+                { timeout: 35000 }
+            );
             Swal.fire("Success", "A new 6-digit verification code has been sent to your email.", "success");
             setCountdown(60); 
         } catch (error) {
-            Swal.fire("Error", "Failed to resend code. Please try again later.", "error");
+            const msg =
+                error.code === "ECONNABORTED"
+                    ? "সার্ভার ব্যস্ত থাকতে পারে। কিছুক্ষণ পর আবার চেষ্টা করুন।"
+                    : "Failed to resend code. Please try again later.";
+            Swal.fire("Error", msg, "error");
         } finally {
             setResendLoading(false);
         }
