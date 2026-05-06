@@ -65,12 +65,34 @@ export default function LoginPage() {
     let loginSucceeded = false;
 
     try {
-      const res = await fetch(backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        signal: AbortSignal.timeout(35000),
-      });
+      const loginWithRetry = async (retries = 3) => {
+        for (let i = 0; i < retries; i++) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s per try
+          try {
+            const r = await fetch(backendUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+              signal: controller.signal,
+            });
+            clearTimeout(timeoutId);
+
+            if (r.status === 429 && i < retries - 1) {
+              await new Promise((resolve) => setTimeout(resolve, 800 * (i + 1)));
+              continue;
+            }
+
+            return r;
+          } catch (err) {
+            clearTimeout(timeoutId);
+            if (i === retries - 1) throw err;
+            await new Promise((resolve) => setTimeout(resolve, 500 * (i + 1)));
+          }
+        }
+      };
+
+      const res = await loginWithRetry(3);
 
       let data = null;
       const contentType = res.headers.get("content-type") || "";
@@ -84,6 +106,7 @@ export default function LoginPage() {
       if (res.ok && data.token) {
         loginSucceeded = true;
         localStorage.setItem("access_token", data.token);
+        // data.user may be basic from login; full profile comes from /api/auth/me
         localStorage.setItem("user_data", JSON.stringify(data.user));
         Cookies.set("access_token", data.token, { expires: 1 });
         dispatch(setLogin({ user: data.user, token: data.token }));
