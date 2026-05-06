@@ -80,8 +80,8 @@ const EmpowerYouth = () => {
                     First Round | MCQ Contest
                   </h4>
                   <p className="text-xs text-gray-600">
-                    MCQ Contest Register in your class category (as of 8 may
-                    2026). Complete 30 MCQ questions from UN-recognized courses.
+                    MCQ Contest: exams by category on 14, 15, and 16 May 2026.
+                    Complete 30 MCQ questions from UN-recognized courses.
                     Winners advance to the second round.
                   </p>
                 </div>

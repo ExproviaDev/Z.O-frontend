@@ -25,14 +25,14 @@ const timelineData = [
   },
   {
     title: "1st Round Exam",
-    date: "7, 8, 9 May 2026",
-    desc: "The Round 1 exam will consist of 30 Multiple Choice Questions (MCQs) carrying a total of 30 marks, with a strict time limit of 30 minutes. Participants will be able to view their scores on the website immediately after submitting the exam. There is no predetermined passing mark; instead, the top 200 students from each category will qualify for Round 2. The exams are scheduled based on the participant's category: May 7th for SDG Activists, May 8th for SDG Ambassadors, and May 9th for SDG Achievers.",
+    date: "14, 15, 16 May 2026",
+    desc: "The Round 1 exam will consist of 30 Multiple Choice Questions (MCQs) carrying a total of 30 marks, with a strict time limit of 30 minutes. Participants will be able to view their scores on the website immediately after submitting the exam. There is no predetermined passing mark; instead, the top 200 students from each category will qualify for Round 2. The exams are scheduled based on the participant's category: May 14th for SDG Activists, May 15th for SDG Ambassadors, and May 16th for SDG Achievers.",
     icon: <FaRegEdit />,
     align: "left",
   },
   {
     title: "1st Round Result",
-    date: "9 May 2026",
+    date: "17 May 2026",
     desc: "Results will be published!! Participants will be selected for the second round of their MCQ scores. Please check your dashboard or email for more information.",
     icon: <FaRegCheckCircle />,
     align: "right",
