@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { api } from "../../lib/apiClient";
 import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
@@ -31,10 +31,7 @@ const MyQuizzes = () => {
     let lastError = null;
     for (const url of endpoints) {
       try {
-        return await axios.get(url, {
-          params: { category },
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        return await api.get(url, { params: { category } });
       } catch (err) {
         lastError = err;
         if (err?.response?.status !== 404) throw err;
@@ -50,9 +47,7 @@ const MyQuizzes = () => {
     ];
     for (const url of endpoints) {
       try {
-        const response = await axios.get(url, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await api.get(url);
         return response?.data?.attempts || [];
       } catch (err) {
         if (err?.response?.status !== 404) throw err;

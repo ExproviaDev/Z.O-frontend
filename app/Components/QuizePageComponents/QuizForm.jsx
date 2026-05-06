@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { api } from "../../lib/apiClient";
 import Swal from "sweetalert2";
 import QuizQuestion from "./QuizQuestion";
 import NextButton from "./NextButton";
@@ -103,7 +103,7 @@ const QuizForm = ({ questions, quizInfo }) => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
       // আপনার আগের কাজ করা রাউটটিই ব্যবহার করুন
-      const response = await axios.post(`${API_URL}/api/admin/submit-quiz`, submissionData);
+      const response = await api.post(`${API_URL}/api/admin/submit-quiz`, submissionData);
 
       if (response.data.success) {
         dispatch(updateParticipation());
