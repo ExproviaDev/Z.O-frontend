@@ -100,10 +100,10 @@ export default function LoginPage() {
           err.message.toLowerCase().includes("abort"));
       if (aborted) {
         setError(
-          "সার্ভার থেকে খুব দেরিতে সাড়া আসছে (ব্যস্ত থাকতে পারে)। একটু পরে আবার চেষ্টা করুন।"
+          "আপনার ইন্টারনেট সংযোগে সমস্যা হতে পারে। দয়া করে অন্য একটি নেটওয়ার্ক দিয়ে আবার চেষ্টা করুন।"
         );
       } else {
-        setError("Something went wrong. Please try again.");
+        setError("there was an network issue, please try a different network or try again later.");
       }
     } finally {
       if (progressIntervalRef.current) {
