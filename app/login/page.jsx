@@ -106,6 +106,9 @@ export default function LoginPage() {
       if (res.ok && data.token) {
         loginSucceeded = true;
         localStorage.setItem("access_token", data.token);
+        if (data.sessionId) {
+          localStorage.setItem("session_id", data.sessionId);
+        }
         // data.user may be basic from login; full profile comes from /api/auth/me
         localStorage.setItem("user_data", JSON.stringify(data.user));
         Cookies.set("access_token", data.token, { expires: 1 });
