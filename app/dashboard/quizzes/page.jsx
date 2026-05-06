@@ -135,9 +135,9 @@ const MyQuizzes = () => {
 
   // 🔥 ইউজারের ক্যাটাগরি অনুযায়ী ডাইনামিক ডেট বের করার ফাংশন
   const getExamDate = (category) => {
-    if (category === "SDG Activist") return "May 7th";
-    if (category === "SDG Ambassador") return "May 8th";
-    if (category === "SDG Achiever") return "May 9th";
+    if (category === "SDG Activist") return "May 14th";
+    if (category === "SDG Ambassador") return "May 15th";
+    if (category === "SDG Achiever") return "May 16th";
     return "the scheduled date";
   };
 
