@@ -70,7 +70,9 @@ const QuizForm = ({ questions, quizInfo }) => {
     const currentRoundNumber = parseInt(rawRoundType.split("_")[1]) || 1;
 
     // নতুন যোগ করা হয়েছে: SDG Role (লিডারবোর্ড ফিল্টারের জন্য)
-    const sdgCategory = user?.sdg_role || "SDG Activist";
+    const level = String(user?.grade_level || user?.current_level || user?.gradeLevel || "");
+    const isAdmissionCandidate = level.includes("Admission Candidate") || level.includes("Musannif");
+    const sdgCategory = isAdmissionCandidate ? "SDG Ambassador" : user?.sdg_role || "SDG Activist";
 
     const totalTimeInSeconds = (quizInfo?.time_limit || 30) * 60;
     const timeSpent = totalTimeInSeconds - timeLeft;

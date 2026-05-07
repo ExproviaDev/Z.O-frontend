@@ -1,6 +1,8 @@
 import Image from "next/image";
+import fs from "fs";
+import path from "path";
 
-const partners = [
+const seasonOnePartners = [
   { name: "YOUReach", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294134/Logo_with_bg.jpg_grshty.jpg" },
   { name: "Faatiha Aayat Academy", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775295723/high_resolution_hwwc5o.jpg" },
   { name: "MFH Science Club Olympiad 2023", logo: "https://res.cloudinary.com/dsga4gyw9/image/upload/q_auto/f_auto/v1775294133/Matrh_jmmuoa.jpg" },
@@ -25,7 +27,79 @@ const partners = [
   { name: "International Olympiads", logo: "https://res.cloudinary.com/dxgcax7lv/image/upload/v1776486128/International_Olympiads_zuciaw.png" },
 ];
 
+const partnerImageExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".svg", ".avif"]);
+
+const formatPartnerName = (fileName) =>
+  fileName
+    .replace(/\.[^/.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const normalizeFolderName = (folderName) => folderName.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+const findSeasonTwoPartnerFolder = () => {
+  const publicPath = path.join(process.cwd(), "public");
+  const targetFolderName = "seasontwopartner";
+
+  if (!fs.existsSync(publicPath)) return null;
+
+  return fs
+    .readdirSync(publicPath, { withFileTypes: true })
+    .find((entry) => entry.isDirectory() && normalizeFolderName(entry.name) === targetFolderName)
+    ?.name;
+};
+
+const getSeasonTwoPartners = () => {
+  const folderName = findSeasonTwoPartnerFolder();
+  if (!folderName) return [];
+
+  const folderPath = path.join(process.cwd(), "public", folderName);
+
+  if (!fs.existsSync(folderPath)) return [];
+
+  return fs
+    .readdirSync(folderPath, { withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name)
+    .filter((fileName) => partnerImageExtensions.has(path.extname(fileName).toLowerCase()))
+    .sort((a, b) => a.localeCompare(b))
+    .map((fileName) => ({
+      name: formatPartnerName(fileName),
+      logo: `/${encodeURIComponent(folderName)}/${encodeURIComponent(fileName)}`,
+    }));
+};
+
+const PartnerGrid = ({ partners }) => (
+  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-8 justify-items-center">
+    {partners.map((partner, index) => (
+      <div
+        key={`${partner.name}-${index}`}
+        className="group relative flex items-center justify-center w-20 h-20 md:w-28 md:h-28 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <div className="relative w-3/4 h-3/4 grayscale-0 group-hover:grayscale transition-all duration-500">
+          <Image
+            src={partner.logo}
+            alt={partner.name}
+            fill
+            sizes="(min-width: 768px) 84px, 60px"
+            className="object-contain p-2"
+          />
+        </div>
+
+        <div className="absolute -bottom-1 translate-y-full opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 pointer-events-none z-20">
+          <div className="bg-gray-900 text-white text-[9px] px-2 py-1 rounded whitespace-nowrap">
+            {partner.name}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 const Supporters = () => {
+  const seasonTwoPartners = getSeasonTwoPartners();
+
   return (
     <section className="relative w-full py-10 md:py-16 px-4  bg-gray-50">
       <div className="max-w-6xl mx-auto text-center px-5">
@@ -38,7 +112,7 @@ const Supporters = () => {
         {/* Header */}
         <div className="mb-10">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
-            Our Valued Partners & Supporters <span className="text-[#f16522]">(Season Two)</span>
+            Our Valued Partners & Supporters <span className="text-[#f16522]">(Season One)</span>
           </h2>
           <p className="text-gray-500 text-sm md:text-base max-w-2xl mx-auto">
             Supported by leading organizations globally.
@@ -46,31 +120,22 @@ const Supporters = () => {
         </div>
 
         {/* 3-Row Logo Grid (on Desktop) */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-8 justify-items-center">
-          {partners.map((partner, index) => (
-            <div 
-              key={index} 
-              className="group relative flex items-center justify-center w-20 h-20 md:w-28 md:h-28 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
-            >
-              {/* Initial: Color | Hover: B&W */}
-              <div className="relative  w-3/4 h-3/4 grayscale-0 group-hover:grayscale transition-all duration-500">
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  fill
-                  className="object-contain p-2"
-                />
-              </div>
-              
-              {/* Tooltip */}
-              <div className="absolute -bottom-1 translate-y-full opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 pointer-events-none z-20">
-                <div className="bg-gray-900 text-white text-[9px] px-2 py-1 rounded whitespace-nowrap">
-                  {partner.name}
-                </div>
-              </div>
+        <PartnerGrid partners={seasonOnePartners} />
+
+        {seasonTwoPartners.length > 0 && (
+          <div className="mt-16 rounded-4xl border border-[#f16522]/10 bg-linear-to-br from-[#fff7ed] via-white to-[#e8f3f8] px-4 py-10 md:px-10 md:py-12 shadow-sm">
+            <div className="mb-10">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3">
+                Our Valued Partners & Supporters <span className="text-[#f16522]">(Season Two)</span>
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+                Supported by our Season Two partner organizations.
+              </p>
             </div>
-          ))}
-        </div>
+
+            <PartnerGrid partners={seasonTwoPartners} />
+          </div>
+        )}
 
       </div>
     </section>

@@ -35,7 +35,7 @@ export default function MyCourses() {
       return {
         title: "Climate Change International Legal Regime",
         link: "https://unccelearn.org/course/view.php?id=68&page=overview&lang=en",
-        desc: "University & Diploma (or equivalent) - (SDG 11 to SDG 17)",
+        desc: "Above (Bachelor, Diploma, Masters or equivalent) - (SDG 11 to SDG 17)",
       };
     }
     return null;

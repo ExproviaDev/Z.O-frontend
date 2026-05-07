@@ -14,12 +14,18 @@ const MyQuizzes = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const isAdmissionCandidate = (user) => {
+    const level = String(user?.grade_level || user?.current_level || user?.gradeLevel || "");
+    return level.includes("Admission Candidate") || level.includes("Musannif");
+  };
+
   const resolveCategoryFromUser = (user) => {
     const normalizedRound = String(user?.round_type || "").toLowerCase().replace(/\s+/g, "_");
     let category = "SDG Activist";
     if (normalizedRound.includes("round_3")) category = "SDG Achiever";
     else if (normalizedRound.includes("round_2")) category = "SDG Ambassador";
     if (user?.sdg_role) category = user.sdg_role;
+    if (isAdmissionCandidate(user)) category = "SDG Ambassador";
     return category;
   };
 
@@ -130,9 +136,9 @@ const MyQuizzes = () => {
 
   // 🔥 ইউজারের ক্যাটাগরি অনুযায়ী ডাইনামিক ডেট বের করার ফাংশন
   const getExamDate = (category) => {
-    if (category === "SDG Activist") return "May 14th";
-    if (category === "SDG Ambassador") return "May 15th";
-    if (category === "SDG Achiever") return "May 16th";
+    if (category === "SDG Activist") return "14 May";
+    if (category === "SDG Ambassador") return "15 May";
+    if (category === "SDG Achiever") return "16 May";
     return "the scheduled date";
   };
 

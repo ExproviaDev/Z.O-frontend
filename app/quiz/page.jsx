@@ -16,10 +16,19 @@ export default function QuizPage() {
   const [hasAttempted, setHasAttempted] = useState(false);
   const [checkingAttempt, setCheckingAttempt] = useState(true);
 
+  const resolveQuizCategory = (profile) => {
+    const level = String(profile?.grade_level || profile?.current_level || profile?.gradeLevel || "");
+    if (level.includes("Admission Candidate") || level.includes("Musannif")) {
+      return "SDG Ambassador";
+    }
+    return profile?.sdg_role;
+  };
+
   // ১. ইউজার ডাটা এবং কুইজ লিস্ট ফেচ করা
   useEffect(() => {
-    if (user?.sdg_role) {
-      dispatch(fetchUserQuizzes(user.sdg_role));
+    const quizCategory = resolveQuizCategory(user);
+    if (quizCategory) {
+      dispatch(fetchUserQuizzes(quizCategory));
     }
   }, [dispatch, user]);
 
