@@ -19,17 +19,17 @@ export default function HeroSection() {
   const stats = [
     {
       icon: <FaCalendarAlt />,
-      number: "18 February, 2026",
+      number: "18 February 2026",
       label: "Registration Opens",
     },
     {
       icon: <FaClock />,
-      number: "6 May, 2026",
-      label: "Registration Deadline",
+      number: "13 May 2026",
+      label: "Registration Last Date",
     },
     {
       icon: <FaTrophy />,
-      number: "6 June, 2026",
+      number: "13 June 2026",
       label: "Grand Finale",
     },
   ];

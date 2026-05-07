@@ -20,7 +20,7 @@ const plans = [
   },
   {
     title: "SDG Ambassador",
-    grade: "Class 9 – 12",
+    grade: "Class 9 - Varsity Admission",
     prize: "300",
     icon: <FiAward className="text-blue-500" size={24} />,
     features: [
@@ -35,7 +35,7 @@ const plans = [
   },
   {
     title: "SDG Achiever",
-    grade: "University & Higher Ed",
+    grade: "Above",
     prize: "300",
     icon: <FiZap className="text-purple-500" size={24} />,
     features: [
