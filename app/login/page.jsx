@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FiUser, FiLock, FiEye, FiEyeOff } from "react-icons/fi"; 
 import { MdOutlineArrowBackIos } from "react-icons/md"; 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../store/slices/authSlice"; 
 import Cookies from "js-cookie";
@@ -14,8 +14,6 @@ import ForgotPasswordModal from "../Components/ForgotPasswordModal";
 export default function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -23,8 +21,18 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+  const [statusMessage, setStatusMessage] = useState(
+    "সংযোগ হচ্ছে—সার্ভার থেকে সাড়া আসা পর্যন্ত একটু অপেক্ষা করুন।"
+  );
+  const [redirecting, setRedirecting] = useState(false);
   const progressIntervalRef = useRef(null);
   const finishLoginRef = useRef(null);
+
+  // Pre-warm the homepage bundle so post-login navigation feels instant
+  // even on slow networks where global prefetch is disabled.
+  useEffect(() => {
+    router.prefetch("/");
+  }, [router]);
 
   useEffect(() => {
     if (!loading) return;
@@ -60,6 +68,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setStatusMessage("সংযোগ হচ্ছে—সার্ভার থেকে সাড়া আসা পর্যন্ত একটু অপেক্ষা করুন।");
 
     const backendUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`;
     let loginSucceeded = false;
@@ -68,7 +77,7 @@ export default function LoginPage() {
       const loginWithRetry = async (retries = 3) => {
         for (let i = 0; i < retries; i++) {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s per try
+          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s per try
           try {
             const r = await fetch(backendUrl, {
               method: "POST",
@@ -106,11 +115,17 @@ export default function LoginPage() {
       if (res.ok && data.token) {
         loginSucceeded = true;
         localStorage.setItem("access_token", data.token);
-        // data.user may be basic from login; full profile comes from /api/auth/me
+        // Login response already includes the full profile, so no /api/auth/me round trip is needed here.
         localStorage.setItem("user_data", JSON.stringify(data.user));
         Cookies.set("access_token", data.token, { expires: 1 });
         dispatch(setLogin({ user: data.user, token: data.token }));
-        router.replace(callbackUrl);
+        setStatusMessage("লগইন সফল! হোমপেজে নিয়ে যাওয়া হচ্ছে…");
+        setLoadProgress(97);
+        // Cover the login page with a transition overlay so the user immediately
+        // sees a navigation state instead of a "stuck" login form while the
+        // homepage bundle finishes loading on slower networks.
+        setRedirecting(true);
+        router.replace("/");
       } else {
         setError(data.message || "Invalid credentials. Please try again.");
       }
@@ -144,6 +159,33 @@ export default function LoginPage() {
   };
 
   return (
+    <>
+      {redirecting && (
+        <div
+          className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-linear-to-br from-[#0F4C8A] via-[#1A5F9E] to-[#0A3866] text-white"
+          aria-busy="true"
+          aria-live="polite"
+          role="status"
+        >
+          <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-white/10 shadow-2xl backdrop-blur-sm">
+            <span className="absolute inset-0 animate-ping rounded-full bg-white/10" />
+            <span className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-white border-r-white/40" />
+            <svg
+              className="relative h-12 w-12 text-white drop-shadow-md"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <p className="mt-8 text-2xl font-semibold tracking-wide">
+            Login Successful
+          </p>
+        </div>
+      )}
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 p-4 sm:p-0 font-sans">
       <div className="bg-white w-full max-w-5xl h-auto md:h-[650px] shadow-2xl rounded-3xl overflow-hidden flex flex-col md:flex-row">
         
@@ -246,7 +288,7 @@ export default function LoginPage() {
                     <div className="mb-2 flex items-center justify-between gap-3 text-xs font-semibold text-slate-600">
                       <span className="tabular-nums text-[#0F4C8A]">{Math.round(loadProgress)}%</span>
                       <span className="text-right font-normal text-slate-500">
-                        সংযোগ হচ্ছে—সার্ভার থেকে সাড়া আসা পর্যন্ত একটু অপেক্ষা করুন।
+                        {statusMessage}
                       </span>
                     </div>
                     <div className="h-2.5 overflow-hidden rounded-full bg-slate-200/90">
@@ -274,5 +316,6 @@ export default function LoginPage() {
 
       {isModalOpen && <ForgotPasswordModal onClose={() => setIsModalOpen(false)} />}
     </div>
+    </>
   );
 }
