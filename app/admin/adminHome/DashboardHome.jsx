@@ -7,6 +7,7 @@ import { FiRefreshCw } from "react-icons/fi";
 import StatsSection from "../components/ChartStatTable/StatCard";
 import SDGChart from "../components/ChartStatTable/Chart";
 import DistributionPieChart from "../components/ChartStatTable/PieChart";
+import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
 
 // ডাটা ফেচিং ফাংশন
 const fetchDashboardStats = async () => {
@@ -72,9 +73,12 @@ export default function DashboardHome() {
 
   if (error) {
     return (
-      <div className="text-center py-10 text-red-500 font-bold">
-        Error loading dashboard data. Please try again.
-      </div>
+      <LoadFailedFallback
+        error={error}
+        title="Couldn't load dashboard stats"
+        description="We couldn't fetch the latest dashboard data. You can retry, or sign in again if your session has expired."
+        onRetry={handleRefresh}
+      />
     );
   }
 

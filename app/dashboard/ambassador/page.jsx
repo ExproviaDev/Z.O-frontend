@@ -4,6 +4,7 @@ import { api } from "../../lib/apiClient";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiUsers, FiCopy, FiCheckCircle, FiPlusCircle, FiAlertCircle } from "react-icons/fi";
 import { toast, Toaster } from "react-hot-toast";
+import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
 
 // ১. ডাটা ফেচিং ফাংশন (Query Function)
 const fetchAmbassadorStats = async () => {
@@ -18,7 +19,7 @@ export default function AmbassadorDashboard() {
   const [newPromoInput, setNewPromoInput] = useState("");
   
   // ২. useQuery হুক ব্যবহার করে ডাটা ফেচ
-  const { data: stats, isLoading, isError, error } = useQuery({
+  const { data: stats, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["ambassador-stats"],
     queryFn: fetchAmbassadorStats,
     staleTime: 5 * 60 * 1000,
@@ -63,10 +64,12 @@ export default function AmbassadorDashboard() {
 
   if (isError) {
     return (
-      <div className="p-10 text-center text-red-500">
-        <p>Failed to load data. Please try again later.</p>
-        <p className="text-xs text-gray-400 mt-2">{error?.message}</p>
-      </div>
+      <LoadFailedFallback
+        error={error}
+        title="Couldn't load your ambassador stats"
+        description="We couldn't fetch your referral and promo stats. Try again, or sign in again if your session has expired."
+        onRetry={refetch}
+      />
     );
   }
 

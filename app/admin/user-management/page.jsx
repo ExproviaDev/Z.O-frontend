@@ -8,6 +8,7 @@ import {
   FaTrashAlt, FaUserShield, FaSearch, FaChevronLeft,
   FaChevronRight, FaEye, FaUserPlus, FaTimes, FaMapMarkerAlt, FaUniversity
 } from "react-icons/fa";
+import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 const USERS_PER_PAGE = 20;
@@ -162,9 +163,12 @@ export default function RoleManagement() {
   if (!isAdmin) return <div className="p-20 text-center font-bold text-red-500">403 | Access Denied</div>;
   if (error && currentUsers.length === 0) {
     return (
-      <div className="p-20 text-center font-bold text-red-500">
-        Failed to load users. Please try again.
-      </div>
+      <LoadFailedFallback
+        error={error}
+        title="Couldn't load users"
+        description="We couldn't load the user list. Try again, or sign in again if your session has expired."
+        onRetry={refreshUsers}
+      />
     );
   }
 
@@ -205,7 +209,7 @@ export default function RoleManagement() {
             </select>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2"
+              className="bg-[#0F172A] text-white px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2 hover:bg-[#020617]"
             >
               <FaUserPlus /> Add Member
             </button>
@@ -429,7 +433,7 @@ export default function RoleManagement() {
                 />
               </div>
               <div className="pt-4 flex gap-3">
-                <button type="submit" className="flex-1 py-3 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Grant Access</button>
+                <button type="submit" className="flex-1 py-3 bg-[#0F172A] text-white rounded-xl text-sm font-bold hover:bg-[#020617] shadow-lg shadow-[#020617]/20 transition-all active:scale-[0.98]">Grant Access</button>
               </div>
             </form>
           </div>

@@ -208,7 +208,7 @@ const VideoEvaluation = () => {
     <button
       onClick={() => { setActiveTab(id); setPage(1); }}
       className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${activeTab === id
-          ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200'
+          ? 'bg-[#0F172A] text-white shadow-lg shadow-black/20'
           : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-100'
         }`}
     >

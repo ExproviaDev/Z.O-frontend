@@ -67,7 +67,7 @@ export default function QuizManagementPage() {
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <button
             onClick={() => router.push("/admin/quiz-management/add")}
-            className="flex items-center gap-2 px-6 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium shadow-sm"
+            className="flex items-center gap-2 px-6 py-2.5 bg-[#0F172A] text-white rounded-lg hover:bg-[#020617] transition-all font-medium shadow-sm"
           >
             <FiPlus /> Add New Quiz
           </button>

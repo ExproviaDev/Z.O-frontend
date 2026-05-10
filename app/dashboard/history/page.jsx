@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { pdf } from "@react-pdf/renderer"; // 🔥 Import pdf function
-import { FiPrinter, FiAlertCircle } from "react-icons/fi";
+import { FiPrinter } from "react-icons/fi";
 import InvoiceDocument from "./Components/InvoiceDocument"; // 🔥 Import the document we made
+import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
 
 // ডাটা ফেচিং ফাংশন
 const fetchUserInvoice = async () => {
@@ -21,7 +22,7 @@ export default function InvoicePage() {
   const [isGenerating, setIsGenerating] = useState(false);
 
   // ১. ডাটা ফেচ করা
-  const { data: invoice, isLoading, isError, error } = useQuery({
+  const { data: invoice, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["my-invoice"],
     queryFn: fetchUserInvoice,
     staleTime: Infinity,
@@ -48,10 +49,12 @@ export default function InvoicePage() {
   if (isLoading) return <div className="text-center p-10">Loading invoice data...</div>;
   
   if (isError) return (
-    <div className="flex flex-col items-center justify-center h-[60vh] text-red-500">
-        <FiAlertCircle size={40} className="mb-2"/>
-        <p>Failed to load invoice information.</p>
-    </div>
+    <LoadFailedFallback
+      error={error}
+      title="Couldn't load your invoice"
+      description="We couldn't fetch your invoice information. Try again, or sign in again if your session has expired."
+      onRetry={refetch}
+    />
   );
 
   return (

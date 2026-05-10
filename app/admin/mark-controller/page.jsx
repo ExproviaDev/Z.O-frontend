@@ -4,9 +4,31 @@ import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 
+// SDG number → name mapping (matches sdg_category values stored in round_performances)
+const SDG_NAMES = [
+    "No Poverty",
+    "Zero Hunger",
+    "Good Health and Well-being",
+    "Quality Education",
+    "Gender Equality",
+    "Clean Water and Sanitation",
+    "Affordable and Clean Energy",
+    "Decent Work and Economic Growth",
+    "Industry, Innovation and Infrastructure",
+    "Reduced Inequalities",
+    "Sustainable Cities and Communities",
+    "Responsible Consumption and Production",
+    "Climate Action",
+    "Life Below Water",
+    "Life on Land",
+    "Peace, Justice and Strong Institutions",
+    "Partnerships for the Goals",
+];
+
 export default function LeaderboardPage() {
     const [round, setRound] = useState(1);
-    const [category, setCategory] = useState("All");
+    // "all" or a string number "1"–"17"
+    const [category, setCategory] = useState("all");
 
 
     const [page, setPage] = useState(1);
@@ -27,7 +49,7 @@ export default function LeaderboardPage() {
         try {
             const token = localStorage.getItem("access_token");
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/mark/view?roundNumber=${round}&category=${category}&page=${page}&limit=${limit}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/mark/view?roundNumber=${round}&sdgNumber=${category}&page=${page}&limit=${limit}`,
                 { 
                     headers: { Authorization: `Bearer ${token}` },
                     signal
@@ -48,13 +70,25 @@ export default function LeaderboardPage() {
     };
 
 
+    const isAllSdg = category === "all";
+    const selectedSdgNum = isAllSdg ? null : parseInt(category);
+    const selectedSdgName = selectedSdgNum ? SDG_NAMES[selectedSdgNum - 1] : null;
+
+    const promoteButtonLabel = isAllSdg
+        ? "Promote All SDGs"
+        : `Promote SDG ${selectedSdgNum}`;
+
     const handlePromoteUsers = async () => {
+        const scopeText = isAllSdg
+            ? `Top ${promotionLimit} users from EACH of the 17 SDG categories`
+            : `Top ${promotionLimit} users from SDG ${selectedSdgNum}: ${selectedSdgName}`;
+
         const result = await Swal.fire({
             title: 'Are you sure?',
-            text: `You are about to promote Top ${promotionLimit} users from EACH of the 17 SDG categories!`,
+            text: `You are about to promote ${scopeText} to Round ${parseInt(round) + 1}!`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#4F46E5',
+            confirmButtonColor: '#0F172A',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Promote Them! 🚀',
             background: '#fff',
@@ -64,7 +98,6 @@ export default function LeaderboardPage() {
         });
 
         if (!result.isConfirmed) return;
-
 
         setIsPromoting(true);
         setProgress(0);
@@ -79,9 +112,14 @@ export default function LeaderboardPage() {
 
         try {
             const token = localStorage.getItem("access_token");
+            const body = {
+                roundNumber: parseInt(round),
+                limit: parseInt(promotionLimit),
+                ...(selectedSdgNum ? { sdgNumber: selectedSdgNum } : {}),
+            };
             const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/mark/promote-users`,
-                { roundNumber: parseInt(round), limit: parseInt(promotionLimit) },
+                body,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -184,11 +222,13 @@ export default function LeaderboardPage() {
 
                 <div className="form-control w-full md:w-64">
                     <label className="label font-bold text-gray-400 text-[10px] uppercase tracking-wider mb-1">Filter by SDG</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered font-bold text-indigo-600 bg-indigo-50 border-indigo-100">
-                        <option value="All">All 17 Categories</option>
-                        <option value="No Poverty">1. No Poverty</option>
-                        <option value="Zero Hunger">2. Zero Hunger</option>
-                        {/* Add others */}
+                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="select select-bordered font-bold text-[#0F172A] bg-gray-50 border-gray-100">
+                        <option value="all">All 17 Categories</option>
+                        {SDG_NAMES.map((name, idx) => (
+                            <option key={idx + 1} value={String(idx + 1)}>
+                                {idx + 1}. {name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -208,12 +248,12 @@ export default function LeaderboardPage() {
                             />
                         </div>
 
-                        <button
-                            onClick={handlePromoteUsers}
-                            className="h-9 px-6 rounded-lg font-bold text-white text-xs shadow-md transition-all flex items-center gap-2 bg-gradient-to-r from-rose-500 to-pink-600 hover:shadow-lg hover:scale-105 active:scale-95"
-                        >
-                            Promote All SDGs
-                        </button>
+                            <button
+                                onClick={handlePromoteUsers}
+                                className="h-9 px-4 rounded-lg font-bold text-white text-xs shadow-md transition-all flex items-center gap-2 bg-[#0F172A] hover:shadow-lg hover:scale-105 active:scale-95 hover:bg-[#020617]"
+                            >
+                                🚀 {promoteButtonLabel}
+                            </button>
                     </div>
                 </div>
             </div>
