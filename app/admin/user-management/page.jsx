@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllUsers } from "../../store/slices/userSlice";
+import { useSelector } from "react-redux";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2"; 
 import {
@@ -10,13 +10,29 @@ import {
 } from "react-icons/fa";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+const USERS_PER_PAGE = 20;
+
+const fetchUsersPage = async ({ page, search, role }) => {
+  const token = localStorage.getItem("access_token");
+  const response = await axios.get(`${API_URL}/api/admin/all-users`, {
+    headers: { Authorization: `Bearer ${token}` },
+    params: {
+      page,
+      limit: USERS_PER_PAGE,
+      ...(search ? { search } : {}),
+      ...(role && role !== "all" ? { role } : {}),
+    },
+  });
+
+  return response.data;
+};
 
 export default function RoleManagement() {
-  const dispatch = useDispatch();
-  const { users, loading } = useSelector((state) => state.users);
+  const queryClient = useQueryClient();
   const { user: currentUser } = useSelector((state) => state.auth);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -24,33 +40,46 @@ export default function RoleManagement() {
   const [selectedUser, setSelectedUser] = useState(null); // সিলেক্টেড ইউজার
   const [newMember, setNewMember] = useState({ email: '', role: 'user', name: '', phone: '', promoCode: '' });
 
-  const usersPerPage = 20;
   const isAdmin = currentUser?.role === 'admin' || (typeof window !== "undefined" && JSON.parse(localStorage.getItem("user_data"))?.role === 'admin');
 
   useEffect(() => {
-    if (isAdmin) dispatch(fetchAllUsers());
-  }, [dispatch, isAdmin]);
+    const id = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery.trim());
+    }, 350);
+    return () => clearTimeout(id);
+  }, [searchQuery]);
+
+  const {
+    data: usersResponse,
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
+    queryKey: ["admin-users", currentPage, debouncedSearchQuery, roleFilter],
+    queryFn: () => fetchUsersPage({
+      page: currentPage,
+      search: debouncedSearchQuery,
+      role: roleFilter,
+    }),
+    enabled: isAdmin,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    placeholderData: (previousData) => previousData,
+  });
 
   // ফিল্টার বা সার্চ করলে কারেন্ট পেজ ১ এ রিসেট করা
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, roleFilter]);
+  }, [debouncedSearchQuery, roleFilter]);
 
-  const sortedUsers = useMemo(() => {
-    if (!users) return [];
-    let filtered = users.filter((u) => {
-      const matchesSearch = u.name?.toLowerCase().includes(searchQuery.toLowerCase()) || u.email?.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesRole = roleFilter === "all" || u.role === roleFilter;
-      return matchesSearch && matchesRole;
-    });
-
-    const roleOrder = { admin: 1, manager: 2, user: 3, ambassador: 4 };
-    return filtered.sort((a, b) => (roleOrder[a.role] || 5) - (roleOrder[b.role] || 5));
-  }, [users, searchQuery, roleFilter]);
-
-  // প্যাজিনেশন লজিক
-  const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
-  const currentUsers = sortedUsers.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage);
+  const currentUsers = useMemo(() => usersResponse?.data || [], [usersResponse]);
+  const totalUsers = usersResponse?.totalUsers || 0;
+  const totalPages = usersResponse?.totalPages || 0;
+  const loading = isLoading || (isFetching && currentUsers.length === 0);
+  const refreshUsers = () => {
+    queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+  };
 
   // --- View Details Function ---
   const handleViewDetails = (user) => {
@@ -76,7 +105,7 @@ export default function RoleManagement() {
       if (response.data.success) {
         setIsModalOpen(false);
         setNewMember({ email: '', role: 'user', name: '', phone: '', promoCode: '' });
-        dispatch(fetchAllUsers());
+        refreshUsers();
         Swal.fire({ icon: 'success', title: 'Access Granted!', text: `Email sent to ${newMember.email}` });
       }
     } catch (error) {
@@ -98,7 +127,7 @@ export default function RoleManagement() {
           await axios.put(`${API_URL}/api/admin/update-user/${id}`, { role: newRole }, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          dispatch(fetchAllUsers());
+          refreshUsers();
           Swal.fire("Updated!", "User role changed.", "success");
         } catch (error) {
           Swal.fire("Failed!", "Something went wrong.", "error");
@@ -121,7 +150,7 @@ export default function RoleManagement() {
           await axios.delete(`${API_URL}/api/admin/delete-user/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          dispatch(fetchAllUsers());
+          refreshUsers();
           Swal.fire("Deleted!", "User removed.", "success");
         } catch (error) {
           Swal.fire("Error!", "Deletion failed.", "error");
@@ -131,6 +160,13 @@ export default function RoleManagement() {
   };
 
   if (!isAdmin) return <div className="p-20 text-center font-bold text-red-500">403 | Access Denied</div>;
+  if (error && currentUsers.length === 0) {
+    return (
+      <div className="p-20 text-center font-bold text-red-500">
+        Failed to load users. Please try again.
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
@@ -142,7 +178,7 @@ export default function RoleManagement() {
             <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
               <FaUserShield className="text-blue-600" /> User Management
             </h1>
-            <p className="text-gray-500 text-xs">Total {sortedUsers.length} members found</p>
+            <p className="text-gray-500 text-xs">Total {totalUsers || 0} members found</p>
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto">
@@ -156,6 +192,17 @@ export default function RoleManagement() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-600 outline-none"
+            >
+              <option value="all">All roles</option>
+              <option value="admin">Admin</option>
+              <option value="manager">Jury</option>
+              <option value="ambassador">Ambassador</option>
+              <option value="user">User</option>
+            </select>
             <button
               onClick={() => setIsModalOpen(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold flex items-center gap-2"
@@ -167,13 +214,18 @@ export default function RoleManagement() {
 
         {/* Table Section */}
         <div className="flex-1 overflow-auto">
-          {loading ? (
+          {loading && currentUsers.length === 0 ? (
             <div className="h-full min-h-[360px] flex flex-col items-center justify-center gap-4 text-gray-500">
               <div className="h-10 w-10 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin" />
               <p className="text-sm font-semibold">Loading users...</p>
             </div>
           ) : (
-            <>
+            <div className="relative">
+              {isFetching && (
+                <div className="absolute inset-x-0 top-0 z-20 h-1 overflow-hidden bg-blue-50">
+                  <div className="h-full w-1/3 animate-pulse bg-blue-600" />
+                </div>
+              )}
               <table className="w-full text-left text-sm relative">
                 <thead className="sticky top-0 bg-white z-10 border-b shadow-sm">
                   <tr className="text-gray-600 font-semibold uppercase text-[10px] tracking-wider">
@@ -222,8 +274,8 @@ export default function RoleManagement() {
                   ))}
                 </tbody>
               </table>
-              {sortedUsers.length === 0 && <div className="p-20 text-center text-gray-400">No users found.</div>}
-            </>
+              {currentUsers.length === 0 && <div className="p-20 text-center text-gray-400">No users found.</div>}
+            </div>
           )}
         </div>
 

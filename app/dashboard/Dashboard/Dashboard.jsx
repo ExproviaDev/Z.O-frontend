@@ -20,7 +20,7 @@ const DashboardHeader = ({ onMenuClick }) => {
 
   return (
     <header className="bg-[#0f172a] border-b border-white/10 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
-        <div prefetch={false} className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <button
             onClick={onMenuClick}
             className="lg:hidden p-2 text-gray-200 hover:bg-white/10 rounded-md"
@@ -84,7 +84,7 @@ const DashboardHeader = ({ onMenuClick }) => {
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-[60] overflow-hidden"
               >
-                <Link prefetch={false}
+                <Link
                   href="/dashboard/profile"
                   className="block px-8 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
                 >

@@ -1,25 +1,25 @@
 "use client";
 import React, { useState } from 'react';
 import { AiOutlineMail, AiOutlineClose } from 'react-icons/ai';
-import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { FaExclamationCircle } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
-import { FaPaperPlane, FaSpinner } from 'react-icons/fa';
+import { FaPaperPlane, FaSpinner, FaEnvelopeOpenText } from 'react-icons/fa';
 
 export default function ForgotPasswordModal({ onClose }) {
     const [resetEmail, setResetEmail] = useState("");
+    const [submittedEmail, setSubmittedEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [submitted, setSubmitted] = useState(false);
 
 
     const handleResetSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        setSuccessMessage("");
         setLoading(true);
 
         if (!resetEmail) {
-            setError("ইমেল অ্যাড্রেস আবশ্যক।");
+            setError("Email is required.");
             setLoading(false);
             return;
         }
@@ -38,14 +38,15 @@ export default function ForgotPasswordModal({ onClose }) {
             const data = await res.json();
 
             if (res.ok) {
-                setSuccessMessage(data.message || "আপনার ইমেলের ইনবক্সে পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে।");
+                setSubmittedEmail(resetEmail);
+                setSubmitted(true);
                 setResetEmail("");
             } else {
-                setError(data.message || "পাসওয়ার্ড রিসেট অনুরোধে ত্রুটি হয়েছে।");
+                setError(data.message || "Couldn't send reset link. Please try again.");
             }
         } catch (err) {
             console.error("Forgot Password Network Error:", err);
-            setError("পাসওয়ার্ড রিসেট করার সময় একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।");
+            setError("Something went wrong. Check your connection and try again.");
         } finally {
             setLoading(false);
         }
@@ -55,7 +56,9 @@ export default function ForgotPasswordModal({ onClose }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
             <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 md:p-12 transform transition-all scale-100 opacity-100">
                 <div className="flex justify-between items-center ">
-                    <h3 className="text-xl  font-bold text-gray-800">পাসওয়ার্ড ভুলে গেছেন?</h3>
+                    <h3 className="text-xl  font-bold text-gray-800">
+                        {submitted ? "Check your email" : "Forgot password?"}
+                    </h3>
                     <button
                         type="button"
                         onClick={onClose}
@@ -65,27 +68,38 @@ export default function ForgotPasswordModal({ onClose }) {
                     </button>
                 </div>
                 <hr className='my-5 border-dashed'/>
-                {successMessage ? (
+                {submitted ? (
                     <div className="text-center">
-                        <FaCheckCircle className="text-green-600 mx-auto mb-4" size={48} />
-                        <p className="text-green-600 font-medium mb-4">{successMessage}</p>
+                        <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50">
+                            <FaEnvelopeOpenText className="text-emerald-600" size={40} />
+                        </div>
+                        <p className="text-gray-800 font-semibold mb-2">
+                            We&apos;ve sent a password reset link to
+                        </p>
+                        <p className="text-[#0F172A] font-bold mb-4 break-all">
+                            {submittedEmail}
+                        </p>
+                        <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+                            Please check your inbox and click the link to reset your password.
+                            If you don&apos;t see it within a minute, check your spam or junk folder.
+                        </p>
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300"
+                            className="w-full bg-[#0F172A] hover:bg-[#020617] text-white py-2.5 rounded-lg font-semibold transition"
                         >
-                            বন্ধ করুন
+                            Got it
                         </button>
                     </div>
                 ) : (
                     <form onSubmit={handleResetSubmit} className="space-y-5">
-                        <p className=" text-gray-600 text-center">আপনার রেজিস্টার্ড ইমেল অ্যাড্রেস দিন</p>
+                        <p className=" text-gray-600 text-center">Enter your registered email address.</p>
 
                         <div className="flex items-center bg-gray-100 rounded-full px-4 mt-1 border border-gray-300">
                             <AiOutlineMail className="text-gray-500 mr-2" size={20} />
                             <input
                                 type="email"
-                                placeholder="আপনার ইমেল"
+                                placeholder="Your email"
                                 name="resetEmail"
                                 value={resetEmail}
                                 onChange={(e) => setResetEmail(e.target.value)}
@@ -103,24 +117,23 @@ export default function ForgotPasswordModal({ onClose }) {
 
                         <button
                             type="submit"
-                            className="w-full flex justify-center items-center bg-indigo-500 text-white py-2 rounded-lg font-bold hover:bg-indigo-600 transition disabled:bg-indigo-300"
+                            className="w-full flex justify-center items-center bg-[#0F172A] text-white py-2 rounded-lg font-bold hover:bg-[#020617] transition disabled:bg-slate-400"
                             disabled={loading}
                         >
-                            {/* Show spinner icon when loading */}
                             {loading ? (
                                 <FaSpinner className="animate-spin mr-2" />
                             ) : (
                                 <FaPaperPlane className="mr-2" />
                             )}
-                            {loading ? "পাঠানো হচ্ছে..." : "রিসেট ইমেল পাঠান"}
+                            {loading ? "Sending…" : "Send reset link"}
                         </button>
 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-full flex justify-center items-center gap-3 border py-2 text-sm text-gray-500 hover:text-white hover:bg-Primary mt-2 rounded-xl"
+                            className="w-full flex justify-center items-center gap-3 border py-2 text-sm text-gray-500 hover:text-white hover:bg-[#0F172A] mt-2 rounded-xl transition"
                         > <FiLogIn className="text-base" />
-                            লগইন পেজে ফিরে যান
+                            Back to login
                         </button>
                     </form>
                 )}

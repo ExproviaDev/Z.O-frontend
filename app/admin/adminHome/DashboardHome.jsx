@@ -18,6 +18,38 @@ const fetchDashboardStats = async () => {
   return res.data;
 };
 
+function DashboardStatsSkeleton() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      <div className="w-full rounded-[32px] bg-[#0f172a] px-8 py-10 shadow-xl">
+        <div className="h-8 w-56 rounded-full bg-white/15" />
+        <div className="mt-4 h-4 w-72 rounded-full bg-white/10" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {[1, 2, 3, 4].map((item) => (
+          <div key={item} className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+            <div className="h-4 w-24 rounded-full bg-slate-200" />
+            <div className="mt-5 h-9 w-20 rounded-full bg-slate-200" />
+            <div className="mt-4 h-3 w-32 rounded-full bg-slate-100" />
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-8 rounded-[30px] border border-gray-50 bg-white p-8 shadow-sm">
+          <div className="h-5 w-56 rounded-full bg-slate-200" />
+          <div className="mt-8 h-72 rounded-3xl bg-slate-100" />
+        </div>
+        <div className="lg:col-span-4 rounded-[32px] border border-gray-100 bg-white p-8 shadow-sm">
+          <div className="mx-auto h-5 w-36 rounded-full bg-slate-200" />
+          <div className="mx-auto mt-8 h-52 w-52 rounded-full bg-slate-100" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardHome() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-dashboard-stats"],
@@ -25,14 +57,11 @@ export default function DashboardHome() {
     staleTime: 30 * 60 * 1000, 
     gcTime: 35 * 60 * 1000,    
     refetchOnWindowFocus: false, 
+    placeholderData: (previousData) => previousData,
   });
 
   if (isLoading) {
-    return (
-      <div className="flex h-[80vh] items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-blue-600"></div>
-      </div>
-    );
+    return <DashboardStatsSkeleton />;
   }
 
   if (error) {

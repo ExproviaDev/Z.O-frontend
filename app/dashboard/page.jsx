@@ -136,7 +136,6 @@ const UserDashboard = () => {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
-                prefetch={false}
                 href="/dashboard/mycourses"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-lg shadow-black/15 transition hover:bg-blue-50 hover:shadow-xl active:scale-[0.98] sm:px-8 sm:py-4 sm:text-base"
               >
@@ -144,7 +143,6 @@ const UserDashboard = () => {
                 Continue Courses
               </Link>
               <Link
-                prefetch={false}
                 href="/dashboard/quizzes"
                 className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-[0.98] sm:px-8 sm:py-4 sm:text-base"
               >
@@ -172,14 +170,12 @@ const UserDashboard = () => {
                   </p>
                   <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                     <Link
-                      prefetch={false}
                       href="/dashboard/video-submission"
                       className="inline-flex items-center justify-center rounded-lg bg-white/95 px-4 py-2.5 text-xs font-bold text-blue-800 shadow-md transition hover:bg-white"
                     >
                       Video submission
                     </Link>
                     <Link
-                      prefetch={false}
                       href="/dashboard/quizzes"
                       className="inline-flex items-center justify-center rounded-lg border border-white/50 bg-white/10 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-white/20"
                     >
