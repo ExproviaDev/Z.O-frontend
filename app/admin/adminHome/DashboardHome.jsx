@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { FaChartLine } from "react-icons/fa";
+import { FiRefreshCw } from "react-icons/fi";
 import StatsSection from "../components/ChartStatTable/StatCard";
 import SDGChart from "../components/ChartStatTable/Chart";
 import DistributionPieChart from "../components/ChartStatTable/PieChart";
@@ -51,14 +52,19 @@ function DashboardStatsSkeleton() {
 }
 
 export default function DashboardHome() {
-  const { data, isLoading, error } = useQuery({
+  const queryClient = useQueryClient();
+  const { data, isLoading, isFetching, error } = useQuery({
     queryKey: ["admin-dashboard-stats"],
     queryFn: fetchDashboardStats,
-    staleTime: 30 * 60 * 1000, 
-    gcTime: 35 * 60 * 1000,    
-    refetchOnWindowFocus: false, 
+    staleTime: 2 * 60 * 1000,   // 2 minutes — fresh enough for live admin use
+    gcTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,  // refetch when admin switches back to this tab
     placeholderData: (previousData) => previousData,
   });
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
+  };
 
   if (isLoading) {
     return <DashboardStatsSkeleton />;
@@ -80,8 +86,19 @@ export default function DashboardHome() {
           <h2 className="text-white text-3xl font-extrabold tracking-tight">System Overview</h2>
           <p className="text-blue-300/60 text-sm font-medium mt-1">Tracking enrollment and SDG participation</p>
         </div>
-        <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20 relative z-10">
-          <FaChartLine className="text-blue-400 text-2xl" />
+        <div className="flex items-center gap-3 relative z-10">
+          <button
+            onClick={handleRefresh}
+            disabled={isFetching}
+            title="Refresh stats"
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold rounded-xl transition-all disabled:opacity-50"
+          >
+            <FiRefreshCw className={isFetching ? "animate-spin" : ""} size={14} />
+            {isFetching ? "Refreshing…" : "Refresh"}
+          </button>
+          <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
+            <FaChartLine className="text-blue-400 text-2xl" />
+          </div>
         </div>
       </div>
 
