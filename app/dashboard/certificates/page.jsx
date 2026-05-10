@@ -83,18 +83,76 @@ export default function CertificatePage() {
       
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
-            <h1 className="text-3xl font-black text-slate-800 mb-2">My Certificates</h1>
+            <h1 className="text-3xl font-black text-slate-800 mb-2">Certificates and Achievement</h1>
             <p className="text-slate-500">
               You've successfully completed the challenge. You can collect your participation certificates here.
             </p>
         </div>
 
+        {/* GLTS Participant Voucher Card — top of page */}
+        <div className="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
+          <div className="grid grid-cols-1 items-stretch md:grid-cols-[1fr_1.4fr]">
+            {/* GLTS image */}
+            <div className="relative min-h-[240px] md:min-h-[300px]">
+              <img
+                src="/src/image/glts.jpeg"
+                alt="GLTS Program"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col justify-center gap-5 p-6 md:p-8">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-red-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-red-600">
+                  Exclusive Offer
+                </span>
+                <span className="rounded-full bg-emerald-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-emerald-600">
+                  80% OFF
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-black text-slate-800 md:text-[26px] leading-tight">GLTS Promo Benefit</h3>
+                <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
+                  As a Zero Olympiad participant, you are eligible for an exclusive GLTS discount voucher.
+                  Use the promo code below while enrolling in GLTS.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <div>
+                  <p className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-400">Your Promo Code</p>
+                  <div className="rounded-xl border border-indigo-200 bg-indigo-50 px-5 py-3">
+                    <p className="text-2xl font-black tracking-[0.2em] text-indigo-700">{gltsPromoCode}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={copyPromoCode}
+                  className="mt-5 self-end rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
+                >
+                  Copy Code
+                </button>
+              </div>
+
+              <a
+                href="https://glts.faatihaaayat.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0F172A] py-3 text-sm font-bold text-white transition hover:bg-indigo-700 active:scale-95"
+              >
+                Visit GLTS Platform <FiArrowRight />
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* Top Banner: Malaysia Bootcamp */}
         <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
           <div className="relative grid grid-cols-1 items-stretch md:grid-cols-[1.2fr_1fr]">
-            <div className="h-full min-h-[220px]">
+            <div className="h-[300px] md:h-full min-h-[220px]">
               <img
-                src="https://res.cloudinary.com/dxgcax7lv/image/upload/v1776503605/WhatsApp_Image_2026-04-18_at_10.53.48_AM_qbfhxf.jpg"
+                src="/src/image/malaysia-summit.jpg"
                 alt="Malaysia Bootcamp"
                 className="h-full w-full object-cover"
               />
@@ -108,8 +166,7 @@ export default function CertificatePage() {
                 APU International Experience
               </h2>
               <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
-                Exclusive for Zero Olympiad participants. Apply to join poster presentation, panel discussion,
-                workshop, seminar, and debate events in Malaysia.
+                Exclusive for Zero Olympiad participants. Attend the most prestigious Global Leadership Summit.
               </p>
 
               <a
@@ -161,35 +218,6 @@ export default function CertificatePage() {
             />
           </div>
         )}
-
-        {/* GLTS Participant Voucher Card */}
-        <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-lg">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="space-y-3">
-              <span className="inline-block rounded-full bg-indigo-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-indigo-600">
-                Participant Voucher
-              </span>
-              <h3 className="text-2xl font-black text-slate-800">GLTS Promo Benefit</h3>
-              <p className="max-w-2xl text-slate-600">
-                As a Zero Olympiad participant, you are eligible for an exclusive GLTS discount voucher.
-                Use the promo code below while enrolling in GLTS.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-start gap-3 md:items-end">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Your Promo Code</p>
-              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 px-6 py-4">
-                <p className="text-3xl font-black tracking-[0.2em] text-indigo-700">{gltsPromoCode}</p>
-              </div>
-              <button
-                onClick={copyPromoCode}
-                className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
-              >
-                Copy Code
-              </button>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
