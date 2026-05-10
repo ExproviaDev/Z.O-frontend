@@ -191,7 +191,7 @@ export default function Announcement() {
             </div>
             <button
               onClick={openCreateModal}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-medium shadow-md transition-all duration-200 hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#0F172A] hover:bg-[#020617] text-white rounded-xl font-medium shadow-md transition-all duration-200 hover:scale-105"
             >
               <FaPlus className="text-sm" />
               <span>Add Announcement</span>

@@ -4,6 +4,7 @@ import { FiSearch, FiRefreshCw, FiUser, FiAlertTriangle } from "react-icons/fi";
 import { MdOutlineRestartAlt } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useQueryClient } from "@tanstack/react-query";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -13,6 +14,7 @@ const getToken = () =>
 const authHeaders = () => ({ Authorization: `Bearer ${getToken()}` });
 
 export default function ResetParticipantPage() {
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [searching, setSearching] = useState(false);
   const [resetting, setResetting] = useState(false);
@@ -69,6 +71,9 @@ export default function ResetParticipantPage() {
         { headers: authHeaders() }
       );
 
+      // Invalidate cached admin stats so dashboard reflects the reset immediately
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
+
       await Swal.fire({
         title: "Reset successful",
         text: res.data.message,
@@ -113,7 +118,8 @@ export default function ResetParticipantPage() {
         <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
           <FiAlertTriangle className="text-amber-500 text-lg mt-0.5 shrink-0" />
           <p className="text-sm text-amber-800 font-medium">
-            This action <span className="font-bold">permanently deletes</span> the participant&apos;s quiz submissions and resets their participation status. It cannot be undone.
+            This action <span className="font-bold">permanently deletes</span>{" "}
+            the participant&apos;s quiz submissions and resets their participation status. It cannot be undone.
           </p>
         </div>
 

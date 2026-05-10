@@ -126,7 +126,7 @@ const AdminVideoSettings = () => {
 
         <button
           type="submit"
-          className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-200 active:scale-95"
+          className="w-full py-4 bg-[#0F172A] hover:bg-[#020617] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-black/20 active:scale-95"
         >
           <FaSave /> Save Changes
         </button>

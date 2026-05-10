@@ -5,12 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import LogoutButton from "../LogoutButton";
+import { FiUser } from "react-icons/fi";
 
 export default function nProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
   const authState = useSelector((state) => state.auth);
   const { user = null } = authState || {};
-
 
   useEffect(() => {
     if (!isOpen) return;
@@ -27,69 +27,71 @@ export default function nProfileModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  return (
-    <div className="absolute right-4 md:right-5 lg:right-0 top-full mt-3 z-50">
+  const menuItems = [
+    { label: "My Courses", path: "/dashboard/mycourses" },
+    { label: "Certificates and Achievement", path: "/dashboard/certificates" },
+    { label: "Announcements", path: "/dashboard/announcement" },
+  ];
 
+  return (
+    <div className="absolute right-0 top-full z-50 mt-2 w-[min(calc(100vw-2rem),17.5rem)] md:w-72">
       <div
         ref={modalRef}
-        className="relative p-[1px] rounded-2xl bg-Secondary shadow-2xl"
+        className="overflow-hidden rounded-lg border border-white/10 bg-[#0F172A] shadow-xl shadow-black/35"
       >
-
-        <div className="w-52 md:w-72 rounded-2xl bg-[#2b2e5c] p-5">
-
-          <div className="flex flex-col items-center text-center">
-            <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-purple-500 to-blue-500">
+        <div className="border-b border-white/8 bg-black/20 px-4 py-4">
+          <div className="flex items-center gap-3">
+            <div className="relative shrink-0 rounded-full ring-2 ring-white/15">
               <Image
-                src={user?.profile_image_url || "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770274774/istockphoto-2149922267-612x612_1_xlpcbg.jpg"}
+                src={
+                  user?.profile_image_url ||
+                  "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770274774/istockphoto-2149922267-612x612_1_xlpcbg.jpg"
+                }
                 alt="profile"
-                width={80}
-                height={80}
-                className="rounded-full w-20 h-20 object-cover bg-[#0b0418]"
+                width={52}
+                height={52}
+                className="h-[52px] w-[52px] rounded-full object-cover bg-slate-900"
               />
             </div>
-            <h3 className="mt-3 font-semibold text-white">
-              {user?.name || "Guest User"}
-            </h3>
-            <p className="text-sm text-gray-400">
-              Student Role: {user?.sdg_role || "N/A"}
-            </p>
-
-            <Link prefetch={false}
-              href="/dashboard/profile"
-              className="mt-4 w-full rounded-lg bg-primary py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity text-center"
-              onClick={onClose}
-            >
-              View Profile
-            </Link>
+            <div className="min-w-0 flex-1 text-left">
+              <p className="truncate text-[15px] font-semibold text-white">
+                {user?.name || "Guest User"}
+              </p>
+              <p className="mt-0.5 truncate text-xs leading-snug text-slate-400">
+                Student · Role:{" "}
+                <span className="text-slate-300">{user?.sdg_role || "N/A"}</span>
+              </p>
+            </div>
           </div>
 
+          <Link
+            href="/dashboard/profile"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-white px-3 py-2 text-center text-sm font-semibold text-[#0F172A] transition hover:bg-slate-100 active:scale-[0.99]"
+            onClick={onClose}
+          >
+            <FiUser className="text-base opacity-80" />
+            View Profile
+          </Link>
+        </div>
 
-          <div className="my-4 h-px bg-purple-800/30" />
-
-
-          <ul className="space-y-1 text-sm">
-            {[
-              { label: "My Courses", path: "/dashboard/mycourses" },
-              { label: "My Certificates", path: "/dashboard/certificates" },
-              { label: "Announcements", path: "/dashboard/announcement" },
-            ].map((item) => (
+        <nav className="px-2 py-2">
+          <ul className="space-y-0.5 text-sm">
+            {menuItems.map((item) => (
               <li key={item.label}>
                 <Link
-                prefetch={false}
                   href={item.path}
                   onClick={onClose}
-                  className="block cursor-pointer rounded-lg px-3 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-all border-b border-white/5 last:border-0"
+                  className="block rounded-md px-3 py-2.5 text-slate-300 transition-colors hover:bg-white/6 hover:text-white"
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
+        </nav>
 
-
-          <div className="mt-4 border-t border-purple-800/30 pt-3">
-            <LogoutButton />
-          </div>
+        <div className="border-t border-white/8 px-2 pb-2 pt-1">
+          <LogoutButton className="justify-center rounded-md py-2.5 hover:bg-red-500/10" />
         </div>
       </div>
     </div>

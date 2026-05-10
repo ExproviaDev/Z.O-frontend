@@ -8,9 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { HiOutlineSpeakerphone, HiOutlineCalendar } from "react-icons/hi";
 import { motion } from "framer-motion";
 import Loading from "../../admin/components/loadign";
+import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
 
 export default function AnnouncementPage() {
-  const { data: announcements = [], isLoading, error } = useQuery({
+  const { data: announcements = [], isLoading, error, refetch } = useQuery({
     queryKey: ["announcements"],
     queryFn: async () => {
       const response = await axios.get(
@@ -29,9 +30,12 @@ export default function AnnouncementPage() {
 
   if (error) {
     return (
-      <div className="text-center py-20 text-red-500 font-semibold">
-        Something went wrong. Please check your connection.
-      </div>
+      <LoadFailedFallback
+        error={error}
+        title="Couldn't load announcements"
+        description="We couldn't fetch the latest announcements. Please check your connection and try again."
+        onRetry={refetch}
+      />
     );
   }
 

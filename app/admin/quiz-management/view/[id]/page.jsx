@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleQuiz } from "../../../../store/slices/quizSlice";
 import { FaArrowLeft, FaRegClock, FaRegCalendarAlt, FaCheckCircle, FaEdit } from "react-icons/fa";
 import Link from "next/link";
+import LoadFailedFallback from "../../../../Components/Fallbacks/LoadFailedFallback";
 
 export default function ViewQuizPage() {
     const { id } = useParams(); // URL theke ID neya
@@ -20,7 +21,14 @@ export default function ViewQuizPage() {
     }, [id, dispatch]);
 
     if (loading) return <div className="p-20 text-center font-bold text-blue-600 animate-pulse">Loading Quiz Details...</div>;
-    if (error) return <div className="p-20 text-center text-red-500 font-bold">Error: {error}</div>;
+    if (error) return (
+        <LoadFailedFallback
+            error={typeof error === "string" ? new Error(error) : error}
+            title="Couldn't load this quiz"
+            description="We couldn't fetch the quiz details. Try again, or sign in again if your session has expired."
+            onRetry={() => dispatch(fetchSingleQuiz(id))}
+        />
+    );
     if (!currentQuiz) return <div className="p-20 text-center text-slate-500">No Quiz Found!</div>;
 
     return (

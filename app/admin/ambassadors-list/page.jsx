@@ -141,7 +141,7 @@ export default function AdminAmbassadorPage() {
                       </div>
                     </td>
                     <td className="p-5">
-                      <span className="bg-slate-100 px-3 py-1 rounded-lg font-mono font-bold text-indigo-600 uppercase border border-slate-200">
+                      <span className="bg-slate-100 px-3 py-1 rounded-lg font-mono font-bold text-[#0F172A] uppercase border border-slate-200">
                         <FiCode className="inline mr-1" /> {amb.promo_code || 'N/A'}
                       </span>
                     </td>
@@ -189,7 +189,7 @@ export default function AdminAmbassadorPage() {
                           key={pageNumber}
                           onClick={() => setCurrentPage(pageNumber)}
                           className={`w-9 h-9 rounded-lg text-sm font-bold transition-all ${currentPage === pageNumber
-                              ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
+                              ? "bg-[#0F172A] text-white shadow-md shadow-black/20"
                               : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
                             }`}
                         >

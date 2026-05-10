@@ -1,14 +1,51 @@
 "use client";
 
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Toaster, toast } from 'react-hot-toast';
 import CertificateCard from './Components/CertificateCard'; 
 import Link from 'next/link';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
+import { setLogin } from '../../store/slices/authSlice';
 
 export default function CertificatePage() {
+  const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+
+  // Keep user_data fresh so promotions/round changes show without re-login
+  useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
+    if (!token) return;
+    const sessionId = typeof window !== "undefined" ? localStorage.getItem("session_id") : null;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            ...(sessionId ? { "X-Session-Id": sessionId } : {}),
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (cancelled) return;
+        if (res.ok && data?.user) {
+          dispatch(setLogin({ user: data.user, token }));
+          try {
+            localStorage.setItem("user_data", JSON.stringify(data.user));
+          } catch {}
+        }
+      } catch {
+        // silent: if session is expired, global interceptor/middleware will handle redirect
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [dispatch]);
 
   if (loading) {
     return (
