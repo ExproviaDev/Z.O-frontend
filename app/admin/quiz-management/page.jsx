@@ -7,6 +7,7 @@ import { FiPlus } from "react-icons/fi"
 import { fetchQuizzes, deleteQuizAction } from "../../store/slices/quizSlice.js"
 import SearchBar from "./components/SearchBar.jsx"
 import QuizGrid from "./components/QuizGrid.jsx"
+import Swal from "sweetalert2"
 
 export default function QuizManagementPage() {
   const router = useRouter()
@@ -26,9 +27,23 @@ export default function QuizManagementPage() {
     )
   }, [quizzes, searchTerm])
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this quiz?")) {
-      dispatch(deleteQuizAction(id))
+  const handleDelete = async (id) => {
+    try {
+      await dispatch(deleteQuizAction(id)).unwrap()
+      Swal.fire({
+        title: "Deleted!",
+        text: "Quiz deleted successfully.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      })
+    } catch (err) {
+      Swal.fire({
+        title: "Delete failed",
+        text: typeof err === "string" ? err : "Could not delete this quiz. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+      })
     }
   }
 

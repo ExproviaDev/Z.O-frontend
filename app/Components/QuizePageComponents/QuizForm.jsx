@@ -11,7 +11,7 @@ import TimeUpModal from "./TimeUpModal";
 import { AiOutlineClockCircle, AiOutlineArrowLeft } from "react-icons/ai";
 import { MdSecurity } from "react-icons/md";
 import { clearActiveQuiz } from "../../store/slices/userQuizSlice";
-import { updateParticipation } from "../../store/slices/authSlice"; // আপনার পাথ অনুযায়ী ঠিক করে নিবেন
+import { updateParticipation } from "../../store/slices/authSlice";
 
 const QuizForm = ({ questions, quizInfo }) => {
   const router = useRouter();
@@ -28,7 +28,6 @@ const QuizForm = ({ questions, quizInfo }) => {
   const [isBlurred, setIsBlurred] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
   useEffect(() => {
     if (quizInfo?.time_limit) {
       setTimeLeft(quizInfo.time_limit * 60);
@@ -36,6 +35,7 @@ const QuizForm = ({ questions, quizInfo }) => {
       setTimeLeft(30 * 60);
     }
   }, [quizInfo, questions]);
+
   useEffect(() => {
     if (!isQuizStarted || isSubmitting) return;
 
@@ -61,7 +61,6 @@ const QuizForm = ({ questions, quizInfo }) => {
     return () => clearInterval(deadlineTimer);
   }, [isQuizStarted, isSubmitting, quizInfo]);
 
-
   const handleSubmitAnswers = async () => {
     if (isSubmitting) return;
     const finalUserId = user?.user_id || user?.id;
@@ -69,7 +68,6 @@ const QuizForm = ({ questions, quizInfo }) => {
     const rawRoundType = user?.round_type || "round_1";
     const currentRoundNumber = parseInt(rawRoundType.split("_")[1]) || 1;
 
-    // নতুন যোগ করা হয়েছে: SDG Role (লিডারবোর্ড ফিল্টারের জন্য)
     const level = String(user?.grade_level || user?.current_level || user?.gradeLevel || "");
     const isAdmissionCandidate = level.includes("Admission Candidate") || level.includes("Musannif");
     const sdgCategory = isAdmissionCandidate ? "SDG Ambassador" : user?.sdg_role || "SDG Activist";
@@ -91,52 +89,74 @@ const QuizForm = ({ questions, quizInfo }) => {
     setIsQuizStarted(false);
     setIsBlurred(false);
 
-    // আপনার আগের অবজেক্ট স্ট্রাকচার (user_id এবং quiz_set_id) ঠিক রাখা হয়েছে
     const submissionData = {
       user_id: finalUserId,
       quiz_set_id: finalQuizSetId,
       answers: answers,
       time_taken: Math.max(timeSpent, 1),
-      sdgCategory: sdgCategory, // ব্যাকএন্ডে লিডারবোর্ড সিঙ্ক করার জন্য
+      sdgCategory: sdgCategory,
       roundNumber: currentRoundNumber
+    };
+
+    // Shared success handler — called on direct success AND after a network-fail
+    // "already submitted" check, so the happy path is always consistent.
+    // No DB changes happen here; they're all inside submit_quiz_optimized RPC.
+    const handleSuccess = () => {
+      dispatch(updateParticipation());
+      localStorage.removeItem("quiz_time");
+      dispatch(clearActiveQuiz());
+      Swal.fire({
+        title: "Quiz Submitted!",
+        text: "Thank you for participating. You can check your ranking on the leaderboard soon.",
+        icon: "success",
+        confirmButtonText: "Return to Dashboard",
+        confirmButtonColor: "#10B981",
+        allowOutsideClick: false
+      }).then(() => {
+        router.push("/dashboard/certificates");
+      });
     };
 
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      // আপনার আগের কাজ করা রাউটটিই ব্যবহার করুন
       const response = await api.post(`${API_URL}/api/admin/submit-quiz`, submissionData);
 
       if (response.data.success) {
-        dispatch(updateParticipation());
-        localStorage.removeItem("quiz_time");
-        dispatch(clearActiveQuiz());
-        Swal.fire({
-          title: "Quiz Submitted!",
-          text: "Thank you for participating. You can check your ranking on the leaderboard soon.",
-          icon: "success",
-          confirmButtonText: "Return to Dashboard",
-          confirmButtonColor: "#10B981",
-          allowOutsideClick: false
-        }).then(() => {
-          router.push("/dashboard/certificates");
-        });
+        handleSuccess();
       }
     } catch (error) {
-      // এরর ডিবাগিং এর জন্য লগ
       console.error("Submission Error Details:", error.response?.data);
 
+      // Network error / timeout: the server RPC may have already committed successfully.
+      // Verify before showing a retry error so the user never submits twice.
+      // If the check confirms submission, treat it as success — no duplicate write happens.
+      const isNetworkError = !error.response;
+      if (isNetworkError) {
+        try {
+          const API_URL = process.env.NEXT_PUBLIC_API_URL;
+          const check = await api.get(
+            `${API_URL}/api/admin/check-attempt/${finalUserId}/${finalQuizSetId}`
+          );
+          if (check.data.hasAttempted) {
+            handleSuccess();
+            return;
+          }
+        } catch {
+          // Check itself failed — fall through to error UI.
+        }
+      }
+
       Swal.fire({
-        title: "Error!",
-        text: error.response?.data?.error || "Failed to submit. Please try again.",
+        title: "Submission Error",
+        text: error.response?.data?.error || "Failed to submit. Please check your connection and try again.",
         icon: "error",
+        confirmButtonText: "Try Again",
       });
       setIsQuizStarted(true);
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   const reportViolation = (reason) => {
     if (!isQuizStarted || isSubmitting || Swal.isVisible()) return;
@@ -167,16 +187,29 @@ const QuizForm = ({ questions, quizInfo }) => {
 
   useEffect(() => {
     if (!isQuizStarted) return;
-    const handleBlur = () => reportViolation("Tab switching detected!");
+
+    // Track whether the page is unloading (tab close / navigation away).
+    // blur fires for both tab-switch AND tab-close — we only want to penalise
+    // genuine tab-switching, not accidental closes or network drops.
+    let pageUnloading = false;
+    const markUnloading = () => { pageUnloading = true; };
+
+    const handleBlur = () => {
+      if (pageUnloading) return;
+      reportViolation("Tab switching detected!");
+    };
     const handleKey = (e) => {
       if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
         e.preventDefault();
         reportViolation("DevTools attempt!");
       }
     };
+
+    window.addEventListener("beforeunload", markUnloading);
     window.addEventListener("blur", handleBlur);
     window.addEventListener("keydown", handleKey);
     return () => {
+      window.removeEventListener("beforeunload", markUnloading);
       window.removeEventListener("blur", handleBlur);
       window.removeEventListener("keydown", handleKey);
     };
@@ -219,7 +252,6 @@ const QuizForm = ({ questions, quizInfo }) => {
       <div className={`transition-all duration-700 min-h-screen ${isBlurred ? "blur-3xl grayscale" : "blur-0"}`}>
         <div className="flex px-3 flex-col items-center py-4 no-select" onContextMenu={(e) => e.preventDefault()}>
 
-          {/* ৩. StartModal এ endTime পাস করা হয়েছে */}
           {showStartModal && (
             <StartModal
               onStart={handleStartQuiz}
