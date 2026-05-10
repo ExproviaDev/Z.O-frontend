@@ -104,7 +104,7 @@ export default function Sidebar({ isOpen, onClose }) {
               const isActive = pathname === item.href;
 
               return (
-                <Link prefetch={false}
+                <Link
                   key={item.name}
                   href={item.href}
                   onClick={onClose}
@@ -123,7 +123,7 @@ export default function Sidebar({ isOpen, onClose }) {
           </nav>
 
           <div className="pt-4 border-t border-white/10 space-y-2">
-            <Link prefetch={false}
+            <Link
               href="/"
               onClick={onClose}
               className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-200 font-medium text-sm hover:bg-white/5 hover:text-white transition-all"

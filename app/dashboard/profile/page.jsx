@@ -91,7 +91,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <Link prefetch={false} href="/dashboard/profile/edit">
+          <Link href="/dashboard/profile/edit">
             <button className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-indigo-600 transition-all font-bold shadow-md hover:shadow-lg active:scale-95">
               <FaRegEdit /> Edit Profile
             </button>
