@@ -14,9 +14,11 @@ export default function AnnouncementPage() {
   const { data: announcements = [], isLoading, error, refetch } = useQuery({
     queryKey: ["announcements"],
     queryFn: async () => {
-      const response = await axios.get(
-        "https://zero-olympiad-server.vercel.app/api/announcement/all"
-      );
+      const base = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
+      if (!base) {
+        throw new Error("NEXT_PUBLIC_API_URL is not configured.");
+      }
+      const response = await axios.get(`${base}/api/announcement/all`);
       return response.data;
     },
    

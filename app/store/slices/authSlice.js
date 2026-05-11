@@ -3,6 +3,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 // ১. ইউজার প্রোফাইল ফেচ করার থাঙ্ক (যদি কখনো সার্ভার থেকে লেটেস্ট ডাটা লাগে)
+function isNetworkIssue(error) {
+  if (!error) return false;
+  const message = String(error.message || error).toLowerCase();
+  return (
+    message.includes("failed to fetch") ||
+    message.includes("network error") ||
+    message.includes("networkrequestfailed") ||
+    message.includes("xhr failed") ||
+    message.includes("abort")
+  );
+}
+
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async (token, { rejectWithValue }) => {
@@ -16,7 +28,7 @@ export const fetchUserProfile = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
             ...(sessionId ? { "X-Session-Id": sessionId } : {}),
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
         }
       );
@@ -24,12 +36,21 @@ export const fetchUserProfile = createAsyncThunk(
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Session expired");
+        const errorPayload = {
+          type: res.status === 401 || res.status === 403 ? "auth" : "server",
+          status: res.status,
+          message: data.message || "Session expired",
+        };
+        return rejectWithValue(errorPayload);
       }
 
       return data; // এক্সপেক্টেড ডাটা: { isAuthenticated: true, user: {...} }
     } catch (err) {
-      return rejectWithValue(err.message);
+      const errorPayload = {
+        type: isNetworkIssue(err) ? "network" : "server",
+        message: err.message || "Unable to connect to the server.",
+      };
+      return rejectWithValue(errorPayload);
     }
   }
 );
@@ -119,9 +140,23 @@ const authSlice = createSlice({
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+
+        if (action.payload?.type === "network") {
+          // Network issue: server offline / disconnected.
+          // Keep existing auth state so user is not logged out immediately.
+          return;
+        }
+
+        if (action.payload?.type === "server") {
+          // 서버/other non-auth errors should not force logout automatically.
+          return;
+        }
+
+        // Auth errors should clear session data.
         state.isLoggedIn = false;
         state.user = null;
-        state.error = action.payload;
+        state.token = null;
         localStorage.removeItem("access_token");
         localStorage.removeItem("user_data");
       });
