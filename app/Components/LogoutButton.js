@@ -1,13 +1,14 @@
 "use client";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { logout } from "../store/slices/authSlice";
+import { removeAllProfileQueries } from "../lib/hooks/useUserProfile";
 import { FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const LogoutButton = ({ className = "" }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     Swal.fire({
@@ -23,6 +24,7 @@ const LogoutButton = ({ className = "" }) => {
       color: "#fff",
     }).then((result) => {
       if (result.isConfirmed) {
+        removeAllProfileQueries(queryClient);
         dispatch(logout());
         window.location.href = "/login";
       }

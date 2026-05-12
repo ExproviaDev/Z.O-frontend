@@ -1,23 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 export default function MyCourses() {
   const [activeTab, setActiveTab] = useState("course");
-  const [userData, setUserData] = useState(null);
+  const { data: userData } = useUserProfile();
 
-  useEffect(() => {
-    // Local Storage থেকে ইউজারের ডাটা নেওয়া হচ্ছে
-    if (typeof window !== "undefined") {
-      const storedData = localStorage.getItem("user_data");
-      if (storedData) {
-        setUserData(JSON.parse(storedData));
-      }
-    }
-  }, []);
-
-  // ইউজারের sdg_role অনুযায়ী কোর্সের তথ্য বের করার লজিক
   const getCourseDetails = (role) => {
     if (role === "SDG Activist") {
       return {
@@ -76,18 +66,18 @@ export default function MyCourses() {
             {courseDetails ? (
               <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-6 sm:p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -mr-10 -mt-10"></div>
-                
+
                 <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold tracking-wide mb-4">
                   {userData?.sdg_role || "Participant"}
                 </span>
-                
+
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                   {courseDetails.title}
                 </h3>
                 <p className="text-gray-600 mb-6 text-sm sm:text-base">
                   {courseDetails.desc}
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link prefetch={false} href={courseDetails.link} target="_blank" rel="noopener noreferrer">
                     <button className="btn-primary w-full sm:w-auto">
@@ -95,7 +85,7 @@ export default function MyCourses() {
                     </button>
                   </Link>
                 </div>
-                
+
                 <p className="text-xs text-gray-500 mt-6">
                   * Note: Your Round 1 MCQ exam questions will be based on this course. Upon completion, you will receive a UN certificate.
                 </p>
@@ -116,7 +106,7 @@ export default function MyCourses() {
               <p className="text-gray-600 mb-6 text-sm sm:text-base">
                 If you face any difficulties registering or navigating the UN CC:Learn platform, please watch this detailed step-by-step guide video.
               </p>
-              
+
               {/* Responsive YouTube Video */}
               <div className="relative w-full max-w-2xl mx-auto rounded-xl overflow-hidden shadow-lg border border-gray-200 aspect-video bg-black">
                 <iframe

@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUserProfile } from "../../../store/slices/authSlice";
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import {
+  useUserProfile,
+  useInvalidateUserProfile,
+} from "../../../lib/hooks/useUserProfile";
 
 export default function EditProfile() {
   const [isSaving, setIsSaving] = useState(false);
@@ -41,8 +43,8 @@ export default function EditProfile() {
   ];
   // -------------------------------------------
 
-  const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  const { data: user } = useUserProfile();
+  const invalidateProfile = useInvalidateUserProfile();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -146,8 +148,8 @@ export default function EditProfile() {
           text: "Your information has been saved successfully.",
           confirmButtonColor: "#2563eb",
         }).then(() => {
-          dispatch(fetchUserProfile(token));
-          router.push("/dashboard/profile"); // চাইলে রিডাইরেক্ট করতে পারেন
+          invalidateProfile();
+          router.push("/dashboard/profile");
         });
       } else {
         Swal.fire({

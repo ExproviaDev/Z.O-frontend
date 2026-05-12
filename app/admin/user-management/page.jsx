@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import {
   FaTrashAlt, FaUserShield, FaSearch, FaChevronLeft,
   FaChevronRight, FaEye, FaUserPlus, FaTimes, FaMapMarkerAlt, FaUniversity
 } from "react-icons/fa";
 import LoadFailedFallback from "../../Components/Fallbacks/LoadFailedFallback";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 const USERS_PER_PAGE = 20;
@@ -30,7 +30,7 @@ const fetchUsersPage = async ({ page, search, role }) => {
 
 export default function RoleManagement() {
   const queryClient = useQueryClient();
-  const { user: currentUser } = useSelector((state) => state.auth);
+  const { data: currentUser } = useUserProfile();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -41,7 +41,7 @@ export default function RoleManagement() {
   const [selectedUser, setSelectedUser] = useState(null); // সিলেক্টেড ইউজার
   const [newMember, setNewMember] = useState({ email: '', role: 'user', name: '', phone: '', promoCode: '' });
 
-  const isAdmin = currentUser?.role === 'admin' || (typeof window !== "undefined" && JSON.parse(localStorage.getItem("user_data"))?.role === 'admin');
+  const isAdmin = currentUser?.role === 'admin';
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -131,7 +131,11 @@ export default function RoleManagement() {
           refreshUsers();
           Swal.fire("Updated!", "User role changed.", "success");
         } catch (error) {
-          Swal.fire("Failed!", "Something went wrong.", "error");
+          const msg =
+            error.response?.data?.error ||
+            error.response?.data?.message ||
+            (typeof error?.message === "string" ? error.message : null);
+          Swal.fire("Failed!", msg || "Something went wrong.", "error");
         }
       }
     });

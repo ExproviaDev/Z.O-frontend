@@ -1,17 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUserProfile } from "../../../store/slices/authSlice"; // check path
 import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUserCircle, FaCloudUploadAlt, FaSave, FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
+import {
+  useUserProfile,
+  useInvalidateUserProfile,
+} from "../../../lib/hooks/useUserProfile";
+
 export default function AdminEditProfile() {
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  const { data: user } = useUserProfile();
+  const invalidateProfile = useInvalidateUserProfile();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -80,8 +83,8 @@ export default function AdminEditProfile() {
           allowOutsideClick: false // বাইরে ক্লিক করলে যেন বন্ধ না হয়
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(fetchUserProfile(token));
-            router.push("/admin/profile"); // ওকে ক্লিক করলে রিডাইরেক্ট হবে
+            invalidateProfile();
+            router.push("/admin/profile");
           }
         });
       } else {

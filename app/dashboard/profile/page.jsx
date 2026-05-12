@@ -1,17 +1,17 @@
 "use client";
-import { useSelector } from "react-redux";
 import {
   FaRegEdit,
   FaUserCircle,
   FaGraduationCap,
   FaAward,
-  FaGlobeAmericas, // SDG এর জন্য গ্লোব আইকন
-  FaHashtag, // Number এর জন্য হ্যাশট্যাগ আইকন
-  FaTrophy, // Round এর জন্য ট্রফি আইকন
+  FaGlobeAmericas,
+  FaHashtag,
+  FaTrophy,
 } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import Loading from "../../admin/components/loadign"; // আপনার বানান ঠিক থাকলে এটাই রাখুন
+import Loading from "../../admin/components/loadign";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 /** Human-readable round label (e.g. Round_1 → Round 1, initial_round_2 → Round 2) */
 function formatRoundType(raw) {
@@ -23,11 +23,9 @@ function formatRoundType(raw) {
 }
 
 const ProfilePage = () => {
-  const authState = useSelector((state) => state.user);
-  const loading = authState?.loading;
-  const user = useSelector((state) => state.auth.user);
+  const { data: user, isLoading } = useUserProfile();
 
-  if (loading) return <Loading></Loading>;
+  if (isLoading) return <Loading></Loading>;
   // SDG Data Mapping
   const sdgData = {
     1: { title: "No Poverty", desc: "Zero Poverty" },

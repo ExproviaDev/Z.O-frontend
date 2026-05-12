@@ -1,51 +1,14 @@
 "use client";
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import CertificateCard from './Components/CertificateCard'; 
+import CertificateCard from './Components/CertificateCard';
 import Link from 'next/link';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { setLogin } from '../../store/slices/authSlice';
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 export default function CertificatePage() {
-  const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.auth);
-
-  // Keep user_data fresh so promotions/round changes show without re-login
-  useEffect(() => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
-    if (!token) return;
-    const sessionId = typeof window !== "undefined" ? localStorage.getItem("session_id") : null;
-    let cancelled = false;
-
-    (async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            ...(sessionId ? { "X-Session-Id": sessionId } : {}),
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json().catch(() => ({}));
-        if (cancelled) return;
-        if (res.ok && data?.user) {
-          dispatch(setLogin({ user: data.user, token }));
-          try {
-            localStorage.setItem("user_data", JSON.stringify(data.user));
-          } catch {}
-        }
-      } catch {
-        // silent: if session is expired, global interceptor/middleware will handle redirect
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [dispatch]);
+  const { data: user, isLoading: loading } = useUserProfile();
 
   if (loading) {
     return (
@@ -184,20 +147,20 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        {/* Top Banner: Malaysia Bootcamp */}
+        {/* Malaysia Summit — registration */}
         <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
           <div className="relative grid grid-cols-1 items-stretch md:grid-cols-[1.2fr_1fr]">
             <div className="h-[300px] md:h-full min-h-[220px]">
               <img
                 src="/src/image/malaysia-summit.jpg"
-                alt="Malaysia Bootcamp"
+                alt="Malaysia Summit"
                 className="h-full w-full object-cover"
               />
             </div>
 
             <div className="flex flex-col justify-center p-5 md:p-7">
               <div className="mb-3 inline-block w-max rounded-full bg-red-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-red-600">
-                Malaysia Bootcamp
+                Malaysia Summit
               </div>
               <h2 className="text-2xl font-black leading-tight text-slate-800 md:text-[28px]">
                 APU International Experience
@@ -207,12 +170,13 @@ export default function CertificatePage() {
               </p>
 
               <a
-                href="https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc8ZMkQnp0Lm57wW2TRSmX7vd1uSB1o7BGFBWHG1rXEhvE9fA/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
               >
-                Apply for Bootcamp <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+                Register for Malaysia Summit{" "}
+                <FiArrowRight className="transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </div>

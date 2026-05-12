@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -11,24 +11,13 @@ import { GrAnnounce } from "react-icons/gr";
 import Swal from "sweetalert2";
 import LogoutButton from "../../Components/LogoutButton";
 import { MdLeaderboard } from "react-icons/md";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [userRole, setUserRole] = useState(null);
-
-  // ১. পেজ লোড হলে লোকাল স্টোরেজ থেকে রোল চেক করা
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedData = localStorage.getItem("user_data");
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        setUserRole(parsedData?.role || "user");
-      } else {
-        setUserRole("user"); 
-      }
-    }
-  }, []);
+  const { data: profile } = useUserProfile();
+  const userRole = profile?.role || "user";
 
   // ২. মেনু আইটেমগুলোতে 'allowedRoles' যোগ করা হলো
   const menuItems = [

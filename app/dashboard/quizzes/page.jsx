@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { api } from "../../lib/apiClient";
 import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 const MyQuizzes = () => {
   const router = useRouter();
+  const { data: profileUser, isLoading: profileLoading } = useUserProfile();
 
   const [userCategory, setUserCategory] = useState("");
   const [quizzes, setQuizzes] = useState([]);
@@ -63,28 +65,24 @@ const MyQuizzes = () => {
   };
 
   useEffect(() => {
+    if (profileLoading) return;
+
+    const token = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
     const fetchQuizData = async () => {
       try {
-        const storedUser = JSON.parse(localStorage.getItem('user_data') || '{}');
-        const token = localStorage.getItem('access_token');
         const API_BASE = process.env.NEXT_PUBLIC_API_URL;
-
-        if (!storedUser || !token) {
-          router.push('/login');
-          return;
-        }
-
-        const categoryToFetch = resolveCategoryFromUser(storedUser);
-
+        const categoryToFetch = resolveCategoryFromUser(profileUser);
         setUserCategory(categoryToFetch);
 
-        // ✅ 3. API Call with endpoint fallback
         const res = await fetchQuizzesWithFallback(API_BASE, token, categoryToFetch);
+        const fetchedQuizzes = res.data.data || [];
 
-        let fetchedQuizzes = res.data.data || [];
-
-        // ✅ 4. Attempt check (fallback + safe user id)
-        const userId = storedUser?.user_id || storedUser?.id;
+        const userId = profileUser?.user_id || profileUser?.id;
         const attempts = userId ? await fetchAttemptsWithFallback(API_BASE, token, userId) : [];
         const attemptedQuizIds = new Set(attempts);
 
@@ -94,7 +92,6 @@ const MyQuizzes = () => {
         }));
 
         setQuizzes(quizzesWithStatus);
-
       } catch (error) {
         console.error("Error fetching quizzes:", error?.response?.status, error?.response?.data || error?.message);
       } finally {
@@ -103,7 +100,7 @@ const MyQuizzes = () => {
     };
 
     fetchQuizData();
-  }, [router]);
+  }, [router, profileUser, profileLoading]);
 
   // টাইম ফরম্যাটিং
   const formatDate = (dateString) => {

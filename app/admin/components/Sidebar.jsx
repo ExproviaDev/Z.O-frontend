@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -14,6 +14,7 @@ import {
   FiRotateCcw,
 } from "react-icons/fi";
 import { MdLeaderboard, MdCampaign  } from "react-icons/md";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 // ১. Access Level onujayi Menu Items
 const menuItems = [
@@ -35,22 +36,8 @@ const menuItems = [
 
 export default function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    // LocalStorage theke user_data object parse koro
-    const data = localStorage.getItem("user_data");
-    if (data) {
-      try {
-        setUser(JSON.parse(data));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
-
-  // User role ber kora (Admin/Manager/User)
+  const { data: user } = useUserProfile();
   const userRole = user?.role || "user";
 
   const isActiveLink = (href) => {

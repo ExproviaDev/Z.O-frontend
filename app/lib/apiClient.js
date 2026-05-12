@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearUserProfileSnap } from "./userProfileSnapshot";
 
 export const api = axios.create();
 
@@ -26,6 +27,8 @@ api.interceptors.response.use(
         // Token invalid/expired or not authorized: force clean session.
         localStorage.removeItem("access_token");
         localStorage.removeItem("user_data");
+        localStorage.removeItem("zo_auth_min");
+        clearUserProfileSnap();
         localStorage.removeItem("active_quiz");
         // Avoid infinite loop if already on login
         if (!window.location.pathname.startsWith("/login")) {

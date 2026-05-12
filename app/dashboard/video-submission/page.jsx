@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FaVideo, FaLink, FaCheckCircle, FaClock, FaExclamationTriangle, FaEdit, FaLock, FaCalendarAlt } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 const UserVideoSubmission = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { data: user } = useUserProfile();
   const router = useRouter();
   
   // States
@@ -26,18 +26,15 @@ const UserVideoSubmission = () => {
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (!token) {
-        router.push('/login');
-        return;
+      router.push('/login');
+      return;
     }
 
-    // 🔥 ২. লোকাল স্টোরেজ থেকে ডাটা নিয়ে রাউন্ড ২ চেক করা
-    const storedUser = JSON.parse(localStorage.getItem("user_data") || "{}");
-    if (storedUser?.round_type === "round_2" || user?.round_type === "round_2") {
-        setIsRound2(true);
+    if (user?.round_type === "round_2") {
+      setIsRound2(true);
     }
 
-    // ইউজার আইডি পাওয়ার পর ডাটা ফেচ
-    const userId = user?.id || user?.user_id || storedUser?.user_id;
+    const userId = user?.id || user?.user_id;
     if (userId) {
       const controller = new AbortController();
       fetchData(userId, token, controller.signal);
@@ -111,7 +108,7 @@ const UserVideoSubmission = () => {
     if (!videoLink) return Swal.fire("Error", "Please enter a valid video link", "warning");
 
     setIsSubmitting(true);
-    const userId = user?.id || user?.user_id || JSON.parse(localStorage.getItem("user_data"))?.user_id;
+    const userId = user?.id || user?.user_id;
 
     try {
       const token = localStorage.getItem("access_token");

@@ -1,16 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import LogoutButton from "../LogoutButton";
 import { FiUser } from "react-icons/fi";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
+
+function getInitials(source) {
+  if (!source || typeof source !== "string") return "U";
+  const trimmed = source.trim();
+  if (!trimmed) return "U";
+  const parts = trimmed.split(/[\s.@_-]+/).filter(Boolean);
+  if (parts.length === 0) return trimmed[0].toUpperCase();
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
 
 export default function nProfileModal({ isOpen, onClose }) {
   const modalRef = useRef(null);
-  const authState = useSelector((state) => state.auth);
-  const { user = null } = authState || {};
+  const { data: user } = useUserProfile({ enabled: isOpen });
 
   useEffect(() => {
     if (!isOpen) return;
@@ -41,17 +49,8 @@ export default function nProfileModal({ isOpen, onClose }) {
       >
         <div className="border-b border-white/8 bg-black/20 px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="relative shrink-0 rounded-full ring-2 ring-white/15">
-              <Image
-                src={
-                  user?.profile_image_url ||
-                  "https://res.cloudinary.com/dsga4gyw9/image/upload/v1770274774/istockphoto-2149922267-612x612_1_xlpcbg.jpg"
-                }
-                alt="profile"
-                width={52}
-                height={52}
-                className="h-[52px] w-[52px] rounded-full object-cover bg-slate-900"
-              />
+            <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white font-bold ring-2 ring-white/15">
+              {getInitials(user?.name || user?.email)}
             </div>
             <div className="min-w-0 flex-1 text-left">
               <p className="truncate text-[15px] font-semibold text-white">

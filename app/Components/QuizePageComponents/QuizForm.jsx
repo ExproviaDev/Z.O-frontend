@@ -11,12 +11,16 @@ import TimeUpModal from "./TimeUpModal";
 import { AiOutlineClockCircle, AiOutlineArrowLeft } from "react-icons/ai";
 import { MdSecurity } from "react-icons/md";
 import { clearActiveQuiz } from "../../store/slices/userQuizSlice";
-import { updateParticipation } from "../../store/slices/authSlice";
+import {
+  useUserProfile,
+  useInvalidateUserProfile,
+} from "../../lib/hooks/useUserProfile";
 
 const QuizForm = ({ questions, quizInfo }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { data: user } = useUserProfile();
+  const invalidateProfile = useInvalidateUserProfile();
   const { activeQuiz } = useSelector((state) => state.userQuiz);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -102,7 +106,7 @@ const QuizForm = ({ questions, quizInfo }) => {
     // "already submitted" check, so the happy path is always consistent.
     // No DB changes happen here; they're all inside submit_quiz_optimized RPC.
     const handleSuccess = () => {
-      dispatch(updateParticipation());
+      invalidateProfile();
       localStorage.removeItem("quiz_time");
       dispatch(clearActiveQuiz());
       Swal.fire({

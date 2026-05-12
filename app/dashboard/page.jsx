@@ -9,8 +9,8 @@ import {
   FaFlag,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
 import Link from "next/link";
+import { useUserProfile } from "../lib/hooks/useUserProfile";
 
 // ✅ SDG Data Mapping
 const sdgData = {
@@ -50,8 +50,7 @@ function formatCompetitionRoundTitle(roundType) {
 }
 
 const UserDashboard = () => {
-  const authState = useSelector((state) => state.auth);
-  const { user = null } = authState || {};
+  const { data: user } = useUserProfile();
   const userName = user?.name || "User";
   const roundKey = getCompetitionRoundKey(user?.round_type);
   const roundTitle = formatCompetitionRoundTitle(user?.round_type);

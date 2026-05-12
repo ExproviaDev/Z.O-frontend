@@ -7,16 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { RxDashboard } from "react-icons/rx";
 import LogoutButton from "../../Components/LogoutButton";
-import { useSelector } from "react-redux";
-import Image from "next/image";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 const DashboardHeader = ({ onMenuClick }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const authState = useSelector((state) => state.auth);
-  const { user = null } = authState || {};
+  const { data: user } = useUserProfile();
   const userName = user?.name || "User";
-  const userImg = user?.profile_image_url;
 
   return (
     <header className="bg-[#0f172a] border-b border-white/10 py-3 px-4 md:px-6 flex items-center justify-between sticky top-0 z-40 h-16">
@@ -48,18 +45,8 @@ const DashboardHeader = ({ onMenuClick }) => {
             onClick={() => setIsProfileOpen(!isProfileOpen)}
             className="flex items-center gap-2 p-2 md:pr-3 hover:bg-white/10 rounded-full md:rounded-xl transition-all border border-transparent hover:border-white/20"
           >
-            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md overflow-hidden">
-              {userImg ? (
-                <Image
-                  src={userImg}
-                  alt={userName}
-                  width={36}
-                  height={36}
-                  className="object-cover w-full h-full"
-                />
-              ) : (
-                userName.charAt(0).toUpperCase()
-              )}
+            <div className="h-9 w-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
+              {userName.charAt(0).toUpperCase()}
             </div>
 
             <div className="hidden md:block text-left">

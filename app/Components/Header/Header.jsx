@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { RxDashboard } from "react-icons/rx";
 import Image from "next/image";
-import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import ProfileModal from "../ProfileModal/ProfileModal";
 import logo from "../../../public/src/zeroolympiad.png";
 import GoogleTranslate from "../../GoogleTranslate";
+import HeaderDashboardEntry from "./HeaderDashboardEntry";
 
 const navItems = [
   { title: "Home", url: "/" },
@@ -18,29 +16,20 @@ const navItems = [
   { title: "Instruction", url: "/instruction" },
   { title: "Gallery", url: "/gallery" },
   { title: "GLTS", url: "https://glts.faatihaaayat.com/", external: true },
-  { title: "Malaysia Bootcamp", url: "https://forms.gle/YOUR_GOOGLE_FORM_LINK_HERE", external: true },
+  { title: "Malaysia Summit", url: "https://docs.google.com/forms/d/e/1FAIpQLSc8ZMkQnp0Lm57wW2TRSmX7vd1uSB1o7BGFBWHG1rXEhvE9fA/viewform", external: true },
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const lastScrollY = useRef(0);
-  const profileAreaRef = useRef(null);
-
   const authState = useSelector((state) => state.auth);
-  const { user = null } = authState || {};
-  const email = user?.email;
-
-  const isStaff = user?.role === "admin" || user?.role === "manager";
+  const { isLoggedIn } = authState || {};
 
   useEffect(() => {
     const handleScroll = () => {
-      const current = window.scrollY;
-      setScrolled(current > 20);
-      lastScrollY.current = current;
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -48,46 +37,31 @@ export default function Header() {
 
   useEffect(() => setIsMobileMenuOpen(false), [pathname]);
 
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (
-        isProfileOpen &&
-        profileAreaRef.current &&
-        !profileAreaRef.current.contains(e.target)
-      ) {
-        setIsProfileOpen(false);
-      }
-    };
-    window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
-  }, [isProfileOpen]);
-
   return (
     <>
       <header
-        className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${scrolled
-          ? "bg-white/90 backdrop-blur-md shadow-md py-2"
-          : "bg-white py-4"
-          }`}
+        className={`sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-md shadow-md py-2"
+            : "bg-white py-4"
+        }`}
       >
         <div className=" px-4 lg:px-5">
           <div className=" max-w-7xl mx-auto flex items-center justify-between">
-            {/* Logo Section */}
             <Link prefetch={false} href="/" className="flex items-center group">
               <div className="relative w-44 h-16  lg:w-64 lg:h-16 transition-transform">
                 <Image
                   src={logo}
                   alt="Zero Olympiad"
                   fill
+                  sizes="(max-width: 1023px) 176px, 256px"
                   className="object-contain"
-                // height={100}
                 />
-
               </div>
             </Link>
-            {/* Desktop Navigation */}
+
             <nav className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.external ? (
                   <a
                     key={item.title}
@@ -104,63 +78,24 @@ export default function Header() {
                     prefetch={false}
                     key={item.title}
                     href={item.url}
-                    className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${pathname === item.url ? "text-orange-500" : "text-gray-600"
-                      } group`}
+                    className={`relative text-sm font-bold transition-colors duration-300 hover:text-orange-500 ${
+                      pathname === item.url ? "text-orange-500" : "text-gray-600"
+                    } group`}
                   >
                     {item.title}
                     <span
-                      className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${pathname === item.url ? "w-full" : ""
-                        }`}
+                      className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full ${
+                        pathname === item.url ? "w-full" : ""
+                      }`}
                     ></span>
                   </Link>
-                )
-
-              ))}
-
+                ),
+              )}
             </nav>
 
-            {/* Right Action Section */}
             <div className="flex items-center gap-4">
-              {email ? (
-                <>
-                  {/* logic: Staff hole Admin Panel button, User hole Profile Icon */}
-                  {isStaff ? (
-                    <Link
-                      prefetch={false}
-                      href="/admin"
-                      className="hidden md:flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-Primary rounded-lg hover:bg-opacity-90 transition-all shadow-md active:scale-95"
-                    >
-                      <RxDashboard size={18} />
-                      Admin Panel
-                    </Link>
-
-                  ) : (
-                    <div className="relative" ref={profileAreaRef}>
-                      <button
-                        onClick={() => setIsProfileOpen(!isProfileOpen)}
-                        className="relative p-0.5 rounded-full transition-all active:scale-95 cursor-pointer focus:outline-none flex items-center flex-col gap-1"
-                      >
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-Secondary ">
-                          {user.profile_image_url ? (
-                            <Image
-                              src={user.profile_image_url}
-                              alt="Profile"
-                              width={48}
-                              height={48}
-                              className="object-cover w-full h-full"
-                            />
-                          ) : (
-                            <FaUserCircle className="w-full h-full text-gray-300 bg-gray-100" />
-                          )}
-                          
-                        </div>
-                        <p className="text-blue-950 font-bold">Profile</p>
-                      </button>
-                      <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
-                    </div>
-                  )}
-
-                </>
+              {isLoggedIn ? (
+                <HeaderDashboardEntry />
               ) : (
                 <div className="hidden lg:flex items-center gap-4">
                   <Link
@@ -183,10 +118,11 @@ export default function Header() {
                 <GoogleTranslate />
               </div>
 
-
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="lg:hidden text-gray-600 p-2 cursor-pointer"
+                type="button"
+                aria-label="Open menu"
               >
                 <AiOutlineMenu size={28} />
               </button>
@@ -195,26 +131,32 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile drawer: includes Dashboard button (lazy profile fetch on click only) */}
       <div
-        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
+        className={`fixed inset-0 z-[60] bg-black/60 transition-opacity  duration-300 ${
+          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
         onClick={() => setIsMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+          className={`fixed top-0 left-0 h-full w-[280px] bg-white border-r  border-gray-200 p-6 transition-transform duration-300 ${
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-bold text-Secondary">Menu</h2>
-            <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-gray-600"
+            >
               <AiOutlineClose size={28} />
             </button>
           </div>
 
           <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
+            {navItems.map((item) =>
               item.external ? (
                 <a
                   key={item.title}
@@ -230,22 +172,22 @@ export default function Header() {
                   key={item.title}
                   href={item.url}
                   prefetch={false}
-                  className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${pathname === item.url
-                    ? "bg-orange-50 text-orange-500"
-                    : "text-gray-600 hover:bg-gray-50"
-                    }`}
+                  className={`text-base font-bold py-3 px-4 rounded-lg transition-colors ${
+                    pathname === item.url
+                      ? "bg-orange-50 text-orange-500"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
                 >
                   {item.title}
                 </Link>
-              )
-            ))}
+              ),
+            )}
 
             <hr className="border-gray-100 my-2" />
 
-            {!email ? (
+            {!isLoggedIn ? (
               <div className="flex flex-col gap-4">
-                <Link
-                  prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
+                <Link prefetch={false} href="/login" className="text-gray-600 font-bold px-4 py-2">
                   Login
                 </Link>
                 <Link
@@ -257,35 +199,19 @@ export default function Header() {
                 </Link>
               </div>
             ) : (
-              <div className="flex flex-col gap-2">
-                {/* Mobile Menu logic: Staff hole Admin link, User hole Profile/Dashboard */}
-                {isStaff ? (
-                  <Link prefetch={false} href="/admin" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
-                    <RxDashboard size={24} />
-                    <span className="font-bold">Admin Panel</span>
-                  </Link>
-                ) : (
-                  <>
-                    <Link prefetch={false} href="/dashboard" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
-                      <RxDashboard size={24} />
-                      <span className="font-bold">Dashboard</span>
-                    </Link>
-                    <Link prefetch={false} href="/dashboard/profile" className="flex items-center gap-3 text-gray-600 px-4 py-3 hover:bg-gray-50 rounded-lg">
-                      <FaUserCircle size={24} />
-                      <span className="font-bold">My Account</span>
-                    </Link>
-                  </>
-                )}
-              </div>
+              <HeaderDashboardEntry
+                variant="mobile"
+                onAfterNavigate={() => setIsMobileMenuOpen(false)}
+              />
             )}
+
             <hr className="border-gray-100 my-2" />
             <div className="flex md:hidden">
-                <GoogleTranslate />
-              </div>
+              <GoogleTranslate />
+            </div>
           </div>
         </div>
       </div>
-
     </>
   );
 }

@@ -1,18 +1,18 @@
 "use client";
-import { useSelector } from "react-redux";
-import { 
-  FaRegEdit, FaUserShield, FaEnvelope, 
-  FaPhoneAlt, FaMapMarkerAlt, FaCheckCircle 
+import {
+  FaRegEdit, FaUserShield, FaEnvelope,
+  FaPhoneAlt, FaMapMarkerAlt, FaCheckCircle
 } from "react-icons/fa";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "../components/loadign";
+import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
 const AdminProfilePage = () => {
-  const user = useSelector((state) => state.auth.user);
+  const { data: user, isLoading } = useUserProfile();
 
-  if (!user) return <Loading></Loading>
+  if (isLoading || !user) return <Loading></Loading>
 
   return (
     <main className="min-h-screen bg-[#f8fafc] py-12 px-4 lg:px-0">
