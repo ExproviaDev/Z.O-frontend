@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiUser, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import Link from "next/link";
@@ -11,6 +11,15 @@ import Cookies from "js-cookie";
 import ForgotPasswordModal from "../Components/ForgotPasswordModal";
 import FullPageLoader from "../Components/FullPageLoader";
 import { removeAllProfileQueries } from "../lib/hooks/useUserProfile";
+
+/** One round-trip attempt; after this we stop waiting and show a clear network message. */
+const LOGIN_ATTEMPT_TIMEOUT_MS = 15_000;
+/** Limits hammering Try again after a slow-connection timeout vs quick typo retries. */
+const MIN_MS_AFTER_QUICK_FINISH = 1_600;
+const MIN_MS_AFTER_SLOW_TIMEOUT_FINISH = 8_000;
+
+const SLOW_OR_BLOCKED_CONNECTION_MESSAGE =
+  "This is taking longer than usual. It usually means your connection is slow, unstable, or restricted. Try switching to another Wi‑Fi network or mobile data, or use a VPN you trust, then try signing in again.";
 
 async function readLoginPayload(res) {
   const ctype = res.headers.get("content-type") || "";
@@ -35,16 +44,78 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  /** True when the last failure was our client-side login timeout (15s). */
+  const [showSlowConnectionRetry, setShowSlowConnectionRetry] =
+    useState(false);
+
+  const slowTimerRef = useRef(null);
+  const abortRef = useRef(null);
+  const lastAttemptEndedAtRef = useRef(0);
+  const prevAttemptWasSlowTimeoutRef = useRef(false);
+  const suppressAbortErrorUiRef = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      suppressAbortErrorUiRef.current = true;
+      if (slowTimerRef.current) {
+        clearTimeout(slowTimerRef.current);
+        slowTimerRef.current = null;
+      }
+      abortRef.current?.abort();
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError("");
+    setShowSlowConnectionRetry(false);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const beginLoginAttempt = () => {
+    const now = Date.now();
+    const endedAt = lastAttemptEndedAtRef.current;
+    if (endedAt > 0) {
+      const minGap = prevAttemptWasSlowTimeoutRef.current
+        ? MIN_MS_AFTER_SLOW_TIMEOUT_FINISH
+        : MIN_MS_AFTER_QUICK_FINISH;
+      if (now - endedAt < minGap) {
+        const sec = Math.ceil((minGap - (now - endedAt)) / 1000);
+        setError(
+          sec <= 1
+            ? "Please wait a moment before trying again."
+            : `Please wait about ${sec} seconds before trying again.`,
+        );
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const clearSlowLoginTimer = () => {
+    if (slowTimerRef.current) {
+      clearTimeout(slowTimerRef.current);
+      slowTimerRef.current = null;
+    }
+  };
+
+  const runLoginAttempt = async () => {
+    if (!beginLoginAttempt()) return;
+
+    suppressAbortErrorUiRef.current = false;
+
+    /** Set in catch when our 15s timer aborts the request. */
+    let attemptHitSlowTimeout = false;
+
     setLoading(true);
     setError("");
+    setShowSlowConnectionRetry(false);
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    slowTimerRef.current = setTimeout(() => {
+      controller.abort();
+    }, LOGIN_ATTEMPT_TIMEOUT_MS);
 
     let loginSucceeded = false;
     try {
@@ -54,8 +125,11 @@ export default function LoginPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        }
+          signal: controller.signal,
+        },
       );
+
+      clearSlowLoginTimer();
 
       const { json, text } = await readLoginPayload(res);
       const data = json ?? {};
@@ -87,18 +161,35 @@ export default function LoginPage() {
       }
     } catch (err) {
       console.error("Login Error:", err);
-      const m = typeof err?.message === "string" ? err.message : "";
-      if (/failed to fetch|network/i.test(m)) {
-        setError(
-          "Could not reach the server. Check your internet and API URL.",
-        );
+      if (err?.name === "AbortError") {
+        if (!suppressAbortErrorUiRef.current) {
+          attemptHitSlowTimeout = true;
+          setError(SLOW_OR_BLOCKED_CONNECTION_MESSAGE);
+          setShowSlowConnectionRetry(true);
+        }
       } else {
-        setError(m || "Login failed unexpectedly. Try again.");
+        const m = typeof err?.message === "string" ? err.message : "";
+        if (/failed to fetch|network/i.test(m)) {
+          setError(
+            "Could not reach the server. Check your internet and API URL.",
+          );
+        } else {
+          setError(m || "Login failed unexpectedly. Try again.");
+        }
       }
     } finally {
+      clearSlowLoginTimer();
+      abortRef.current = null;
+      lastAttemptEndedAtRef.current = Date.now();
+      prevAttemptWasSlowTimeoutRef.current = attemptHitSlowTimeout;
       // Keep overlay until navigation on success so the UX matches header dashboard entry.
       if (!loginSucceeded) setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await runLoginAttempt();
   };
 
   return (
@@ -184,7 +275,23 @@ export default function LoginPage() {
                 </button>
               </div>
 
-              {error && <p className="text-red-500 text-sm font-medium text-center">{error}</p>}
+              {error && (
+                <p className="text-red-500 text-sm font-medium text-center leading-relaxed">
+                  {error}
+                </p>
+              )}
+
+              {showSlowConnectionRetry && !loading ? (
+                <div className="flex justify-center pt-1">
+                  <button
+                    type="button"
+                    onClick={() => runLoginAttempt()}
+                    className="rounded-lg border-2 border-[#0F172A] bg-white px-6 py-2.5 text-sm font-bold text-[#0F172A] transition-colors hover:bg-slate-50 active:scale-[0.99]"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : null}
 
               <div className="flex flex-col gap-4 pt-4">
                 <button
