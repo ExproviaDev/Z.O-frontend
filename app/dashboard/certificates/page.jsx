@@ -147,23 +147,23 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        {/* Malaysia Summit — registration */}
+        {/* Global Leadership Summit — registration */}
         <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
-          <div className="relative grid grid-cols-1 items-stretch md:grid-cols-[1.2fr_1fr]">
-            <div className="h-[300px] md:h-full min-h-[220px]">
+          <div className="relative grid grid-cols-1 items-stretch md:grid-cols-[0.95fr_1.05fr]">
+            <div className="h-[280px] md:h-full min-h-[220px]">
               <img
                 src="/src/image/malaysia-summit.jpg"
-                alt="Malaysia Summit"
+                alt="Global Leadership Summit"
                 className="h-full w-full object-cover"
               />
             </div>
 
             <div className="flex flex-col justify-center p-5 md:p-7">
               <div className="mb-3 inline-block w-max rounded-full bg-red-50 px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-red-600">
-                Malaysia Summit
+                Global Leadership Summit
               </div>
               <h2 className="text-2xl font-black leading-tight text-slate-800 md:text-[28px]">
-                APU International Experience
+                Global Leadership Summit
               </h2>
               <p className="mt-2 text-sm font-medium leading-relaxed text-slate-600">
                 Exclusive for Zero Olympiad participants. Attend the most prestigious Global Leadership Summit.
@@ -175,7 +175,7 @@ export default function CertificatePage() {
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-sm font-bold text-white transition hover:bg-indigo-600 active:scale-95"
               >
-                Register for Malaysia Summit{" "}
+                Register for Global Leadership Summit{" "}
                 <FiArrowRight className="transition-transform group-hover:translate-x-1" />
               </a>
             </div>
