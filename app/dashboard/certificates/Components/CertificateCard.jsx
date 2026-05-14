@@ -19,12 +19,44 @@ const CertificateCard = ({
   accentClass = "bg-indigo-600",
   description = "",
 }) => {
+  // Convert Greek/Cyrillic "lookalike" letters to their Latin equivalents.
+  // Many users paste names where A/T/M/O etc. are actually Greek or Cyrillic
+  // characters (Α/Τ/Μ/О). Helvetica can't render those, so the PDF would show
+  // empty boxes. We normalize them here so the certificate looks correct.
+  const HOMOGLYPH_MAP = {
+    // Greek uppercase → Latin
+    'Α': 'A', 'Β': 'B', 'Ε': 'E', 'Ζ': 'Z', 'Η': 'H', 'Ι': 'I', 'Κ': 'K',
+    'Μ': 'M', 'Ν': 'N', 'Ο': 'O', 'Ρ': 'P', 'Τ': 'T', 'Υ': 'Y', 'Χ': 'X',
+    // Greek lowercase → Latin
+    'α': 'a', 'ε': 'e', 'ι': 'i', 'κ': 'k', 'ν': 'v', 'ο': 'o',
+    'ρ': 'p', 'τ': 't', 'υ': 'y', 'χ': 'x',
+    // Cyrillic uppercase → Latin
+    'А': 'A', 'В': 'B', 'Е': 'E', 'К': 'K', 'М': 'M', 'Н': 'H', 'О': 'O',
+    'Р': 'P', 'С': 'C', 'Т': 'T', 'Х': 'X', 'У': 'Y',
+    // Cyrillic lowercase → Latin
+    'а': 'a', 'е': 'e', 'к': 'k', 'м': 'm', 'о': 'o', 'р': 'p', 'с': 'c',
+    'т': 't', 'х': 'x', 'у': 'y',
+    // Fullwidth / special spaces
+    '\u00A0': ' ', '\u2002': ' ', '\u2003': ' ', '\u200B': '',
+  };
+
+  const normalizeName = (str) => {
+    if (!str) return '';
+    const nfkc = str.normalize('NFKC');
+    let out = '';
+    for (const ch of nfkc) {
+      out += HOMOGLYPH_MAP[ch] ?? ch;
+    }
+    return out;
+  };
+
   const [loading, setLoading] = useState(false);
-  const certificateName = (userName || "").toUpperCase();
+  const certificateName = normalizeName(userName || "").toUpperCase();
 
   const isFellowshipTemplate = templatePath === "/fellowship_certificates.pdf";
 
-  // Check if name contains Bengali or other non-WinAnsi characters
+  // After normalization, anything left outside the WinAnsi range is something
+  // we can't render with the built-in Helvetica font (e.g. Bengali).
   const needsUnicodeFont = (str) => /[^\u0000-\u00FF]/.test(str);
 
   const viewPdf = async () => {
@@ -59,15 +91,18 @@ const CertificateCard = ({
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
       pdfDoc.registerFontkit(fontkit);
 
-      let font, fontRegular;
+      // Date & validation ID are always plain ASCII — always render them with
+      // Helvetica so they look consistent regardless of the user's name.
+      const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+      // Pick the font used for the user's name. If, after homoglyph
+      // normalization, the name still contains non-Latin characters
+      // (e.g. real Bengali), load the Bengali font for just the name.
+      let nameFont = font;
       if (needsUnicodeFont(certificateName)) {
-        // Bengali or other non-Latin characters — use Noto Sans Bengali
         const bengaliFontBytes = await fetch('/NotoSansBengali-Bold.ttf').then(r => r.arrayBuffer());
-        font = await pdfDoc.embedFont(bengaliFontBytes);
-        fontRegular = font;
-      } else {
-        font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-        fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        nameFont = await pdfDoc.embedFont(bengaliFontBytes);
       }
 
       const pages = pdfDoc.getPages();
@@ -90,12 +125,12 @@ const CertificateCard = ({
 
 
       // ১. নাম বসানো
-      const nameWidth = font.widthOfTextAtSize(certificateName, nameFontSize);
+      const nameWidth = nameFont.widthOfTextAtSize(certificateName, nameFontSize);
       firstPage.drawText(certificateName, {
         x: (width / 1.85) - (nameWidth / 2),
-        y: nameYPosition, 
+        y: nameYPosition,
         size: nameFontSize,
-        font: font,
+        font: nameFont,
         color: rgb(0.12, 0.12, 0.12),
       });
 
