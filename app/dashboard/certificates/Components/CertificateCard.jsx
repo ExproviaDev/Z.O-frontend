@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import fontkit from '@pdf-lib/fontkit';
 import { FiExternalLink, FiAward, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
@@ -22,6 +23,9 @@ const CertificateCard = ({
   const certificateName = (userName || "").toUpperCase();
 
   const isFellowshipTemplate = templatePath === "/fellowship_certificates.pdf";
+
+  // Check if name contains Bengali or other non-WinAnsi characters
+  const needsUnicodeFont = (str) => /[^\u0000-\u00FF]/.test(str);
 
   const viewPdf = async () => {
       if (!certificateName) { toast.error("User name missing!"); return; }
@@ -48,13 +52,23 @@ const CertificateCard = ({
 
     try {
       const existingPdfBytes = await fetch(templatePath).then(res => {
-        if (!res.ok) throw new Error("Template not found");
+        if (!res.ok) throw new Error(`TEMPLATE_MISSING:${templatePath}`);
         return res.arrayBuffer();
       });
 
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
-      const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-      const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica); // আইডির জন্য রেগুলার ফন্ট
+      pdfDoc.registerFontkit(fontkit);
+
+      let font, fontRegular;
+      if (needsUnicodeFont(certificateName)) {
+        // Bengali or other non-Latin characters — use Noto Sans Bengali
+        const bengaliFontBytes = await fetch('/NotoSansBengali-Bold.ttf').then(r => r.arrayBuffer());
+        font = await pdfDoc.embedFont(bengaliFontBytes);
+        fontRegular = font;
+      } else {
+        font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+        fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      }
 
       const pages = pdfDoc.getPages();
       const firstPage = pages[0];
@@ -125,8 +139,24 @@ const CertificateCard = ({
 
     } catch (error) {
       console.error("PDF Error:", error);
-      toast.error("Certificate template not found. Please contact admin.");
-      if (newWindow) newWindow.close();
+      if (error?.message?.startsWith("TEMPLATE_MISSING:")) {
+        toast.error("Certificate is being prepared. Please check back soon!");
+        if (newWindow) {
+          newWindow.document.body.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#f8fafc;text-align:center;padding:20px;">
+              <div style="font-size:48px;margin-bottom:16px;">🎓</div>
+              <h2 style="color:#1e293b;font-size:22px;font-weight:800;margin-bottom:8px;">Certificate Coming Soon!</h2>
+              <p style="color:#64748b;font-size:15px;max-width:400px;line-height:1.6;">
+                Your certificate is being prepared by the admin. Please check back in a little while.
+              </p>
+              <p style="color:#94a3b8;font-size:12px;margin-top:24px;">You can safely close this tab.</p>
+            </div>
+          `;
+        }
+      } else {
+        toast.error("Could not generate certificate. Please try again.");
+        if (newWindow) newWindow.close();
+      }
     } finally {
       setLoading(false);
     }

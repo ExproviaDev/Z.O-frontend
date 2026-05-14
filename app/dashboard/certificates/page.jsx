@@ -32,11 +32,12 @@ export default function CertificatePage() {
     );
   }
 
-  const hasParticipated = user.is_participated;
+  const hasParticipated = !!user.is_participated;
   const normalizedRoundType = String(user?.round_type || "").toLowerCase().replace(/\s+/g, "_");
   const isRound2OrAbove = normalizedRoundType.includes("round_2") || normalizedRoundType.includes("round_3");
 
-  if (!hasParticipated) {
+  // Show locked page only when the user has no certificates at all
+  if (!hasParticipated && !isRound2OrAbove) {
     return (
       <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-6 text-center">
         <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-100 max-w-lg w-full">
@@ -182,7 +183,9 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        {/* Round 1 & Fellowship — condition: is_participated = true only */}
+        {hasParticipated && (
+          <div className="space-y-6">
             <CertificateCard 
                 userName={user.name || "Participant"} 
                 date={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} 
@@ -203,8 +206,10 @@ export default function CertificatePage() {
                 accentClass="bg-emerald-600"
                 description="Awarded for joining the fellowship participation track of Zero Olympiad."
             />
-        </div>
+          </div>
+        )}
 
+        {/* Round 2 — condition: round_type = 2 only */}
         {isRound2OrAbove && (
           <div className="mt-6">
             <CertificateCard
