@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from "../../lib/apiClient";
-import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay } from 'react-icons/fa';
+import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay, FaStar, FaStopwatch } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
@@ -13,6 +13,7 @@ const MyQuizzes = () => {
 
   const [userCategory, setUserCategory] = useState("");
   const [quizzes, setQuizzes] = useState([]);
+  const [attemptDetails, setAttemptDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,12 +57,15 @@ const MyQuizzes = () => {
     for (const url of endpoints) {
       try {
         const response = await api.get(url);
-        return response?.data?.attempts || [];
+        return {
+          attempts: response?.data?.attempts || [],
+          details: response?.data?.details || {},
+        };
       } catch (err) {
         if (err?.response?.status !== 404) throw err;
       }
     }
-    return [];
+    return { attempts: [], details: {} };
   };
 
   useEffect(() => {
@@ -83,8 +87,12 @@ const MyQuizzes = () => {
         const fetchedQuizzes = res.data.data || [];
 
         const userId = profileUser?.user_id || profileUser?.id;
-        const attempts = userId ? await fetchAttemptsWithFallback(API_BASE, token, userId) : [];
+        const { attempts, details } = userId
+          ? await fetchAttemptsWithFallback(API_BASE, token, userId)
+          : { attempts: [], details: {} };
         const attemptedQuizIds = new Set(attempts);
+
+        setAttemptDetails(details);
 
         const quizzesWithStatus = fetchedQuizzes.map(quiz => ({
           ...quiz,
@@ -102,11 +110,20 @@ const MyQuizzes = () => {
     fetchQuizData();
   }, [router, profileUser, profileLoading]);
 
-  // টাইম ফরম্যাটিং
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
+  // seconds → "Xm Ys" display
+  const formatTimeTaken = (seconds) => {
+    if (seconds == null || isNaN(seconds)) return null;
+    const m = Math.floor(seconds / 60);
+    const s = Math.round(seconds % 60);
+    if (m === 0) return `${s}s`;
+    if (s === 0) return `${m}m`;
+    return `${m}m ${s}s`;
   };
 
   const handleStartQuiz = (quiz) => {
@@ -166,54 +183,112 @@ const MyQuizzes = () => {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
-          [1, 2, 3].map(i => <div key={i} className="h-48 bg-gray-200 rounded-2xl animate-pulse"></div>)
-        ) : filteredQuizzes.length > 0 ? (
-          filteredQuizzes.map((quiz) => (
-            <div key={quiz.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all flex flex-col justify-between h-full">
-
-              <div>
-                <div className="flex justify-between items-start mb-4">
-                  <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[11px] font-bold rounded-full border border-indigo-100 uppercase tracking-wide">
-                    {quiz.category}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs font-semibold text-gray-500">
-                    <FaClock /> {quiz.time_limit} Mins
-                  </span>
-                </div>
-
-                <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
-                  {quiz.title}
-                </h3>
-
-                <div className="space-y-2 mt-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-gray-400" />
-                    <span>Starts: <span className="font-medium text-gray-700">{formatDate(quiz.start_at)}</span></span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <FaBan className="text-gray-400" />
-                    <span>Ends: <span className="font-medium text-gray-700">{formatDate(quiz.ends_at)}</span></span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-gray-50">
-                {quiz.hasAttempted ? (
-                  <button disabled className="w-full py-2.5 rounded-xl bg-emerald-50 text-emerald-600 font-bold text-sm flex items-center justify-center gap-2 cursor-not-allowed opacity-80">
-                    <FaCheckCircle /> Completed
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleStartQuiz(quiz)}
-                    className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-200"
-                  >
-                    <FaPlayCircle /> Start Quiz
-                  </button>
-                )}
-              </div>
-
-            </div>
+          [1, 2, 3].map(i => (
+            <div key={i} className="h-64 bg-gray-100 rounded-2xl animate-pulse" />
           ))
+        ) : filteredQuizzes.length > 0 ? (
+          filteredQuizzes.map((quiz) => {
+            const detail = attemptDetails[quiz.id];
+            const score = detail?.score ?? null;
+            const timeTaken = formatTimeTaken(detail?.time_taken);
+            const totalQuestions = quiz.questions?.length ?? quiz.question_count ?? null;
+            const now = Date.now();
+            const startMs = quiz.start_at ? new Date(quiz.start_at).getTime() : 0;
+            const endMs = quiz.ends_at ? new Date(quiz.ends_at).getTime() : Infinity;
+            // Only show Upcoming/Closed for quizzes the user has NOT attempted
+            const isUpcoming = !quiz.hasAttempted && startMs > now;
+            const isExpired = !quiz.hasAttempted && endMs < now;
+
+            return (
+              <div
+                key={quiz.id}
+                className={`relative bg-white rounded-2xl shadow-sm border transition-all flex flex-col h-full overflow-hidden
+                  ${quiz.hasAttempted
+                    ? 'border-emerald-100 hover:shadow-emerald-100/60 hover:shadow-md'
+                    : 'border-gray-100 hover:shadow-md hover:-translate-y-0.5'}`}
+              >
+                {/* Top colour strip */}
+                <div className={`h-1.5 w-full ${quiz.hasAttempted ? 'bg-linear-to-r from-emerald-400 to-teal-500' : 'bg-linear-to-r from-indigo-500 to-violet-500'}`} />
+
+                <div className="p-5 flex flex-col flex-1">
+                  {/* Category & time */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="px-2.5 py-0.5 bg-indigo-50 text-indigo-600 text-[10px] font-black rounded-full border border-indigo-100 uppercase tracking-wide">
+                      {quiz.category}
+                    </span>
+                    <span className="flex items-center gap-1 text-[11px] font-semibold text-gray-400">
+                      <FaClock className="text-[10px]" /> {quiz.time_limit} Mins
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-base font-bold text-gray-800 leading-snug line-clamp-2 mb-3">
+                    {quiz.title}
+                  </h3>
+
+                  {/* Completed stats — always show score after attempt */}
+                  {quiz.hasAttempted && score !== null && (
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 flex items-center gap-2 bg-emerald-50 border border-emerald-100 rounded-xl px-3 py-2">
+                        <FaStar className="text-amber-400 text-sm shrink-0" />
+                        <div>
+                          <p className="text-[9px] font-black text-emerald-600 uppercase tracking-wider leading-none mb-0.5">Your Score</p>
+                          <p className="text-sm font-black text-emerald-800 leading-tight">
+                            {score}{totalQuestions ? `/${totalQuestions}` : ''} correct
+                          </p>
+                        </div>
+                      </div>
+                      {timeTaken && (
+                        <div className="flex-1 flex items-center gap-2 bg-sky-50 border border-sky-100 rounded-xl px-3 py-2">
+                          <FaStopwatch className="text-sky-500 text-sm shrink-0" />
+                          <div>
+                            <p className="text-[9px] font-black text-sky-600 uppercase tracking-wider leading-none mb-0.5">Time Taken</p>
+                            <p className="text-sm font-black text-sky-800 leading-tight">{timeTaken}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Dates */}
+                  <div className="space-y-1.5 text-[11px] text-gray-400 mb-4">
+                    <div className="flex items-center gap-1.5">
+                      <FaCalendarAlt className="text-[10px] shrink-0" />
+                      <span>Starts: <span className="font-semibold text-gray-600">{formatDate(quiz.start_at)}</span></span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <FaBan className="text-[10px] shrink-0" />
+                      <span>Ends: <span className="font-semibold text-gray-600">{formatDate(quiz.ends_at)}</span></span>
+                    </div>
+                  </div>
+
+                  {/* Action button — pushed to bottom */}
+                  <div className="mt-auto pt-3 border-t border-gray-50">
+                    {quiz.hasAttempted ? (
+                      <div className="w-full py-2.5 rounded-xl bg-emerald-50 text-emerald-600 font-bold text-sm flex items-center justify-center gap-2">
+                        <FaCheckCircle /> Completed
+                      </div>
+                    ) : isUpcoming ? (
+                      <div className="w-full py-2.5 rounded-xl bg-amber-50 text-amber-600 font-bold text-sm flex items-center justify-center gap-2 border border-amber-100">
+                        <FaClock /> Upcoming
+                      </div>
+                    ) : isExpired ? (
+                      <div className="w-full py-2.5 rounded-xl bg-red-50 text-red-400 font-bold text-sm flex items-center justify-center gap-2 border border-red-100">
+                        <FaBan /> Closed
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleStartQuiz(quiz)}
+                        className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-200 hover:shadow-lg hover:shadow-indigo-200"
+                      >
+                        <FaPlayCircle /> Start Quiz
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })
         ) : (
           // 🔥 সুন্দর নো-কুইজ মেসেজ ডিজাইন
           <div className="col-span-full py-16 px-6 text-center bg-indigo-50/40 rounded-3xl border border-indigo-100 shadow-sm flex flex-col items-center justify-center">

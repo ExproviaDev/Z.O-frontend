@@ -142,8 +142,11 @@ export default function LeaderboardPage() {
     }
   };
 
-  const top3 = stats.page === 1 ? students.slice(0, 3) : [];
-  const listData = stats.page === 1 ? students.slice(3) : students;
+  // Don't show the podium when a search or SDG filter is active — the matched
+  // users would otherwise get fake #1/#2/#3 medals regardless of their real rank.
+  const isFiltering = search.trim().length > 0 || filterSdg.length > 0;
+  const top3 = (!isFiltering && stats.page === 1) ? students.slice(0, 3) : [];
+  const listData = (!isFiltering && stats.page === 1) ? students.slice(3) : students;
   const totalPages = Math.ceil(stats.total / stats.limit);
 
   return (
@@ -197,7 +200,7 @@ export default function LeaderboardPage() {
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search by name, email or institution..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full md:w-64 pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-4 focus:ring-indigo-500/10"

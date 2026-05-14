@@ -30,9 +30,35 @@ function AuthWrapper({ children }) {
   return <>{children}</>;
 }
 
+// Google Translate is disabled on /quiz (see app/quiz/page.jsx). When the user
+// leaves the quiz, restore the language they originally had selected so the
+// rest of the app keeps working in their preferred language.
+function GoogleTranslateRestorer({ pathname }) {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (pathname?.startsWith("/quiz")) return;
+
+    const savedLang = sessionStorage.getItem("quiz_prev_lang");
+    if (!savedLang || savedLang === "en") return;
+
+    sessionStorage.removeItem("quiz_prev_lang");
+
+    const hostname = window.location.hostname;
+    document.cookie = `googtrans=/auto/${savedLang}; path=/`;
+    if (hostname && hostname !== "localhost") {
+      document.cookie = `googtrans=/auto/${savedLang}; path=/; domain=${hostname}`;
+      document.cookie = `googtrans=/auto/${savedLang}; path=/; domain=.${hostname}`;
+    }
+
+    window.location.reload();
+  }, [pathname]);
+
+  return null;
+}
+
 export default function ConditionalLayout({ children }) {
   const pathname = usePathname();
-  
+
   const routesToHideHeaderFooter = [
     "/admin",
     "/login",
@@ -47,6 +73,7 @@ export default function ConditionalLayout({ children }) {
 
   return (
     <AuthWrapper>
+      <GoogleTranslateRestorer pathname={pathname} />
       {!shouldHideHeaderFooter && <Header />}
       <main className="min-h-screen mx-auto">{children}</main>
       {!shouldHideHeaderFooter && <Footer />}

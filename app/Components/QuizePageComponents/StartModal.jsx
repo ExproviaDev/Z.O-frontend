@@ -61,80 +61,79 @@ export default function StartModal({ onStart, startTime, endTime }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start md:items-center justify-center overflow-y-auto bg-slate-900/60 backdrop-blur-md p-4">
-      <div className="min-h-full w-full flex items-center justify-center py-8">
-        <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl border border-gray-100 overflow-hidden transform transition-all flex flex-col">
+    <div className="fixed inset-0 z-[100] flex items-start md:items-center justify-center overflow-y-auto bg-slate-900/60 backdrop-blur-md p-2 sm:p-4">
+      <div className="min-h-full w-full flex items-center justify-center py-3 md:py-8">
+        <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-2xl w-full max-w-2xl border border-gray-100 overflow-hidden transform transition-all flex flex-col">
 
-          <div className="bg-red-50 p-6 flex items-center justify-between border-b border-red-100 shrink-0">
-            <div className="flex items-center gap-3">
-              <AiOutlineAlert className="text-red-600 text-3xl animate-pulse" />
-              <h2 className="text-xl md:text-2xl font-black text-gray-800 tracking-tight uppercase">Important Rules</h2>
+          <div className="bg-red-50 px-4 py-3 md:p-6 flex items-center justify-between border-b border-red-100 shrink-0">
+            <div className="flex items-center gap-2 md:gap-3">
+              <AiOutlineAlert className="text-red-600 text-xl md:text-3xl animate-pulse" />
+              <h2 className="text-base md:text-2xl font-black text-gray-800 tracking-tight uppercase">Important Rules</h2>
             </div>
             <button
               onClick={() => window.location.href = "/dashboard"}
-              className="p-2 hover:bg-white text-gray-400 hover:text-red-500 rounded-full transition-colors shadow-sm"
+              className="p-1.5 md:p-2 hover:bg-white text-gray-400 hover:text-red-500 rounded-full transition-colors shadow-sm"
             >
-              <AiOutlineClose className="text-xl" />
+              <AiOutlineClose className="text-base md:text-xl" />
             </button>
           </div>
 
-          <div className="p-6 md:p-8 overflow-y-auto">
+          <div className="p-4 md:p-8 overflow-y-auto">
 
-            {/* Status Section */}
             {!canStart && (
-              <div className={`mb-8 p-6 border-2 rounded-[24px] flex flex-col items-center justify-center text-center shadow-inner ${isExpired ? "bg-red-50 border-red-100" : "bg-indigo-50 border-indigo-100"}`}>
+              <div className={`mb-5 md:mb-8 p-4 md:p-6 border-2 rounded-2xl md:rounded-[24px] flex flex-col items-center justify-center text-center shadow-inner ${isExpired ? "bg-red-50 border-red-100" : "bg-indigo-50 border-indigo-100"}`}>
                 <div className={`flex items-center gap-2 mb-1 ${isExpired ? "text-red-600" : "text-indigo-600"}`}>
-                  <AiOutlineClockCircle className="text-lg" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">
+                  <AiOutlineClockCircle className="text-base md:text-lg" />
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">
                     {isExpired ? "Registration Closed" : "Upcoming Quiz Time"}
                   </span>
                 </div>
-                <div className={`text-4xl font-black font-mono tracking-wider ${isExpired ? "text-red-700" : "text-indigo-700"}`}>
+                <div className={`text-2xl md:text-4xl font-black font-mono tracking-wider ${isExpired ? "text-red-700" : "text-indigo-700"}`}>
                   {isExpired ? "EXPIRED" : timeLeftToStart}
                 </div>
-                <p className={`mt-2 text-xs font-bold ${isExpired ? "text-red-500" : "text-indigo-500"}`}>
+                <p className={`mt-1.5 md:mt-2 text-[10px] md:text-xs font-bold ${isExpired ? "text-red-500" : "text-indigo-500"}`}>
                   {isExpired ? "The time limit for this quiz has ended." : `Starts at: ${new Date(startTime).toLocaleString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' })}`}
                 </p>
               </div>
             )}
 
-            <p className="text-gray-400 font-bold text-center mb-6 uppercase tracking-[0.2em] text-[10px] md:text-xs border-b pb-4">
+            <p className="text-gray-400 font-bold text-center mb-4 md:mb-6 uppercase tracking-[0.2em] text-[9px] md:text-xs border-b pb-3 md:pb-4">
               Academic Integrity Protocol Active
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-4 mb-5 md:mb-8">
               {instructions.map((item, index) => (
-                <div key={index} className="flex gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 transition-all">
-                  <span className="text-2xl shrink-0">{item.icon}</span>
-                  <div>
-                    <h3 className="text-sm font-black text-gray-800 uppercase leading-tight">{item.title}</h3>
-                    <p className="text-xs text-gray-600 mt-1 font-bold italic leading-relaxed">{item.desc}</p>
+                <div key={index} className="flex gap-2.5 md:gap-4 p-3 md:p-4 rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 transition-all">
+                  <span className="text-lg md:text-2xl shrink-0">{item.icon}</span>
+                  <div className="min-w-0">
+                    <h3 className="text-[11px] md:text-sm font-black text-gray-800 uppercase leading-tight">{item.title}</h3>
+                    <p className="text-[10px] md:text-xs text-gray-600 mt-0.5 md:mt-1 font-bold italic leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mb-8 p-5 bg-amber-50 rounded-2xl border border-amber-200 flex items-start gap-4">
-              <MdSecurity className="text-amber-600 text-2xl shrink-0 mt-0.5" />
-              <p className="text-xs md:text-sm text-amber-900 font-black leading-snug">
+            <div className="mb-5 md:mb-8 p-3 md:p-5 bg-amber-50 rounded-xl md:rounded-2xl border border-amber-200 flex items-start gap-2.5 md:gap-4">
+              <MdSecurity className="text-amber-600 text-lg md:text-2xl shrink-0 mt-0.5" />
+              <p className="text-[11px] md:text-sm text-amber-900 font-black leading-snug">
                 WARNING: AI detection and screenshot monitoring are active. Any violation attempt will result in an immediate ban.
               </p>
             </div>
 
             <div
-              className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-4 mb-8 ${agreed ? "border-green-500 bg-green-50/30" : "border-gray-200 bg-gray-50 hover:border-red-200"}`}
+              className={`p-3 md:p-5 rounded-xl md:rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-2.5 md:gap-4 mb-5 md:mb-8 ${agreed ? "border-green-500 bg-green-50/30" : "border-gray-200 bg-gray-50 hover:border-red-200"}`}
               onClick={() => setAgreed(!agreed)}
             >
-              <input type="checkbox" checked={agreed} readOnly className="w-6 h-6 accent-green-600 cursor-pointer shrink-0" />
-              <label className="text-sm md:text-base font-black text-gray-800 cursor-pointer select-none">
+              <input type="checkbox" checked={agreed} readOnly className="w-5 h-5 md:w-6 md:h-6 accent-green-600 cursor-pointer shrink-0" />
+              <label className="text-xs md:text-base font-black text-gray-800 cursor-pointer select-none leading-snug">
                 I have read the rules and accept the disqualification policy.
               </label>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 md:gap-4">
               <button
                 onClick={() => window.location.href = "/dashboard"}
-                className="w-full sm:w-1/3 py-4 rounded-2xl font-bold border-2 border-gray-100 text-gray-400 hover:bg-gray-50 transition-all text-sm uppercase tracking-wider"
+                className="w-full sm:w-1/3 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold border-2 border-gray-100 text-gray-400 hover:bg-gray-50 transition-all text-xs md:text-sm uppercase tracking-wider"
               >
                 Cancel
               </button>
@@ -142,12 +141,12 @@ export default function StartModal({ onStart, startTime, endTime }) {
               <button
                 onClick={onStart}
                 disabled={!agreed || !canStart || isExpired}
-                className={`w-full sm:w-2/3 py-4 rounded-2xl font-black flex items-center gap-3 justify-center transition-all shadow-xl text-sm uppercase tracking-widest ${agreed && canStart && !isExpired
+                className={`w-full sm:w-2/3 py-3 md:py-4 rounded-xl md:rounded-2xl font-black flex items-center gap-2 md:gap-3 justify-center transition-all shadow-xl text-xs md:text-sm uppercase tracking-widest ${agreed && canStart && !isExpired
                   ? "bg-gray-900 text-white hover:bg-black hover:scale-[1.02] active:scale-95 shadow-gray-200"
                   : "bg-gray-200 text-gray-400 cursor-not-allowed"
                   }`}
               >
-                {canStart ? <AiOutlinePlayCircle className="text-xl" /> : <AiOutlineClockCircle className="text-xl animate-spin-slow" />}
+                {canStart ? <AiOutlinePlayCircle className="text-base md:text-xl" /> : <AiOutlineClockCircle className="text-base md:text-xl animate-spin-slow" />}
                 {isExpired ? "Exam Ended" : canStart ? "Start Exam" : `Starts in ${timeLeftToStart}`}
               </button>
             </div>
