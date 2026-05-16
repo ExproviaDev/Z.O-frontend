@@ -102,7 +102,7 @@ export default function LeaderboardPage() {
       const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
-      const res = await axios.get(`${baseUrl}/api/leaderboard`, {
+      const res = await axios.get(`${baseUrl}/api/leaderboard/admin`, {
         params: {
           page,
           limit: stats.limit,
