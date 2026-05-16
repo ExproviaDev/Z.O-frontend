@@ -28,7 +28,7 @@ const MyQuizzes = () => {
     if (normalizedRound.includes("round_3")) category = "SDG Achiever";
     else if (normalizedRound.includes("round_2")) category = "SDG Ambassador";
     if (user?.sdg_role) category = user.sdg_role;
-    if (isAdmissionCandidate(user)) category = "SDG Ambassador";
+    if (isAdmissionCandidate(user)) category = "SDG Achiever";
     return category;
   };
 

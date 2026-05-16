@@ -19,7 +19,7 @@ export default function MyCourses() {
       return {
         title: "Convention on Long-range Transboundary Air Pollution",
         link: "https://unccelearn.org/course/view.php?id=150&page=overview",
-        desc: "Class 9 to University Admission Candidate (or equivalent) - (SDG 5 to SDG 10)",
+        desc: "Class 9 to HSC/Alim Candidate (or equivalent) - (SDG 5 to SDG 10)",
       };
     } else if (role === "SDG Achiever") {
       return {

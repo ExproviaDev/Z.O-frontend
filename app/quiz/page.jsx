@@ -51,7 +51,7 @@ export default function QuizPage() {
       profile?.grade_level || profile?.current_level || profile?.gradeLevel || "",
     );
     if (level.includes("Admission Candidate") || level.includes("Musannif")) {
-      return "SDG Ambassador";
+      return "SDG Achiever";
     }
     return profile?.sdg_role;
   };

@@ -26,7 +26,7 @@ const timelineData = [
   {
     title: "1st Round Exam",
     date: "14, 15, 16 May 2026",
-    desc: "The Round 1 exam will consist of 30 Multiple Choice Questions (MCQs) carrying a total of 30 marks, with a strict time limit of 30 minutes. Participants will be able to view their scores on the website immediately after submitting the exam. There is no predetermined passing mark; instead, the top 200 students from each category will qualify for Round 2. Exam schedule: 14 May for Class 5-8, 15 May for Class 9 - Varsity Admission Candidates, and 16 May for above.",
+    desc: "The Round 1 exam will consist of 30 Multiple Choice Questions (MCQs) carrying a total of 30 marks, with a strict time limit of 30 minutes. Participants will be able to view their scores on the website immediately after submitting the exam. There is no predetermined passing mark; instead, the top 200 students from each category will qualify for Round 2. Exam schedule: 14 May for Class 5-8, 15 May for Class 9 - HSC/Alim Candidates, and 16 May for University Admission Candidates and above.",
     icon: <FaRegEdit />,
     align: "left",
   },

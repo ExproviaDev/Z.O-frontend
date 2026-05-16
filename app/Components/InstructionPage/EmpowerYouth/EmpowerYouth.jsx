@@ -81,7 +81,7 @@ const EmpowerYouth = () => {
                   </h4>
                   <p className="text-xs text-gray-600">
                     MCQ Contest: 14 May for Class 5-8, 15 May for Class 9 -
-                    Varsity Admission Candidates, and 16 May for above.
+                    HSC/Alim Candidates, and 16 May for University Admission Candidates and above.
                     Complete 30 MCQ questions from UN-recognized courses. Winners
                     advance to the second round.
                   </p>

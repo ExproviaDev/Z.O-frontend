@@ -74,7 +74,7 @@ const QuizForm = ({ questions, quizInfo }) => {
 
     const level = String(user?.grade_level || user?.current_level || user?.gradeLevel || "");
     const isAdmissionCandidate = level.includes("Admission Candidate") || level.includes("Musannif");
-    const sdgCategory = isAdmissionCandidate ? "SDG Ambassador" : user?.sdg_role || "SDG Activist";
+    const sdgCategory = isAdmissionCandidate ? "SDG Achiever" : user?.sdg_role || "SDG Activist";
 
     const totalTimeInSeconds = (quizInfo?.time_limit || 30) * 60;
     const timeSpent = totalTimeInSeconds - timeLeft;

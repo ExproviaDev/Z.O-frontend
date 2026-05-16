@@ -28,7 +28,7 @@ export default function FAQPage() {
       q: "What will I learn from these courses?",
       a: `You will be assigned different courses from the UN based on your category:
          Class 5 – Class 8 (SDG 1 – SDG 4): Sport For Climate Action
-         Class 9 – University Admission Candidates (SDG 5 – SDG 10): Becoming A Climate Champion
+         Class 9 – HSC/Alim Candidates (SDG 5 – SDG 10): Becoming A Climate Champion
          Bachelor – Masters and above (SDG 11 – SDG 17): Scaling Climate Finance`,
     },
     {

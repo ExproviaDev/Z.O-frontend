@@ -48,7 +48,7 @@ export default function Sdg() {
     },
     {
       group: "SDG LEADER",
-      sub: "Class 9 - Varsity Admission Candidates",
+      sub: "Class 9 - HSC/Alim Candidates",
       winnerTitle: "SDG Leader",
       othersTitle: "SDG Ambassador",
       color: "from-indigo-600 to-purple-600",
