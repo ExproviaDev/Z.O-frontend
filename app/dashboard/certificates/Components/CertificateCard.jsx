@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import { FiExternalLink, FiAward, FiCheckCircle } from 'react-icons/fi';
+import { FiAward, FiCheckCircle, FiCheck, FiDownload, FiLoader } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 // 🔥 DEBUG_MODE (আপনার দরকার হলে true করতে পারেন)
@@ -50,7 +50,8 @@ const CertificateCard = ({
     return out;
   };
 
-  const [loading, setLoading] = useState(false);
+  const [downloadState, setDownloadState] = useState("idle"); // idle | generating | downloading | done
+  const loading = downloadState !== "idle";
   const certificateName = normalizeName(userName || "").toUpperCase();
 
   const isFellowshipTemplate = templatePath === "/fellowship_certificates.pdf";
@@ -59,28 +60,23 @@ const CertificateCard = ({
   // we can't render with the built-in Helvetica font (e.g. Bengali).
   const needsUnicodeFont = (str) => /[^\u0000-\u00FF]/.test(str);
 
-  const viewPdf = async () => {
-      if (!certificateName) { toast.error("User name missing!"); return; }
-    
-    // ১. লোডিং উইন্ডো ওপেন (পপআপ ব্লকার বাইপাস)
-    const newWindow = window.open('', '_blank');
-    if (newWindow) {
-        newWindow.document.write(`
-          <html>
-            <head><title>Generating Certificate...</title></head>
-            <body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;background:#f8fafc;">
-              <div style="text-align:center;">
-                <div style="width:50px;height:50px;border:5px solid #ddd;border-top-color:#4f46e5;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px;"></div>
-                <h2 style="color:#333;">Generating your certificate...</h2>
-                <p style="color:#666;">Please wait a moment.</p>
-                <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
-              </div>
-            </body>
-          </html>
-        `);
-    }
+  const buildFileName = () => {
+    const safeName = certificateName
+      .replace(/[^A-Z0-9 ]/g, "")
+      .trim()
+      .replace(/\s+/g, "_");
+    const safeTitle = String(title || "certificate")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+    return `${safeTitle || "certificate"}_${safeName || "participant"}.pdf`;
+  };
 
-    setLoading(true);
+  const downloadPdf = async () => {
+    if (loading) return;
+      if (!certificateName) { toast.error("User name missing!"); return; }
+    setDownloadState("generating");
+    let hasDownloaded = false;
 
     try {
       const existingPdfBytes = await fetch(templatePath).then(res => {
@@ -161,39 +157,35 @@ const CertificateCard = ({
          // ... Debug logic
       }
 
-      // ৪. পিডিএফ জেনারেশন
+      // ৪. পিডিএফ জেনারেশন + direct download
+      setDownloadState("downloading");
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const pdfUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = buildFileName();
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(pdfUrl);
 
-      if (newWindow) {
-          newWindow.location.href = pdfUrl;
-      }
-
-      toast.success("Certificate opened in new tab!");
+      setDownloadState("done");
+      hasDownloaded = true;
+      toast.success("Certificate downloaded successfully!");
+      setTimeout(() => setDownloadState("idle"), 1500);
 
     } catch (error) {
       console.error("PDF Error:", error);
       if (error?.message?.startsWith("TEMPLATE_MISSING:")) {
         toast.error("Certificate is being prepared. Please check back soon!");
-        if (newWindow) {
-          newWindow.document.body.innerHTML = `
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#f8fafc;text-align:center;padding:20px;">
-              <div style="font-size:48px;margin-bottom:16px;">🎓</div>
-              <h2 style="color:#1e293b;font-size:22px;font-weight:800;margin-bottom:8px;">Certificate Coming Soon!</h2>
-              <p style="color:#64748b;font-size:15px;max-width:400px;line-height:1.6;">
-                Your certificate is being prepared by the admin. Please check back in a little while.
-              </p>
-              <p style="color:#94a3b8;font-size:12px;margin-top:24px;">You can safely close this tab.</p>
-            </div>
-          `;
-        }
       } else {
         toast.error("Could not generate certificate. Please try again.");
-        if (newWindow) newWindow.close();
       }
     } finally {
-      setLoading(false);
+      if (!hasDownloaded) {
+        setDownloadState("idle");
+      }
     }
   };
 
@@ -240,15 +232,25 @@ const CertificateCard = ({
 
           <div className="mt-4 flex justify-end">
             <button
-              onClick={viewPdf}
+              onClick={downloadPdf}
               disabled={loading}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-indigo-600 active:scale-95 disabled:opacity-70"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition-all hover:bg-indigo-600 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {loading ? (
-                <>Generating...</>
+              {downloadState === "generating" ? (
+                <>
+                  <FiLoader className="animate-spin" /> Generating...
+                </>
+              ) : downloadState === "downloading" ? (
+                <>
+                  <FiDownload className="animate-bounce" /> Downloading...
+                </>
+              ) : downloadState === "done" ? (
+                <>
+                  <FiCheck /> Downloaded
+                </>
               ) : (
                 <>
-                  <FiExternalLink /> View Certificate
+                  <FiDownload /> Download Certificate
                 </>
               )}
             </button>
