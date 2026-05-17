@@ -62,7 +62,7 @@ export default function ConditionalLayout({ children }) {
   const routesToHideHeaderFooter = [
     "/admin",
     "/login",
-    "/registration",
+    "/registration-full",
     "/dashboard",
     '/quiz',
   ];
