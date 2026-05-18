@@ -231,7 +231,8 @@ const VideoEvaluation = () => {
           <h1 className="text-3xl font-black text-gray-800 tracking-tight">Video Evaluation</h1>
           <p className="text-gray-500 font-medium mt-1">Review round 2 submissions and assign detailed scores.</p>
           <p className="text-xs text-gray-400 mt-2 max-w-xl">
-            Only participants who submitted a video link appear here (empty links are excluded), newest update first.
+            Only participants who <span className="font-semibold text-gray-500">submitted</span> a video link appear here (promoted-but-not-submitted are excluded).
+            Sorted by newest update first.
           </p>
         </div>
 
