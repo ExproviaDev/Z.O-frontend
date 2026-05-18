@@ -174,7 +174,11 @@ export default function PromotedSecondRoundPage() {
                     </td>
                     <td className="p-5">
                       <p className="font-semibold text-slate-700">{student.institution || "N/A"}</p>
-                      <p className="text-xs text-indigo-600 font-bold mt-1">{student.status || "Promoted"}</p>
+                      <p className="text-xs text-indigo-600 font-bold mt-1">
+                        {activeRound === "round_1"
+                          ? "First round participant"
+                          : student.status || "Promoted"}
+                      </p>
                     </td>
                   </tr>
                 ))}
