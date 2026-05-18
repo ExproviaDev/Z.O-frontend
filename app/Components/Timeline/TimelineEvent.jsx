@@ -40,7 +40,7 @@ const timelineData = [
   {
     title: "2nd Round Video",
     date: "25 May 2026",
-    desc: "Three Minute Thrill: Create a compelling 3-minute video on your assigned SDG topic. Post on social media with #ZeroOlympiad. Submit your video link by 20 may 2026.",
+    desc: "Three Minute Thrill: Create a compelling 3-minute video on your assigned SDG topic. Post on social media with #ZeroOlympiad. Submit your video link by 25 May 2026.",
     icon: <FaVideo />,
     align: "left",
   },

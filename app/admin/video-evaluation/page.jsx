@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import {
   FiVideo, FiStar, FiMessageSquare, FiFilter,
-  FiExternalLink, FiCheckCircle, FiClock, FiChevronLeft, FiChevronRight, FiEdit
+  FiExternalLink, FiCheckCircle, FiClock, FiChevronLeft, FiChevronRight, FiEdit, FiRefreshCw
 } from 'react-icons/fi';
 
 const MySwal = withReactContent(Swal);
@@ -24,6 +24,8 @@ const CRITERIA_LIST = [
   "Inclusivity and Diversity",
   "Overall Learning and Execution"
 ];
+
+const ITEMS_PER_PAGE = 10;
 
 const VideoEvaluation = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -51,13 +53,14 @@ const VideoEvaluation = () => {
           sdg_number: filterSdg,
           status: activeTab,
           page: page,
-          limit: 10
+          limit: ITEMS_PER_PAGE
         },
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      setSubmissions(res.data.data);
-      setTotalPages(Math.ceil(res.data.total / 10));
+      setSubmissions(res.data.data ?? []);
+      const rawTotal = Number(res.data.total ?? 0);
+      setTotalPages(Math.max(1, Math.ceil(rawTotal / ITEMS_PER_PAGE)));
     } catch (err) {
       console.error(err);
       toast.error("ডাটা লোড করতে সমস্যা হয়েছে!");
@@ -206,14 +209,15 @@ const VideoEvaluation = () => {
 
   const TabButton = ({ id, label, icon: Icon }) => (
     <button
+      type="button"
       onClick={() => { setActiveTab(id); setPage(1); }}
-      className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${activeTab === id
+      className={`flex min-h-[52px] w-full flex-1 items-center justify-center gap-2 rounded-xl px-5 py-3 text-center text-sm font-bold transition-all sm:w-auto sm:min-w-[220px] ${activeTab === id
           ? 'bg-[#0F172A] text-white shadow-lg shadow-black/20'
           : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-100'
         }`}
     >
-      <Icon size={26} />
-      {label}
+      <Icon size={22} className="shrink-0" aria-hidden />
+      <span>{label}</span>
     </button>
   );
 
@@ -226,27 +230,41 @@ const VideoEvaluation = () => {
         <div>
           <h1 className="text-3xl font-black text-gray-800 tracking-tight">Video Evaluation</h1>
           <p className="text-gray-500 font-medium mt-1">Review round 2 submissions and assign detailed scores.</p>
+          <p className="text-xs text-gray-400 mt-2 max-w-xl">
+            Only participants who submitted a video link appear here (empty links are excluded), newest update first.
+          </p>
         </div>
 
-        {/* SDG Filter */}
-        <div className="bg-white p-1 rounded-xl border border-gray-200 shadow-sm flex items-center">
-          <div className="px-3 text-gray-400"><FiFilter /></div>
-          <select
-            className="bg-transparent outline-none text-sm font-bold text-gray-700 py-2 pr-4 cursor-pointer"
-            value={filterSdg}
-            onChange={(e) => { setFilterSdg(e.target.value); setPage(1); }}
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => fetchSubmissions()}
+            disabled={loading}
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-bold text-gray-700 shadow-sm transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <option value="">All SDG Categories</option>
-            {[...Array(17)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>SDG {i + 1}</option>
-            ))}
-          </select>
+            <FiRefreshCw className={`size-4 ${loading ? 'animate-spin' : ''}`} aria-hidden />
+            Refresh
+          </button>
+          {/* SDG Filter */}
+          <div className="flex h-11 items-center rounded-xl border border-gray-200 bg-white p-1 pr-2 shadow-sm">
+            <div className="flex items-center px-3 text-gray-400"><FiFilter aria-hidden /></div>
+            <select
+              className="h-full min-w-40 cursor-pointer bg-transparent py-0 pr-2 text-sm font-bold text-gray-700 outline-none"
+              value={filterSdg}
+              onChange={(e) => { setFilterSdg(e.target.value); setPage(1); }}
+            >
+              <option value="">All SDG Categories</option>
+              {[...Array(17)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>SDG {i + 1}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-col items-start gap-4 mb-6 text-xs">
-        <TabButton id="pending" label="Pending Review" icon={FiClock}  />
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-start">
+        <TabButton id="pending" label="Pending Review" icon={FiClock} />
         <TabButton id="evaluated" label="Marked & Completed" icon={FiCheckCircle} />
       </div>
 
@@ -278,7 +296,7 @@ const VideoEvaluation = () => {
               ) : (
                 submissions.map((row) => (
                   <tr key={row.id} className="group hover:bg-blue-50/30 transition-colors">
-                    <td className="p-6">
+                    <td className="p-6 align-middle">
                       <div className="flex flex-col">
                         <span className="font-bold text-gray-800 text-sm">{row.user_profiles?.name}</span>
                         <span className="text-xs text-gray-400 mb-1">{row.user_profiles?.institution}</span>
@@ -287,17 +305,17 @@ const VideoEvaluation = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-6">
+                    <td className="p-6 align-middle">
                       <a
                         href={row.video_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-bold hover:bg-indigo-100 transition-colors"
+                        className="inline-flex min-h-[40px] items-center justify-center gap-2 rounded-lg bg-indigo-50 px-4 py-2 text-xs font-bold text-indigo-600 transition-colors hover:bg-indigo-100"
                       >
-                        <FiExternalLink /> Watch Video
+                        <FiExternalLink className="shrink-0" aria-hidden /> Watch Video
                       </a>
                     </td>
-                    <td className="p-6 text-center">
+                    <td className="p-6 text-center align-middle">
                        {row.jury_score ? (
                          <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-sm font-black border border-amber-100">
                            <FiStar className="fill-amber-500 text-amber-500" /> {row.jury_score}
@@ -306,15 +324,17 @@ const VideoEvaluation = () => {
                          <span className="text-gray-300 font-bold text-2xl">-</span>
                        )}
                     </td>
-                    <td className="p-6">
-                      <p className="text-sm text-gray-500 line-clamp-2 italic">
+                    <td className="p-6 align-middle">
+                      <p className="text-sm leading-relaxed text-gray-500 line-clamp-2 italic">
                         {row.jury_comments || "No feedback given yet..."}
                       </p>
                     </td>
-                    <td className="p-6 text-right">
+                    <td className="p-6 text-right align-middle">
+                      <div className="flex justify-end items-center">
                       <button
+                        type="button"
                         onClick={() => openEvaluationModal(row)}
-                        className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold shadow-md transition-all active:scale-95 ${activeTab === 'pending'
+                        className={`inline-flex min-h-[40px] items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold shadow-md transition-all active:scale-95 ${activeTab === 'pending'
                             ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
                             : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
                           }`}
@@ -325,6 +345,7 @@ const VideoEvaluation = () => {
                             <><FiEdit /> Edit Score</>
                         )}
                       </button>
+                      </div>
                     </td>
                   </tr>
                 ))
