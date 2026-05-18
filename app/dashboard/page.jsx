@@ -165,7 +165,7 @@ const UserDashboard = () => {
                     Congratulations — you&apos;ve advanced to Round 2!
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-blue-100/90">
-                    Submit your video presentation from the Video Submission page and watch for updates after jury evaluation. You can also take Round 2 quizzes from My Quizzes when they are available.
+                    Submit your video presentation at the Video Submission page and watch for the update after jury evaluation.
                   </p>
                   <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                     <Link
