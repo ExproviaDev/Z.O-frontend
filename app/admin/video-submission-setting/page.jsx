@@ -38,14 +38,30 @@ const AdminVideoSettings = () => {
     }
   };
 
-  // ✅ FIX: সেইফ ডেট ফরম্যাটিং ফাংশন (Null চেক সহ)
-  const formatForInput = (dateString) => {
+  /** Bangladesh (Asia/Dhaka, UTC+6, no DST) wall time for `<input type="datetime-local" />`. */
+  const DHAKA_TZ = "Asia/Dhaka";
+  const DHAKA_UTC_OFFSET_HOURS = 6;
+
+  const formatDbTimeForDatetimeLocalDhaka = (dateString) => {
     if (!dateString) return "";
-    try {
-        return new Date(dateString).toISOString().slice(0, 16);
-    } catch (e) {
-        return "";
-    }
+    const d = new Date(dateString);
+    if (Number.isNaN(d.getTime())) return "";
+    const s = d.toLocaleString("sv-SE", { timeZone: DHAKA_TZ });
+    return s.replace(" ", "T").slice(0, 16);
+  };
+
+  /** Treat datetime-local value as Bangladesh civil time → ISO (UTC) for API/DB. */
+  const parseDatetimeLocalDhakaToIso = (datetimeLocalValue) => {
+    if (!datetimeLocalValue) return "";
+    const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(datetimeLocalValue.trim());
+    if (!m) return datetimeLocalValue;
+    const y = Number(m[1]);
+    const mo = Number(m[2]);
+    const day = Number(m[3]);
+    const h = Number(m[4]);
+    const mi = Number(m[5]);
+    const utcMs = Date.UTC(y, mo - 1, day, h - DHAKA_UTC_OFFSET_HOURS, mi);
+    return new Date(utcMs).toISOString();
   };
 
   // ২. সেটিংস আপডেট করা
@@ -95,34 +111,54 @@ const AdminVideoSettings = () => {
           </label>
         </div>
 
-        {/* Date Inputs */}
+        {/* Date Inputs — values shown/edited as Bangladesh time; stored as ISO UTC on save */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Start Date & Time</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Start Date & Time{" "}
+              <span className="font-normal text-gray-400">(Bangladesh)</span>
+            </label>
             <div className="relative">
               <FaCalendarAlt className="absolute left-4 top-3.5 text-gray-400" />
               <input
                 type="datetime-local"
-                value={formatForInput(settings.round_2_start)}
-                onChange={(e) => setSettings({ ...settings, round_2_start: e.target.value })}
+                value={formatDbTimeForDatetimeLocalDhaka(settings.round_2_start)}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    round_2_start: parseDatetimeLocalDhakaToIso(e.target.value),
+                  })
+                }
                 className="w-full pl-12 p-3 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium text-gray-600"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">End Date (Deadline)</label>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              End Date (Deadline){" "}
+              <span className="font-normal text-gray-400">(Bangladesh)</span>
+            </label>
             <div className="relative">
               <FaCalendarAlt className="absolute left-4 top-3.5 text-red-400" />
               <input
                 type="datetime-local"
-                value={formatForInput(settings.round_2_end)}
-                onChange={(e) => setSettings({ ...settings, round_2_end: e.target.value })}
+                value={formatDbTimeForDatetimeLocalDhaka(settings.round_2_end)}
+                onChange={(e) =>
+                  setSettings({
+                    ...settings,
+                    round_2_end: parseDatetimeLocalDhakaToIso(e.target.value),
+                  })
+                }
                 className="w-full pl-12 p-3 bg-white border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 outline-none font-medium text-gray-600"
               />
             </div>
           </div>
         </div>
+
+        <p className="text-xs text-gray-500 -mt-2">
+          Times use 24-hour clock in Bangladesh (Asia/Dhaka, UTC+6). Stored on the server as UTC.
+        </p>
 
         <button
           type="submit"

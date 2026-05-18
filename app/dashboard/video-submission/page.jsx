@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FaVideo, FaLink, FaCheckCircle, FaClock, FaExclamationTriangle, FaEdit, FaLock, FaCalendarAlt } from "react-icons/fa";
+import { FaVideo, FaLink, FaCheckCircle, FaClock, FaExclamationTriangle, FaEdit, FaLock } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useUserProfile } from "../../lib/hooks/useUserProfile";
 
@@ -166,11 +166,6 @@ const UserVideoSubmission = () => {
           
           <div className="flex flex-wrap gap-4 mt-4 text-sm font-medium bg-white/10 p-3 rounded-xl backdrop-blur-sm inline-flex">
              <div className="flex items-center gap-2">
-                <FaCalendarAlt className="text-emerald-300" />
-                <span>Starts: {formatDate(roundSettings?.start_time)}</span>
-             </div>
-             <div className="w-[1px] bg-white/30 hidden sm:block"></div>
-             <div className="flex items-center gap-2">
                 <FaClock className="text-red-300" />
                 <span>Ends: {formatDate(roundSettings?.end_time)}</span>
              </div>
@@ -250,7 +245,7 @@ const UserVideoSubmission = () => {
                   <FaLink className={`absolute left-4 top-4 transition-colors ${isInputEnabled ? 'text-gray-400 group-focus-within:text-indigo-500' : 'text-gray-300'}`} />
                   <input
                     type="url"
-                    placeholder={submissionState === "active" ? "https://youtu.be/..." : "Submission closed"}
+                    placeholder={submissionState === "active" ? "https://youtu.be/... or https://www.facebook.com/..." : "Submission closed"}
                     required
                     disabled={!isInputEnabled}
                     value={videoLink}
