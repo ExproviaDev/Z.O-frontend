@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { api } from "../../lib/apiClient";
-import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay, FaStar, FaStopwatch } from 'react-icons/fa';
+import { FaSearch, FaClock, FaCalendarAlt, FaCheckCircle, FaPlayCircle, FaBan, FaCalendarDay } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useUserProfile } from "../../lib/hooks/useUserProfile";
+import {
+  resolveCategoryFromUser,
+  loadQuizzesWithSubmissionCoverage,
+  fetchAttemptsWithFallback,
+  resolveUserIdForQuizApi,
+} from "../../lib/quizUserData";
 
 const MyQuizzes = () => {
   const router = useRouter();
@@ -13,60 +18,8 @@ const MyQuizzes = () => {
 
   const [userCategory, setUserCategory] = useState("");
   const [quizzes, setQuizzes] = useState([]);
-  const [attemptDetails, setAttemptDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const isAdmissionCandidate = (user) => {
-    const level = String(user?.grade_level || user?.current_level || user?.gradeLevel || "");
-    return level.includes("Admission Candidate") || level.includes("Musannif");
-  };
-
-  const resolveCategoryFromUser = (user) => {
-    const normalizedRound = String(user?.round_type || "").toLowerCase().replace(/\s+/g, "_");
-    let category = "SDG Activist";
-    if (normalizedRound.includes("round_3")) category = "SDG Achiever";
-    else if (normalizedRound.includes("round_2")) category = "SDG Ambassador";
-    if (user?.sdg_role) category = user.sdg_role;
-    if (isAdmissionCandidate(user)) category = "SDG Achiever";
-    return category;
-  };
-
-  const fetchQuizzesWithFallback = async (apiBase, token, category) => {
-    const endpoints = [
-      `${apiBase}/api/admin/public-quizzes`,
-      `${apiBase}/api/quiz/public-quizzes`,
-    ];
-    let lastError = null;
-    for (const url of endpoints) {
-      try {
-        return await api.get(url, { params: { category } });
-      } catch (err) {
-        lastError = err;
-        if (err?.response?.status !== 404) throw err;
-      }
-    }
-    throw lastError;
-  };
-
-  const fetchAttemptsWithFallback = async (apiBase, token, userId) => {
-    const endpoints = [
-      `${apiBase}/api/admin/user-attempts/${userId}`,
-      `${apiBase}/api/quiz/user-attempts/${userId}`,
-    ];
-    for (const url of endpoints) {
-      try {
-        const response = await api.get(url);
-        return {
-          attempts: response?.data?.attempts || [],
-          details: response?.data?.details || {},
-        };
-      } catch (err) {
-        if (err?.response?.status !== 404) throw err;
-      }
-    }
-    return { attempts: [], details: {} };
-  };
 
   useEffect(() => {
     if (profileLoading) return;
@@ -83,23 +36,19 @@ const MyQuizzes = () => {
         const categoryToFetch = resolveCategoryFromUser(profileUser);
         setUserCategory(categoryToFetch);
 
-        const res = await fetchQuizzesWithFallback(API_BASE, token, categoryToFetch);
-        const fetchedQuizzes = res.data.data || [];
-
-        const userId = profileUser?.user_id || profileUser?.id;
-        const { attempts, details } = userId
-          ? await fetchAttemptsWithFallback(API_BASE, token, userId)
+        const userId = resolveUserIdForQuizApi(profileUser);
+        const attemptsPkg = userId
+          ? await fetchAttemptsWithFallback(API_BASE, userId)
           : { attempts: [], details: {} };
-        const attemptedQuizIds = new Set(attempts);
 
-        setAttemptDetails(details);
+        const { quizzes: mergedQuizzes } =
+          await loadQuizzesWithSubmissionCoverage({
+            apiBase: API_BASE,
+            category: categoryToFetch,
+            attemptsPkg,
+          });
 
-        const quizzesWithStatus = fetchedQuizzes.map(quiz => ({
-          ...quiz,
-          hasAttempted: attemptedQuizIds.has(quiz.id)
-        }));
-
-        setQuizzes(quizzesWithStatus);
+        setQuizzes(mergedQuizzes);
       } catch (error) {
         console.error("Error fetching quizzes:", error?.response?.status, error?.response?.data || error?.message);
       } finally {
@@ -114,16 +63,6 @@ const MyQuizzes = () => {
     if (!dateString) return "N/A";
     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(dateString).toLocaleDateString('en-US', options);
-  };
-
-  // seconds → "Xm Ys" display
-  const formatTimeTaken = (seconds) => {
-    if (seconds == null || isNaN(seconds)) return null;
-    const m = Math.floor(seconds / 60);
-    const s = Math.round(seconds % 60);
-    if (m === 0) return `${s}s`;
-    if (s === 0) return `${m}m`;
-    return `${m}m ${s}s`;
   };
 
   const handleStartQuiz = (quiz) => {
@@ -188,10 +127,6 @@ const MyQuizzes = () => {
           ))
         ) : filteredQuizzes.length > 0 ? (
           filteredQuizzes.map((quiz) => {
-            const detail = attemptDetails[quiz.id];
-            const score = detail?.score ?? null;
-            const timeTaken = formatTimeTaken(detail?.time_taken);
-            const totalQuestions = quiz.questions?.length ?? quiz.question_count ?? null;
             const now = Date.now();
             const startMs = quiz.start_at ? new Date(quiz.start_at).getTime() : 0;
             const endMs = quiz.ends_at ? new Date(quiz.ends_at).getTime() : Infinity;
@@ -226,30 +161,6 @@ const MyQuizzes = () => {
                     {quiz.title}
                   </h3>
 
-                  {/* Completed stats — always show score after attempt */}
-                  {quiz.hasAttempted && score !== null && (
-                    <div className="flex gap-2 mb-3">
-                      <div className="flex-1 flex items-center gap-2 bg-emerald-50 border border-emerald-100 rounded-xl px-3 py-2">
-                        <FaStar className="text-amber-400 text-sm shrink-0" />
-                        <div>
-                          <p className="text-[9px] font-black text-emerald-600 uppercase tracking-wider leading-none mb-0.5">Your Score</p>
-                          <p className="text-sm font-black text-emerald-800 leading-tight">
-                            {score}{totalQuestions ? `/${totalQuestions}` : ''} correct
-                          </p>
-                        </div>
-                      </div>
-                      {timeTaken && (
-                        <div className="flex-1 flex items-center gap-2 bg-sky-50 border border-sky-100 rounded-xl px-3 py-2">
-                          <FaStopwatch className="text-sky-500 text-sm shrink-0" />
-                          <div>
-                            <p className="text-[9px] font-black text-sky-600 uppercase tracking-wider leading-none mb-0.5">Time Taken</p>
-                            <p className="text-sm font-black text-sky-800 leading-tight">{timeTaken}</p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
                   {/* Dates */}
                   <div className="space-y-1.5 text-[11px] text-gray-400 mb-4">
                     <div className="flex items-center gap-1.5">
@@ -263,10 +174,10 @@ const MyQuizzes = () => {
                   </div>
 
                   {/* Action button — pushed to bottom */}
-                  <div className="mt-auto pt-3 border-t border-gray-50">
+                  <div className="mt-auto pt-3 border-t border-gray-50 flex flex-col gap-2">
                     {quiz.hasAttempted ? (
-                      <div className="w-full py-2.5 rounded-xl bg-emerald-50 text-emerald-600 font-bold text-sm flex items-center justify-center gap-2">
-                        <FaCheckCircle /> Completed
+                      <div className="w-full py-2 rounded-xl bg-emerald-50/90 text-emerald-600 font-bold text-xs flex items-center justify-center gap-2 border border-emerald-100">
+                        <FaCheckCircle /> Submitted
                       </div>
                     ) : isUpcoming ? (
                       <div className="w-full py-2.5 rounded-xl bg-amber-50 text-amber-600 font-bold text-sm flex items-center justify-center gap-2 border border-amber-100">

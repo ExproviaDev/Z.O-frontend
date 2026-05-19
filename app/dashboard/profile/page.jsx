@@ -156,7 +156,7 @@ const ProfilePage = () => {
                   </div>
                   <div className="relative z-10">
                     <h3 className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
-                      Your Assigned Topic (SDG Goal)
+                      Your round 2 Assigned Topic (SDG Goal)
                     </h3>
                     <h2 className="text-2xl font-black text-slate-800 mb-3">
                       SDG {user.assigned_sdg_number}: {sdgData[user.assigned_sdg_number].title}
