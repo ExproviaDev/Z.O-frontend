@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen, onClose }) {
     { name: "Payment History", icon: <FaStar />, href: "/dashboard/history", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "Announcement", icon: <GrAnnounce />, href: "/dashboard/announcement", allowedRoles: ["user", "ambassador", "contestor"] },
     { name: "Video Submission", icon: <FaRegBookmark />, href: "/dashboard/video-submission", allowedRoles: ["user", "ambassador", "contestor"] },
-    { name: "Promoted to Second Round", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador", "contestor"] },
+    { name: "Leaderboard", icon: <MdLeaderboard />, href: "/dashboard/leaderboard", allowedRoles: ["user", "ambassador", "contestor"] },
 
     
     {
