@@ -5,7 +5,6 @@ export default function WhyParticipate() {
   "All participants will be honored with the prestigious **“Young SDG Fellow” Certificate**, officially recognized by the **Commonwealth Students’ Association**.",
   "Access to globally recognized digital skilling and professional certification through the **UNICEF ‘Passport to Earning’ (P2E)** initiative, empowering all participants with future-ready career skills.",
   "Exclusive **Overseas Education Trip** to participate in a high-impact **International Bootcamp** at a prestigious global campus, fostering international networking.",
-  "A grand cash prize of **৳3,42,500** (Three hundred forty-two thousand five hundred taka) will be awarded to the top-performing winners.",
   "High-value **Scholarship opportunities** from **Washington University of Science and Technology, USA and Murdoch University, Australia**.",
   "Specialized **Language Learning Scholarship** from **Sanrin Nihongono Gakkou, Japan**.",
   

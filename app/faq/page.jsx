@@ -22,7 +22,7 @@ export default function FAQPage() {
     },
     {
       q: "Since the UN Course is free, why is there a registration fee?",
-      a: "The fee is used to cover the costs of numerous rewards provided by Zero Olympiad, such as international boot camps, cash prizes, crests, trophies, and certificates. Additionally, it contributes to the logistics, hospitality, and travel and accommodation expenses for international guests attending the Grand Final on June 6th.",
+      a: "The fee is used to cover the costs of numerous rewards provided by Zero Olympiad, such as international boot camps, crests, trophies, and certificates. Additionally, it contributes to the logistics, hospitality, and travel and accommodation expenses for international guests attending the Grand Final on June 6th.",
     },
     {
       q: "What will I learn from these courses?",
