@@ -1,28 +1,53 @@
-name: Deploy to Vercel
+name: CI/CD - Frontend (Vercel -> VPS)
 
 on:
   push:
-    branches:
-      - main  # Only deploy on main branch update
+    branches: [main] # deploy on every push to main
+
+concurrency:
+  group: frontend-deploy
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  # ---------- STAGE 1: Vercel ----------
+  vercel:
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
-
     steps:
-      - name: zero olympiad repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build and Deploy to Vercel
-        run: npx --yes vercel@latest --prod --yes
+      - name: Deploy to Vercel (production)
+        run: |
+          npx --yes vercel@latest link --yes --project=zero-frontend --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest --prod --yes --token="$VERCEL_TOKEN"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  # ---------- STAGE 2: VPS (only after Vercel succeeds) ----------
+  vps:
+    name: Deploy to VPS
+    needs: vercel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH (git pull + build + PM2)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            export PATH=$PATH:/usr/bin:/usr/local/bin:/root/.nvm/versions/node/*/bin
+            cd /var/www/zero-frontend
+            git pull origin main
+            npm ci || npm install
+            npm run build
+            export PORT=3001
+            pm2 restart zero-frontend --update-env || pm2 start npm --name zero-frontend -- start
+            pm2 save
